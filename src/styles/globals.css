@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+/* Dark variant follows the resolved theme attribute set before paint (see ThemeScript). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------------------------------------------------------------------------
+   Brand tokens: fixed colors named after the stock and inks they come from.
+   --------------------------------------------------------------------------- */
+:root {
+  --paper: #f3efe6;
+  --paper-2: #e8e2d4;
+  --ink: #141414;
+  --ink-2: #1e1d1b;
+  --kraft: #b98a5a;
+  --board: #2a2724;
+  --board-2: #34302c;
+  --foil: #c9a95c;
+  --cyan: #00a3e0;
+  --magenta: #e4007c;
+  --yellow: #ffd400;
+
+  /* Semantic tokens: light theme (uncoated paper). */
+  --surface: var(--paper);
+  --surface-2: var(--paper-2);
+  --fg: var(--ink);
+  --fg-muted: #5a554d;
+  --line: rgb(20 20 20 / 0.16);
+  --line-strong: rgb(20 20 20 / 0.55);
+  --accent: #8a6238; /* kraft darkened for AA text contrast on paper */
+  --grain-opacity: 0.07;
+  --grain-blend: multiply;
+
+  /* Illustration face shading, light from the upper left. */
+  --illo-lift-1: 55%;
+  --illo-lift-2: 18%;
+  --illo-sink: 7%;
+
+  --header-h: 64px;
+  color-scheme: light;
+}
+
+/* Dark theme: ink background, paper text. */
+:root[data-theme="dark"] {
+  --illo-lift-1: 9%;
+  --illo-lift-2: 3%;
+  --illo-sink: 32%;
+  --surface: var(--ink);
+  --surface-2: var(--ink-2);
+  --fg: var(--paper);
+  --fg-muted: #a8a297;
+  --line: rgb(243 239 230 / 0.14);
+  --line-strong: rgb(243 239 230 / 0.5);
+  --accent: var(--kraft);
+  --grain-opacity: 0.05;
+  --grain-blend: screen;
+  color-scheme: dark;
+}
+
+/* No-JS fallback: follow the OS when no theme attribute was set. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+  --illo-lift-1: 9%;
+  --illo-lift-2: 3%;
+  --illo-sink: 32%;
+    --surface: var(--ink);
+    --surface-2: var(--ink-2);
+    --fg: var(--paper);
+    --fg-muted: #a8a297;
+    --line: rgb(243 239 230 / 0.14);
+    --line-strong: rgb(243 239 230 / 0.5);
+    --accent: var(--kraft);
+    --grain-opacity: 0.05;
+    --grain-blend: screen;
+    color-scheme: dark;
+  }
+}
+
+/* Tones: remap the semantic tokens for a section so every component inside adapts.
+   .tone-board is the rigid / luxury tone (greyboard + gold foil). */
+.tone-board {
+  --illo-lift-1: 9%;
+  --illo-lift-2: 3%;
+  --illo-sink: 32%;
+  --surface: var(--board);
+  --surface-2: var(--board-2);
+  --fg: var(--paper);
+  --fg-muted: #b5ada0;
+  --line: rgb(243 239 230 / 0.14);
+  --line-strong: rgb(243 239 230 / 0.5);
+  --accent: var(--foil);
+  --grain-blend: screen;
+  color-scheme: dark;
+  background-color: var(--surface);
+  color: var(--fg);
+}
+.tone-ink {
+  --illo-lift-1: 9%;
+  --illo-lift-2: 3%;
+  --illo-sink: 32%;
+  --surface: var(--ink);
+  --surface-2: var(--ink-2);
+  --fg: var(--paper);
+  --fg-muted: #a8a297;
+  --line: rgb(243 239 230 / 0.14);
+  --line-strong: rgb(243 239 230 / 0.5);
+  --accent: var(--kraft);
+  --grain-blend: screen;
+  color-scheme: dark;
+  background-color: var(--surface);
+  color: var(--fg);
+}
+.tone-kraft {
+  --illo-lift-1: 40%;
+  --illo-lift-2: 12%;
+  --illo-sink: 10%;
+  --surface: var(--kraft);
+  --surface-2: #a87b4d;
+  --fg: var(--ink);
+  --fg-muted: #261b10; /* ≥ 4.5:1 on kraft */
+  --line: rgb(20 20 20 / 0.2);
+  --line-strong: rgb(20 20 20 / 0.6);
+  --accent: var(--ink);
+  background-color: var(--surface);
+  color: var(--fg);
+}
+
+/* ---------------------------------------------------------------------------
+   Tailwind theme
+   --------------------------------------------------------------------------- */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-kraft: var(--kraft);
+  --color-board: var(--board);
+  --color-foil: var(--foil);
+  --color-cyan: var(--cyan);
+  --color-magenta: var(--magenta);
+  --color-yellow: var(--yellow);
+
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+
+  --font-display: var(--ff-display), "Arial Narrow", sans-serif;
+  --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+@theme {
+  /* Type scale: defined once. Display sizes are fluid. */
+  --text-spec: 0.6875rem;
+  --text-spec--line-height: 1.4;
+  --text-spec--letter-spacing: 0.14em;
+  --text-display-2xl: clamp(3.5rem, 2rem + 8vw, 11rem);
+  --text-display-2xl--line-height: 0.86;
+  --text-display-xl: clamp(3rem, 1.8rem + 5.5vw, 7.5rem);
+  --text-display-xl--line-height: 0.88;
+  --text-display-lg: clamp(2.5rem, 1.6rem + 3.6vw, 5rem);
+  --text-display-lg--line-height: 0.9;
+  --text-display-md: clamp(2rem, 1.4rem + 2.2vw, 3.5rem);
+  --text-display-md--line-height: 0.95;
+  --text-display-sm: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+  --text-display-sm--line-height: 1;
+
+  --breakpoint-3xl: 120rem;
+
+  --ease-press: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-fold: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--fg);
+    font-family: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--yellow);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  [id] {
+    scroll-margin-top: calc(var(--header-h) + 16px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities and signature details
+   --------------------------------------------------------------------------- */
+@utility container-x {
+  width: 100%;
+  max-width: 100rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 3rem;
+  }
+}
+
+/* 12-column editorial grid. */
+@utility grid-editorial {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+}
+
+@utility type-display {
+  font-family: var(--ff-display), "Arial Narrow", sans-serif;
+  font-weight: 800;
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+@utility spec {
+  font-family: var(--ff-mono), ui-monospace, monospace;
+  font-size: var(--text-spec);
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility measure {
+  max-width: 65ch;
+}
+
+/* Dieline strokes: solid = cut, dashed = fold. */
+@utility stroke-cut {
+  stroke: currentColor;
+  stroke-width: 1.25;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+@utility stroke-fold {
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Paper grain: static SVG noise, very low opacity, never intercepts input. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.45  0 0 0 0 0.4  0 0 0 1.4 -0.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Illustrations: face shades resolve against the local tone, so the same SVG
+   works on paper, ink and board sections.
+   --------------------------------------------------------------------------- */
+.illo {
+  --face-1: color-mix(in oklab, var(--surface-2), white var(--illo-lift-1));
+  --face-2: color-mix(in oklab, var(--surface-2), white var(--illo-lift-2));
+  --face-3: color-mix(in oklab, var(--surface-2), black var(--illo-sink));
+  color: var(--fg);
+}
+.illo .f1 { fill: var(--face-1); }
+.illo .f2 { fill: var(--face-2); }
+.illo .f3 { fill: var(--face-3); }
+.illo .fs { fill: var(--surface); }
+.illo .ln { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; }
+.illo .ln-thin { fill: none; stroke: currentColor; stroke-width: 0.75; stroke-opacity: 0.6; }
+.illo .fold { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 4 3; stroke-opacity: 0.85; }
+.illo .acc { stroke: var(--accent); }
+.illo .acc-fill { fill: var(--accent); }
+.illo .lbl {
+  font-family: var(--ff-mono), ui-monospace, monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--fg-muted);
+}
+.illo .lbl-strong { fill: var(--fg); }
+
+/* Page enter: plain CSS so content is never stuck hidden without JS. */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.page-in {
+  /* backwards, not both: a lingering transform would break GSAP pinning (position: fixed). */
+  animation: page-in 0.5s var(--ease-press) backwards;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}

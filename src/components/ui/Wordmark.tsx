@@ -14,7 +14,7 @@ export function Wordmark({ className, asLink = true }: WordmarkProps) {
   const mark = (
     <span className={cn("inline-flex items-center gap-2 leading-none", className)}>
       <RegMark className="h-[0.9em] w-[0.9em] shrink-0" />
-      <span className="type-display whitespace-nowrap text-[1.375rem] tracking-[0.01em]">{site.name}</span>
+      <span className="type-display whitespace-nowrap text-[1.05rem] tracking-[0.01em] sm:text-[1.375rem]">{site.name}</span>
     </span>
   );
   if (!asLink) return mark;

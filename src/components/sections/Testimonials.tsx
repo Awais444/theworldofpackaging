@@ -5,7 +5,7 @@ export function Testimonials() {
   const [lead, ...rest] = testimonials;
   if (!lead) return null;
   return (
-    <section className="tone-ink">
+    <section className="tone-board">
       <div className="container-x py-24 md:py-32">
         <SpecLabel items={["Clients"]} as="p" />
         <div className="grid-editorial mt-10 gap-y-14">

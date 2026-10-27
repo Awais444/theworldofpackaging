@@ -6,10 +6,11 @@ Generated from `src/content/media.ts`. Every image on the site is one of these s
 then set `src` on the slot in `media.ts` (fixed slots) or add it to the `photos` map there (generated style/factory/industry slots).
 The illustration is replaced automatically; alt text stays in `media.ts`.
 
-111 slots.
+112 slots.
 
 | Slot id | Page | Size (px) | Aspect | Now | What to shoot |
 | --- | --- | --- | --- | --- | --- |
+| `home-hero` | / | 2400×1800 still, or 1920×1440 video loop (5–8 s, muted) | 4/3 | Illustration | Deep green wrapped magnetic box, gold foil logo; lid opens to show the insert and product. Cream backdrop, soft side light |
 | `case-halden-cover` | / and /work/halden-apothecary | 2400×1800 | 4/3 | Illustration | Hero shot of the finished gift box, lid closed, product beside it |
 | `case-kiri-cover` | / and /work/kiri-atelier | 2400×1800 | 4/3 | Illustration | Identity flat lay: business cards, ring box, swatches |
 | `case-marrow-cover` | / and /work/marrow-and-vale | 2400×1800 | 4/3 | Illustration | Flat-packed boxes beside one assembled box with candle |

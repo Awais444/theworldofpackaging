@@ -49,7 +49,7 @@ export function IndustriesStrip() {
   );
 
   return (
-    <section ref={root} className="flex min-h-0 flex-col justify-center overflow-hidden py-24 md:py-32 lg:min-h-svh">
+    <section ref={root} className="tone-board flex min-h-0 flex-col justify-center overflow-hidden py-24 md:py-32 lg:min-h-svh">
       <div className="container-x grid-editorial gap-y-6">
         <div className="col-span-4 md:col-span-8">
           <SpecLabel items={["Industries", `${industries.length} sectors`]} as="p" className="mb-5" />

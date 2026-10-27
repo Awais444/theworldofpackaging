@@ -75,7 +75,7 @@ export function ServiceList({ services, base }: { services: AgencyService[]; bas
 /** Closing call to action for agency pages. */
 export function ProjectCta({ title, body }: { title: string; body: string }) {
   return (
-    <section className="tone-ink">
+    <section className="tone-board">
       <div className="container-x py-20 md:py-28">
         <ColorBar className="mb-12" />
         <div className="grid-editorial items-end gap-y-8">

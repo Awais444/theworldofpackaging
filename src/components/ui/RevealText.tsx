@@ -24,10 +24,11 @@ export function RevealText({ text, as = "h2", className, delay = 0 }: RevealText
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.from("[data-word]", {
-          yPercent: 110,
-          duration: 0.9,
+          // Far enough to clear the padded mask, so nothing peeks before the reveal.
+          yPercent: 140,
+          duration: 0.7,
           ease: "expo.out",
-          stagger: 0.045,
+          stagger: 0.035,
           delay,
           scrollTrigger: { trigger: ref.current, start: "top 88%", once: true },
         });
@@ -46,7 +47,9 @@ export function RevealText({ text, as = "h2", className, delay = 0 }: RevealText
           <span key={li} className="block">
             {line.split(" ").map((word, wi, words) => (
               <span key={wi}>
-                <span className="inline-block overflow-hidden pb-[0.08em] -mb-[0.08em] align-bottom">
+                {/* Mask padded beyond the tight display line-height so caps and accents are never clipped;
+                    negative margins keep the line spacing unchanged. */}
+                <span className="-my-[0.18em] inline-block overflow-hidden py-[0.18em] align-bottom">
                   <span data-word className="inline-block will-change-transform">
                     {word}
                   </span>

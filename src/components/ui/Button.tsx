@@ -9,7 +9,7 @@ const base =
   "group/btn relative inline-flex items-center justify-center gap-3 font-medium whitespace-nowrap transition-[background-color,color,border-color] duration-200 disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-fg text-surface hover:bg-accent hover:text-ink",
+  primary: "bg-cta text-cta-fg hover:bg-cta-hover",
   secondary: "border border-line-strong text-fg hover:border-fg hover:bg-fg hover:text-surface",
   link: "text-fg underline decoration-line-strong underline-offset-[6px] hover:decoration-fg",
 };

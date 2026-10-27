@@ -7,8 +7,8 @@
 export type CurrencyCode = "USD" | "GBP" | "EUR" | "CAD" | "AUD" | "AED";
 
 export const site = {
-  name: "Studio Name", // TODO: final company name
-  shortName: "Studio", // TODO
+  name: "The World of Packaging",
+  shortName: "World of Packaging",
   tagline: "Brand. Packaging. Made in-house.",
   description:
     "Packaging design and branding studio with its own rigid box factory. We design your brand, engineer your packaging and manufacture it, in one place.",

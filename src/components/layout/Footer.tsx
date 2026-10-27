@@ -98,7 +98,7 @@ export function Footer() {
 
         <p
           aria-hidden="true"
-          className="type-display mt-20 overflow-hidden text-[clamp(3.5rem,15vw,15rem)] leading-[0.8] tracking-[-0.02em] whitespace-nowrap"
+          className="type-display mt-20 overflow-hidden text-[clamp(2.5rem,9vw,10rem)] leading-[0.8] tracking-[-0.02em] whitespace-nowrap"
         >
           {site.name}
         </p>

@@ -8,7 +8,7 @@ import { Illo, SpecText, type IllustrationProps } from "./primitives";
 export function CmykSheet({ className }: IllustrationProps) {
   return (
     <Illo className={className}>
-      <rect x="60" y="34" width="360" height="270" fill="var(--paper)" className="ln-thin" />
+      <rect x="60" y="34" width="360" height="270" style={{ fill: "var(--paper)" }} className="ln-thin" />
       <g style={{ mixBlendMode: "multiply" }}>
         <g data-pass="c" fill="var(--cyan)">
           <circle cx="292" cy="150" r="78" />

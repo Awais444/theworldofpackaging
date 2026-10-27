@@ -73,7 +73,7 @@ export function BrandBoard({ className }: IllustrationProps) {
                 <path d={hatch(x, y)} className="ln-thin" />
               </>
             ) : (
-              <rect x={x} y={y} width={SW} height={SH} fill={s.fill} className="ln-thin" />
+              <rect x={x} y={y} width={SW} height={SH} style={{ fill: s.fill }} className="ln-thin" />
             )}
             <text x={x} y={y + 78} className="lbl">{s.label}</text>
           </g>

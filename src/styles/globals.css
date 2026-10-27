@@ -4,53 +4,65 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------------------------------------------------------------------------
-   Brand tokens: fixed colors named after the stock and inks they come from.
+   Brand tokens: "Luxury Rigid" palette.
+   Deep green and cream alternate down the page; gold foil marks actions and
+   key lines; kraft is the secondary surface. Process colours stay tiny.
    --------------------------------------------------------------------------- */
 :root {
-  --paper: #f3efe6;
-  --paper-2: #e8e2d4;
-  --ink: #141414;
-  --ink-2: #1e1d1b;
+  --green: #1f3a2e;
+  --green-2: #28493a;
+  --green-3: #16291f;
+  --cream: #f4ede0;
+  --cream-2: #e8dcc6;
+  --foil: #c9a35c;
+  --foil-deep: #7a5a1e; /* gold dark enough for text on cream (AA) */
   --kraft: #b98a5a;
-  --board: #2a2724;
-  --board-2: #34302c;
-  --foil: #c9a95c;
+  --ink: #151515;
+  --ink-2: #1f1f1d;
   --cyan: #00a3e0;
   --magenta: #e4007c;
   --yellow: #ffd400;
 
-  /* Semantic tokens: light theme (uncoated paper). */
-  --surface: var(--paper);
-  --surface-2: var(--paper-2);
+  /* Older names used across components. */
+  --paper: var(--cream);
+  --paper-2: var(--cream-2);
+  --board: var(--green);
+  --board-2: var(--green-2);
+
+  /* Semantic tokens: light theme (cream). */
+  --surface: var(--cream);
+  --surface-2: var(--cream-2);
   --fg: var(--ink);
-  --fg-muted: #5a554d;
-  --line: rgb(20 20 20 / 0.16);
-  --line-strong: rgb(20 20 20 / 0.55);
-  --accent: #8a6238; /* kraft darkened for AA text contrast on paper */
-  --grain-opacity: 0.07;
+  --fg-muted: #4f4a40;
+  --line: rgb(21 21 21 / 0.16);
+  --line-strong: rgb(21 21 21 / 0.55);
+  --accent: var(--foil-deep);
+  /* Primary action: gold foil with ink text everywhere except on kraft. */
+  --cta: var(--foil);
+  --cta-hover: #d8b670;
+  --cta-fg: var(--ink);
+  --grain-opacity: 0.06;
   --grain-blend: multiply;
 
-  /* Illustration face shading, light from the upper left. */
-  --illo-lift-1: 55%;
-  --illo-lift-2: 18%;
-  --illo-sink: 7%;
+  /* Illustration fills: cream, kraft and deep kraft with inked edges, on every tone. */
+  --face-1: #fbf6ec;
+  --face-2: #cfa577;
+  --face-3: #9a6c42;
+  --illo-edge: var(--ink);
 
   --header-h: 64px;
   color-scheme: light;
 }
 
-/* Dark theme: ink background, paper text. */
+/* Dark theme: cream sections become ink; green sections stay green. */
 :root[data-theme="dark"] {
-  --illo-lift-1: 9%;
-  --illo-lift-2: 3%;
-  --illo-sink: 32%;
   --surface: var(--ink);
   --surface-2: var(--ink-2);
-  --fg: var(--paper);
-  --fg-muted: #a8a297;
-  --line: rgb(243 239 230 / 0.14);
-  --line-strong: rgb(243 239 230 / 0.5);
-  --accent: var(--kraft);
+  --fg: var(--cream);
+  --fg-muted: #b9b1a1;
+  --line: rgb(244 237 224 / 0.14);
+  --line-strong: rgb(244 237 224 / 0.5);
+  --accent: var(--foil);
   --grain-opacity: 0.05;
   --grain-blend: screen;
   color-scheme: dark;
@@ -59,16 +71,13 @@
 /* No-JS fallback: follow the OS when no theme attribute was set. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-  --illo-lift-1: 9%;
-  --illo-lift-2: 3%;
-  --illo-sink: 32%;
     --surface: var(--ink);
     --surface-2: var(--ink-2);
-    --fg: var(--paper);
-    --fg-muted: #a8a297;
-    --line: rgb(243 239 230 / 0.14);
-    --line-strong: rgb(243 239 230 / 0.5);
-    --accent: var(--kraft);
+    --fg: var(--cream);
+    --fg-muted: #b9b1a1;
+    --line: rgb(244 237 224 / 0.14);
+    --line-strong: rgb(244 237 224 / 0.5);
+    --accent: var(--foil);
     --grain-opacity: 0.05;
     --grain-blend: screen;
     color-scheme: dark;
@@ -76,17 +85,14 @@
 }
 
 /* Tones: remap the semantic tokens for a section so every component inside adapts.
-   .tone-board is the rigid / luxury tone (greyboard + gold foil). */
+   .tone-board is the deep green "rigid" tone with gold foil. */
 .tone-board {
-  --illo-lift-1: 9%;
-  --illo-lift-2: 3%;
-  --illo-sink: 32%;
-  --surface: var(--board);
-  --surface-2: var(--board-2);
-  --fg: var(--paper);
-  --fg-muted: #b5ada0;
-  --line: rgb(243 239 230 / 0.14);
-  --line-strong: rgb(243 239 230 / 0.5);
+  --surface: var(--green);
+  --surface-2: var(--green-2);
+  --fg: var(--cream);
+  --fg-muted: #c7cbb8;
+  --line: rgb(244 237 224 / 0.16);
+  --line-strong: rgb(244 237 224 / 0.55);
   --accent: var(--foil);
   --grain-blend: screen;
   color-scheme: dark;
@@ -94,32 +100,30 @@
   color: var(--fg);
 }
 .tone-ink {
-  --illo-lift-1: 9%;
-  --illo-lift-2: 3%;
-  --illo-sink: 32%;
   --surface: var(--ink);
   --surface-2: var(--ink-2);
-  --fg: var(--paper);
-  --fg-muted: #a8a297;
-  --line: rgb(243 239 230 / 0.14);
-  --line-strong: rgb(243 239 230 / 0.5);
-  --accent: var(--kraft);
+  --fg: var(--cream);
+  --fg-muted: #b9b1a1;
+  --line: rgb(244 237 224 / 0.14);
+  --line-strong: rgb(244 237 224 / 0.5);
+  --accent: var(--foil);
   --grain-blend: screen;
   color-scheme: dark;
   background-color: var(--surface);
   color: var(--fg);
 }
 .tone-kraft {
-  --illo-lift-1: 40%;
-  --illo-lift-2: 12%;
-  --illo-sink: 10%;
   --surface: var(--kraft);
   --surface-2: #a87b4d;
   --fg: var(--ink);
   --fg-muted: #261b10; /* ≥ 4.5:1 on kraft */
-  --line: rgb(20 20 20 / 0.2);
-  --line-strong: rgb(20 20 20 / 0.6);
+  --line: rgb(21 21 21 / 0.2);
+  --line-strong: rgb(21 21 21 / 0.6);
   --accent: var(--ink);
+  /* Gold would vanish on kraft: actions go ink here. */
+  --cta: var(--ink);
+  --cta-hover: var(--green);
+  --cta-fg: var(--cream);
   background-color: var(--surface);
   color: var(--fg);
 }
@@ -128,6 +132,12 @@
    Tailwind theme
    --------------------------------------------------------------------------- */
 @theme inline {
+  --color-green: var(--green);
+  --color-green-2: var(--green-2);
+  --color-cream: var(--cream);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-cta-fg: var(--cta-fg);
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-kraft: var(--kraft);
@@ -325,20 +335,20 @@ html.lenis body {
    works on paper, ink and board sections.
    --------------------------------------------------------------------------- */
 .illo {
-  --face-1: color-mix(in oklab, var(--surface-2), white var(--illo-lift-1));
-  --face-2: color-mix(in oklab, var(--surface-2), white var(--illo-lift-2));
-  --face-3: color-mix(in oklab, var(--surface-2), black var(--illo-sink));
   color: var(--fg);
 }
+/* Lines default to no fill at zero extra specificity, so a face class (.f1–.f3, .fs) always wins. */
+.illo :where(.ln, .ln-thin, .fold) { fill: none; }
 .illo .f1 { fill: var(--face-1); }
 .illo .f2 { fill: var(--face-2); }
 .illo .f3 { fill: var(--face-3); }
 .illo .fs { fill: var(--surface); }
-.illo .ln { fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; }
-.illo .ln-thin { fill: none; stroke: currentColor; stroke-width: 0.75; stroke-opacity: 0.6; }
-.illo .fold { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 4 3; stroke-opacity: 0.85; }
-.illo .acc { stroke: var(--accent); }
-.illo .acc-fill { fill: var(--accent); }
+.illo .ln { stroke: var(--illo-edge); stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; }
+.illo .ln-thin { stroke: currentColor; stroke-width: 0.75; stroke-opacity: 0.6; }
+.illo .fold { stroke: var(--illo-edge); stroke-width: 1; stroke-dasharray: 4 3; stroke-opacity: 0.85; }
+/* Printed details on kraft faces: deep green reads on kraft where gold would not. */
+.illo .acc { stroke: var(--green); }
+.illo .acc-fill { fill: var(--green); }
 .illo .lbl {
   font-family: var(--ff-mono), ui-monospace, monospace;
   font-size: 8px;
@@ -350,12 +360,12 @@ html.lenis body {
 
 /* Page enter: plain CSS so content is never stuck hidden without JS. */
 @keyframes page-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: none; }
+  from { transform: translateY(8px); }
+  to { transform: none; }
 }
 .page-in {
   /* backwards, not both: a lingering transform would break GSAP pinning (position: fixed). */
-  animation: page-in 0.5s var(--ease-press) backwards;
+  animation: page-in 0.35s var(--ease-press) backwards;
 }
 
 @keyframes spin-slow {

@@ -14,6 +14,8 @@ export type MediaSlot = {
   alt: string;
   /** Path under /public, e.g. "/images/rigid/rigid-magnetic-hero.webp". Empty = illustration. */
   src?: string;
+  /** Optional short looping video (MP4/WebM under /public). Used where a slot supports motion, e.g. the home hero. */
+  video?: string;
   illustration: IllustrationKey;
   aspect: MediaAspect;
   /** Shot list fields (see MEDIA_SLOTS.md). */
@@ -27,6 +29,16 @@ export type MediaSlot = {
  * /public/images/<section>/<slot-id>.webp and fill `src`. Nothing else changes.
  */
 const fixedSlots = {
+  "home-hero": {
+    id: "home-hero",
+    alt: "Deep green magnetic rigid box with a gold foil logo, lid opening to reveal the insert",
+    // Until `video` or `src` is set, the hero shows the animated 3D box (HeroRigidBox).
+    illustration: "magnetic-open",
+    aspect: "4/3",
+    page: "/",
+    size: "2400×1800 still, or 1920×1440 video loop (5–8 s, muted)",
+    shot: "Deep green wrapped magnetic box, gold foil logo; lid opens to show the insert and product. Cream backdrop, soft side light",
+  },
   "mega-menu-feature": {
     id: "mega-menu-feature",
     alt: "Open magnetic rigid box with an EVA foam insert holding a product jar",

@@ -1,4 +1,4 @@
-import { site } from "@/config/site.config";
+import { site } from "@/config/site";
 import type { IllustrationKey } from "@/components/illustrations";
 import type { WorkCategory } from "./caseStudies";
 import type { Option } from "./materials";
@@ -26,7 +26,7 @@ export type AgencyService = {
 export const hubs: Record<ServiceHub, { name: string; href: string; tagline: string; intro: string; illustration: IllustrationKey }> = {
   branding: {
     name: "Branding",
-    href: "/branding",
+    href: "/services",
     tagline: "Brands built to be printed.",
     intro:
       "Strategy, names and identity systems from a studio that also runs a press. Every mark is tested at box scale, in foil and on kraft, before you sign it off.",
@@ -34,7 +34,7 @@ export const hubs: Record<ServiceHub, { name: string; href: string; tagline: str
   },
   "packaging-design": {
     name: "Packaging Design",
-    href: "/packaging-design",
+    href: "/services",
     tagline: "Graphics and structure, drawn together.",
     intro:
       "Packaging design from the people who will manufacture it. Dielines are drawn for real board, artwork is checked on our own press, and nothing is handed to a printer who has never seen the brief.",
@@ -74,7 +74,7 @@ export const agencyServices: AgencyService[] = [
     priceFrom: null, // TODO
     timeline: "Agreed per project",
     workCategory: "Branding",
-    illustration: "sketch-box",
+    illustration: "brand-board",
     faqs: [
       { q: "Do you register trademarks?", a: "No. We do preliminary checks and recommend you clear the final name with a trademark attorney in your markets." },
     ],
@@ -155,7 +155,7 @@ export const agencyServices: AgencyService[] = [
     priceFrom: null, // TODO
     timeline: "Agreed per project",
     workCategory: "Branding",
-    illustration: "sketch-box",
+    illustration: "brand-board",
     faqs: [{ q: "What happens to my existing packaging stock?", a: "We plan the switch around your stock levels so nothing is wasted where it can be avoided." }],
   },
   {
@@ -174,7 +174,7 @@ export const agencyServices: AgencyService[] = [
     priceFrom: null, // TODO
     timeline: "Agreed per project",
     workCategory: "Packaging",
-    illustration: "cmyk-sheet",
+    illustration: "magnetic-open",
     faqs: [{ q: "Can you design for another printer?", a: "Yes, we supply files to any printer's spec, though we can only guarantee results on our own press." }],
   },
   {
@@ -256,8 +256,6 @@ export const agencyServices: AgencyService[] = [
   },
 ];
 
-export const servicesByHub = (hub: ServiceHub) => agencyServices.filter((s) => s.hub === hub);
-export const getService = (hub: ServiceHub, slug: string) => agencyServices.find((s) => s.hub === hub && s.slug === slug);
 
 export const serviceCommonFaqs: Faq[] = [
   {

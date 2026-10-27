@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
+import { ArrowRight, CheckCircle2, Plane, Ship } from "lucide-react";
 import Link from "next/link";
-import { site } from "@/config/site.config";
+import { site } from "@/config/site";
+import { quoteHref } from "@/content/navigation";
 import { shipTo } from "@/content/shipTo";
-import { ProjectCta } from "@/components/sections/AgencyBlocks";
+import { shipToSharedFaqs } from "@/content/shipToDetails";
+import { FadeIn } from "@/components/motion/FadeIn";
 import { FreightSlider } from "@/components/sections/FreightSlider";
 import { PageHero } from "@/components/sections/PageHero";
-import { FaqList } from "@/components/sections/StyleDetailBlocks";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Tag } from "@/components/ui/Tag";
+import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Worldwide Shipping: air and sea",
@@ -16,40 +24,59 @@ export const metadata: Metadata = {
 };
 
 const modes = [
-  { name: "Air freight", points: ["Fastest door-to-door", "Charged on actual or volumetric weight, whichever is higher", "Best for samples, launches and urgent stock"] },
-  { name: "Sea freight", points: ["Slowest, lowest cost per box at volume", "Charged on volume, with a minimum", "Best for production runs and repeat stock"] },
+  { icon: Plane, name: "Air freight", best: "Samples, launches and urgent stock", points: ["Fastest door-to-door", "Charged on actual or volumetric weight, whichever is higher", "Delivered to your door or 3PL"] },
+  { icon: Ship, name: "Sea freight", best: "Production runs and repeat stock", points: ["Lowest cost per box at volume", "Charged on volume, with a minimum", "Port delivery, then road to your warehouse"] },
 ];
+
+const packing = [
+  "Boxes packed in strong export cartons",
+  "Corner protection and dividers for rigid boxes",
+  "Collapsible boxes packed flat in bundles",
+  "Cartons labelled with your SKU and count",
+  "Palletised for sea freight on request",
+];
+
+const faqs = [{ q: "Do you ship samples by courier?", a: "Yes, by express courier with tracking." }, ...shipToSharedFaqs];
 
 export default function ShippingPage() {
   return (
     <>
+      <JsonLd data={faqPage(faqs)} />
       <PageHero
         crumbs={[{ label: "Shipping" }]}
-        spec={["Shipping", "Air + sea", "Worldwide"]}
-        title="From our floor to yours."
-        intro={
-          <p>
-            We pack in export cartons, book freight and prepare the documents. You choose air for speed or sea for cost;
-            collapsible boxes make either one cheaper.
-          </p>
-        }
+        eyebrow="Worldwide shipping"
+        title="From our factory to your door"
+        highlight="door"
+        intro={<p>We pack in export cartons, book freight and prepare the documents. Choose air for speed or sea for cost; collapsible boxes make both cheaper.</p>}
+        slotId="printed-shipping-hero"
         actions={
-          <Button href="/quote" size="lg" arrow>
-            Quote with freight
-          </Button>
+          <>
+            <Button href={quoteHref} size="lg" arrow>
+              Quote with freight
+            </Button>
+            <Button href="/collapsible-rigid-boxes" size="lg" variant="secondary">
+              Collapsible boxes
+            </Button>
+          </>
         }
-        slotId="world-map"
       />
 
-      <section className="container-x py-20 md:py-28">
-        <SectionHeader spec={["Air vs sea"]} title="Two ways to ship." />
-        <div className="mt-12 grid border-y border-line md:grid-cols-2">
-          {modes.map((m, i) => (
-            <div key={m.name} className={i ? "border-t border-line py-10 md:border-t-0 md:border-l md:pl-10" : "py-10 md:pr-10"}>
-              <h3 className="type-display text-display-md">{m.name}</h3>
-              <ul className="mt-5 space-y-2">
+      <Section bg="silver">
+        <FadeIn>
+          <SectionHeader eyebrow="Air vs sea" title="Two ways to ship" highlight="ship" />
+        </FadeIn>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {modes.map((m) => (
+            <div key={m.name} className="rounded-3xl bg-white p-8">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                <m.icon aria-hidden="true" className="h-6 w-6" />
+              </span>
+              <h3 className="text-h3 mt-4">{m.name}</h3>
+              <p className="mt-1 text-sm font-semibold text-orange-text">Best for: {m.best}</p>
+              <ul className="mt-5 space-y-2.5">
                 {m.points.map((p) => (
-                  <li key={p} className="flex gap-3 before:mt-[0.75em] before:h-px before:w-3 before:shrink-0 before:bg-line-strong">
+                  <li key={p} className="flex gap-3">
+                    <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
                     {p}
                   </li>
                 ))}
@@ -57,56 +84,92 @@ export default function ShippingPage() {
             </div>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section className="tone-board">
-        <div className="container-x py-20 md:py-28">
-          <SectionHeader spec={["Collapsible savings"]} title="Ship boxes, not air." className="mb-14" />
+      <Section>
+        <SectionHeader eyebrow="Assembled vs flat" title="Ship boxes, not air" highlight="air" lead="Collapsible rigid boxes ship flat. Move the slider to compare carton volume (example figures)." />
+        <div className="mt-12">
           <FreightSlider />
-          <Button href="/collapsible-rigid-boxes" variant="link" arrow className="mt-10">
-            Collapsible rigid boxes
-          </Button>
         </div>
-      </section>
+      </Section>
 
-      <section className="container-x py-20 md:py-28">
-        <SectionHeader spec={["Duties + documents"]} title="What happens at the border." />
-        <div className="mt-10 grid gap-10 md:grid-cols-3">
-          {[
-            ["Documents", "Commercial invoice and packing list with every shipment; certificate of origin on request."],
-            ["Duties and taxes", "Import duty and VAT or sales tax are set by your country and usually paid by the importer. We can quote delivered-duty-paid on request."],
-            ["Your broker", "For sea freight you will normally need a customs broker at destination. We work with yours or suggest one."],
-          ].map(([t, b]) => (
-            <div key={t} className="border-t border-line pt-5">
-              <h3 className="type-display text-display-sm">{t}</h3>
-              <p className="mt-3 text-muted">{b}</p>
+      <Section bg="blue-50">
+        <div className="grid gap-12 lg:grid-cols-2">
+          <div>
+            <SectionHeader eyebrow="Packing" title="Packed for the journey" highlight="journey" />
+            <ul className="mt-8 space-y-3">
+              {packing.map((p) => (
+                <li key={p} className="flex gap-3 rounded-2xl bg-white p-4">
+                  <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <SectionHeader eyebrow="Duties + documents" title="At the border" highlight="border" />
+            <div className="mt-8 space-y-4">
+              {[
+                ["Documents", "Commercial invoice and packing list with every shipment; certificate of origin on request."],
+                ["Duties and taxes", "Import duty and VAT or sales tax are set by your country and usually paid by the importer."],
+                ["Delivered duty paid (DDP)", "We can quote DDP to some destinations. Ask with your quote."], // TODO verify DDP availability
+                ["Your broker", "For sea freight you normally need a customs broker at destination. We work with yours."],
+              ].map(([t, b]) => (
+                <div key={t} className="rounded-2xl bg-white p-5">
+                  <h3 className="font-heading text-lg font-bold">{t}</h3>
+                  <p className="mt-1 text-ink-500">{b}</p>
+                </div>
+              ))}
             </div>
-          ))}
+            <Tag tone="orange" className="mt-6">
+              General guidance, not customs advice
+            </Tag>
+          </div>
         </div>
-        <p className="spec mt-8 text-muted">General guidance, not customs advice. Rules vary by product and country.</p>
-      </section>
+      </Section>
 
-      <section className="container-x pb-20 md:pb-28">
-        <SectionHeader spec={["Ship to"]} title="Country guides." />
-        <ul className="mt-10 grid border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+      <Section>
+        <SectionHeader eyebrow="Countries" title="Country guides" highlight="Country" lead="We ship worldwide. These are our most common destinations." />
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {shipTo.map((c) => (
-            <li key={c.slug} className="border-b border-line">
-              <Link href={`/ship-to/${c.slug}`} className="group flex items-baseline justify-between py-6 pr-6">
-                <span className="type-display text-display-md transition-transform duration-300 group-hover:translate-x-2">{c.country}</span>
-                <span aria-hidden="true" className="text-accent">→</span>
+            <li key={c.slug}>
+              <Link href={`/ship-to/${c.slug}`} className="group flex items-center justify-between rounded-2xl border border-silver-300 p-6 transition hover:-translate-y-1 hover:border-blue-600 hover:shadow-md">
+                <span className="font-heading text-xl font-bold">{c.country}</span>
+                <ArrowRight aria-hidden="true" className="h-5 w-5 text-blue-600 transition-transform group-hover:translate-x-1" />
               </Link>
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
 
-      <FaqList
-        faqs={[
-          { q: "Do you ship samples by courier?", a: "Yes, by express courier with tracking." },
-          { q: "Can you deliver to my 3PL or Amazon warehouse?", a: "We deliver to any address you give us. For marketplaces, tell us their labelling rules before packing." },
-        ]}
-      />
-      <ProjectCta title="Get a delivered price." body="Tell us the destination and we include freight in your quote." />
+      <Section bg="silver">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="FAQ" title="Shipping questions" highlight="questions" />
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} />
+          </div>
+        </div>
+      </Section>
+
+      <Section>
+        <CTABand
+          title="Get a delivered price"
+          highlight="delivered"
+          text="Tell us the destination and we include freight in your quote."
+          actions={
+            <>
+              <Button href={quoteHref} variant="accent" size="lg" arrow>
+                Get a Quote
+              </Button>
+              <Button href="/contact" variant="white" size="lg">
+                Talk to us
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </>
   );
 }

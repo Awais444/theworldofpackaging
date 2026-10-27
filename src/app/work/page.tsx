@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { caseStudies } from "@/content/caseStudies";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { ProjectCta } from "@/components/sections/AgencyBlocks";
-import { WorkCard } from "@/components/sections/SelectedWork";
+import { quoteHref } from "@/content/navigation";
+import { PageHero } from "@/components/sections/PageHero";
 import { WorkFilter } from "@/components/sections/WorkFilter";
-import { RevealText } from "@/components/ui/RevealText";
-import { SpecLabel } from "@/components/ui/SpecLabel";
+import { Button } from "@/components/ui/Button";
+import { CaseCard } from "@/components/ui/Cards";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
 
 export const metadata: Metadata = {
   title: "Work: branding, packaging and rigid box projects",
@@ -16,26 +17,44 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
-      <section className="container-x pt-8 pb-24 md:pb-32">
-        <Breadcrumbs items={[{ label: "Work" }]} />
-        <div className="mt-12 md:mt-16">
-          <SpecLabel items={["Case studies", `${caseStudies.length} projects`]} as="p" />
-          <RevealText as="h1" text="Work, from brief to box." className="type-display mt-5 text-display-xl" />
-          <p className="measure mt-6 text-lg text-muted">
-            Brand identities, packaging systems and boxes we made ourselves. Filter by what you need.
-          </p>
-        </div>
-        <div className="mt-14">
-          <WorkFilter
-            items={caseStudies.map((c) => ({
-              slug: c.slug,
-              categories: c.categories,
-              card: <WorkCard study={c} />,
-            }))}
-          />
-        </div>
-      </section>
-      <ProjectCta title="Your project next." body="Tell us what you are making. We reply with a scope, timeline and the questions we still have." />
+      <PageHero
+        crumbs={[{ label: "Work" }]}
+        eyebrow="Our work"
+        title="From first sketch to delivered box"
+        highlight="delivered"
+        intro={<p>Brand identities, packaging systems and boxes made in our own factory. Filter by what you need.</p>}
+        actions={
+          <Button href="/start-a-project" size="lg" arrow>
+            Start a Project
+          </Button>
+        }
+      />
+      <Section className="!pt-0">
+        <WorkFilter
+          items={caseStudies.map((c) => ({
+            slug: c.slug,
+            categories: c.categories,
+            card: <CaseCard href={`/work/${c.slug}`} title={c.client} text={c.summary} slot={c.coverSlot} industry={c.industry} placeholder={c.placeholder} />,
+          }))}
+        />
+      </Section>
+      <Section className="!pt-0">
+        <CTABand
+          title="Your project next"
+          highlight="next"
+          text="Tell us what you are making. We reply with a scope, timeline and a fixed quote."
+          actions={
+            <>
+              <Button href="/start-a-project" variant="accent" size="lg" arrow>
+                Start a Project
+              </Button>
+              <Button href={quoteHref} variant="white" size="lg">
+                Get a Quote
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </>
   );
 }

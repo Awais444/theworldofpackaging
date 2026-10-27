@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { caseStudies, getCaseStudy } from "@/content/caseStudies";
+import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { SiteImage } from "@/components/media/SiteImage";
-import { ProjectCta } from "@/components/sections/AgencyBlocks";
-import { RevealText } from "@/components/ui/RevealText";
-import { SpecLabel } from "@/components/ui/SpecLabel";
+import { Media } from "@/components/media/Media";
+import { Button } from "@/components/ui/Button";
+import { StatCard } from "@/components/ui/Cards";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Tag } from "@/components/ui/Tag";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/** Case study (CLAUDE.md §7.5). */
 export default async function CaseStudyPage({ params }: Props) {
   const study = getCaseStudy((await params).slug);
   if (!study) notFound();
@@ -43,44 +49,107 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <article>
-      <header className="container-x pt-8">
-        <Breadcrumbs items={[{ label: "Work", href: "/work" }, { label: study.client }]} />
-        <div className="mt-12 md:mt-16">
-          {study.placeholder && <p className="spec mb-5 inline-block bg-yellow px-2 py-1 text-ink">Sample project</p>}
-          <RevealText as="h1" text={study.client} className="type-display text-display-2xl" />
-          <p className="measure mt-6 text-xl">{study.summary}</p>
-        </div>
-        <SiteImage slotId={study.coverSlot} priority className="mt-14" sizes="100vw" />
-        <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-line py-6 md:grid-cols-4">
-          {meta.map((m) => (
-            <div key={m.label}>
-              <dt className="spec text-muted">{m.label}</dt>
-              <dd className="mt-1 font-mono text-sm uppercase tracking-wider">{m.value}</dd>
+      <header className="bg-white pb-12 pt-8">
+        <div className="container-x">
+          <Breadcrumbs items={[{ label: "Work", href: "/work" }, { label: study.client }]} />
+          <div className="mt-10 max-w-3xl">
+            <div className="flex flex-wrap gap-2">
+              <Tag tone="orange">{study.industry}</Tag>
+              {study.placeholder && <Tag tone="white" className="border border-silver-300">Sample project</Tag>}
             </div>
-          ))}
-        </dl>
+            <h1 className="text-h1 mt-4">{study.client}</h1>
+            <p className="text-lead mt-4 text-ink-500">{study.summary}</p>
+          </div>
+          <Media slot={study.coverSlot} priority panel="blue" className="mt-10" sizes="100vw" />
+          <dl className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {meta.map((m) => (
+              <div key={m.label} className="rounded-2xl bg-silver-50 px-5 py-4">
+                <dt className="text-xs font-semibold uppercase tracking-wider text-ink-500">{m.label}</dt>
+                <dd className="mt-1 font-semibold">{m.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </header>
 
-      <div className="container-x py-20 md:py-28">
-        {study.sections.map((s) => (
-          <section key={s.heading} className="grid-editorial gap-y-6 border-t border-line py-12 md:py-16">
-            <h2 className="type-display col-span-4 text-display-md md:col-span-4">{s.heading}</h2>
-            <p className="measure col-span-4 text-lg md:col-span-7 md:col-start-6">{s.body}</p>
-            {s.mediaSlot && <SiteImage slotId={s.mediaSlot} className="col-span-4 mt-8 md:col-span-12" sizes="100vw" />}
-          </section>
-        ))}
-        <SpecLabel items={study.spec} as="p" className="border-t border-line pt-6" />
-      </div>
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="Challenge" title="The brief" highlight="brief" />
+          </div>
+          <p className="text-lead lg:col-span-8">{study.challenge}</p>
+        </div>
+      </Section>
 
-      <Link href={`/work/${next.slug}`} className="group block border-t border-line">
-        <div className="container-x py-16 md:py-24">
-          <p className="spec text-muted">Next project</p>
-          <p className="type-display mt-4 text-display-xl transition-colors group-hover:text-accent">{next.client} →</p>
-          <p className="mt-3 text-muted">{next.summary}</p>
+      <Section bg="silver">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="Solution" title="What we made" highlight="made" />
+            <div className="mt-6 flex flex-wrap gap-2">
+              {study.spec.map((s) => (
+                <Tag key={s}>{s}</Tag>
+              ))}
+            </div>
+          </div>
+          <ol className="space-y-6 lg:col-span-8">
+            {study.solution.map((s, i) => (
+              <li key={i} className="flex gap-5 rounded-2xl bg-white p-6">
+                <span className="font-heading text-3xl font-bold text-blue-600">0{i + 1}</span>
+                <p className="text-lg">{s}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="Gallery" title="The finished work" highlight="finished" />
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
+          {study.gallery.map((slot) => (
+            <Media key={slot} slot={slot} sizes="(min-width: 1024px) 33vw, 50vw" />
+          ))}
+        </div>
+      </Section>
+
+      <Section bg="blue-50">
+        <SectionHeader eyebrow="Results" title="What changed" highlight="changed" />
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {study.results.map((r) => (
+            <StatCard key={r.label} value={r.value} label={r.label} placeholder={study.placeholder} />
+          ))}
+        </div>
+      </Section>
+
+      <Link href={`/work/${next.slug}`} className="group block border-t border-silver-300 bg-white">
+        <div className="container-x flex flex-wrap items-center justify-between gap-6 py-14 md:py-20">
+          <div>
+            <p className="text-eyebrow text-blue-600">Next project</p>
+            <p className="text-h2 mt-3 transition-colors group-hover:text-blue-600">{next.client}</p>
+            <p className="mt-2 text-ink-500">{next.summary}</p>
+          </div>
+          <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white transition-transform group-hover:translate-x-1">
+            <ArrowRight aria-hidden="true" className="h-6 w-6" />
+          </span>
         </div>
       </Link>
 
-      <ProjectCta title="Start yours." body="Brand, packaging and production from one team. Tell us what you are launching." />
+      <Section className="!pt-0">
+        <CTABand
+          title="Start your project"
+          highlight="project"
+          text="Brand, packaging and production from one team. Tell us what you are launching."
+          actions={
+            <>
+              <Button href="/start-a-project" variant="accent" size="lg" arrow>
+                Start a Project
+              </Button>
+              <Button href={quoteHref} variant="white" size="lg">
+                Get a Quote
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </article>
   );
 }

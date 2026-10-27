@@ -5,20 +5,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitInlineContact } from "@/app/actions/contact";
-import { site } from "@/config/site.config";
+import { site } from "@/config/site";
 import { Button } from "@/components/ui/Button";
-import { RegMark } from "@/components/ui/RegMark";
+import { CircleCheck as CheckCircleIcon } from "lucide-react";
 import { BUDGETS, inlineContactSchema, NEEDS, type InlineContactInput } from "@/lib/schemas";
+import { controlClass } from "@/components/ui/Field";
 import { cn } from "@/lib/utils";
 
-const fieldLabel = "spec mb-2 block text-muted";
-const inputClass =
-  "h-12 w-full border-0 border-b border-line-strong bg-transparent px-0 text-lg outline-none transition-colors placeholder:text-muted/60 focus:border-fg focus-visible:outline-none";
+const fieldLabel = "mb-1.5 block text-sm font-semibold text-ink-900";
+const inputClass = cn(controlClass, "h-12");
 
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) return null;
   return (
-    <p id={id} role="alert" className="mt-2 text-sm text-magenta">
+    <p id={id} role="alert" className="mt-2 text-sm text-error">
       {message}
     </p>
   );
@@ -52,16 +52,15 @@ export function InlineContact() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          className="border border-line p-8"
+          className="rounded-2xl bg-blue-50 p-8"
           role="status"
         >
-          <RegMark className="h-10 w-10 text-accent" />
-          <p className="type-display mt-6 text-display-md">In register.</p>
-          <p className="mt-3 text-lg text-muted">
-            Thanks. We reply within {site.facts.quoteReplyHours} hours on working days, usually with a few questions
-            about your product.
+          <CheckCircleIcon aria-hidden="true" className="h-12 w-12 text-blue-600" />
+          <p className="text-h3 mt-5">Message sent</p>
+          <p className="mt-3 text-lg text-ink-500">
+            Thanks. We reply {site.facts.quoteReply}, usually with a few questions about your product.
           </p>
-          <Button variant="link" className="mt-6" onClick={() => setStatus("idle")}>
+          <Button variant="ghost" className="mt-6" onClick={() => setStatus("idle")}>
             Send another
           </Button>
         </motion.div>
@@ -73,9 +72,9 @@ export function InlineContact() {
           exit={{ opacity: 0 }}
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          className="space-y-8"
+          className="space-y-6"
         >
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label htmlFor="ic-name" className={fieldLabel}>
                 Name
@@ -113,7 +112,7 @@ export function InlineContact() {
               {NEEDS.map((n) => (
                 <label key={n} className="cursor-pointer">
                   <input type="checkbox" value={n} className="peer sr-only" {...register("needs")} />
-                  <span className="inline-flex h-10 items-center border border-line-strong px-4 transition-colors peer-checked:border-fg peer-checked:bg-fg peer-checked:text-surface peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg hover:border-fg">
+                  <span className="inline-flex h-11 items-center rounded-full border border-silver-300 bg-white px-4 text-[15px] font-medium transition peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white peer-focus-visible:shadow-[var(--ring)] hover:border-blue-600">
                     {n}
                   </span>
                 </label>
@@ -157,7 +156,7 @@ export function InlineContact() {
               {isSubmitting ? "Sending" : "Send"}
             </Button>
             {status === "error" && (
-              <p role="alert" className="text-sm text-magenta">
+              <p role="alert" className="text-sm text-error">
                 That did not go through. Try again, or email {site.email}.
               </p>
             )}

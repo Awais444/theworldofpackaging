@@ -15,8 +15,8 @@ export default function ConfigurePage() {
       <Breadcrumbs items={[{ label: "Configure a Box" }]} />
       <div className="mt-10 mb-14">
         <SpecLabel items={["Configurator", "Live estimate"]} as="p" />
-        <h1 className="type-display mt-4 text-display-lg">Configure a box.</h1>
-        <p className="measure mt-4 text-lg text-muted">
+        <h1 className="font-heading font-bold mt-4 text-h2">Configure a box.</h1>
+        <p className="max-w-2xl mt-4 text-lg text-ink-500">
           About ten quick choices. The preview and estimate update as you go; send it to us as a quote when it looks right.
         </p>
       </div>

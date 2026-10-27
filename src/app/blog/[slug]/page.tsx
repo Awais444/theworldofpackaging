@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, posts } from "@/content/blog/posts";
+import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { ProjectCta } from "@/components/sections/AgencyBlocks";
 import { illustrations } from "@/components/illustrations";
-import { CropMarks } from "@/components/ui/CropMarks";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SpecLabel } from "@/components/ui/SpecLabel";
+import { Button } from "@/components/ui/Button";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
+import { Tag } from "@/components/ui/Tag";
 import { article } from "@/lib/schema";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -41,36 +43,61 @@ export default async function PostPage({ params }: Props) {
   return (
     <article>
       <JsonLd data={article({ title: post.title, description: post.description, path: `/blog/${post.slug}`, date: post.date })} />
-      <header className="container-x pt-8">
-        <Breadcrumbs items={[{ label: "Guides", href: "/blog" }, { label: post.title }]} />
-        <div className="mt-12 max-w-4xl">
-          <SpecLabel items={[dateFmt.format(new Date(post.date)), `${post.readingMinutes} min read`, ...post.tags]} as="p" />
-          <h1 className="type-display mt-5 text-display-lg">{post.title}</h1>
-          <p className="mt-5 text-xl text-muted">{post.description}</p>
-        </div>
-        <div className="relative mt-12 max-w-4xl bg-surface-2 p-[4%]" aria-hidden="true" style={{ aspectRatio: "16 / 9" }}>
-          <Art />
-          <CropMarks />
+      <header className="bg-white pt-8">
+        <div className="container-x">
+          <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: post.title }]} />
+          <div className="mx-auto mt-10 max-w-3xl">
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((t) => (
+                <Tag key={t}>{t}</Tag>
+              ))}
+            </div>
+            <h1 className="text-h1 mt-4">{post.title}</h1>
+            <p className="text-lead mt-4 text-ink-500">{post.description}</p>
+            <p className="mt-4 text-sm text-ink-500">
+              {dateFmt.format(new Date(post.date))} · {post.readingMinutes} min read
+            </p>
+          </div>
+          <div className="mx-auto mt-10 max-w-4xl rounded-3xl bg-blue-50 p-[4%]" aria-hidden="true" style={{ aspectRatio: "16 / 9" }}>
+            <Art />
+          </div>
         </div>
       </header>
       <div className="container-x py-12 md:py-16">
-        <div className="measure">
+        <div className="mx-auto max-w-3xl">
           <Body />
         </div>
       </div>
-      <nav aria-label="More guides" className="container-x pb-20">
-        <p className="spec mb-4 text-muted">More guides</p>
-        <ul className="border-t border-line">
+      <Section bg="silver">
+        <h2 className="text-h3">More guides</h2>
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
           {others.map((p) => (
-            <li key={p.slug} className="border-b border-line">
-              <Link href={`/blog/${p.slug}`} className="block py-5 text-lg hover:text-accent">
-                {p.title}
+            <li key={p.slug}>
+              <Link href={`/blog/${p.slug}`} className="block h-full rounded-2xl bg-white p-6 transition hover:-translate-y-1 hover:shadow-md">
+                <p className="font-heading text-lg font-bold">{p.title}</p>
+                <p className="mt-2 text-sm text-ink-500">{p.description}</p>
               </Link>
             </li>
           ))}
         </ul>
-      </nav>
-      <ProjectCta title="Want us to handle it?" body="Brief us and we take care of structure, artwork and production." />
+      </Section>
+      <Section>
+        <CTABand
+          title="Want us to handle it?"
+          highlight="handle"
+          text="Brief us and we take care of structure, artwork and production."
+          actions={
+            <>
+              <Button href={quoteHref} variant="accent" size="lg" arrow>
+                Get a Quote
+              </Button>
+              <Button href="/start-a-project" variant="white" size="lg">
+                Start a Project
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </article>
   );
 }

@@ -4,11 +4,11 @@ const SW = 54; // swatch width
 const SH = 64; // swatch height
 
 const SWATCHES: Array<{ fill?: string; label: string; hatch?: boolean }> = [
-  { fill: "var(--ink)", label: "Ink" },
-  { fill: "var(--board)", label: "Board" },
-  { fill: "var(--kraft)", label: "Kraft" },
-  { fill: "var(--foil)", label: "Foil" },
-  { fill: "var(--paper)", label: "Stock" },
+  { fill: "var(--accent)", label: "Primary" },
+  { fill: "var(--text)", label: "Text" },
+  { fill: "var(--face-3)", label: "Tint" },
+  { fill: "var(--face-2)", label: "Light" },
+  { fill: "var(--bg-soft)", label: "Soft" },
   { label: "Pattern", hatch: true },
 ];
 
@@ -35,7 +35,7 @@ export function BrandBoard({ className }: IllustrationProps) {
       <text
         x="36"
         y="168"
-        style={{ fontFamily: "var(--ff-display), sans-serif", fontWeight: 800, fontSize: 132, letterSpacing: "-0.02em" }}
+        style={{ fontFamily: "var(--ff-body), sans-serif", fontWeight: 700, fontSize: 132, letterSpacing: "-0.02em" }}
         fill="currentColor"
       >
         Aa
@@ -54,10 +54,10 @@ export function BrandBoard({ className }: IllustrationProps) {
       <text
         x="88"
         y="290"
-        style={{ fontFamily: "var(--ff-display), sans-serif", fontWeight: 800, fontSize: 28, letterSpacing: "0.02em" }}
+        style={{ fontFamily: "var(--ff-body), sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "0.02em" }}
         fill="currentColor"
       >
-        WORDMARK
+        Wordmark
       </text>
 
       {/* Palette */}

@@ -1,9 +1,9 @@
 import { ogContentType, ogSize, renderOg } from "@/lib/og";
 
-export const alt = "From our floor to yours.";
+export const alt = "From our factory to your door";
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
-  return renderOg({ eyebrow: "Shipping / Air + sea", title: "From our floor to yours.", tone: "paper" });
+  return renderOg({ eyebrow: "Worldwide shipping", title: "From our factory to your door", tone: "paper" });
 }

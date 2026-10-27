@@ -1,124 +1,97 @@
+import { Mail, MapPin, MessageCircle, Clock } from "lucide-react";
 import Link from "next/link";
-import { site } from "@/config/site.config";
-import { footerNav, legalNav, primaryCta } from "@/content/navigation";
+import { site, whatsappUrl } from "@/config/site";
+import { footerNav, legalNav } from "@/content/navigation";
+import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { CookieSettingsLink } from "@/components/providers/ConsentAndAnalytics";
-import { Button } from "@/components/ui/Button";
-import { ColorBar } from "@/components/ui/ColorBar";
-import { CopyButton } from "@/components/ui/CopyButton";
-import { SpecLabel } from "@/components/ui/SpecLabel";
+import { Logo } from "@/components/ui/Logo";
 
 const socialLabels: Record<keyof typeof site.socials, string> = {
   instagram: "Instagram",
   linkedin: "LinkedIn",
-  behance: "Behance",
+  facebook: "Facebook",
   pinterest: "Pinterest",
+  behance: "Behance",
 };
 
 export function Footer() {
-  const socials = (Object.keys(site.socials) as Array<keyof typeof site.socials>).filter((k) => site.socials[k]);
   const year = new Date().getFullYear();
-
+  const socials = (Object.keys(site.socials) as Array<keyof typeof site.socials>).filter((k) => site.socials[k]);
   return (
-    <footer className="tone-ink relative mt-auto">
-      <div className="container-x pt-20 pb-10 md:pt-28">
-        <div className="grid-editorial gap-y-12">
-          <div className="col-span-4 md:col-span-7">
-            <SpecLabel items={["Studio", "Factory", "Worldwide shipping"]} as="p" className="mb-5" />
-            <p className="type-display text-display-lg">
-              Designed here.
-              <br />
-              Made here.
-            </p>
-            <p className="measure mt-6 text-muted">
-              Brand identity, packaging design and rigid box manufacturing under one roof. We ship to{" "}
-              {site.markets.slice(0, -1).join(", ")} and the {site.markets.at(-1)} by air and sea.
-            </p>
-            <Button href={primaryCta.href} size="lg" arrow className="mt-8">
-              {primaryCta.label}
-            </Button>
-          </div>
-
-          <div className="col-span-4 md:col-span-4 md:col-start-9">
-            <h2 className="spec mb-4 text-muted">Contact</h2>
-            <dl className="space-y-4 text-base">
-              <div>
-                <dt className="sr-only">Email</dt>
-                <dd className="flex flex-wrap items-center gap-3">
-                  <a href={`mailto:${site.email}`} className="hover:text-accent">
-                    {site.email}
-                  </a>
-                  <CopyButton value={site.email} label="email address" />
-                </dd>
-              </div>
-              <div>
-                <dt className="sr-only">WhatsApp</dt>
-                <dd className="flex flex-wrap items-center gap-3">
-                  <span>WhatsApp {site.whatsapp}</span>
-                  <CopyButton value={site.whatsapp} label="WhatsApp number" />
-                </dd>
-              </div>
-              <div>
-                <dt className="sr-only">Address</dt>
-                <dd className="text-muted">{site.address}</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-
-        <nav aria-label="Footer" className="mt-20 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-line pt-10 md:grid-cols-4">
-          {footerNav.map((group) => (
-            <div key={group.title}>
-              <h2 className="spec mb-4 text-muted">{group.title}</h2>
-              <ul className="space-y-2">
-                {group.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="hover:text-accent">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          {socials.length > 0 && (
-            <div>
-              <h2 className="spec mb-4 text-muted">Follow</h2>
-              <ul className="space-y-2">
-                {socials.map((key) => (
-                  <li key={key}>
-                    <a href={site.socials[key]} target="_blank" rel="noopener noreferrer" className="hover:text-accent">
-                      {socialLabels[key]}
+    <footer className="mt-auto bg-blue-900 text-white">
+      <div className="container-x py-16 md:py-20">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <Logo tone="light" />
+            <p className="mt-4 max-w-xs text-white/80">{site.tagline}</p>
+            {socials.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-4 text-sm">
+                {socials.map((k) => (
+                  <li key={k}>
+                    <a href={site.socials[k]} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      {socialLabels[k]}
                     </a>
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-        </nav>
+            )}
+            <NewsletterForm />
+          </div>
 
-        <p
-          aria-hidden="true"
-          className="type-display mt-20 overflow-hidden text-[clamp(2.5rem,9vw,10rem)] leading-[0.8] tracking-[-0.02em] whitespace-nowrap"
-        >
-          {site.name}
-        </p>
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
+            {footerNav.map((group) => (
+              <div key={group.title}>
+                <h2 className="font-heading text-base font-bold">{group.title}</h2>
+                <ul className="mt-4 space-y-2.5">
+                  {group.links.map((l) => (
+                    <li key={l.label}>
+                      <Link href={l.href} className="text-sm text-white/80 hover:text-white hover:underline">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
 
-        <ColorBar className="mt-8" label={`Rigid MOQ ${site.facts.rigidMoq}`} />
+          <div className="lg:col-span-3">
+            <h2 className="font-heading text-base font-bold">Contact</h2>
+            <ul className="mt-4 space-y-3 text-sm text-white/80">
+              <li>
+                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 hover:text-white">
+                  <MessageCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> WhatsApp {site.whatsapp}
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${site.email}`} className="inline-flex gap-2 break-all hover:text-white">
+                  <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.email}
+                </a>
+              </li>
+              <li className="flex gap-2">
+                <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.address}
+              </li>
+              <li className="flex gap-2">
+                <Clock aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.hours}
+              </li>
+            </ul>
+          </div>
+        </div>
 
-        <div className="mt-6 flex flex-col gap-3 text-sm text-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-6 text-sm text-white/70 md:flex-row md:items-center md:justify-between">
           <p>
-            © {year} {site.name}. All rights reserved.
+            © {year} {site.name}
           </p>
-          <ul className="flex gap-6">
-            {legalNav.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="hover:text-fg">
-                  {link.label}
+          <ul className="flex flex-wrap gap-6">
+            {legalNav.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="hover:text-white">
+                  {l.label}
                 </Link>
               </li>
             ))}
             <li>
-              <CookieSettingsLink className="hover:text-fg" />
+              <CookieSettingsLink className="hover:text-white" />
             </li>
           </ul>
         </div>

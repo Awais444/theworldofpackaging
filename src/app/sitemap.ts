@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { agencyServices, hubs } from "@/content/agencyServices";
+import { servicePages } from "@/content/servicePages";
 import { posts } from "@/content/blog/posts";
 import { caseStudies } from "@/content/caseStudies";
 import { industries } from "@/content/industries";
@@ -25,19 +25,19 @@ const entry = (path: string, priority = 0.6, changeFrequency: "weekly" | "monthl
 const sections: Record<Id, () => MetadataRoute.Sitemap> = {
   core: () => [
     entry("/", 1, "weekly"),
-    ...["/packages", "/pricing", "/configure", "/samples", "/studio-and-factory", "/process", "/shipping", "/faq", "/contact", "/start-a-project", "/quote"].map((p) => entry(p, 0.8)),
+    ...["/packages", "/pricing", "/configure", "/samples", "/about", "/factory", "/how-it-works", "/shipping", "/faq", "/contact", "/start-a-project", "/get-a-quote"].map((p) => entry(p, 0.8)),
     ...shipTo.map((c) => entry(`/ship-to/${c.slug}`, 0.6)),
     ...["/privacy", "/terms"].map((p) => entry(p, 0.2, "yearly")),
   ],
   manufacturing: () => [
     ...["/rigid-boxes", "/collapsible-rigid-boxes", "/printed-boxes"].map((p) => entry(p, 0.9, "weekly")),
-    ...["/rigid-boxes/inserts", "/rigid-boxes/materials", "/rigid-boxes/finishes"].map((p) => entry(p, 0.6)),
+    ...["/boxes", "/materials", "/finishes", "/inserts"].map((p) => entry(p, 0.6)),
     ...rigidStyles.map((s) => entry(`/rigid-boxes/${s.slug}`, 0.8)),
     ...printedStyles.map((s) => entry(`/printed-boxes/${s.slug}`, 0.7)),
   ],
   agency: () => [
-    ...Object.values(hubs).map((h) => entry(h.href, 0.9)),
-    ...agencyServices.map((s) => entry(`${hubs[s.hub].href}/${s.slug}`, 0.7)),
+    entry("/services", 0.9),
+    ...servicePages.map((s) => entry(`/services/${s.path}`, 0.7)),
     entry("/work", 0.8, "weekly"),
     // Sample (placeholder) case studies are noindex, so they stay out of the sitemap.
     ...caseStudies.filter((c) => !c.placeholder).map((c) => entry(`/work/${c.slug}`, 0.7)),

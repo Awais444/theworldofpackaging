@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { posts } from "@/content/blog/posts";
-import { ProjectCta } from "@/components/sections/AgencyBlocks";
-import { PageHero } from "@/components/sections/PageHero";
-import { SpecLabel } from "@/components/ui/SpecLabel";
+import { quoteHref } from "@/content/navigation";
 import { illustrations } from "@/components/illustrations";
+import { PageHero } from "@/components/sections/PageHero";
+import { Button } from "@/components/ui/Button";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
+import { Tag } from "@/components/ui/Tag";
 
 export const metadata: Metadata = {
-  title: "Guides: packaging, boxes and print",
-  description: "Practical guides on rigid and printed boxes, freight, and preparing print-ready packaging files.",
+  title: "Blog: packaging guides",
+  description: "Practical guides on rigid and folding carton boxes, measuring box sizes and collapsible rigid boxes.",
   alternates: { canonical: "/blog" },
 };
 
@@ -18,33 +22,58 @@ export default function BlogPage() {
   return (
     <>
       <PageHero
-        crumbs={[{ label: "Guides" }]}
-        spec={["Guides", `${posts.length} articles`]}
-        title="Notes from the studio and the floor."
+        crumbs={[{ label: "Blog" }]}
+        eyebrow="Blog"
+        title="Packaging guides from our studio"
+        highlight="guides"
         intro={<p>What we explain to clients most often, written down once.</p>}
       />
-      <section className="container-x pb-20 md:pb-28">
-        <ul className="border-t border-line">
-          {posts.map((p) => {
+      <Section className="!pt-0">
+        <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((p, i) => {
             const Art = illustrations[p.illustration];
             return (
-              <li key={p.slug} className="border-b border-line">
-                <Link href={`/blog/${p.slug}`} className="group grid-editorial items-center gap-y-6 py-10">
-                  <div className="col-span-4 bg-surface-2 p-3 md:col-span-3" aria-hidden="true">
-                    <Art />
+              <li key={p.slug}>
+                <Link href={`/blog/${p.slug}`} className="group flex h-full flex-col">
+                  <div className="aspect-[4/3] overflow-hidden rounded-3xl bg-blue-50 p-[8%]" aria-hidden="true">
+                    <Art className={`transition-transform duration-500 group-hover:scale-[1.04] ${i === 1 ? "illo--orange" : ""}`} />
                   </div>
-                  <div className="col-span-4 md:col-span-8 md:col-start-5">
-                    <SpecLabel items={[dateFmt.format(new Date(p.date)), `${p.readingMinutes} min`, ...p.tags]} as="p" />
-                    <h2 className="type-display mt-3 text-display-md transition-colors group-hover:text-accent">{p.title}</h2>
-                    <p className="mt-3 text-lg text-muted">{p.description}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {p.tags.map((t) => (
+                      <Tag key={t}>{t}</Tag>
+                    ))}
                   </div>
+                  <h2 className="text-h4 mt-3 group-hover:text-blue-600">{p.title}</h2>
+                  <p className="mt-2 text-ink-500">{p.description}</p>
+                  <p className="mt-auto flex items-center justify-between pt-4 text-sm text-ink-500">
+                    <span>
+                      {dateFmt.format(new Date(p.date))} · {p.readingMinutes} min
+                    </span>
+                    <ArrowRight aria-hidden="true" className="h-4 w-4 text-blue-600 transition-transform group-hover:translate-x-1" />
+                  </p>
                 </Link>
               </li>
             );
           })}
         </ul>
-      </section>
-      <ProjectCta title="Rather we just did it?" body="Brief us and we handle structure, artwork and production." />
+      </Section>
+      <Section className="!pt-0">
+        <CTABand
+          title="Rather we just did it?"
+          highlight="did"
+          text="Brief us and we handle structure, artwork and production."
+          actions={
+            <>
+              <Button href={quoteHref} variant="accent" size="lg" arrow>
+                Get a Quote
+              </Button>
+              <Button href="/start-a-project" variant="white" size="lg">
+                Start a Project
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </>
   );
 }

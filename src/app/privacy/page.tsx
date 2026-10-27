@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { site } from "@/config/site.config";
+import { site } from "@/config/site";
 import { LegalPage } from "@/components/sections/LegalPage";
 
 export const metadata: Metadata = { title: "Privacy Policy", alternates: { canonical: "/privacy" } };

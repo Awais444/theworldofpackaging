@@ -11,5 +11,5 @@ export const contentType = ogContentType;
 export default async function Image({ params }: { params: Promise<{ country: string }> }) {
   const { country } = await params;
   const s = getShipTo(country);
-  return renderOg({ eyebrow: "Ship to / Air + sea", title: `Packaging for ${s?.country ?? ""} brands.`, tone: "paper" });
+  return renderOg({ eyebrow: "Ship to", title: `Custom boxes delivered to ${s?.country ?? ""}`, tone: "paper" });
 }

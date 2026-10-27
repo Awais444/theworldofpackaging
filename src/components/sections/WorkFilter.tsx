@@ -17,7 +17,7 @@ export function WorkFilter({ items }: { items: Item[] }) {
 
   return (
     <>
-      <div role="group" aria-label="Filter projects by category" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="Filter projects by category" className="inline-flex flex-wrap gap-1 rounded-full bg-silver-100 p-1">
         {FILTERS.map((f) => {
           const count = f === "All" ? items.length : items.filter((i) => i.categories.includes(f)).length;
           return (
@@ -27,8 +27,8 @@ export function WorkFilter({ items }: { items: Item[] }) {
               aria-pressed={active === f}
               onClick={() => setActive(f)}
               className={cn(
-                "spec inline-flex h-10 items-center gap-2 border px-4 transition-colors",
-                active === f ? "border-fg bg-fg text-surface" : "border-line-strong text-fg hover:border-fg",
+                "inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors",
+                active === f ? "bg-blue-600 text-white" : "text-ink-900 hover:bg-white",
               )}
             >
               {f}
@@ -40,9 +40,9 @@ export function WorkFilter({ items }: { items: Item[] }) {
       <p className="sr-only" aria-live="polite">
         {visible.length} projects shown
       </p>
-      <motion.ul layout={!reduce} className="mt-14 grid gap-x-6 gap-y-16 md:grid-cols-2">
+      <motion.ul layout={!reduce} className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence initial={false}>
-          {visible.map((item, i) => (
+          {visible.map((item) => (
             <motion.li
               key={item.slug}
               layout={!reduce}
@@ -50,7 +50,6 @@ export function WorkFilter({ items }: { items: Item[] }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className={cn(i % 2 === 1 && "md:mt-24")}
             >
               {item.card}
             </motion.li>

@@ -56,7 +56,7 @@ export function BoxPreview3D({ dims, type }: { dims: { l: number; w: number; h: 
   const top = useTransform([L, W, H], ([l, w, h]: number[]) => `rotateX(90deg) translateZ(${h! / 2}px) scale(${s(l!)}, ${s(w!)})`);
   const bottom = useTransform([L, W, H], ([l, w, h]: number[]) => `rotateX(-90deg) translateZ(${h! / 2}px) scale(${s(l!)}, ${s(w!)})`);
 
-  const tone = type === "printed" ? "tone-kraft" : "tone-board";
+  const tone = type === "printed" ? "bg-silver-100" : "bg-silver-100";
 
   return (
     <div className={cn("illo relative aspect-[4/3] overflow-hidden [perspective:1200px]", tone)} aria-hidden="true">
@@ -75,7 +75,7 @@ export function BoxPreview3D({ dims, type }: { dims: { l: number; w: number; h: 
           <span className="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--accent)]" />
         </Face>
       </motion.div>
-      <p className="spec absolute bottom-3 left-3 text-muted">
+      <p className="text-xs font-semibold uppercase tracking-wider absolute bottom-3 left-3 text-ink-500">
         {dims.l} × {dims.w} × {dims.h} mm
       </p>
     </div>

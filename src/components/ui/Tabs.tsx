@@ -48,7 +48,7 @@ export function Tabs({ items, label }: { items: TabItem[]; label: string }) {
       <div className="space-y-20">
         {items.map((t) => (
           <section key={t.id} aria-label={t.label}>
-            <h2 className="spec mb-6 text-muted">{t.label}</h2>
+            <h2 className="text-h4 mb-6">{t.label}</h2>
             {t.content}
           </section>
         ))}
@@ -58,7 +58,7 @@ export function Tabs({ items, label }: { items: TabItem[]; label: string }) {
 
   return (
     <div>
-      <div role="tablist" aria-label={label} className="flex flex-wrap gap-x-8 gap-y-2 border-b border-line">
+      <div role="tablist" aria-label={label} className="inline-flex max-w-full flex-wrap gap-1 rounded-full bg-silver-100 p-1">
         {items.map((t, i) => {
           const selected = t.id === active;
           return (
@@ -76,8 +76,8 @@ export function Tabs({ items, label }: { items: TabItem[]; label: string }) {
               onClick={() => select(t.id)}
               onKeyDown={(e) => onKey(e, i)}
               className={cn(
-                "type-display relative -mb-px border-b-2 pb-3 text-display-sm transition-colors",
-                selected ? "border-fg text-fg" : "border-transparent text-muted hover:text-fg",
+                "h-10 rounded-full px-5 text-[15px] font-semibold transition-colors",
+                selected ? "bg-blue-600 text-white shadow-sm" : "text-ink-500 hover:text-ink-900",
               )}
             >
               {t.label}
@@ -93,7 +93,7 @@ export function Tabs({ items, label }: { items: TabItem[]; label: string }) {
           aria-labelledby={`${base}-tab-${t.id}`}
           hidden={t.id !== active}
           tabIndex={0}
-          className="page-in pt-12 focus-visible:outline-offset-8"
+          className="pt-10"
         >
           {t.content}
         </div>

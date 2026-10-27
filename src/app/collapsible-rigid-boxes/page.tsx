@@ -1,100 +1,142 @@
 import type { Metadata } from "next";
-import { site } from "@/config/site.config";
+import Link from "next/link";
+import { site } from "@/config/site";
+import { rigidExtraFaqs } from "@/content/boxDetails";
+import { getIndustry } from "@/content/industries";
+import { quoteHref } from "@/content/navigation";
 import { getRigidStyle, rigidCommonFaqs } from "@/content/rigidStyles";
-import { CollapsibleSnap } from "@/components/sections/CollapsibleSnap";
-import { FactStrip } from "@/components/sections/FactStrip";
+import { CollapsibleSequence } from "@/components/boxes/CollapsibleSequence";
+import { FadeIn } from "@/components/motion/FadeIn";
 import { FreightSlider } from "@/components/sections/FreightSlider";
 import { PageHero } from "@/components/sections/PageHero";
-import { CtaBand, FaqList } from "@/components/sections/StyleDetailBlocks";
-import { SiteImage } from "@/components/media/SiteImage";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
+import { ProductCard } from "@/components/ui/Cards";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { rigidCard } from "@/lib/boxView";
+import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Collapsible Rigid Boxes that ship flat",
-  description: `Rigid boxes with hinged walls that pack flat for international shipping. Same board, wrap and foil as fixed rigid boxes. MOQ ${site.facts.collapsibleMoq}.`,
+  description: `Rigid boxes with hinged walls that pack flat for international shipping. Same board, wrap and finishes as fixed rigid boxes. MOQ ${site.facts.collapsibleMoq}.`,
   alternates: { canonical: "/collapsible-rigid-boxes" },
 };
 
-const steps = [
-  { title: "Made flat", body: "Walls are hinged into the base during wrapping, so the box leaves our line already folded." },
-  { title: "Shipped flat", body: "Flat units stack tightly in cartons. Fewer cartons means less air and sea freight volume." },
-  { title: "Stored flat", body: "Your warehouse or 3PL keeps them flat until needed, taking a fraction of the shelf space." },
-  { title: "Assembled in seconds", body: "Lift the walls and they lock upright with built-in tape or magnets. No tools." },
-];
+const industrySlugs = ["cosmetics", "perfume", "apparel", "gifts-pr-kits", "electronics", "candles"];
 
 export default function CollapsiblePage() {
-  const style = getRigidStyle("collapsible");
+  const collapsible = getRigidStyle("collapsible")!;
+  const magnetic = getRigidStyle("magnetic-closure")!;
+  const faqs = [
+    ...collapsible.faqs,
+    {
+      q: "Do you handle shipping to my country?",
+      a: "Yes, by air or sea. We pack flat in export cartons and prepare the commercial paperwork; duties are paid on arrival unless agreed otherwise.",
+    }, // TODO confirm Incoterms wording
+    ...rigidCommonFaqs,
+    ...rigidExtraFaqs,
+  ].slice(0, 6);
+
   return (
     <>
+      <JsonLd data={faqPage(faqs)} />
       <PageHero
-        tone="board"
         crumbs={[{ label: "Rigid Boxes", href: "/rigid-boxes" }, { label: "Collapsible Rigid Boxes" }]}
-        spec={["For international buyers", `MOQ ${site.facts.collapsibleMoq}`]}
-        title="Luxury boxes that ship flat."
+        eyebrow="Ships flat"
+        title="Rigid when it arrives. Flat when it ships."
+        highlight="Flat"
         intro={
           <p>
-            We manufacture in Pakistan and ship to {site.markets.join(", ")}. A fixed rigid box ships mostly air;
-            a collapsible one ships as a flat panel and becomes a rigid box when your team unfolds it.
+            A collapsible rigid box looks and feels like a fixed one, but folds flat for shipping. Fewer cartons, lower freight and less warehouse
+            space. MOQ {site.facts.collapsibleMoq}.
           </p>
         }
+        slotId="collapsible-flat"
         actions={
           <>
-            <Button href="/configure?type=collapsible" size="lg" arrow>
-              Configure
+            <Button href={`${quoteHref}?style=collapsible`} size="lg" arrow>
+              Get a Quote
             </Button>
-            <Button href="/quote?style=collapsible" variant="secondary" size="lg">
-              Get a {site.facts.quoteReplyHours}h Quote
+            <Button href="/samples?style=collapsible" size="lg" variant="secondary">
+              Request a Sample
             </Button>
           </>
         }
-        visual={<CollapsibleSnap />}
       />
 
-      <FactStrip
-        items={[
-          { label: "MOQ", value: String(site.facts.collapsibleMoq) },
-          { label: "Board", value: "1.5–2.5 mm" },
-          { label: "Ships", value: "Flat" },
-          { label: "Production", value: "Made in-house" },
-        ]}
-      />
+      <CollapsibleSequence />
 
-      <section className="container-x py-20 md:py-28">
-        <SectionHeader spec={["How it works"]} title="Flat at every step except the last." />
-        <ol className="mt-14 grid gap-x-6 gap-y-10 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <li key={s.title}>
-              <span className="font-mono text-sm text-accent">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="type-display mt-3 text-display-sm">{s.title}</h3>
-              <p className="mt-3 text-muted">{s.body}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="tone-board">
-        <div className="container-x py-20 md:py-28">
-          <div className="grid-editorial mb-16 items-center gap-y-10">
-            <div className="col-span-4 md:col-span-5">
-              <SectionHeader spec={["Freight"]} title="Same carton, more boxes." className="!block" />
-            </div>
-            <div className="col-span-4 md:col-span-6 md:col-start-7">
-              <SiteImage slotId="shipping-stack" sizes="(min-width: 768px) 45vw, 100vw" />
-            </div>
-          </div>
+      <Section>
+        <FadeIn>
+          <SectionHeader
+            eyebrow="Freight"
+            title="Ship boxes, not air"
+            highlight="air"
+            lead="Move the slider to compare carton volume for assembled and collapsible boxes. These are example figures; we calculate yours with the quote."
+          />
+        </FadeIn>
+        <div className="mt-12">
           <FreightSlider />
         </div>
-      </section>
+      </Section>
 
-      <FaqList
-        faqs={[
-          ...(style?.faqs ?? []),
-          { q: "Do you handle shipping to my country?", a: "Yes, by air or sea. We pack flat in export cartons and prepare the commercial paperwork; duties are paid on arrival unless agreed otherwise." }, // TODO confirm Incoterms wording
-          ...rigidCommonFaqs,
-        ]}
-      />
-      <CtaBand title="Fold one yourself." body="Order a sample and assemble it at your desk. The sample fee is credited to your bulk order." />
+      <Section bg="silver">
+        <FadeIn>
+          <SectionHeader eyebrow="Styles" title="Available collapsible styles" highlight="collapsible" />
+        </FadeIn>
+        <div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:gap-6 lg:grid-cols-4">
+          <ProductCard {...rigidCard(collapsible)} href="/rigid-boxes/collapsible" />
+          <ProductCard {...rigidCard(magnetic)} name="Magnetic Closure (flat-pack)" text="Our magnetic box with hinged walls." tags={[`MOQ ${site.facts.collapsibleMoq}`, "Ships flat"]} />
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="Industries" title="Popular with brands that ship abroad" highlight="abroad" />
+        <ul className="mt-10 flex flex-wrap gap-3">
+          {industrySlugs.map((slug) => {
+            const ind = getIndustry(slug);
+            return ind ? (
+              <li key={slug}>
+                <Link href={`/industries/${slug}`} className="inline-flex h-11 items-center rounded-full border border-silver-300 px-5 font-medium transition-colors hover:border-blue-600 hover:text-blue-600">
+                  {ind.name}
+                </Link>
+              </li>
+            ) : null;
+          })}
+        </ul>
+      </Section>
+
+      <Section bg="silver">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="FAQ" title="Collapsible box questions" highlight="questions" />
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} />
+          </div>
+        </div>
+      </Section>
+
+      <Section>
+        <CTABand
+          title="Get a price for collapsible boxes"
+          highlight="collapsible"
+          text="Send your size and quantity. We include freight options in the quote."
+          actions={
+            <>
+              <Button href={`${quoteHref}?style=collapsible`} variant="accent" size="lg" arrow>
+                Get a Quote
+              </Button>
+              <Button href="/contact" variant="white" size="lg">
+                Talk to us
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Minus, Plus, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, type RefObject } from "react";
-import { site } from "@/config/site.config";
-import { mainNav, primaryCta } from "@/content/navigation";
-import { useLenis } from "@/components/providers/SmoothScroll";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import { boxesMenu, industriesMenu, mainNav, primaryCta, servicesMenu, type NavLink } from "@/content/navigation";
 import { Button } from "@/components/ui/Button";
-import { ColorBar } from "@/components/ui/ColorBar";
+import { Logo } from "@/components/ui/Logo";
+import { cn } from "@/lib/utils";
 
 type MobileMenuProps = {
   id: string;
@@ -18,51 +18,45 @@ type MobileMenuProps = {
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
-  const reduce = useReducedMotion();
-  const lenis = useLenis();
-  const panelRef = useRef<HTMLDivElement>(null);
+const groups: Record<string, Array<{ title?: string; links: NavLink[] }>> = {
+  boxes: boxesMenu.map((g) => ({ title: g.title, links: g.links })),
+  services: [{ links: servicesMenu }],
+  industries: [{ links: [...industriesMenu, { label: "All industries", href: "/industries" }] }],
+};
 
-  // Lock scrolling and manage focus while open.
+/** Full-screen drawer: accordion groups, large tap targets, sticky quote button. */
+export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  // Lock page scroll and keep focus inside while open.
   useEffect(() => {
     if (!open) return;
-    lenis?.stop();
-    const prevOverflow = document.documentElement.style.overflow;
+    const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = "hidden";
     const toggle = toggleRef.current;
     panelRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
-
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-        return;
-      }
-      if (e.key !== "Tab" || !panelRef.current || !toggle) return;
-      // Trap focus between the toggle button and the panel.
-      const nodes = [toggle, ...panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)];
-      const first = nodes[0]!;
-      const last = nodes[nodes.length - 1]!;
+      if (e.key === "Escape") return onClose();
+      if (e.key !== "Tab" || !panelRef.current) return;
+      const nodes = [...panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)];
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
-        last.focus();
+        last?.focus();
       } else if (!e.shiftKey && document.activeElement === last) {
         e.preventDefault();
-        first.focus();
+        first?.focus();
       }
     };
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.documentElement.style.overflow = prevOverflow;
-      lenis?.start();
+      document.documentElement.style.overflow = prev;
       toggle?.focus();
     };
-  }, [open, lenis, onClose, toggleRef]);
-
-  const item = {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0 },
-  };
+  }, [open, onClose, toggleRef]);
 
   return (
     <AnimatePresence>
@@ -76,56 +70,68 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 overflow-y-auto bg-surface xl:hidden"
-          data-lenis-prevent
+          transition={{ duration: 0.15 }}
+          className="fixed inset-0 z-[60] flex flex-col bg-white lg:hidden"
         >
-          <motion.nav
-            aria-label="Main"
-            className="container-x flex min-h-full flex-col pb-10 pt-6"
-            initial="hidden"
-            animate="show"
-            transition={{ staggerChildren: reduce ? 0 : 0.05, delayChildren: 0.05 }}
-          >
-            <ul className="border-t border-line">
-              {mainNav.map((nav) => (
-                <motion.li
-                  key={nav.label}
-                  variants={item}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="border-b border-line"
-                >
-                  {nav.kind === "link" ? (
-                    <Link href={nav.href} onClick={onClose} className="type-display block py-3 text-5xl">
+          <div className="container-x flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-silver-300/60">
+            <Logo />
+            <button type="button" onClick={onClose} aria-label="Close menu" className="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-blue-50">
+              <X aria-hidden="true" className="h-6 w-6" />
+            </button>
+          </div>
+          <nav aria-label="Main" className="container-x flex-1 overflow-y-auto py-4">
+            <ul className="divide-y divide-silver-300/60">
+              {mainNav.map((nav) => {
+                if (nav.kind === "link") {
+                  return (
+                    <li key={nav.label}>
+                      <Link href={nav.href} onClick={onClose} className="flex min-h-14 items-center font-heading text-xl font-bold">
+                        {nav.label}
+                      </Link>
+                    </li>
+                  );
+                }
+                const isOpen = expanded === nav.id;
+                return (
+                  <li key={nav.label}>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={`m-${nav.id}`}
+                      onClick={() => setExpanded(isOpen ? null : nav.id)}
+                      className="flex min-h-14 w-full items-center justify-between font-heading text-xl font-bold"
+                    >
                       {nav.label}
-                    </Link>
-                  ) : (
-                    <div className="py-3">
-                      <span className="type-display block text-5xl">{nav.label}</span>
-                      <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-                        {nav.items.map((sub) => (
-                          <li key={sub.href}>
-                            <Link href={sub.href} onClick={onClose} className="block py-1 text-base text-muted hover:text-fg">
-                              {sub.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                        {isOpen ? <Minus aria-hidden="true" className="h-4 w-4" /> : <Plus aria-hidden="true" className="h-4 w-4" />}
+                      </span>
+                    </button>
+                    <div id={`m-${nav.id}`} hidden={!isOpen} className="pb-4">
+                      {groups[nav.id]!.map((g, i) => (
+                        <div key={g.title ?? i} className={cn(i > 0 && "mt-4")}>
+                          {g.title && <p className="text-eyebrow text-blue-600">{g.title}</p>}
+                          <ul className="mt-1">
+                            {g.links.map((l) => (
+                              <li key={l.label}>
+                                <Link href={l.href} onClick={onClose} className="flex min-h-11 items-center text-base text-ink-500 hover:text-blue-600">
+                                  {l.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
-                  )}
-                </motion.li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
-            <motion.div variants={item} className="mt-auto pt-10">
-              <Button href={primaryCta.href} onClick={onClose} size="lg" arrow className="w-full">
-                {primaryCta.label}
-              </Button>
-              <p className="spec mt-6 text-muted">
-                {site.email} <span aria-hidden="true">/</span> WhatsApp {site.whatsapp}
-              </p>
-              <ColorBar className="mt-6" />
-            </motion.div>
-          </motion.nav>
+          </nav>
+          <div className="container-x shrink-0 border-t border-silver-300/60 bg-white py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <Button href={primaryCta.href} onClick={onClose} size="lg" arrow className="w-full">
+              {primaryCta.label}
+            </Button>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

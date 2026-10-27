@@ -4,17 +4,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { submitProject } from "@/app/actions/forms";
-import { site } from "@/config/site.config";
-import { agencyServices } from "@/content/agencyServices";
+import { site } from "@/config/site";
 import { packages } from "@/content/packages";
-import { BUDGETS, NEEDS, projectSchema, QTY_BANDS, STAGES, TIMELINES, type ProjectInput } from "@/lib/schemas";
+import { BUDGETS, PROJECT_SERVICES, projectSchema, QTY_BANDS, STAGES, TIMELINES, type ProjectInput } from "@/lib/schemas";
 import { Chips, Honeypot, ReviewList, TextArea, TextField } from "./fields";
 import { MultiStepForm, type FormStep } from "./MultiStepForm";
 
+/** Which project service each /services page pre-selects. */
+const SERVICE_PREFILL: Record<string, (typeof PROJECT_SERVICES)[number]> = {
+  "brand-identity": "Brand identity",
+  "logo-design": "Logo",
+  "packaging-design": "Packaging design",
+  "label-design": "Labels",
+  "structural-dieline-design": "Packaging design",
+  "3d-mockups": "Packaging design",
+};
+
+/** Design/branding project brief (CLAUDE.md §10.2). */
 export function ProjectForm() {
   const form = useForm<ProjectInput>({
     resolver: zodResolver(projectSchema),
-    defaultValues: { name: "", email: "", company: "", country: "", brandName: "", product: "", needs: [], links: "", notes: "", website: "" },
+    defaultValues: { name: "", email: "", company: "", country: "", brandName: "", brandWebsite: "", product: "", services: [], links: "", notes: "", website: "" },
     mode: "onTouched",
   });
   const { register, formState, setValue } = form;
@@ -24,15 +34,12 @@ export function ProjectForm() {
   // Prefill from ?service= or ?package= links on service and package pages.
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    const service = agencyServices.find((s) => s.slug === q.get("service"));
+    const service = SERVICE_PREFILL[q.get("service") ?? ""];
     const pkg = packages.find((p) => p.slug === q.get("package"));
-    if (service) {
-      setValue("needs", [service.hub === "branding" ? "Branding" : "Packaging design"]);
-      setValue("notes", `Interested in: ${service.name}`);
-    }
+    if (service) setValue("services", [service]);
     if (pkg) {
-      setValue("needs", ["All of it"]);
-      setValue("notes", `Interested in the ${pkg.name} package`);
+      setValue("services", ["Brand identity", "Packaging design", "Production"]);
+      setValue("notes", `Interested in the ${pkg.name} package.`);
     }
   }, [setValue]);
 
@@ -42,7 +49,7 @@ export function ProjectForm() {
       title: "About you",
       fields: ["name", "email", "country"],
       content: (
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           <TextField label="Name" reg={register("name")} error={e.name} autoComplete="name" />
           <TextField label="Email" type="email" reg={register("email")} error={e.email} autoComplete="email" />
           <TextField label="Company (optional)" reg={register("company")} error={e.company} autoComplete="organization" />
@@ -53,32 +60,40 @@ export function ProjectForm() {
     },
     {
       id: "brand",
-      title: "Your brand and product",
-      fields: ["product", "stage"],
+      title: "Your brand",
+      fields: ["stage", "brandName", "brandWebsite"],
       content: (
         <>
-          <TextField label="Brand name (optional)" reg={register("brandName")} error={e.brandName} />
-          <TextArea label="What is the product?" reg={register("product")} error={e.product} hint="What it is, who buys it, where it sells." />
-          <Chips legend="Where is the brand today?" reg={register("stage")} options={STAGES} error={e.stage} />
+          <Chips legend="Is this a new or existing brand?" reg={register("stage")} options={STAGES} error={e.stage} />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <TextField label="Brand name (optional)" reg={register("brandName")} error={e.brandName} />
+            <TextField label="Website or social link (optional)" type="url" reg={register("brandWebsite")} error={e.brandWebsite} inputMode="url" />
+          </div>
         </>
       ),
     },
     {
-      id: "need",
-      title: "What you need",
-      fields: ["needs"],
-      content: <Chips legend="Pick all that apply" reg={register("needs")} options={NEEDS} error={e.needs} multiple />,
+      id: "services",
+      title: "Services needed",
+      fields: ["services"],
+      content: <Chips legend="Pick all that apply" reg={register("services")} options={PROJECT_SERVICES} error={e.services} multiple />,
     },
     {
-      id: "qty",
-      title: "Quantity and timeline",
-      fields: ["quantity", "timeline"],
+      id: "product",
+      title: "Product and quantity",
+      fields: ["product", "quantity"],
       content: (
         <>
+          <TextArea label="What is the product?" reg={register("product")} error={e.product} hint="What it is, who buys it and where it sells." />
           <Chips legend={`Boxes per design (rigid MOQ ${site.facts.rigidMoq})`} reg={register("quantity")} options={QTY_BANDS} error={e.quantity} />
-          <Chips legend="When do you need it?" reg={register("timeline")} options={TIMELINES} error={e.timeline} />
         </>
       ),
+    },
+    {
+      id: "timeline",
+      title: "Timeline",
+      fields: ["timeline"],
+      content: <Chips legend="When do you need it?" reg={register("timeline")} options={TIMELINES} error={e.timeline} />,
     },
     {
       id: "budget",
@@ -93,13 +108,7 @@ export function ProjectForm() {
       fields: ["links", "notes"],
       content: (
         <>
-          <TextArea
-            label="Links (optional)"
-            reg={register("links")}
-            error={e.links}
-            rows={3}
-            hint="Website, Instagram, a shared folder with logos or references. Large files: send a WeTransfer or Drive link."
-          />
+          <TextArea label="Links (optional)" reg={register("links")} error={e.links} rows={3} hint="A shared folder with logos, references or competitor packaging. For large files, a WeTransfer or Drive link." />
           <TextArea label="Anything else (optional)" reg={register("notes")} error={e.notes} rows={3} />
         </>
       ),
@@ -115,10 +124,10 @@ export function ProjectForm() {
             { label: "Email", value: v.email },
             { label: "Company", value: v.company },
             { label: "Country", value: v.country },
-            { label: "Brand", value: v.brandName },
+            { label: "Brand", value: [v.stage, v.brandName].filter(Boolean).join(" · ") },
+            { label: "Website", value: v.brandWebsite },
+            { label: "Services", value: v.services?.join(", ") },
             { label: "Product", value: v.product },
-            { label: "Stage", value: v.stage },
-            { label: "Needs", value: v.needs?.join(", ") },
             { label: "Quantity", value: v.quantity },
             { label: "Timeline", value: v.timeline },
             { label: "Budget", value: v.budget },
@@ -136,8 +145,8 @@ export function ProjectForm() {
       steps={steps}
       action={submitProject}
       success={{
-        title: "Brief received.",
-        body: `Thanks. We reply within ${site.facts.quoteReplyHours} hours on working days with a scope, a timeline and any questions we still have.`,
+        title: "Brief received",
+        body: `Thanks. We reply ${site.facts.quoteReply} with a scope, a timeline and any questions we still have.`,
       }}
     />
   );

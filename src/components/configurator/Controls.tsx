@@ -22,7 +22,7 @@ export function ChoiceGroup<T extends string>({
   const name = useId();
   return (
     <fieldset>
-      <legend className="spec mb-4 text-muted">{legend}</legend>
+      <legend className="text-xs font-semibold uppercase tracking-wider mb-4 text-ink-500">{legend}</legend>
       <div className={cn("grid gap-2", columns === 2 && "sm:grid-cols-2", columns === 3 && "sm:grid-cols-3")}>
         {options.map((o) => (
           <label key={o.value} className={cn("block", o.disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer")}>
@@ -35,7 +35,7 @@ export function ChoiceGroup<T extends string>({
               onChange={() => onChange(o.value)}
               className="peer sr-only"
             />
-            <span className="block h-full border border-line-strong p-4 transition-colors peer-checked:border-fg peer-checked:bg-fg peer-checked:text-surface peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg hover:border-fg">
+            <span className="block h-full border border-silver-300 p-4 transition-colors peer-checked:border-ink-900 peer-checked:bg-ink-900 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg hover:border-ink-900">
               <span className="block font-medium">{o.label}</span>
               {o.detail && <span className="mt-1 block text-sm opacity-70">{o.detail}</span>}
             </span>
@@ -60,7 +60,7 @@ export function MultiChoice({
 }) {
   return (
     <fieldset>
-      <legend className="spec mb-4 text-muted">{legend}</legend>
+      <legend className="text-xs font-semibold uppercase tracking-wider mb-4 text-ink-500">{legend}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((o) => {
           const on = values.includes(o);
@@ -72,7 +72,7 @@ export function MultiChoice({
                 onChange={() => onChange(on ? values.filter((v) => v !== o) : [...values, o])}
                 className="peer sr-only"
               />
-              <span className="inline-flex h-11 items-center border border-line-strong px-4 transition-colors peer-checked:border-fg peer-checked:bg-fg peer-checked:text-surface peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg hover:border-fg">
+              <span className="inline-flex h-11 items-center border border-silver-300 px-4 transition-colors peer-checked:border-ink-900 peer-checked:bg-ink-900 peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg hover:border-ink-900">
                 {o}
               </span>
             </label>
@@ -107,10 +107,10 @@ export function NumberField({
   const invalid = value < min || value > max || Number.isNaN(value);
   return (
     <div>
-      <label htmlFor={id} className="spec mb-2 block text-muted">
+      <label htmlFor={id} className="text-xs font-semibold uppercase tracking-wider mb-2 block text-ink-500">
         {label}
       </label>
-      <div className="flex items-baseline gap-2 border-b border-line-strong focus-within:border-fg">
+      <div className="flex items-baseline gap-2 border-b border-silver-300 focus-within:border-ink-900">
         <input
           id={id}
           type="number"
@@ -122,11 +122,11 @@ export function NumberField({
           onChange={(e) => onChange(e.target.valueAsNumber)}
           aria-invalid={invalid}
           aria-describedby={`${id}-hint`}
-          className="h-12 w-full bg-transparent font-mono text-2xl outline-none focus-visible:outline-none"
+          className="h-12 w-full bg-transparent text-2xl outline-none focus-visible:outline-none"
         />
-        {suffix && <span className="spec text-muted">{suffix}</span>}
+        {suffix && <span className="text-xs font-semibold uppercase tracking-wider text-ink-500">{suffix}</span>}
       </div>
-      <p id={`${id}-hint`} className={cn("mt-2 text-sm", invalid ? "text-magenta" : "text-muted")}>
+      <p id={`${id}-hint`} className={cn("mt-2 text-sm", invalid ? "text-error" : "text-ink-500")}>
         {invalid ? `Enter a value between ${min} and ${max}.` : hint}
       </p>
     </div>

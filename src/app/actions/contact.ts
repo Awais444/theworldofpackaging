@@ -1,17 +1,16 @@
 "use server";
 
-import { inlineContactSchema } from "@/lib/schemas";
+import { inlineContactSchema, newsletterSchema } from "@/lib/schemas";
+import { handleSubmission, type ActionResult } from "@/lib/submission";
 
-export type ActionResult = { ok: true } | { ok: false; error: string };
+export type { ActionResult };
 
-/** Short homepage enquiry. Validates on the server; delivery is not wired up yet. */
+/** Short enquiry used on the contact page, samples page and elsewhere. */
 export async function submitInlineContact(input: unknown): Promise<ActionResult> {
-  const parsed = inlineContactSchema.safeParse(input);
-  if (!parsed.success) return { ok: false, error: "Please check the form and try again." };
-  // Bots fill the hidden field; pretend success so they move on.
-  if (parsed.data.website) return { ok: true };
+  return handleSubmission("inline-contact", inlineContactSchema, input, "Please check the form and try again.");
+}
 
-  // TODO connect email/CRM (e.g. Resend + CRM webhook). Logged for now.
-  console.info("[inline-contact]", { ...parsed.data, receivedAt: new Date().toISOString() });
-  return { ok: true };
+/** Footer newsletter sign-up. */
+export async function submitNewsletter(input: unknown): Promise<ActionResult> {
+  return handleSubmission("newsletter", newsletterSchema, input, "Please enter a valid email.");
 }

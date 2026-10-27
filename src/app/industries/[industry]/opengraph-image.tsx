@@ -11,5 +11,5 @@ export const contentType = ogContentType;
 export default async function Image({ params }: { params: Promise<{ industry: string }> }) {
   const { industry } = await params;
   const s = getIndustry(industry);
-  return renderOg({ eyebrow: "Industry", title: `${s?.name ?? ""} packaging.`, tone: "paper" });
+  return renderOg({ eyebrow: "Industry", title: `${s?.name ?? ""} packaging`, tone: "paper" });
 }

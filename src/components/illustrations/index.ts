@@ -1,7 +1,6 @@
 import type { ComponentType } from "react";
 import type { IllustrationProps } from "./primitives";
 import { BrandBoard } from "./BrandBoard";
-import { CmykSheet } from "./CmykSheet";
 import { CollapsibleBoxAssembled, CollapsibleBoxFlat } from "./CollapsibleBox";
 import { DielineFlat } from "./DielineFlat";
 import { FactoryCorner, FactoryCut, FactoryInsert, FactoryQc, FactoryWrap, FoilStamping, InsertFoam, ShippingStack } from "./Factory";
@@ -11,7 +10,6 @@ import { MailerBox } from "./MailerBox";
 import { DisplayBox, GableBox, PillowBox, ShippingCarton, SleeveBox, TuckEndBox } from "./PrintedBoxes";
 import { PressMachine } from "./PressMachine";
 import { BookStyleBox, DrawerBox, LidAndBaseBox, ShoulderNeckBox, TubeBox, WindowBox } from "./RigidBoxes";
-import { SketchBox } from "./SketchBox";
 import { WorldMap } from "./WorldMap";
 
 /** Every illustration a media slot can fall back to. */
@@ -36,8 +34,6 @@ export const illustrations = {
   "dieline-flat": DielineFlat,
   "brand-board": BrandBoard,
   "press-machine": PressMachine,
-  "sketch-box": SketchBox,
-  "cmyk-sheet": CmykSheet,
   "factory-cut": FactoryCut,
   "factory-wrap": FactoryWrap,
   "factory-corner": FactoryCorner,
@@ -52,5 +48,5 @@ export const illustrations = {
 
 export type IllustrationKey = keyof typeof illustrations;
 
-export { BrandBoard, CmykSheet, DielineFlat, MagneticBoxClosed, MagneticBoxOpen, SketchBox };
+export { BrandBoard, DielineFlat, MagneticBoxClosed, MagneticBoxOpen };
 export type { IllustrationProps };

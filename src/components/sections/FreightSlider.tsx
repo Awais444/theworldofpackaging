@@ -24,18 +24,18 @@ export function FreightSlider() {
   ];
 
   return (
-    <div className="border-t border-line pt-10">
+    <div className="rounded-3xl border border-silver-300 bg-white p-6 md:p-10">
       <div className="flex flex-wrap items-baseline justify-between gap-4">
-        <h3 className="type-display text-display-sm">Assembled vs collapsible shipping</h3>
-        <p className="spec bg-yellow px-2 py-1 text-ink">Example figures</p>
+        <h3 className="text-h3">Assembled vs collapsible shipping</h3>
+        <p className="rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-text">Example figures</p>
       </div>
 
       <div className="mt-8 grid gap-10 md:grid-cols-12">
         <div className="md:col-span-4">
-          <label htmlFor={id} className="spec text-muted">
+          <label htmlFor={id} className="text-sm font-semibold text-ink-500">
             Order quantity
           </label>
-          <output htmlFor={id} className="type-display mt-2 block text-display-md">
+          <output htmlFor={id} className="mt-2 block font-heading text-5xl font-bold text-blue-600">
             {qty.toLocaleString("en-US")}
           </output>
           <input
@@ -46,9 +46,9 @@ export function FreightSlider() {
             step={ex.step}
             value={qty}
             onChange={(e) => setQty(Number(e.target.value))}
-            className="mt-4 w-full accent-[var(--accent)]"
+            className="mt-4 w-full accent-blue-600"
           />
-          <p className="spec mt-3 text-muted">Box {ex.boxSize}</p>
+          <p className="mt-3 text-sm text-ink-500">Example box {ex.boxSize}</p>
         </div>
 
         <div className="space-y-8 md:col-span-7 md:col-start-6">
@@ -56,13 +56,13 @@ export function FreightSlider() {
             <div key={r.label}>
               <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
                 <span className="font-medium">{r.label}</span>
-                <span className="font-mono text-sm text-muted">
+                <span className="text-sm text-ink-500">
                   {r.perCarton}/carton · {r.cartons.toLocaleString("en-US")} cartons · {r.m3.toFixed(1)} m³
                 </span>
               </div>
-              <div className="mt-3 h-3 bg-surface-2">
+              <div className="mt-3 h-3 overflow-hidden rounded-full bg-silver-100">
                 <motion.div
-                  className="h-full origin-left bg-accent"
+                  className={r.label === "Collapsible" ? "h-full origin-left rounded-full bg-orange-500" : "h-full origin-left rounded-full bg-blue-600"}
                   initial={false}
                   animate={{ scaleX: r.ratio }}
                   transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 160, damping: 24 }}
@@ -71,7 +71,7 @@ export function FreightSlider() {
             </div>
           ))}
           <p className="text-lg">
-            In this example, collapsible boxes take <strong className="font-mono">{saving}%</strong> less freight volume.
+            In this example, collapsible boxes take <strong>{saving}%</strong> less freight volume.
             Real savings depend on box size and carton spec; we calculate yours with the quote.
           </p>
         </div>

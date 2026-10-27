@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { agencyServices, hubs } from "@/content/agencyServices";
+import { Gift, Info, ShieldCheck, Store, type LucideIcon } from "lucide-react";
+import { caseStudies } from "@/content/caseStudies";
 import { getIndustry, industries } from "@/content/industries";
+import { industryCase, industryFinishes, industrySharedFaqs } from "@/content/industryDetails";
+import { quoteHref } from "@/content/navigation";
 import { printedStyles } from "@/content/printedStyles";
-import { rigidCommonFaqs, rigidStyles } from "@/content/rigidStyles";
-import { ProjectCta, RelatedWork } from "@/components/sections/AgencyBlocks";
+import { rigidStyles } from "@/content/rigidStyles";
+import { FadeIn } from "@/components/motion/FadeIn";
 import { PageHero } from "@/components/sections/PageHero";
-import { FaqList } from "@/components/sections/StyleDetailBlocks";
-import { StyleGrid, type StyleCardData } from "@/components/sections/StyleGrid";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
+import { CaseCard, ProductCard } from "@/components/ui/Cards";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import Link from "next/link";
+import { Tag } from "@/components/ui/Tag";
+import { printedCard, rigidCard } from "@/lib/boxView";
+import { faqPage } from "@/lib/schema";
 
 type Props = { params: Promise<{ industry: string }> };
 
@@ -24,94 +32,157 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ind = getIndustry((await params).industry);
   if (!ind) return {};
   return {
-    title: `${ind.name} Packaging: boxes, labels and branding`,
+    title: `${ind.name} Packaging: custom boxes and design`,
     description: ind.intro,
     alternates: { canonical: `/industries/${ind.slug}` },
   };
 }
 
+const needIcons: LucideIcon[] = [ShieldCheck, Store, Gift];
+
 export default async function IndustryPage({ params }: Props) {
   const ind = getIndustry((await params).industry);
   if (!ind) notFound();
 
-  const cards: StyleCardData[] = [
+  const boxes = [
     ...ind.rigid.flatMap((slug) => {
       const s = rigidStyles.find((r) => r.slug === slug);
-      return s ? [{ href: `/rigid-boxes/${s.slug}`, name: s.name, summary: s.summary, slotId: s.mediaSlots[0]!, spec: ["Rigid", s.short] }] : [];
+      return s ? [rigidCard(s)] : [];
     }),
     ...ind.printed.flatMap((slug) => {
       const s = printedStyles.find((p) => p.slug === slug);
-      return s ? [{ href: `/printed-boxes/${s.slug}`, name: s.name, summary: s.summary, slotId: s.mediaSlots[0]!, spec: ["Printed", s.short] }] : [];
+      return s ? [printedCard(s)] : [];
     }),
   ].slice(0, 6);
-  const services = ind.services.flatMap((slug) => agencyServices.filter((s) => s.slug === slug));
+  const study = caseStudies.find((c) => c.slug === industryCase[ind.slug]) ?? caseStudies[0]!;
+  const faqs = [...ind.faqs, ...industrySharedFaqs].slice(0, 5);
+  const finishes = industryFinishes[ind.slug] ?? [];
 
   return (
     <>
+      <JsonLd data={faqPage(faqs)} />
       <PageHero
         crumbs={[{ label: "Industries", href: "/industries" }, { label: ind.name }]}
-        spec={["Industry", ind.name]}
-        title={`${ind.name} packaging.`}
+        eyebrow="Industry"
+        title={`${ind.name} packaging`}
+        highlight="packaging"
         intro={<p>{ind.intro}</p>}
+        slotId={`industry-${ind.slug}-hero`}
         actions={
           <>
-            <Button href="/start-a-project" size="lg" arrow>
-              Start a Project
+            <Button href={`${quoteHref}?industry=${ind.slug}`} size="lg" arrow>
+              Get a Quote
             </Button>
-            <Button href="/quote" variant="secondary" size="lg">
-              Get a quote
+            <Button href="/samples" size="lg" variant="secondary">
+              Request a Sample
             </Button>
           </>
         }
-        slotId={`industry-${ind.slug}-hero`}
       />
 
-      <section className="container-x py-20 md:py-28">
-        <SectionHeader spec={["Challenges"]} title={`What ${ind.name.toLowerCase()} packaging has to solve.`} />
-        <div className="mt-12 grid border-t border-line md:grid-cols-3">
-          {ind.challenges.map((c, i) => (
-            <div key={c.title} className={i > 0 ? "border-t border-line py-8 md:border-t-0 md:border-l md:pl-8" : "py-8 md:pr-8"}>
-              <h3 className="type-display text-display-sm">{c.title}</h3>
-              <p className="mt-3 text-muted">{c.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {cards.length > 0 && (
-        <section className="container-x pb-20 md:pb-28">
-          <SectionHeader spec={["Recommended styles"]} title="Boxes that suit the category." />
-          <div className="mt-14">
-            <StyleGrid items={cards} />
-          </div>
-        </section>
-      )}
-
-      <section className="container-x pb-20 md:pb-28">
-        <SectionHeader spec={["Services"]} title="Where the studio helps." />
-        <ul className="mt-12 border-t border-line">
-          {services.map((s) => (
-            <li key={s.slug} className="border-b border-line">
-              <Link href={`${hubs[s.hub].href}/${s.slug}`} className="group flex flex-wrap items-baseline justify-between gap-4 py-6">
-                <span className="type-display text-display-sm transition-transform duration-300 group-hover:translate-x-2">{s.name}</span>
-                <span className="text-muted">{s.summary}</span>
-              </Link>
-            </li>
-          ))}
+      <Section bg="silver">
+        <FadeIn>
+          <SectionHeader eyebrow="Packaging needs" title={`What ${ind.name.toLowerCase()} packaging must do`} highlight="must" />
+        </FadeIn>
+        <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:gap-6 lg:grid-cols-4">
+          {ind.challenges.slice(0, 3).map((c, i) => {
+            const Icon = needIcons[i % needIcons.length]!;
+            return (
+              <li key={c.title} className="rounded-2xl bg-white p-6">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                  <Icon aria-hidden="true" className="h-6 w-6" />
+                </span>
+                <h3 className="text-h4 mt-4">{c.title}</h3>
+                <p className="mt-2 text-ink-500">{c.body}</p>
+              </li>
+            );
+          })}
+          {/* TODO: compliance notes need review before launch (see content/industries.ts). */}
+          <li className="rounded-2xl border-2 border-dashed border-silver-300 bg-white p-6">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+              <Info aria-hidden="true" className="h-6 w-6" />
+            </span>
+            <h3 className="text-h4 mt-4">Compliance notes</h3>
+            <p className="mt-2 text-ink-500">{ind.compliance}</p>
+            <Tag tone="orange" className="mt-4">
+              To verify
+            </Tag>
+          </li>
         </ul>
-      </section>
+      </Section>
 
-      <RelatedWork />
-
-      <section className="container-x pb-8">
-        <div className="border border-dashed border-line-strong p-6 md:p-8">
-          <p className="spec text-accent">Compliance notes · to be reviewed</p>
-          <p className="measure mt-3 text-muted">{ind.compliance}</p>
+      <Section>
+        <FadeIn>
+          <SectionHeader
+            eyebrow="Recommended boxes"
+            title={`Boxes that suit ${ind.name.toLowerCase()}`}
+            highlight="suit"
+            action={
+              <Button href="/boxes" variant="ghost" arrow>
+                All boxes
+              </Button>
+            }
+          />
+        </FadeIn>
+        <div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:gap-6 lg:grid-cols-3">
+          {boxes.map((b) => (
+            <ProductCard key={b.href} {...b} />
+          ))}
         </div>
-      </section>
+      </Section>
 
-      <FaqList faqs={[...ind.faqs, ...rigidCommonFaqs.slice(0, 2)]} />
-      <ProjectCta title={`Launching in ${ind.name.toLowerCase()}?`} body="Tell us about the product. We reply with box suggestions, a scope and a timeline." />
+      <Section bg="blue-50">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <SectionHeader eyebrow="Finishes" title="Finishes that work" highlight="work" lead="Popular combinations for this category. Every finish is shown on your sample." />
+            <ul className="mt-8 flex flex-wrap gap-3">
+              {finishes.map((f) => (
+                <li key={f} className="inline-flex h-11 items-center rounded-full bg-white px-5 font-medium">
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <Button href="/finishes" variant="ghost" arrow className="mt-8">
+              All finishes
+            </Button>
+          </div>
+          <div className="lg:col-span-6">
+            <p className="text-eyebrow text-blue-600">Case study</p>
+            <div className="mt-4">
+              <CaseCard href={`/work/${study.slug}`} title={study.client} text={study.summary} slot={study.coverSlot} industry={study.industry} placeholder={study.placeholder} />
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="FAQ" title={`${ind.name} packaging questions`} highlight="questions" />
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} />
+          </div>
+        </div>
+      </Section>
+
+      <Section className="!pt-0">
+        <CTABand
+          title={`Launching in ${ind.name.toLowerCase()}?`}
+          highlight="Launching"
+          text="Tell us about the product. We recommend a box and send a quote."
+          actions={
+            <>
+              <Button href={`${quoteHref}?industry=${ind.slug}`} variant="accent" size="lg" arrow>
+                Get a Quote
+              </Button>
+              <Button href="/contact" variant="white" size="lg">
+                Talk to us
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </>
   );
 }

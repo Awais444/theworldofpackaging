@@ -11,5 +11,5 @@ export const contentType = ogContentType;
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const s = getPost(slug);
-  return renderOg({ eyebrow: "Guide", title: s?.title ?? "Guide", tone: "paper" });
+  return renderOg({ eyebrow: "Blog", title: s?.title ?? "Guide", tone: "paper" });
 }

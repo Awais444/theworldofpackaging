@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { CurrencyCode } from "@/config/site.config";
+import type { CurrencyCode } from "@/config/site";
 import { printedStyles } from "@/content/printedStyles";
 import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
 import { MOQ, type BoxConfig, type BoxType } from "@/lib/pricing";

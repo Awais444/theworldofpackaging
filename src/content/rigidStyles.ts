@@ -1,4 +1,4 @@
-import { site } from "@/config/site.config";
+import { site } from "@/config/site";
 import type { IllustrationKey } from "@/components/illustrations";
 
 export type Faq = { q: string; a: string };
@@ -12,7 +12,6 @@ export type RigidStyle = {
   summary: string;
   description: string;
   moq: number;
-  leadTimeDays?: [number, number];
   boardMm: number[];
   closures: string[];
   inserts: string[];
@@ -34,7 +33,7 @@ const FINISHES = ["Hot foil blocking", "Embossing", "Debossing", "Spot UV", "Sof
 const INSERTS = ["EVA foam", "Velvet-lined EVA", "Card insert", "Satin cushion"];
 const TIERS: PriceTier[] = [500, 1000, 2500, 5000].map((qty) => ({ qty, unitUsd: null })); // TODO
 
-const slots = (slug: string) => [`rigid-${slug}-hero`, `rigid-${slug}-gallery-1`, `rigid-${slug}-gallery-2`, `rigid-${slug}-gallery-3`];
+const slots = (slug: string) => [`rigid-${slug}-hero`, ...Array.from({ length: 6 }, (_, i) => `rigid-${slug}-gallery-${i + 1}`)];
 
 /** Questions every rigid style answers the same way. */
 export const rigidCommonFaqs: Faq[] = [
@@ -67,7 +66,7 @@ export const rigidStyles: RigidStyle[] = [
     wraps: WRAPS,
     finishes: FINISHES,
     collapsible: false,
-    industries: ["cosmetics", "perfume", "pr-kits-corporate-gifts", "watches", "electronics"],
+    industries: ["cosmetics", "perfume", "gifts-pr-kits", "watches", "electronics"],
     priceTiers: TIERS,
     illustration: "magnetic-closed",
     mediaSlots: slots("magnetic-closure"),
@@ -117,7 +116,7 @@ export const rigidStyles: RigidStyle[] = [
     wraps: WRAPS,
     finishes: FINISHES,
     collapsible: false,
-    industries: ["jewelry", "cosmetics", "chocolates", "pr-kits-corporate-gifts"],
+    industries: ["jewelry", "cosmetics", "chocolates", "gifts-pr-kits"],
     priceTiers: TIERS,
     illustration: "drawer",
     mediaSlots: slots("drawer"),
@@ -142,7 +141,7 @@ export const rigidStyles: RigidStyle[] = [
     wraps: WRAPS,
     finishes: FINISHES,
     collapsible: false,
-    industries: ["watches", "pr-kits-corporate-gifts", "electronics", "perfume"],
+    industries: ["watches", "gifts-pr-kits", "electronics", "perfume"],
     priceTiers: TIERS,
     illustration: "book-style",
     mediaSlots: slots("book-style"),
@@ -167,7 +166,7 @@ export const rigidStyles: RigidStyle[] = [
     wraps: WRAPS,
     finishes: FINISHES,
     collapsible: true,
-    industries: ["apparel", "candles", "cosmetics", "pr-kits-corporate-gifts"],
+    industries: ["apparel", "candles", "cosmetics", "gifts-pr-kits"],
     priceTiers: TIERS,
     illustration: "collapsible-assembled",
     mediaSlots: slots("collapsible"),
@@ -192,7 +191,7 @@ export const rigidStyles: RigidStyle[] = [
     wraps: WRAPS,
     finishes: FINISHES,
     collapsible: false,
-    industries: ["perfume", "cosmetics", "pr-kits-corporate-gifts"],
+    industries: ["perfume", "cosmetics", "gifts-pr-kits"],
     priceTiers: TIERS,
     illustration: "shoulder-neck",
     mediaSlots: slots("shoulder-neck"),

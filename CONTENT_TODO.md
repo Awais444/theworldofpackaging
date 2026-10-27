@@ -1,57 +1,68 @@
 # Content to replace before launch
 
-Everything below is a placeholder, an example figure, or wording that needs checking. Nothing here is presented on the site as a confirmed fact: placeholders are labelled on the page ("Sample project", "Placeholder testimonial", "Example rates", "Template · review with a lawyer", "To be verified").
+Everything below is a placeholder, an example figure, or wording that needs checking. Nothing here is shown on the site as a confirmed fact: placeholders are labelled on the page ("Sample project", "Placeholder", "TBC", "Example prices", "Example only", "To verify", "Template · legal review needed").
 
 Find them in code with `grep -rn "TODO" src` and `grep -rn "placeholder: true" src`.
 
-## 1. Company identity — `src/config/site.config.ts`
+## 1. Company details: `src/config/site.ts`
 
-Changing these updates the header, footer, metadata, OG images and JSON-LD everywhere.
+Changing these updates the header, utility bar, footer, contact page, metadata, OG images and JSON-LD everywhere.
 
-- [ ] `name`, `shortName` — final company name
-- [ ] `domain` (or `NEXT_PUBLIC_SITE_URL` in `.env`) — canonical URLs, sitemaps, OG images
-- [ ] `email`, `whatsapp`, `address`
-- [ ] `socials` — Instagram, LinkedIn, Behance, Pinterest (empty links are hidden)
-- [ ] `facts.printedMoq` — printed box minimum (pages say "On quote" until set; also update `MOQ.printed` in `src/lib/pricing.ts`)
-- [ ] `facts.rigidLeadTimeDays` — e.g. `[21, 28]` (pages say "Confirmed with quote" until set)
-- [ ] `facts.firstConceptHours`, `facts.quoteReplyHours` — confirm 48 h / 24 h
-- [ ] `currency.rates` — display exchange rates for the configurator
+- [ ] `url` (or `NEXT_PUBLIC_SITE_URL` in `.env`): confirm the domain and TLD
+- [ ] `email`, `whatsapp`, `phone`, `address`, `hours`
+- [ ] `socials`: Instagram, LinkedIn, Facebook, Pinterest, Behance (empty links stay hidden)
+- [ ] `facts.printedMoq`: printed box minimum (pages say "On quote" until set; also update `MOQ.printed` in `src/lib/pricing.ts`)
+- [ ] `facts.rigidLeadTime`, `facts.printedLeadTime`: e.g. "3–4 weeks" (pages say "Confirmed with your quote" until set)
+- [ ] `QUOTE_REPLY_HOURS` (24) and `facts.firstConceptHours` (48): confirm
+- [ ] `currency.rates`: display exchange rates for the configurator
+- [ ] Logo: replace the temporary wordmark with `/public/brand/logo.svg` (see `src/components/ui/Logo.tsx`)
 
 ## 2. Prices and rates
 
-- [ ] `src/lib/pricing.ts` → `RATES`: every unit, area, finish, insert, tooling, freight and sample rate. Set `ratesConfirmed: true` to remove the "Example rates" badges.
-- [ ] `src/content/rigidStyles.ts` / `printedStyles.ts` → `priceTiers[].unitUsd` (tables show "On quote" while `null`)
-- [ ] `src/content/agencyServices.ts` → `priceFrom` for all 10 services
-- [ ] `src/content/packages.ts` → `priceFrom` for the 3 packages
-- [ ] `src/content/shipping.ts` → freight comparison example figures (carton size, boxes per carton)
-- [ ] `src/lib/schemas.ts` → budget bands in the forms
-- [ ] Payment terms (deposit / balance): FAQ on `/pricing` and `/faq`
+- [ ] `src/lib/pricing.ts` → `RATES`: every unit, finish, insert, tooling, freight and sample rate. Set `ratesConfirmed: true` to remove the "Example prices" labels (configurator, samples, pricing).
+- [ ] `src/content/rigidStyles.ts` / `printedStyles.ts` → `priceTiers[].unitUsd`
+- [ ] `src/content/agencyServices.ts` → `priceFrom` for the 6 service pages (shows "Quoted per project")
+- [ ] `src/content/packages.ts` → `priceFrom` for Box Ready, Launch and Full System
+- [ ] `src/content/shipping.ts` → freight slider example figures (box size, boxes per carton)
+- [ ] `src/lib/schemas.ts` → budget bands in the project form
+- [ ] Payment terms (deposit / balance / methods): FAQ "How do I pay?" in `src/content/faqs.ts` and `/packages`
 
 ## 3. Placeholder records (`placeholder: true`)
 
-- [ ] `src/content/caseStudies.ts` — 4 fictional case studies (shown with "Sample project" badge, noindex, excluded from sitemap). Replace with real projects; "Results" must use real, approved figures only.
-- [ ] `src/content/testimonials.ts` — 3 placeholder quotes. Use real quotes with written permission.
-- [ ] `src/content/company.ts` — team (4 role placeholders), machine list (generic types; add make/model/format)
+- [ ] `src/content/caseStudies.ts`: 6 fictional projects (labelled "Sample project", noindex, left out of the sitemap). Replace with real work; results must be real, approved figures.
+- [ ] `src/content/testimonials.ts`: 3 placeholder quotes (homepage). Use real quotes with written permission.
+- [ ] `src/components/home/HomeSections.tsx` → `ClientLogos`: 8 placeholder brand names in the logo strip. Replace with real client logos (with permission).
+- [ ] `src/content/company.ts`:
+  - [ ] `team`: 4 role placeholders (names, photos, bios)
+  - [ ] `machines`: generic machine types; add make, model and format
+  - [ ] `companyNumbers`: 4 "TBC" figures on `/about`
+  - [ ] `story`: founding story on `/about`
+  - [ ] `capacityNote`: real capacity on `/factory`
 
-## 4. Copy to write or confirm
+## 4. Wording to verify
 
-- [ ] Studio story on `/studio-and-factory`; factory capacity figure
-- [ ] Sustainability claims in `src/content/company.ts` (FSC / recycled board) and the materials FAQ — verify before publishing
-- [ ] Industry compliance notes in `src/content/industries.ts` (placeholder on every industry page)
-- [ ] Ship-to pages `src/content/shipTo.ts` — have a customs broker review
-- [ ] Shipping / Incoterms wording on `/collapsible-rigid-boxes` FAQ; sample shipping wording on `/samples`
-- [ ] Typical project durations (FAQ on `/process`)
+- [ ] Sustainability: `sustainability` in `src/content/company.ts` (`/factory`), recycled/FSC card and FAQ in `src/content/optionPages.ts` (`/materials`), FAQ in `src/content/faqs.ts`
+- [ ] Industry compliance notes: `COMPLIANCE_NOTE` in `src/content/industries.ts` (dashed "To verify" card on every industry page)
+- [ ] CBD: "Child-resistant options on request" in `src/content/industryDetails.ts`. Remove if not offered.
+- [ ] Shipping and customs: delivered-duty-paid availability (`/shipping`, FAQs), import notes per country in `src/content/shipTo.ts`, the Australia packing-material note and the Germany LUCID note in `src/content/shipToDetails.ts`. Have a customs broker review.
+- [ ] Transit times per country (ship-to pages say "Confirmed with your quote")
+- [ ] Typical project timeline: `exampleTimeline` in `src/content/process.ts` (labelled "Example only")
+- [ ] Sample lead time and shipping cost: FAQs on `/samples`
+- [ ] Production lead time FAQs in `src/content/boxDetails.ts`
+- [ ] Privacy policy and terms (`/privacy`, `/terms`): template text, needs legal review; set the "Last updated" date
 - [ ] Blog publish dates in `src/content/blog/posts.ts`
-- [ ] Privacy policy and terms (`/privacy`, `/terms`) — templates, need legal review and a "last updated" date
 
-## 5. Integrations
+## 5. Media
 
-- [ ] Form delivery: `src/app/actions/contact.ts` and `forms.ts` only log submissions. Connect email (e.g. Resend) and/or CRM.
-- [ ] Payment: `/checkout` records an order request for invoicing. Connect a provider (e.g. Stripe) when ready.
-- [ ] Analytics: set `NEXT_PUBLIC_GA4_ID` in `.env` (loads only after cookie consent).
-- [ ] Brand font for OG images: add a TTF/OTF to `/assets` and pass it in `src/lib/og.tsx`.
+- [ ] Real photos for the 189 image slots listed in `MEDIA_SLOTS.md`. Until then every slot shows a brand illustration.
+- [ ] Optional: a 5–8 s muted video loop for the homepage hero (`home-hero` supports `video`)
 
-## 6. Imagery
+## 6. Integrations (not connected yet)
 
-- [ ] Logo: replace the text `<Wordmark />` with the real logo file when ready.
-- [ ] Photos: see `MEDIA_SLOTS.md` (111 slots). Every slot shows an illustration until a photo is added.
+- [ ] Form delivery: `deliver()` in `src/lib/submission.ts` only logs. Connect Resend (email notifications) and your CRM. All forms (quote, project, contact, newsletter, order request) go through it.
+- [ ] Artwork uploads in the quote builder record file names only. Real uploads need storage (e.g. Vercel Blob or S3).
+- [ ] Rate limiting in `src/lib/rateLimit.ts` is in-memory per server instance. Move to a shared store (e.g. Upstash Redis) if spam appears.
+- [ ] Newsletter: connect an email list provider.
+- [ ] Checkout (`/checkout`) records an order request only; no payment provider is connected.
+- [ ] GA4: set `NEXT_PUBLIC_GA4_ID` in `.env` (loads only after cookie consent).
+- [ ] OG images use a system sans-serif. Optionally load the Space Grotesk TTF in `src/lib/og.tsx`.

@@ -1,57 +1,122 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { mainNav, primaryCta } from "@/content/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { boxesMenu, boxesPromo, industriesMenu, mainNav, primaryCta, servicesMenu, type MainNavItem } from "@/content/navigation";
 import { CartLink } from "@/components/cart/CartLink";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { Wordmark } from "@/components/ui/Wordmark";
+import { MagneticBoxClosed } from "@/components/illustrations";
+import { Button } from "@/components/ui/Button";
+import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
-import { MegaMenu } from "./MegaMenu";
 import { MobileMenu } from "./MobileMenu";
+import { UtilityBar } from "./UtilityBar";
 
-const MEGA_ID = "mega-manufacturing";
+type MenuId = Extract<MainNavItem, { kind: "menu" }>["id"];
+
 const MOBILE_ID = "mobile-menu";
-const CLOSE_DELAY = 140;
+const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
+const topLink = "inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-[15px] font-medium text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
+const menuLink = "block rounded-lg px-2 py-1.5 text-[15px] text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
 
-function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
+function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
+  return (
+    <div className="grid grid-cols-4 gap-8">
+      {boxesMenu.map((group) => (
+        <div key={group.title}>
+          <p className="text-eyebrow text-blue-600">
+            {group.href ? (
+              <Link href={group.href} onClick={onNavigate} className="hover:underline">
+                {group.title}
+              </Link>
+            ) : (
+              group.title
+            )}
+          </p>
+          <ul className="mt-3 space-y-0.5">
+            {group.links.map((l) => (
+              <li key={l.label}>
+                <Link href={l.href} onClick={onNavigate} className={menuLink}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <Link href={boxesPromo.href} onClick={onNavigate} className="group flex flex-col rounded-2xl bg-blue-50 p-5">
+        <div className="aspect-[4/3]">
+          <MagneticBoxClosed collapsible />
+        </div>
+        <p className="mt-2 font-heading text-lg font-bold leading-snug">{boxesPromo.title}</p>
+        <p className="mt-1 text-sm text-ink-500">{boxesPromo.text}</p>
+        <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-blue-600">
+          See collapsible boxes <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </span>
+      </Link>
+    </div>
+  );
 }
 
-// Hover = dashed (fold) underline, active = solid (cut) underline.
-const navLinkClass =
-  "relative inline-flex h-[var(--header-h)] items-center whitespace-nowrap text-sm transition-colors hover:text-fg after:absolute after:inset-x-0 after:bottom-[18px] after:h-px after:opacity-0 after:transition-opacity hover:after:opacity-100 after:bg-[repeating-linear-gradient(90deg,currentColor_0_4px,transparent_4px_7px)]";
-const navLinkActive = "text-fg after:!bg-fg after:!opacity-100";
+function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
+  return (
+    <ul className="grid grid-cols-3 gap-2">
+      {servicesMenu.map((s) => (
+        <li key={s.href}>
+          <Link href={s.href} onClick={onNavigate} className="block rounded-xl p-3 transition-colors hover:bg-blue-50">
+            <span className="block font-semibold text-ink-900">{s.label}</span>
+            <span className="mt-0.5 block text-sm text-ink-500">{s.description}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
-export function Header({ megaFeature }: { megaFeature: ReactNode }) {
+function IndustriesPanel({ onNavigate }: { onNavigate: () => void }) {
+  return (
+    <div className="flex gap-10">
+      <ul className="grid flex-1 grid-cols-2 gap-x-8 gap-y-0.5">
+        {industriesMenu.map((l) => (
+          <li key={l.href}>
+            <Link href={l.href} onClick={onNavigate} className={menuLink}>
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div className="w-64 rounded-2xl bg-silver-100 p-5">
+        <p className="font-heading text-lg font-bold">Packaging by industry</p>
+        <p className="mt-1 text-sm text-ink-500">Recommended box styles and finishes for your product.</p>
+        <Button href="/industries" variant="ghost" arrow className="mt-3" onClick={onNavigate}>
+          All industries
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+const panels: Record<MenuId, (p: { onNavigate: () => void }) => React.ReactNode> = {
+  boxes: BoxesPanel,
+  services: ServicesPanel,
+  industries: IndustriesPanel,
+};
+
+export function Header() {
   const pathname = usePathname();
+  const reduce = useReducedMotion();
   // Menus remember the path they were opened on, so they close on navigation without an effect.
-  const [megaOpenAt, setMegaOpenAt] = useState<string | null>(null);
-  const [mobileOpenAt, setMobileOpenAt] = useState<string | null>(null);
-  const megaOpen = megaOpenAt === pathname;
-  const mobileOpen = mobileOpenAt === pathname;
+  const [menu, setMenu] = useState<{ id: MenuId; at: string } | null>(null);
+  const [mobileAt, setMobileAt] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const megaTriggerRef = useRef<HTMLButtonElement>(null);
-  const megaWrapRef = useRef<HTMLDivElement>(null);
-  const mobileToggleRef = useRef<HTMLButtonElement>(null);
-
-  const cancelClose = () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-  };
-  const openMega = () => {
-    cancelClose();
-    setMegaOpenAt(pathname);
-  };
-  const closeMega = useCallback(() => setMegaOpenAt(null), []);
-  const scheduleClose = () => {
-    cancelClose();
-    closeTimer.current = setTimeout(closeMega, CLOSE_DELAY);
-  };
-  const closeMobile = useCallback(() => setMobileOpenAt(null), []);
+  const openId = menu?.at === pathname ? menu.id : null;
+  const mobileOpen = mobileAt === pathname;
+  const navRef = useRef<HTMLElement>(null);
+  const mobileToggle = useRef<HTMLButtonElement>(null);
+  const closeMenu = useCallback(() => setMenu(null), []);
+  const closeMobile = useCallback(() => setMobileAt(null), []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -60,17 +125,15 @@ export function Header({ megaFeature }: { megaFeature: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Mega-menu: Escape returns focus to the trigger; clicks outside close it.
   useEffect(() => {
-    if (!megaOpen) return;
+    if (!openId) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeMega();
-        megaTriggerRef.current?.focus();
-      }
+      if (e.key !== "Escape") return;
+      closeMenu();
+      navRef.current?.querySelector<HTMLButtonElement>(`[aria-controls="menu-${openId}"]`)?.focus();
     };
     const onDown = (e: PointerEvent) => {
-      if (!megaWrapRef.current?.contains(e.target as Node)) closeMega();
+      if (!navRef.current?.contains(e.target as Node)) closeMenu();
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onDown);
@@ -78,114 +141,92 @@ export function Header({ megaFeature }: { megaFeature: ReactNode }) {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("pointerdown", onDown);
     };
-  }, [megaOpen, closeMega]);
+  }, [openId, closeMenu]);
 
-  useEffect(() => cancelClose, []);
+  const Panel = openId ? panels[openId] : null;
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 h-[var(--header-h)] border-b bg-surface transition-colors duration-300",
-        scrolled || megaOpen || mobileOpen ? "border-line" : "border-transparent",
-      )}
-    >
-      <div ref={megaWrapRef} className="h-full">
+    <>
+      <UtilityBar />
+      <header className={cn("sticky top-0 z-50 h-[var(--header-h)] border-b bg-white transition-shadow", scrolled ? "border-transparent shadow-sm" : "border-silver-300/60")}>
         <div className="container-x flex h-full items-center justify-between gap-6">
-          <Wordmark />
+          <Logo />
 
-          <nav aria-label="Main" className="hidden xl:block">
-            <ul className="flex items-center gap-7 text-muted">
+          <nav ref={navRef} aria-label="Main" className="hidden lg:block" onMouseLeave={closeMenu}>
+            <ul className="flex items-center gap-1">
               {mainNav.map((item) =>
                 item.kind === "link" ? (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={cn(navLinkClass, isActive(pathname, item.href) && navLinkActive)}
+                      className={cn(topLink, isActive(pathname, item.href) && "text-blue-600")}
                       aria-current={isActive(pathname, item.href) ? "page" : undefined}
                     >
                       {item.label}
                     </Link>
                   </li>
                 ) : (
-                  <li key={item.id} onPointerEnter={(e) => e.pointerType === "mouse" && openMega()} onPointerLeave={(e) => e.pointerType === "mouse" && scheduleClose()}>
+                  <li key={item.id} onMouseEnter={() => setMenu({ id: item.id, at: pathname })}>
                     <button
-                      ref={megaTriggerRef}
                       type="button"
-                      aria-expanded={megaOpen}
-                      aria-controls={MEGA_ID}
-                      onClick={() => (megaOpen ? closeMega() : openMega())}
-                      className={cn(
-                        navLinkClass,
-                        "gap-1.5",
-                        (megaOpen || item.items.some((i) => isActive(pathname, i.href))) && navLinkActive,
-                      )}
+                      aria-expanded={openId === item.id}
+                      aria-controls={`menu-${item.id}`}
+                      onClick={() => (openId === item.id ? closeMenu() : setMenu({ id: item.id, at: pathname }))}
+                      className={cn(topLink, openId === item.id && "bg-blue-50 text-blue-600")}
                     >
                       {item.label}
-                      <svg
-                        viewBox="0 0 10 10"
-                        className={cn("h-2.5 w-2.5 transition-transform duration-300", megaOpen && "rotate-180")}
-                        aria-hidden="true"
-                      >
-                        <path d="M1 3.5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.4" />
-                      </svg>
+                      <ChevronDown aria-hidden="true" className={cn("h-4 w-4 transition-transform", openId === item.id && "rotate-180")} />
                     </button>
                   </li>
                 ),
               )}
             </ul>
+            <AnimatePresence>
+              {openId && Panel && (
+                <motion.div
+                  key={openId}
+                  id={`menu-${openId}`}
+                  initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute inset-x-0 top-full border-t border-silver-300/60 bg-white shadow-md"
+                >
+                  <div className="container-x py-8">
+                    <Panel onNavigate={closeMenu} />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2">
             <CartLink />
-            <ThemeToggle />
+            {/* Wrapper controls visibility: the button's own inline-flex would override `hidden`. */}
             <div className="hidden sm:block">
-              <MagneticButton href={primaryCta.href}>{primaryCta.label}</MagneticButton>
+              <Button href={primaryCta.href} arrow>
+                {primaryCta.label}
+              </Button>
             </div>
             <button
-              ref={mobileToggleRef}
+              ref={mobileToggle}
               type="button"
-              className="spec inline-flex h-11 items-center gap-2 px-2 text-fg xl:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 hover:bg-blue-50 lg:hidden"
               aria-expanded={mobileOpen}
               aria-controls={MOBILE_ID}
-              onClick={() => (mobileOpen ? closeMobile() : setMobileOpenAt(pathname))}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              onClick={() => (mobileOpen ? closeMobile() : setMobileAt(pathname))}
             >
-              <span>{mobileOpen ? "Close" : "Menu"}</span>
               <span aria-hidden="true" className="relative block h-3 w-5">
-                <span
-                  className={cn(
-                    "absolute left-0 top-0.5 h-px w-5 bg-current transition-transform duration-300",
-                    mobileOpen && "translate-y-1 rotate-45",
-                  )}
-                />
-                <span
-                  className={cn(
-                    "absolute left-0 bottom-0.5 h-px w-5 bg-current transition-transform duration-300",
-                    mobileOpen && "-translate-y-1 -rotate-45",
-                  )}
-                />
+                <span className={cn("absolute left-0 top-0.5 h-0.5 w-5 rounded bg-current transition-transform duration-200", mobileOpen && "translate-y-1 rotate-45")} />
+                <span className={cn("absolute bottom-0.5 left-0 h-0.5 w-5 rounded bg-current transition-transform duration-200", mobileOpen && "-translate-y-1 -rotate-45")} />
               </span>
             </button>
           </div>
         </div>
 
-        {mainNav.map(
-          (item) =>
-            item.kind === "menu" && (
-              <MegaMenu
-                key={item.id}
-                id={MEGA_ID}
-                open={megaOpen}
-                items={item.items}
-                feature={megaFeature}
-                onNavigate={closeMega}
-                onPointerEnter={cancelClose}
-                onPointerLeave={scheduleClose}
-              />
-            ),
-        )}
-      </div>
-
-      <MobileMenu id={MOBILE_ID} open={mobileOpen} onClose={closeMobile} toggleRef={mobileToggleRef} />
-    </header>
+        <MobileMenu id={MOBILE_ID} open={mobileOpen} onClose={closeMobile} toggleRef={mobileToggle} />
+      </header>
+    </>
   );
 }

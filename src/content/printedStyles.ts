@@ -1,4 +1,4 @@
-import { site } from "@/config/site.config";
+import { site } from "@/config/site";
 import type { IllustrationKey } from "@/components/illustrations";
 import type { Faq, PriceTier } from "./rigidStyles";
 
@@ -24,7 +24,7 @@ const PRINT = ["CMYK", "Pantone spot", "Inside print", "Outside print"];
 const FINISHES = ["Matt or gloss lamination", "Spot UV", "Hot foil blocking", "Embossing", "Soft-touch lamination"];
 const TIERS: PriceTier[] = [500, 1000, 2500, 5000, 10000].map((qty) => ({ qty, unitUsd: null })); // TODO
 
-const slots = (slug: string) => [`printed-${slug}-hero`, `printed-${slug}-gallery-1`, `printed-${slug}-gallery-2`];
+const slots = (slug: string) => [`printed-${slug}-hero`, ...Array.from({ length: 6 }, (_, i) => `printed-${slug}-gallery-${i + 1}`)];
 
 export const printedCommonFaqs: Faq[] = [
   {
@@ -87,7 +87,7 @@ export const printedStyles: PrintedStyle[] = [
     finishes: FINISHES,
     industries: ["food-bakery", "supplements", "chocolates", "cosmetics"],
     priceTiers: TIERS,
-    illustration: "dieline-flat",
+    illustration: "tuck-end",
     mediaSlots: slots("folding-carton"),
     faqs: [{ q: "Can you design a new structure?", a: "Yes. Structural design and dieline engineering is one of our studio services." }],
   },
@@ -135,7 +135,7 @@ export const printedStyles: PrintedStyle[] = [
     materials: ["SBS board", "Kraft board"],
     print: PRINT,
     finishes: FINISHES,
-    industries: ["jewelry", "apparel", "pr-kits-corporate-gifts"],
+    industries: ["jewelry", "apparel", "gifts-pr-kits"],
     priceTiers: TIERS,
     illustration: "pillow-box",
     mediaSlots: slots("pillow"),
@@ -167,7 +167,7 @@ export const printedStyles: PrintedStyle[] = [
     materials: ["SBS board", "Kraft board"],
     print: PRINT,
     finishes: ["Uncoated", "Matt lamination", "Spot UV"],
-    industries: ["food-bakery", "chocolates", "pr-kits-corporate-gifts"],
+    industries: ["food-bakery", "chocolates", "gifts-pr-kits"],
     priceTiers: TIERS,
     illustration: "gable-box",
     mediaSlots: slots("gable"),

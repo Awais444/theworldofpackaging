@@ -1,40 +1,41 @@
 import type { ReactNode } from "react";
 import { Breadcrumbs, type Crumb } from "@/components/layout/Breadcrumbs";
-import { SiteImage } from "@/components/media/SiteImage";
-import { RevealText } from "@/components/ui/RevealText";
-import { SpecLabel } from "@/components/ui/SpecLabel";
-import { cn } from "@/lib/utils";
+import { Media } from "@/components/media/Media";
+import { withHighlight } from "@/components/ui/withHighlight";
 
 type PageHeroProps = {
   crumbs: Crumb[];
-  spec: string[];
   title: string;
+  /** One word of the title shown in orange with the swoosh. */
+  highlight?: string;
+  eyebrow?: string;
   intro: ReactNode;
+  /** Primary action, optionally a secondary one beside it. */
   actions?: ReactNode;
   /** Media slot for the visual; or pass `visual` for a custom element. */
   slotId?: string;
   visual?: ReactNode;
-  tone?: "paper" | "board" | "kraft";
+  /** Older call sites still pass these; the hero no longer shows them. */
+  spec?: string[];
+  tone?: string;
 };
 
-/** Inner-page hero: breadcrumbs, spec line, H1, intro, CTAs and a framed visual. */
-export function PageHero({ crumbs, spec, title, intro, actions, slotId, visual, tone = "paper" }: PageHeroProps) {
+/** Inner-page hero: breadcrumbs, eyebrow, H1, lead, actions, optional visual. */
+export function PageHero({ crumbs, title, highlight, eyebrow, intro, actions, slotId, visual }: PageHeroProps) {
+  const media = visual ?? (slotId ? <Media slot={slotId} priority panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" /> : null);
   return (
-    <section className={cn(tone === "board" && "tone-board", tone === "kraft" && "tone-kraft")}>
-      <div className="container-x pt-8 pb-20 md:pb-24">
+    <section className="relative overflow-hidden bg-white pb-16 pt-8 md:pb-24">
+      <span aria-hidden="true" className="absolute -right-48 -top-48 h-[30rem] w-[30rem] rounded-full bg-blue-50" />
+      <div className="container-x relative">
         <Breadcrumbs items={crumbs} />
-        <div className="grid-editorial mt-12 items-center gap-y-14 md:mt-16">
-          <div className="col-span-4 md:col-span-12 lg:col-span-6">
-            <SpecLabel items={spec} as="p" />
-            <RevealText as="h1" text={title} className="type-display mt-5 text-display-xl" />
-            <div className="measure mt-8 text-lg text-muted">{intro}</div>
-            {actions && <div className="mt-10 flex flex-wrap gap-3">{actions}</div>}
+        <div className={media ? "mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-16" : "mt-10"}>
+          <div className={media ? "lg:col-span-6" : "max-w-3xl"}>
+            {eyebrow && <p className="text-eyebrow text-blue-600">{eyebrow}</p>}
+            <h1 className="text-h1 mt-3">{withHighlight(title, highlight)}</h1>
+            <div className="text-lead mt-5 max-w-2xl text-ink-500">{intro}</div>
+            {actions && <div className="mt-8 flex flex-wrap items-center gap-3">{actions}</div>}
           </div>
-          {(slotId || visual) && (
-            <div className="col-span-4 md:col-span-10 md:col-start-2 lg:col-span-6 lg:col-start-7">
-              {visual ?? (slotId && <SiteImage slotId={slotId} priority sizes="(min-width: 1024px) 45vw, 90vw" />)}
-            </div>
-          )}
+          {media && <div className="lg:col-span-6">{media}</div>}
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ export default function CheckoutPage() {
   return (
     <section className="container-x pt-8 pb-24">
       <Breadcrumbs items={[{ label: "Cart", href: "/cart" }, { label: "Checkout" }]} />
-      <h1 className="type-display mt-10 mb-12 text-display-lg">Checkout.</h1>
+      <h1 className="font-heading font-bold mt-10 mb-12 text-h2">Checkout.</h1>
       <CheckoutView />
     </section>
   );

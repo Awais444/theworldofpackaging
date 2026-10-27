@@ -1,185 +1,120 @@
 @import "tailwindcss";
 
-/* Dark variant follows the resolved theme attribute set before paint (see ThemeScript). */
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-
 /* ---------------------------------------------------------------------------
-   Brand tokens: "Luxury Rigid" palette.
-   Deep green and cream alternate down the page; gold foil marks actions and
-   key lines; kraft is the secondary surface. Process colours stay tiny.
+   Design tokens (CLAUDE.md §4). Light theme only.
    --------------------------------------------------------------------------- */
 :root {
-  --green: #1f3a2e;
-  --green-2: #28493a;
-  --green-3: #16291f;
-  --cream: #f4ede0;
-  --cream-2: #e8dcc6;
-  --foil: #c9a35c;
-  --foil-deep: #7a5a1e; /* gold dark enough for text on cream (AA) */
-  --kraft: #b98a5a;
-  --ink: #151515;
-  --ink-2: #1f1f1d;
-  --cyan: #00a3e0;
-  --magenta: #e4007c;
-  --yellow: #ffd400;
+  /* Brand */
+  --blue-50: #eef1ff;
+  --blue-100: #d9dfff;
+  --blue-600: #011efd; /* Vibrant Blue: primary buttons, links, brand bands */
+  --blue-700: #0118cc;
+  --blue-900: #1b08b7; /* Klein Blue: dark sections, footer, utility bar */
+  --orange-50: #fff2e6;
+  --orange-500: #ff7001; /* Hot Orange: highlights, icons, badges, accent buttons */
+  --orange-600: #e66400;
+  --orange-text: #b84f00; /* orange that passes AA as text on orange-50 / white */
+  --red-500: #ff3600; /* Chilli Red: tiny accents only */
+  --silver-50: #f4f6f7;
+  --silver-100: #e7eaec; /* Pale Silver: soft sections, image panels */
+  --silver-300: #c9ced2;
+  --ink-400: #8c8a94; /* captions */
+  --ink-500: #5e5c66; /* muted text */
+  --ink-900: #141317; /* Business Black */
+  --white: #ffffff;
+  --success: #12a150;
+  --error: #e5251c;
 
-  /* Older names used across components. */
-  --paper: var(--cream);
-  --paper-2: var(--cream-2);
-  --board: var(--green);
-  --board-2: var(--green-2);
+  /* Semantic */
+  --surface: var(--white);
+  --surface-2: var(--silver-50);
+  --fg: var(--ink-900);
+  --fg-muted: var(--ink-500);
+  --line: var(--silver-300);
+  --accent: var(--blue-600);
+  --accent-hover: var(--blue-700);
 
-  /* Semantic tokens: light theme (cream). */
-  --surface: var(--cream);
-  --surface-2: var(--cream-2);
-  --fg: var(--ink);
-  --fg-muted: #4f4a40;
-  --line: rgb(21 21 21 / 0.16);
-  --line-strong: rgb(21 21 21 / 0.55);
-  --accent: var(--foil-deep);
-  /* Primary action: gold foil with ink text everywhere except on kraft. */
-  --cta: var(--foil);
-  --cta-hover: #d8b670;
-  --cta-fg: var(--ink);
-  --grain-opacity: 0.06;
-  --grain-blend: multiply;
+  --shadow-sm: 0 1px 2px rgb(20 19 23 / 0.06);
+  --shadow-md: 0 8px 24px rgb(20 19 23 / 0.08);
+  --shadow-blue: 0 12px 32px rgb(1 30 253 / 0.25);
+  --ring: 0 0 0 3px rgb(1 30 253 / 0.3);
 
-  /* Illustration fills: cream, kraft and deep kraft with inked edges, on every tone. */
-  --face-1: #fbf6ec;
-  --face-2: #cfa577;
-  --face-3: #9a6c42;
-  --illo-edge: var(--ink);
-
-  --header-h: 64px;
+  --header-h: 72px;
+  --utility-h: 36px;
+  --gutter: 1rem;
   color-scheme: light;
 }
 
-/* Dark theme: cream sections become ink; green sections stay green. */
-:root[data-theme="dark"] {
-  --surface: var(--ink);
-  --surface-2: var(--ink-2);
-  --fg: var(--cream);
-  --fg-muted: #b9b1a1;
-  --line: rgb(244 237 224 / 0.14);
-  --line-strong: rgb(244 237 224 / 0.5);
-  --accent: var(--foil);
-  --grain-opacity: 0.05;
-  --grain-blend: screen;
-  color-scheme: dark;
-}
-
-/* No-JS fallback: follow the OS when no theme attribute was set. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --surface: var(--ink);
-    --surface-2: var(--ink-2);
-    --fg: var(--cream);
-    --fg-muted: #b9b1a1;
-    --line: rgb(244 237 224 / 0.14);
-    --line-strong: rgb(244 237 224 / 0.5);
-    --accent: var(--foil);
-    --grain-opacity: 0.05;
-    --grain-blend: screen;
-    color-scheme: dark;
+@media (width >= 48rem) {
+  :root {
+    --gutter: 1.5rem;
   }
-}
-
-/* Tones: remap the semantic tokens for a section so every component inside adapts.
-   .tone-board is the deep green "rigid" tone with gold foil. */
-.tone-board {
-  --surface: var(--green);
-  --surface-2: var(--green-2);
-  --fg: var(--cream);
-  --fg-muted: #c7cbb8;
-  --line: rgb(244 237 224 / 0.16);
-  --line-strong: rgb(244 237 224 / 0.55);
-  --accent: var(--foil);
-  --grain-blend: screen;
-  color-scheme: dark;
-  background-color: var(--surface);
-  color: var(--fg);
-}
-.tone-ink {
-  --surface: var(--ink);
-  --surface-2: var(--ink-2);
-  --fg: var(--cream);
-  --fg-muted: #b9b1a1;
-  --line: rgb(244 237 224 / 0.14);
-  --line-strong: rgb(244 237 224 / 0.5);
-  --accent: var(--foil);
-  --grain-blend: screen;
-  color-scheme: dark;
-  background-color: var(--surface);
-  color: var(--fg);
-}
-.tone-kraft {
-  --surface: var(--kraft);
-  --surface-2: #a87b4d;
-  --fg: var(--ink);
-  --fg-muted: #261b10; /* ≥ 4.5:1 on kraft */
-  --line: rgb(21 21 21 / 0.2);
-  --line-strong: rgb(21 21 21 / 0.6);
-  --accent: var(--ink);
-  /* Gold would vanish on kraft: actions go ink here. */
-  --cta: var(--ink);
-  --cta-hover: var(--green);
-  --cta-fg: var(--cream);
-  background-color: var(--surface);
-  color: var(--fg);
 }
 
 /* ---------------------------------------------------------------------------
    Tailwind theme
    --------------------------------------------------------------------------- */
 @theme inline {
-  --color-green: var(--green);
-  --color-green-2: var(--green-2);
-  --color-cream: var(--cream);
-  --color-cta: var(--cta);
-  --color-cta-hover: var(--cta-hover);
-  --color-cta-fg: var(--cta-fg);
-  --color-paper: var(--paper);
-  --color-ink: var(--ink);
-  --color-kraft: var(--kraft);
-  --color-board: var(--board);
-  --color-foil: var(--foil);
-  --color-cyan: var(--cyan);
-  --color-magenta: var(--magenta);
-  --color-yellow: var(--yellow);
+  --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-600: var(--blue-600);
+  --color-blue-700: var(--blue-700);
+  --color-blue-900: var(--blue-900);
+  --color-orange-50: var(--orange-50);
+  --color-orange-500: var(--orange-500);
+  --color-orange-600: var(--orange-600);
+  --color-orange-text: var(--orange-text);
+  --color-red-500: var(--red-500);
+  --color-silver-50: var(--silver-50);
+  --color-silver-100: var(--silver-100);
+  --color-silver-300: var(--silver-300);
+  --color-ink-400: var(--ink-400);
+  --color-ink-500: var(--ink-500);
+  --color-ink-900: var(--ink-900);
+  --color-success: var(--success);
+  --color-error: var(--error);
 
+  /* Semantic names used across components. */
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-fg: var(--fg);
   --color-muted: var(--fg-muted);
   --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
+  --color-line-strong: var(--silver-300);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  /* Older names still used by pages awaiting their phase. */
+  --color-ink: var(--ink-900);
+  --color-magenta: var(--error);
+  --color-yellow: var(--orange-50);
+  --color-cta: var(--blue-600);
+  --color-cta-hover: var(--blue-700);
+  --color-cta-fg: var(--white);
 
-  --font-display: var(--ff-display), "Arial Narrow", sans-serif;
   --font-sans: var(--ff-body), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-heading: var(--ff-heading), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-blue: var(--shadow-blue);
 }
 
 @theme {
-  /* Type scale: defined once. Display sizes are fluid. */
-  --text-spec: 0.6875rem;
-  --text-spec--line-height: 1.4;
-  --text-spec--letter-spacing: 0.14em;
-  --text-display-2xl: clamp(3.5rem, 2rem + 8vw, 11rem);
-  --text-display-2xl--line-height: 0.86;
-  --text-display-xl: clamp(3rem, 1.8rem + 5.5vw, 7.5rem);
-  --text-display-xl--line-height: 0.88;
-  --text-display-lg: clamp(2.5rem, 1.6rem + 3.6vw, 5rem);
-  --text-display-lg--line-height: 0.9;
-  --text-display-md: clamp(2rem, 1.4rem + 2.2vw, 3.5rem);
-  --text-display-md--line-height: 0.95;
-  --text-display-sm: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
-  --text-display-sm--line-height: 1;
-
-  --breakpoint-3xl: 120rem;
+  /* Older display sizes, mapped onto the new scale (display, h1, h2, h3, h4). */
+  --text-display-2xl: clamp(2.75rem, 1.9rem + 3.6vw, 4.5rem);
+  --text-display-2xl--line-height: 1.02;
+  --text-display-xl: clamp(2.375rem, 1.8rem + 2.4vw, 3.5rem);
+  --text-display-xl--line-height: 1.08;
+  --text-display-lg: clamp(2rem, 1.55rem + 1.9vw, 2.75rem);
+  --text-display-lg--line-height: 1.12;
+  --text-display-md: clamp(1.5rem, 1.35rem + 0.6vw, 1.75rem);
+  --text-display-md--line-height: 1.2;
+  --text-display-sm: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-display-sm--line-height: 1.3;
+  --text-spec: 0.875rem;
 
   --ease-press: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-fold: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* ---------------------------------------------------------------------------
@@ -188,7 +123,6 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -206,6 +140,8 @@
   h2,
   h3,
   h4 {
+    font-family: var(--ff-heading), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
@@ -213,15 +149,10 @@
     text-wrap: pretty;
   }
 
-  ::selection {
-    background-color: var(--yellow);
-    color: var(--ink);
-  }
-
   :focus-visible {
-    outline: 2px solid var(--fg);
-    outline-offset: 3px;
-    border-radius: 1px;
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: 8px;
   }
 
   [id] {
@@ -230,22 +161,105 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Utilities and signature details
+   Typography utilities (§4.2). Mobile size first, desktop from 1024px.
    --------------------------------------------------------------------------- */
-@utility container-x {
-  width: 100%;
-  max-width: 100rem;
-  margin-inline: auto;
-  padding-inline: 1rem;
-  @media (width >= 48rem) {
-    padding-inline: 2rem;
-  }
-  @media (width >= 80rem) {
-    padding-inline: 3rem;
+@utility text-display {
+  font-family: var(--ff-heading), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 2.75rem;
+  line-height: 1.02;
+  @media (width >= 64rem) {
+    font-size: 4.5rem;
   }
 }
+@utility text-h1 {
+  font-family: var(--ff-heading), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 2.375rem;
+  line-height: 1.08;
+  @media (width >= 64rem) {
+    font-size: 3.5rem;
+  }
+}
+@utility text-h2 {
+  font-family: var(--ff-heading), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 2rem;
+  line-height: 1.12;
+  @media (width >= 64rem) {
+    font-size: 2.75rem;
+  }
+}
+@utility text-h3 {
+  font-family: var(--ff-heading), ui-sans-serif, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  @media (width >= 64rem) {
+    font-size: 1.75rem;
+  }
+}
+@utility text-h4 {
+  font-family: var(--ff-heading), ui-sans-serif, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  @media (width >= 64rem) {
+    font-size: 1.25rem;
+  }
+}
+@utility text-lead {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  @media (width >= 64rem) {
+    font-size: 1.25rem;
+  }
+}
+@utility text-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
 
-/* 12-column editorial grid. */
+/* Older heading utility used by pages awaiting their phase. */
+@utility type-display {
+  font-family: var(--ff-heading), ui-sans-serif, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+@utility spec {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+@utility measure {
+  max-width: 65ch;
+}
+
+/* ---------------------------------------------------------------------------
+   Layout utilities (§4.3)
+   --------------------------------------------------------------------------- */
+/* Max content width 1240px plus 24px (16px mobile) side padding. */
+@utility container-x {
+  width: 100%;
+  max-width: calc(77.5rem + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+/* Section rhythm: 64px mobile, 96px desktop. */
+@utility section-y {
+  padding-block: 4rem;
+  @media (width >= 64rem) {
+    padding-block: 6rem;
+  }
+}
 @utility grid-editorial {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -256,55 +270,7 @@
   }
 }
 
-@utility type-display {
-  font-family: var(--ff-display), "Arial Narrow", sans-serif;
-  font-weight: 800;
-  font-optical-sizing: auto;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-
-@utility spec {
-  font-family: var(--ff-mono), ui-monospace, monospace;
-  font-size: var(--text-spec);
-  line-height: 1.4;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-@utility measure {
-  max-width: 65ch;
-}
-
-/* Dieline strokes: solid = cut, dashed = fold. */
-@utility stroke-cut {
-  stroke: currentColor;
-  stroke-width: 1.25;
-  fill: none;
-  vector-effect: non-scaling-stroke;
-}
-@utility stroke-fold {
-  stroke: currentColor;
-  stroke-width: 1;
-  stroke-dasharray: 4 3;
-  fill: none;
-  vector-effect: non-scaling-stroke;
-}
-
-/* Paper grain: static SVG noise, very low opacity, never intercepts input. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  mix-blend-mode: var(--grain-blend);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.45  0 0 0 0 0.4  0 0 0 1.4 -0.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-/* Lenis */
+/* Lenis smooth scroll */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -319,6 +285,16 @@ html.lenis body {
   overflow: clip;
 }
 
+/* Logo marquee: CSS-only infinite strip; paused under reduced motion. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -328,46 +304,82 @@ html.lenis body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .marquee-track {
+    animation: none;
+  }
 }
 
 /* ---------------------------------------------------------------------------
-   Illustrations: face shades resolve against the local tone, so the same SVG
-   works on paper, ink and board sections.
+   Illustrations (§4.6): filled flat-3D shapes in brand colours.
+   A variant class on the SVG root sets the body palette; lids and inserts
+   have their own palettes so every box reads as blue body + orange lid + white insert.
    --------------------------------------------------------------------------- */
 .illo {
+  /* body (default: Vibrant Blue) */
+  --b1: #4d63ff;
+  --b2: var(--blue-600);
+  --b3: var(--blue-900);
+  /* lid / ribbon (Hot Orange) */
+  --l1: #ffa45c;
+  --l2: var(--orange-500);
+  --l3: var(--orange-600);
+  /* insert / paper (white) */
+  --w1: var(--white);
+  --w2: var(--silver-50);
+  --w3: var(--silver-100);
+  --ink: var(--ink-900);
+  --shadow: rgb(20 19 23 / 0.14);
   color: var(--fg);
 }
-/* Lines default to no fill at zero extra specificity, so a face class (.f1–.f3, .fs) always wins. */
+.illo--klein {
+  --b1: #4a3ad1;
+  --b2: var(--blue-900);
+  --b3: #120579;
+}
+.illo--orange {
+  --b1: #ffa45c;
+  --b2: var(--orange-500);
+  --b3: var(--orange-600);
+  --l1: #4d63ff;
+  --l2: var(--blue-600);
+  --l3: var(--blue-900);
+}
+.illo--white {
+  --b1: var(--white);
+  --b2: var(--silver-50);
+  --b3: var(--silver-100);
+}
+
 .illo :where(.ln, .ln-thin, .fold) { fill: none; }
-.illo .f1 { fill: var(--face-1); }
-.illo .f2 { fill: var(--face-2); }
-.illo .f3 { fill: var(--face-3); }
+/* Body faces: top / front / side */
+.illo .f1 { fill: var(--b1); }
+.illo .f2 { fill: var(--b2); }
+.illo .f3 { fill: var(--b3); }
+/* Lid faces */
+.illo .l1 { fill: var(--l1); }
+.illo .l2 { fill: var(--l2); }
+.illo .l3 { fill: var(--l3); }
+/* Insert / white faces */
+.illo .w1 { fill: var(--w1); }
+.illo .w2 { fill: var(--w2); }
+.illo .w3 { fill: var(--w3); }
 .illo .fs { fill: var(--surface); }
-.illo .ln { stroke: var(--illo-edge); stroke-width: 1.25; stroke-linejoin: round; stroke-linecap: round; }
-.illo .ln-thin { stroke: currentColor; stroke-width: 0.75; stroke-opacity: 0.6; }
-.illo .fold { stroke: var(--illo-edge); stroke-width: 1; stroke-dasharray: 4 3; stroke-opacity: 0.85; }
-/* Printed details on kraft faces: deep green reads on kraft where gold would not. */
-.illo .acc { stroke: var(--green); }
-.illo .acc-fill { fill: var(--green); }
+.illo .shadow { fill: var(--shadow); }
+/* Edges are a faint highlight, not wireframe lines. */
+.illo .ln { stroke: rgb(255 255 255 / 0.35); stroke-width: 1; stroke-linejoin: round; }
+.illo .ln-thin { stroke: rgb(20 19 23 / 0.2); stroke-width: 0.75; }
+.illo .fold { stroke: rgb(20 19 23 / 0.25); stroke-width: 1; stroke-dasharray: 4 3; }
+.illo .acc { stroke: var(--orange-500); }
+.illo .acc-fill { fill: var(--orange-500); }
 .illo .lbl {
-  font-family: var(--ff-mono), ui-monospace, monospace;
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: var(--ff-body), sans-serif;
+  font-size: 9px;
   fill: var(--fg-muted);
 }
 .illo .lbl-strong { fill: var(--fg); }
 
-/* Page enter: plain CSS so content is never stuck hidden without JS. */
-@keyframes page-in {
-  from { transform: translateY(8px); }
-  to { transform: none; }
-}
-.page-in {
-  /* backwards, not both: a lingering transform would break GSAP pinning (position: fixed). */
-  animation: page-in 0.35s var(--ease-press) backwards;
-}
-
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
+/* WhatsApp button sits above any mobile bottom sheet (quote builder summary). */
+.whatsapp-float { bottom: calc(1rem + env(safe-area-inset-bottom)); }
+@media (max-width: 63.99rem) {
+  body:has([data-bottom-sheet]) .whatsapp-float { bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
 }

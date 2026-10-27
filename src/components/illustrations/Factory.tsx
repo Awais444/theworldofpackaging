@@ -6,8 +6,8 @@ export function FactoryCut({ className }: IllustrationProps) {
   const teeth = Array.from({ length: 13 }, (_, i) => `M${130 + i * 18} 168v26`).join("");
   return (
     <Illo className={className}>
-      <rect x="100" y="70" width="280" height="70" className="f2 ln" />
-      <rect x="116" y="140" width="248" height="28" className="f3 ln" />
+      <rect x="100" y="70" width="280" height="70" className="l2 ln" />
+      <rect x="116" y="140" width="248" height="28" className="l3 ln" />
       <path d={teeth} className="ln" />
       <path d="M240 40v22M232 54l8 8 8-8" className="ln acc" />
       <rect x="80" y="214" width="320" height="10" className="f1 ln" />
@@ -33,7 +33,7 @@ export function FactoryWrap({ className }: IllustrationProps) {
   );
   return (
     <Illo className={className}>
-      <path d={sheet} className="f1 ln" />
+      <path d={sheet} className="l1 ln" />
       <path d={path3([[0, 0, 0], [L, 0, 0], [L, W, 0], [0, W, 0]], o, true)} className="fold" />
       <IsoBox o={o} size={[L, W, 60]} hideTop />
       <path d={path3([[0, 0, 60], [L, 0, 60], [L, W, 60], [0, W, 60]], o, true)} className="f3 ln" />
@@ -73,9 +73,9 @@ export function FactoryInsert({ className }: IllustrationProps) {
     <Illo className={className}>
       <IsoBox o={o} size={[L, W, H]} hideTop />
       <path d={path3([[5, 5, H], [L - 5, 5, H], [L - 5, W - 5, H], [5, W - 5, H]], o, true)} className="f3 ln" />
-      <IsoBox o={o} at={[6, 6, H + 40]} size={[L - 12, W - 12, 22]} />
-      <path d={cut(60, W / 2, H + 62)} className="f3 ln" />
-      <path d={cut(130, W / 2, H + 62)} className="f3 ln" />
+      <IsoBox o={o} at={[6, 6, H + 40]} size={[L - 12, W - 12, 22]} tone="white" />
+      <path d={cut(60, W / 2, H + 62)} className="w3 ln" />
+      <path d={cut(130, W / 2, H + 62)} className="w3 ln" />
       <Callout from={project([L - 6, W / 2, H + 50], o)} to={[466, 120]} label="EVA insert" align="end" />
       <SpecText items={["Insert placement", "CNC-cut EVA"]} y={350} />
     </Illo>
@@ -97,7 +97,7 @@ export function FactoryQc({ className }: IllustrationProps) {
       ))}
       <rect x="250" y="150" width="170" height="110" className="f2 ln" />
       <path d="M240 120V142M430 120V142M240 128H430" className="ln" />
-      <rect x="300" y="112" width="70" height="18" className="f1 ln" />
+      <rect x="300" y="112" width="70" height="18" className="l1 ln" />
       <text x="335" y="125" textAnchor="middle" className="lbl lbl-strong">250.0</text>
       <SpecText items={["Quality control", "Every stage"]} y={350} />
     </Illo>
@@ -108,8 +108,8 @@ export function FactoryQc({ className }: IllustrationProps) {
 export function FoilStamping({ className }: IllustrationProps) {
   return (
     <Illo className={className}>
-      <rect x="170" y="50" width="140" height="60" className="f2 ln" />
-      <rect x="200" y="110" width="80" height="24" className="f3 ln" />
+      <rect x="170" y="50" width="140" height="60" className="l2 ln" />
+      <rect x="200" y="110" width="80" height="24" className="l3 ln" />
       <path d="M216 116h48" className="ln acc" />
       <circle cx="80" cy="160" r="26" className="f1 ln" />
       <circle cx="400" cy="160" r="26" className="f1 ln" />
@@ -128,7 +128,7 @@ export function FoilStamping({ className }: IllustrationProps) {
 export function InsertFoam({ className }: IllustrationProps) {
   return (
     <Illo className={className}>
-      <rect x="70" y="60" width="340" height="230" rx="4" className="f2 ln" />
+      <rect x="70" y="60" width="340" height="230" rx="4" className="w2 ln" />
       <circle cx="160" cy="175" r="52" className="f3 ln" />
       <rect x="240" y="95" width="130" height="70" rx="10" className="f3 ln" />
       <rect x="240" y="185" width="60" height="70" rx="10" className="f3 ln" />
@@ -147,7 +147,7 @@ export function ShippingStack({ className }: IllustrationProps) {
     <Illo className={className}>
       {carton(40)}
       {[0, 1, 2].map((i) => (
-        <rect key={i} x="52" y={84 + i * 60} width="146" height="54" className="f2 ln" />
+        <rect key={i} x="52" y={84 + i * 60} width="146" height="54" className="l2 ln" />
       ))}
       {carton(270)}
       {Array.from({ length: 16 }, (_, i) => (

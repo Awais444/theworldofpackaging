@@ -70,12 +70,12 @@ export function ConsentAndAnalytics() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="tone-ink fixed inset-x-4 bottom-4 z-[70] max-w-xl border border-line p-5 md:left-auto md:right-6 md:bottom-6"
+            className="fixed inset-x-4 bottom-4 z-[70] max-w-md rounded-2xl border border-silver-300 bg-white p-5 shadow-[0_12px_32px_rgb(17_17_17/0.12)] md:left-auto md:right-6 md:bottom-6"
           >
-            <p className="spec text-muted">Cookies</p>
-            <p className="mt-2 text-sm">
-              We use essential storage for your cart and theme. With your permission we also use analytics to see which
-              pages help people. See our <Link href="/privacy" className="underline underline-offset-4">privacy policy</Link>.
+            <p className="font-bold">Cookies</p>
+            <p className="mt-2 text-sm text-ink-500">
+              We use essential storage for your cart. With your permission we also use analytics to see which pages help
+              people. See our <Link href="/privacy" className="text-blue-600 underline">privacy policy</Link>.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Button onClick={() => decide("denied")} variant="secondary">

@@ -1,13 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { site, siteUrl } from "@/config/site.config";
+import { site, siteUrl } from "@/config/site";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { MegaFeature } from "@/components/layout/MegaFeature";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
-import { StoreHydration } from "@/components/providers/StoreHydration";
-import { ThemeScript } from "@/components/providers/ThemeScript";
 import { ConsentAndAnalytics } from "@/components/providers/ConsentAndAnalytics";
+import { StoreHydration } from "@/components/providers/StoreHydration";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { fontVariables } from "@/lib/fonts";
 import { organization, website } from "@/lib/schema";
@@ -22,35 +21,30 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3efe6" },
-    { media: "(prefers-color-scheme: dark)", color: "#141414" },
-  ],
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={fontVariables} suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-      </head>
+    <html lang="en" className={fontVariables}>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="spec sr-only z-[60] bg-fg px-4 py-3 text-surface focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+          className="sr-only z-[60] rounded-lg bg-accent px-4 py-3 text-sm font-medium text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
         >
           Skip to content
         </a>
         <JsonLd data={[organization(), website()]} />
         <StoreHydration />
+        <SmoothScroll />
         <ConsentAndAnalytics />
-        <SmoothScroll>
-          <Header megaFeature={<MegaFeature />} />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </SmoothScroll>
+        <Header />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+        <WhatsAppFloat />
       </body>
     </html>
   );

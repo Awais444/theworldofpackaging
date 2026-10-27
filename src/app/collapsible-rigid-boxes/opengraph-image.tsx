@@ -1,9 +1,9 @@
 import { ogContentType, ogSize, renderOg } from "@/lib/og";
 
-export const alt = "Luxury boxes that ship flat.";
+export const alt = "Rigid when it arrives. Flat when it ships.";
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
-  return renderOg({ eyebrow: "Collapsible rigid / Ships flat", title: "Luxury boxes that ship flat.", tone: "board" });
+  return renderOg({ eyebrow: "Ships flat", title: "Rigid when it arrives. Flat when it ships.", tone: "board" });
 }

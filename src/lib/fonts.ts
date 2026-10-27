@@ -1,28 +1,18 @@
-import { Big_Shoulders, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 
-// "Big Shoulders" is the current Google family for Big Shoulders Display;
-// the opsz axis switches to the display cut at large sizes.
-export const displayFont = Big_Shoulders({
+// Headings: Space Grotesk 600/700. Body and UI: Plus Jakarta Sans 400–700.
+export const headingFont = Space_Grotesk({
   subsets: ["latin"],
-  axes: ["opsz"],
-  // No metrics exist for an automatic fallback; use a condensed system face instead.
-  adjustFontFallback: false,
-  fallback: ["Arial Narrow", "Roboto Condensed", "sans-serif"],
-  variable: "--ff-display",
+  weight: ["600", "700"],
+  variable: "--ff-heading",
   display: "swap",
 });
 
-export const bodyFont = Instrument_Sans({
+export const bodyFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--ff-body",
   display: "swap",
 });
 
-export const monoFont = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--ff-mono",
-  display: "swap",
-});
-
-export const fontVariables = [displayFont.variable, bodyFont.variable, monoFont.variable].join(" ");
+export const fontVariables = [headingFont.variable, bodyFont.variable].join(" ");

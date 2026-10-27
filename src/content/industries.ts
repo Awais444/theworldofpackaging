@@ -195,11 +195,11 @@ export const industries: Industry[] = [
     printed: ["shipping", "sleeve"],
     services: ["structural-dieline", "rigid-box-design", "3d-mockups"],
     compliance: COMPLIANCE_NOTE,
-    illustration: "factory-insert",
+    illustration: "drawer",
     faqs: [{ q: "Can you design a multi-layer insert?", a: "Yes, stacked trays and lift-out layers are common for electronics." }],
   },
   {
-    slug: "pr-kits-corporate-gifts",
+    slug: "gifts-pr-kits",
     name: "PR Kits & Gifts",
     styles: ["Magnetic", "Book style", "Custom insert"],
     intro: "One-off and short-run boxes for launches, influencer kits and corporate gifting.",

@@ -32,3 +32,15 @@ export const packages: PackageBundle[] = [
     priceFrom: null, // TODO
   },
 ];
+
+/** Side-by-side comparison rows: true = included, false = not included, string = scope. */
+export const packageComparison: Array<{ label: string; values: Record<string, boolean | string> }> = [
+  { label: "Logo design", values: { "box-ready": false, launch: true, "full-system": true } },
+  { label: "Brand identity", values: { "box-ready": false, launch: "Core", "full-system": "Full + guidelines" } },
+  { label: "Packaging design", values: { "box-ready": "1 box", launch: "1 box", "full-system": "Up to 3 SKUs" } },
+  { label: "Dieline + print-ready artwork", values: { "box-ready": true, launch: true, "full-system": true } },
+  { label: "Insert design", values: { "box-ready": false, launch: true, "full-system": true } },
+  { label: "Mailer or shipper design", values: { "box-ready": false, launch: false, "full-system": true } },
+  { label: "Physical sample", values: { "box-ready": true, launch: true, "full-system": true } },
+  { label: "Production", values: { "box-ready": "500 rigid boxes", launch: "500 rigid boxes", "full-system": "Quoted per range" } },
+];

@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import type { CurrencyCode } from "@/config/site.config";
+import type { CurrencyCode } from "@/config/site";
 import { finishes as allFinishes } from "@/content/materials";
 import { printedStyles } from "@/content/printedStyles";
 import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
@@ -110,15 +110,15 @@ export function Configurator() {
       render: () => (
         <div>
           <div className="mb-6 flex items-center justify-between">
-            <p className="spec text-muted">Inside dimensions</p>
-            <div role="group" aria-label="Units" className="flex border border-line-strong">
+            <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">Inside dimensions</p>
+            <div role="group" aria-label="Units" className="flex border border-silver-300">
               {(["mm", "in"] as const).map((u) => (
                 <button
                   key={u}
                   type="button"
                   aria-pressed={unit === u}
                   onClick={() => setUnit(u)}
-                  className={cn("spec h-9 px-3", unit === u ? "bg-fg text-surface" : "text-fg")}
+                  className={cn("text-xs font-semibold uppercase tracking-wider h-9 px-3", unit === u ? "bg-ink-900 text-white" : "text-ink-900")}
                 >
                   {u}
                 </button>
@@ -181,12 +181,12 @@ export function Configurator() {
       render: () => (
         <div>
           <MultiChoice legend="Finishes (any)" values={c.finishes} options={opts.finishes} onChange={(finishes) => set({ finishes })} />
-          <ul className="mt-6 space-y-1 text-sm text-muted">
+          <ul className="mt-6 space-y-1 text-sm text-ink-500">
             {allFinishes
               .filter((f) => c.finishes.includes(f.name))
               .map((f) => (
                 <li key={f.name}>
-                  <span className="text-fg">{f.name}:</span> {f.detail}
+                  <span className="text-ink-900">{f.name}:</span> {f.detail}
                 </li>
               ))}
           </ul>
@@ -230,7 +230,7 @@ export function Configurator() {
                   key={q}
                   type="button"
                   onClick={() => set({ quantity: q })}
-                  className={cn("spec h-9 border px-3", c.quantity === q ? "border-fg bg-fg text-surface" : "border-line-strong")}
+                  className={cn("text-xs font-semibold uppercase tracking-wider h-9 border px-3", c.quantity === q ? "border-ink-900 bg-ink-900 text-white" : "border-silver-300")}
                 >
                   {q.toLocaleString("en-US")}
                 </button>
@@ -289,7 +289,7 @@ export function Configurator() {
   const go = (n: number) => setStep(Math.max(0, Math.min(steps.length - 1, n)));
   const canAdvance = active.id === "dims" ? dimOk : active.id === "qty" ? qtyOk : true;
 
-  const sendAsQuote = () => router.push("/quote?from=configurator");
+  const sendAsQuote = () => router.push("/get-a-quote?from=configurator");
   const addSample = () => {
     const priceUsd = RATES.samplePrice[c.type];
     addToCart({
@@ -307,18 +307,18 @@ export function Configurator() {
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="spec text-muted">Estimated total</p>
-          <AnimatedNumber value={fromUsd(est.total, currency)} format={(n) => formatMoney(n, currency, { decimals: 0 })} className="type-display mt-1 block text-display-md" />
-          <p className="font-mono text-sm">
+          <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">Estimated total</p>
+          <AnimatedNumber value={fromUsd(est.total, currency)} format={(n) => formatMoney(n, currency, { decimals: 0 })} className="font-heading font-bold mt-1 block text-h3" />
+          <p className="text-sm">
             <AnimatedNumber value={fromUsd(est.unit, currency)} format={(n) => formatMoney(n, currency, { decimals: 2 })} /> per box
           </p>
         </div>
-        <label className="spec flex flex-col gap-1 text-muted">
+        <label className="text-xs font-semibold uppercase tracking-wider flex flex-col gap-1 text-ink-500">
           Currency
           <select
             value={currency}
             onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-            className="h-9 border border-line-strong bg-surface px-2 font-mono text-fg"
+            className="h-9 border border-silver-300 bg-white px-2 text-ink-900"
           >
             {CURRENCIES.map((code) => (
               <option key={code}>{code}</option>
@@ -326,21 +326,21 @@ export function Configurator() {
           </select>
         </label>
       </div>
-      <dl className="divide-y divide-dashed divide-line border-y border-line font-mono text-sm">
+      <dl className="divide-y divide-dashed divide-silver-300 border-y border-silver-300 text-sm">
         {est.lines.map((l) => (
           <div key={l.label} className="flex justify-between gap-4 py-2">
-            <dt className="text-muted">{l.label}</dt>
+            <dt className="text-ink-500">{l.label}</dt>
             <dd>{money(l.amount)}</dd>
           </div>
         ))}
         <div className="flex justify-between gap-4 py-2">
-          <dt className="text-muted">Freight volume</dt>
+          <dt className="text-ink-500">Freight volume</dt>
           <dd>{est.cbm} m³</dd>
         </div>
       </dl>
-      <p className="text-sm text-muted">
+      <p className="text-sm text-ink-500">
         Estimated, final price confirmed in quote.
-        {!RATES.ratesConfirmed && <span className="spec ml-2 bg-yellow px-1.5 py-0.5 text-ink">Example rates</span>}
+        {!RATES.ratesConfirmed && <span className="text-xs font-semibold uppercase tracking-wider ml-2 bg-orange-50 rounded-full px-1.5 py-0.5 text-ink-900">Example rates</span>}
       </p>
       <div className="flex flex-wrap gap-3">
         <Button onClick={sendAsQuote} arrow disabled={!dimOk || !qtyOk}>
@@ -366,17 +366,17 @@ export function Configurator() {
                 type="button"
                 onClick={() => go(i)}
                 aria-current={i === current ? "step" : undefined}
-                className={cn("spec flex items-center gap-1.5 py-1", i === current ? "text-fg" : "text-muted hover:text-fg")}
+                className={cn("text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 py-1", i === current ? "text-ink-900" : "text-ink-500 hover:text-ink-900")}
               >
-                <span className={cn("font-mono", i === current && "text-accent")}>{String(i + 1).padStart(2, "0")}</span>
+                <span className={cn(i === current && "text-blue-600")}>{String(i + 1).padStart(2, "0")}</span>
                 {s.label}
               </button>
             </li>
           ))}
         </ol>
-        <div className="h-px bg-line">
+        <div className="h-px bg-silver-300">
           <motion.div
-            className="h-px origin-left bg-fg"
+            className="h-px origin-left bg-ink-900"
             initial={false}
             animate={{ scaleX: (current + 1) / steps.length }}
             transition={{ duration: reduce ? 0 : 0.4 }}
@@ -393,7 +393,7 @@ export function Configurator() {
               exit={reduce ? { opacity: 0 } : { opacity: 0, x: -24 }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h2 id={`step-${active.id}`} className="type-display mb-8 text-display-md">
+              <h2 id={`step-${active.id}`} className="font-heading font-bold mb-8 text-h3">
                 {active.label}
               </h2>
               {active.render()}
@@ -401,7 +401,7 @@ export function Configurator() {
           </AnimatePresence>
         </div>
 
-        <div className="mt-10 flex items-center justify-between border-t border-line pt-6">
+        <div className="mt-10 flex items-center justify-between border-t border-silver-300 pt-6">
           <Button variant="link" onClick={() => go(current - 1)} disabled={current === 0}>
             Back
           </Button>
@@ -426,9 +426,9 @@ export function Configurator() {
       </aside>
 
       {/* Mobile: total always in reach. */}
-      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between border-t border-line bg-surface px-4 py-3 lg:hidden">
-        <span className="font-mono text-sm">
-          {money(est.total)} <span className="text-muted">· {money(est.unit)}/box</span>
+      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between border-t border-silver-300 bg-white px-4 py-3 lg:hidden">
+        <span className="text-sm">
+          {money(est.total)} <span className="text-ink-500">· {money(est.unit)}/box</span>
         </span>
         <Button size="md" onClick={sendAsQuote} disabled={!dimOk || !qtyOk}>
           Quote

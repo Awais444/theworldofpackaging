@@ -28,7 +28,7 @@ export function AddToCartButton({ item, label = "Add to cart" }: { item: Omit<Ca
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0 }}
-            className="spec underline underline-offset-4"
+            className="text-xs font-semibold uppercase tracking-wider underline underline-offset-4"
             role="status"
           >
             Added · view cart

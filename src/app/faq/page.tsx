@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import { faqGroups } from "@/content/faqs";
-import { ProjectCta } from "@/components/sections/AgencyBlocks";
+import { quoteHref } from "@/content/navigation";
 import { PageHero } from "@/components/sections/PageHero";
-import { FaqList } from "@/components/sections/StyleDetailBlocks";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Accordion } from "@/components/ui/Accordion";
+import { Button } from "@/components/ui/Button";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
+import { Tabs } from "@/components/ui/Tabs";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers on rigid and printed boxes, minimum orders, samples, design, shipping and ordering.",
+  description: "Answers on ordering, design, production, shipping and payment for rigid and printed boxes.",
   alternates: { canonical: "/faq" },
 };
+
+const total = faqGroups.reduce((n, g) => n + g.faqs.length, 0);
 
 export default function FaqPage() {
   return (
@@ -18,27 +24,38 @@ export default function FaqPage() {
       <JsonLd data={faqPage(faqGroups.flatMap((g) => g.faqs))} />
       <PageHero
         crumbs={[{ label: "FAQ" }]}
-        spec={["FAQ", `${faqGroups.reduce((n, g) => n + g.faqs.length, 0)} answers`]}
-        title="Questions, answered."
-        intro={<p>The things clients ask before their first order. Missing one? Ask us directly.</p>}
+        eyebrow={`FAQ · ${total} answers`}
+        title="Questions, answered"
+        highlight="answered"
+        intro={<p>The things clients ask before their first order, grouped by topic. Missing one? Ask us directly.</p>}
+        actions={
+          <Button href="/contact" size="lg" arrow>
+            Ask a question
+          </Button>
+        }
       />
-      <nav aria-label="FAQ sections" className="container-x">
-        <ul className="flex flex-wrap gap-2 border-y border-line py-4">
-          {faqGroups.map((g) => (
-            <li key={g.id}>
-              <a href={`#${g.id}`} className="spec inline-flex h-9 items-center border border-line-strong px-3 hover:bg-fg hover:text-surface">
-                {g.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      {faqGroups.map((g) => (
-        <div key={g.id} id={g.id}>
-          <FaqList faqs={g.faqs} title={g.title} schema={false} />
+      <Section className="!pt-0">
+        <div className="mx-auto max-w-4xl">
+          <Tabs label="FAQ topics" items={faqGroups.map((g) => ({ id: g.id, label: g.title, content: <Accordion items={g.faqs} defaultOpen={null} /> }))} />
         </div>
-      ))}
-      <ProjectCta title="Still wondering?" body="Send the question with your brief and we will answer both." />
+      </Section>
+      <Section className="!pt-0">
+        <CTABand
+          title="Still have a question?"
+          highlight="question"
+          text="Send it with your brief and we will answer both."
+          actions={
+            <>
+              <Button href="/contact" variant="accent" size="lg" arrow>
+                Contact us
+              </Button>
+              <Button href={quoteHref} variant="white" size="lg">
+                Get a Quote
+              </Button>
+            </>
+          }
+        />
+      </Section>
     </>
   );
 }

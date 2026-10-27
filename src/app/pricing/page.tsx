@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { site } from "@/config/site.config";
-import { agencyServices, hubs } from "@/content/agencyServices";
+import { site } from "@/config/site";
+import { servicePages } from "@/content/servicePages";
 import { packages } from "@/content/packages";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
@@ -25,9 +25,9 @@ function PriceTable({ head, rows, caption }: { head: string[]; rows: Row[]; capt
       <table className="w-full min-w-[34rem] border-collapse text-left">
         <caption className="sr-only">{caption}</caption>
         <thead>
-          <tr className="border-b border-line-strong">
+          <tr className="border-b border-silver-300">
             {[...head, "From"].map((h) => (
-              <th key={h} scope="col" className="spec py-3 pr-4 font-medium text-muted">
+              <th key={h} scope="col" className="text-xs font-semibold uppercase tracking-wider py-3 pr-4 font-medium text-ink-500">
                 {h}
               </th>
             ))}
@@ -35,9 +35,9 @@ function PriceTable({ head, rows, caption }: { head: string[]; rows: Row[]; capt
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.href} className="border-b border-dashed border-line">
+            <tr key={r.href} className="border-b border-dashed border-silver-300">
               <th scope="row" className="py-4 pr-4 font-medium">
-                <Link href={r.href} className="hover:text-accent">
+                <Link href={r.href} className="hover:text-blue-600">
                   {r.name}
                 </Link>
               </th>
@@ -57,11 +57,11 @@ function PriceTable({ head, rows, caption }: { head: string[]; rows: Row[]; capt
 
 function Drivers({ items }: { items: string[] }) {
   return (
-    <div className="mt-12 grid gap-8 border-t border-line pt-8 md:grid-cols-[1fr_2fr]">
-      <p className="spec text-muted">What sets the price</p>
+    <div className="mt-12 grid gap-8 border-t border-silver-300 pt-8 md:grid-cols-[1fr_2fr]">
+      <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">What sets the price</p>
       <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
         {items.map((d) => (
-          <li key={d} className="flex gap-3 before:mt-[0.75em] before:h-px before:w-3 before:shrink-0 before:bg-line-strong">
+          <li key={d} className="flex gap-3 before:mt-[0.75em] before:h-px before:w-3 before:shrink-0 before:bg-silver-300-strong">
             {d}
           </li>
         ))}
@@ -109,10 +109,10 @@ export default function PricingPage() {
     <PriceTable
       caption="Design services"
       head={["Service", "Studio"]}
-      rows={agencyServices.map((s) => ({
-        href: `${hubs[s.hub].href}/${s.slug}`,
+      rows={servicePages.map((s) => ({
+        href: `/services/${s.path}`,
         name: s.name,
-        cells: [hubs[s.hub].name],
+        cells: [s.hub === "branding" ? "Branding" : "Packaging design"],
         price: priceFromLabel(s.priceFrom),
       }))}
     />
@@ -145,11 +145,8 @@ export default function PricingPage() {
         }
         actions={
           <>
-            <Button href="/configure" size="lg" arrow>
-              Get an estimate
-            </Button>
-            <Button href="/quote" variant="secondary" size="lg">
-              Request a quote
+            <Button href="/get-a-quote" size="lg">
+              Get a Quote
             </Button>
           </>
         }

@@ -22,7 +22,7 @@ export function CopyButton({ value, label, className }: { value: string; label: 
       type="button"
       onClick={copy}
       aria-label={`Copy ${label}`}
-      className={cn("spec inline-flex h-7 items-center border border-line px-2 text-muted hover:border-fg hover:text-fg", className)}
+      className={cn("inline-flex h-8 items-center rounded-full border border-silver-300 px-3 text-xs font-semibold text-ink-500 hover:border-blue-600 hover:text-blue-600", className)}
     >
       <span aria-live="polite">{copied ? "Copied" : "Copy"}</span>
     </button>

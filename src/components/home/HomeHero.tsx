@@ -1,0 +1,99 @@
+"use client";
+
+import { useRef } from "react";
+import { MagneticBoxOpen, illustrations } from "@/components/illustrations";
+import { Media } from "@/components/media/Media";
+import { Button } from "@/components/ui/Button";
+import { Highlight } from "@/components/ui/Highlight";
+import { getMedia } from "@/content/media";
+import { quoteHref } from "@/content/navigation";
+import { gsap, useGSAP } from "@/lib/gsap";
+
+const trust = ["Own factory", "MOQ 500", "Collapsible rigid boxes", "Ships worldwide"];
+const chips = [
+  { label: "2 mm greyboard", className: "left-[2%] top-[14%]" },
+  { label: "Gold foil", className: "right-[4%] top-[6%]" },
+  { label: "Ships flat", className: "bottom-[10%] right-[8%]" },
+];
+
+const Mailer = illustrations["mailer-box"];
+
+/** Illustration composition: open magnetic box, a mailer and a small orange box. */
+function Composition({ alt }: { alt: string }) {
+  return (
+    <div role="img" aria-label={alt} className="relative aspect-[4/3] rounded-3xl bg-blue-50">
+      <span aria-hidden="true" className="absolute -right-[8%] -top-[10%] aspect-square h-[60%] rounded-full bg-white/70" />
+      <span aria-hidden="true" className="absolute -bottom-[12%] -left-[6%] aspect-square h-[45%] rounded-full bg-silver-100" />
+      <div data-hero-art className="absolute inset-[4%_10%_12%_4%]">
+        <MagneticBoxOpen />
+      </div>
+      <div data-hero-art className="absolute bottom-[2%] right-[2%] w-[42%]">
+        <Mailer className="illo--klein" />
+      </div>
+      <div data-hero-art className="absolute left-[4%] bottom-[4%] w-[24%]">
+        <Mailer className="illo--orange" />
+      </div>
+      {chips.map((c) => (
+        <span key={c.label} data-hero-chip className={`absolute rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-ink-900 shadow-md sm:text-sm ${c.className}`}>
+          {c.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+export function HomeHero() {
+  const root = useRef<HTMLElement>(null);
+  const slot = getMedia("home-hero");
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        tl.from("[data-hero-line]", { yPercent: 40, opacity: 0, duration: 0.7, stagger: 0.1 })
+          .from("[data-hero-art]", { scale: 0.92, opacity: 0, duration: 0.8, stagger: 0.12 }, 0.15)
+          .from("[data-hero-chip]", { y: 12, opacity: 0, duration: 0.5, stagger: 0.1 }, 0.6);
+        gsap.to("[data-hero-art]", { y: -8, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.6, delay: 1.2 });
+      });
+      return () => mm.revert();
+    },
+    { scope: root },
+  );
+
+  return (
+    <section ref={root} className="relative overflow-hidden bg-white">
+      <span aria-hidden="true" className="absolute -left-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-blue-50" />
+      <div className="container-x relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-6">
+          <p data-hero-line className="text-eyebrow text-blue-600">
+            Packaging design + manufacturing
+          </p>
+          <h1 data-hero-line className="text-display mt-4">
+            Custom boxes that make your brand <Highlight>unforgettable</Highlight>.
+          </h1>
+          <p data-hero-line className="text-lead mt-6 max-w-xl text-ink-500">
+            Brand identity, packaging design and rigid boxes made in our own factory. From first sketch to delivery, worldwide.
+          </p>
+          <div data-hero-line className="mt-8 flex flex-wrap gap-3">
+            <Button href={quoteHref} size="lg" arrow>
+              Get a Quote
+            </Button>
+            <Button href="/boxes" size="lg" variant="secondary">
+              Explore Boxes
+            </Button>
+          </div>
+          <ul data-hero-line className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-ink-900">
+            {trust.map((t) => (
+              <li key={t} className="inline-flex items-center gap-2">
+                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="lg:col-span-6">{slot.src ? <Media slot="home-hero" priority panel="blue" /> : <Composition alt={slot.alt} />}</div>
+      </div>
+    </section>
+  );
+}

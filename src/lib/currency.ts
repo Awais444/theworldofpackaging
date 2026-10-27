@@ -1,4 +1,4 @@
-import { site, type CurrencyCode } from "@/config/site.config";
+import { site, type CurrencyCode } from "@/config/site";
 
 export const CURRENCIES = Object.keys(site.currency.rates) as CurrencyCode[];
 

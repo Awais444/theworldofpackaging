@@ -1,5 +1,5 @@
 import { path3, project, type Origin, type Vec3 } from "./iso";
-import { Callout, Illo, IsoBox, Line3, SpecText, type IllustrationProps } from "./primitives";
+import { Callout, Illo, IsoBox, Shadow, Line3, SpecText, type IllustrationProps } from "./primitives";
 import { MagneticBoxClosed } from "./MagneticBox";
 
 const o: Origin = { x: 225, y: 150 };
@@ -28,6 +28,7 @@ export function CollapsibleBoxFlat({ className }: IllustrationProps) {
   const [sx, sy] = project([L, W, zTop / 2], o);
   return (
     <Illo className={className}>
+      <Shadow o={o} size={[L, W]} />
       {Array.from({ length: UNITS }, (_, i) => (
         <IsoBox key={i} o={o} at={[0, 0, i * (T + GAP)]} size={[L, W, T]} />
       ))}

@@ -1,11 +1,12 @@
 import type { IllustrationKey } from "@/components/illustrations";
-import { agencyServices, hubs } from "./agencyServices";
-import { caseSlot, caseStudies } from "./caseStudies";
+import { servicePages } from "./servicePages";
+import { caseStudies } from "./caseStudies";
 import { industries } from "./industries";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
 
-export type MediaAspect = "16/9" | "4/3" | "1/1" | "3/4" | "21/9";
+export type MediaAspect = "16/9" | "4/3" | "1/1" | "3/4";
+export type MediaVariant = "blue" | "klein" | "orange" | "white";
 
 export type MediaSlot = {
   /** Matches the record key, e.g. "rigid-magnetic-closure-hero". */
@@ -17,6 +18,8 @@ export type MediaSlot = {
   /** Optional short looping video (MP4/WebM under /public). Used where a slot supports motion, e.g. the home hero. */
   video?: string;
   illustration: IllustrationKey;
+  /** Colour variant for the illustration body (lids stay orange, inserts white). */
+  variant?: MediaVariant;
   aspect: MediaAspect;
   /** Shot list fields (see MEDIA_SLOTS.md). */
   page: string;
@@ -31,13 +34,12 @@ export type MediaSlot = {
 const fixedSlots = {
   "home-hero": {
     id: "home-hero",
-    alt: "Deep green magnetic rigid box with a gold foil logo, lid opening to reveal the insert",
-    // Until `video` or `src` is set, the hero shows the animated 3D box (HeroRigidBox).
+    alt: "A rigid gift box, a mailer box and a tube, made in our factory",
     illustration: "magnetic-open",
     aspect: "4/3",
     page: "/",
     size: "2400×1800 still, or 1920×1440 video loop (5–8 s, muted)",
-    shot: "Deep green wrapped magnetic box, gold foil logo; lid opens to show the insert and product. Cream backdrop, soft side light",
+    shot: "Three finished boxes (rigid gift box, mailer, tube) on a white or light grey backdrop, soft daylight",
   },
   "mega-menu-feature": {
     id: "mega-menu-feature",
@@ -66,60 +68,24 @@ const fixedSlots = {
     size: "2400×1800",
     shot: "Printed mailer box closed on paper-coloured backdrop, logo visible on lid",
   },
-  "branding-hero": {
-    id: "branding-hero",
-    alt: "Brand board showing a type specimen, colour palette, wordmark and pattern",
-    illustration: "brand-board",
-    aspect: "4/3",
-    page: "/branding",
-    size: "2400×1800",
-    shot: "Printed brand board / identity flat lay: swatches, type specimen, stationery",
-  },
   "factory-press": {
     id: "factory-press",
     alt: "Four-colour sheet-fed offset press in the factory",
     illustration: "press-machine",
     aspect: "16/9",
-    page: "/studio-and-factory",
+    page: "/about, /factory",
     size: "2400×1350",
     shot: "Offset press running, operator at delivery end, wide shot, motion in sheets",
   },
-  // Case study covers (placeholder projects, see caseStudies.ts).
-  "case-halden-cover": {
-    id: "case-halden-cover",
-    alt: "Magnetic rigid gift box with a foil-blocked lid for a skincare brand",
-    illustration: "magnetic-closed",
-    aspect: "4/3",
-    page: "/ and /work/halden-apothecary",
-    size: "2400×1800",
-    shot: "Hero shot of the finished gift box, lid closed, product beside it",
-  },
-  "case-ostra-cover": {
-    id: "case-ostra-cover",
-    alt: "Printed tea subscription mailer box",
-    illustration: "mailer-box",
-    aspect: "4/3",
-    page: "/ and /work/ostra-tea",
-    size: "2400×1800",
-    shot: "Mailer closed on a table, printed lid visible, tea tin beside it",
-  },
-  "case-kiri-cover": {
-    id: "case-kiri-cover",
-    alt: "Brand board for a jewellery identity: wordmark, palette and pattern",
-    illustration: "brand-board",
-    aspect: "4/3",
-    page: "/ and /work/kiri-atelier",
-    size: "2400×1800",
-    shot: "Identity flat lay: business cards, ring box, swatches",
-  },
-  "case-marrow-cover": {
-    id: "case-marrow-cover",
-    alt: "Collapsible rigid candle boxes packed flat",
-    illustration: "collapsible-flat",
-    aspect: "4/3",
-    page: "/ and /work/marrow-and-vale",
-    size: "2400×1800",
-    shot: "Flat-packed boxes beside one assembled box with candle",
+  "home-factory": {
+    id: "home-factory",
+    alt: "Rigid boxes being wrapped and finished on our factory floor",
+    illustration: "lid-and-base",
+    variant: "klein",
+    aspect: "3/4",
+    page: "/",
+    size: "1600×2130",
+    shot: "Operator wrapping rigid boxes at a workbench, finished boxes stacked beside, warm daylight",
   },
 } satisfies Record<string, MediaSlot>;
 
@@ -135,34 +101,40 @@ export const factorySteps = [
 
 function generatedSlots(): MediaSlot[] {
   const out: MediaSlot[] = [];
-  const angles = ["three-quarter view, lid closed", "open, product in insert", "detail: corner, wrap and finish close-up"];
+  const rigidAngles = ["three-quarter view, lid closed", "open, product in insert", "detail: corner, wrap and finish close-up", "top view showing the foil logo", "stack of finished boxes", "in a customer's hands"];
+  const printedAngles = ["printed detail close-up", "packed with product", "open, inside print visible", "flat sheet before folding", "stack of finished boxes", "in use"];
+  const galleryVariants: MediaVariant[] = ["blue", "klein", "orange", "white"];
   for (const s of rigidStyles) {
     const page = `/rigid-boxes/${s.slug}`;
-    s.mediaSlots.forEach((id, i) =>
+    s.mediaSlots.forEach((id, i) => {
+      const angle = rigidAngles[(i - 1) % rigidAngles.length]!;
       out.push({
         id,
-        alt: i === 0 ? `${s.name}, made in our factory` : `${s.name}: ${angles[i - 1]}`,
+        alt: i === 0 ? `${s.name}, made in our factory` : `${s.name}: ${angle}`,
         illustration: s.illustration,
+        variant: galleryVariants[i % galleryVariants.length],
         aspect: "4/3",
         page,
         size: "2400×1800",
-        shot: i === 0 ? `${s.name} hero shot on dark greyboard set` : `${s.name}, ${angles[i - 1]}`,
-      }),
-    );
+        shot: i === 0 ? `${s.name} on a Pale Silver background, soft light` : `${s.name}, ${angle}`,
+      });
+    });
   }
   for (const s of printedStyles) {
     const page = `/printed-boxes/${s.slug}`;
-    s.mediaSlots.forEach((id, i) =>
+    s.mediaSlots.forEach((id, i) => {
+      const angle = printedAngles[(i - 1) % printedAngles.length]!;
       out.push({
         id,
-        alt: i === 0 ? `Printed ${s.name.toLowerCase()}` : `${s.name}, ${i === 1 ? "printed detail" : "in use"}`,
+        alt: i === 0 ? `Printed ${s.name.toLowerCase()}` : `${s.name}: ${angle}`,
         illustration: s.illustration,
+        variant: galleryVariants[i % galleryVariants.length],
         aspect: "4/3",
         page,
         size: "2400×1800",
-        shot: i === 0 ? `${s.name} on paper-coloured backdrop` : `${s.name}, ${i === 1 ? "print detail close-up" : "packed with product"}`,
-      }),
-    );
+        shot: i === 0 ? `${s.name} on a Pale Silver background, soft light` : `${s.name}, ${angle}`,
+      });
+    });
   }
   for (const f of factorySteps) {
     out.push({
@@ -170,7 +142,7 @@ function generatedSlots(): MediaSlot[] {
       alt: `Factory step: ${f.label.toLowerCase()}`,
       illustration: f.illustration,
       aspect: "4/3",
-      page: "Rigid style pages, /studio-and-factory",
+      page: "/factory",
       size: "1600×1200",
       shot: f.shot,
     });
@@ -180,88 +152,49 @@ function generatedSlots(): MediaSlot[] {
       id: `industry-${ind.slug}-hero`,
       alt: `${ind.name} packaging made in our factory`,
       illustration: ind.illustration,
+      variant: industries.indexOf(ind) % 2 ? "klein" : "blue",
       aspect: "4/3",
       page: `/industries/${ind.slug}`,
       size: "2400×1800",
       shot: `${ind.name} product in its box, styled for the category`,
     });
   }
-  out.push({
-    id: "world-map",
-    alt: "World map with shipping routes from Pakistan to the USA, UK, Canada, Australia, UAE and Europe",
-    illustration: "world-map",
-    aspect: "16/9",
-    page: "/shipping",
-    size: "2400×1350",
-    shot: "Keep as illustration, or: export cartons being loaded into a container",
-  });
-  for (const s of agencyServices) {
+  for (const s of servicePages) {
     out.push({
       id: `service-${s.slug}-hero`,
       alt: `${s.name}: example deliverable`,
       illustration: s.illustration,
       aspect: "4/3",
-      page: `${hubs[s.hub].href}/${s.slug}`,
+      page: `/services/${s.path}`,
       size: "2400×1800",
       shot: `Representative ${s.name.toLowerCase()} work from a real project`,
     });
   }
-  const caseParts = [
-    ["identity", "brand-board", "Identity applied: logo, palette, stationery or labels"],
-    ["packaging", "magnetic-open", "Finished packaging, open, with product"],
-    ["production", "press-machine", "The job on our factory floor: press, wrapping or QC"],
-  ] as const;
+  const caseShots = ["identity applied: logo, palette, stationery or labels", "finished packaging, open, with product", "detail: finish and print close-up", "the range together", "on our factory floor", "in the customer's hands"];
   for (const c of caseStudies) {
-    for (const [part, illustration, shot] of caseParts) {
+    out.push({
+      id: c.coverSlot,
+      alt: `${c.client}: ${c.summary.split(":")[0]!.toLowerCase()}`,
+      illustration: c.illustration,
+      variant: "blue",
+      aspect: "4/3",
+      page: `/work/${c.slug}, /work, /`,
+      size: "2400×1800",
+      shot: `Hero shot of the finished ${c.spec[0]!.toLowerCase()} for ${c.client}`,
+    });
+    c.gallery.forEach((id, i) =>
       out.push({
-        id: caseSlot(c.slug, part),
-        alt: `${c.client}: ${part}`,
-        illustration,
-        aspect: "16/9",
+        id,
+        alt: `${c.client}: ${caseShots[i]}`,
+        illustration: i === 0 ? "brand-board" : c.illustration,
+        variant: galleryVariants[(i + 1) % galleryVariants.length],
+        aspect: "4/3",
         page: `/work/${c.slug}`,
-        size: "2400×1350",
-        shot,
-      });
-    }
+        size: "2400×1800",
+        shot: `${c.client}, ${caseShots[i]}`,
+      }),
+    );
   }
-  out.push({
-    id: "packaging-design-hero",
-    alt: "Flat dieline with cut and fold lines for a packaging design project",
-    illustration: hubs["packaging-design"].illustration,
-    aspect: "4/3",
-    page: "/packaging-design",
-    size: "2400×1800",
-    shot: "Designer marking up a printed dieline at the studio desk",
-  });
-  out.push(
-    {
-      id: "foil-stamping",
-      alt: "Hot foil blocking press applying gold foil to a box wrap",
-      illustration: "foil-stamping",
-      aspect: "4/3",
-      page: "/rigid-boxes/finishes",
-      size: "2400×1800",
-      shot: "Foil press mid-stroke, gold foil web visible",
-    },
-    {
-      id: "insert-foam",
-      alt: "Black EVA foam insert with cut cavities for several products",
-      illustration: "insert-foam",
-      aspect: "4/3",
-      page: "/rigid-boxes/inserts",
-      size: "2400×1800",
-      shot: "EVA insert top-down, empty cavities, on paper backdrop",
-    },
-    {
-      id: "shipping-stack",
-      alt: "Same shipping carton packed with assembled boxes and with flat-packed collapsible boxes",
-      illustration: "shipping-stack",
-      aspect: "4/3",
-      page: "/collapsible-rigid-boxes",
-      size: "2400×1800",
-      shot: "Two open cartons side by side: few assembled boxes vs many flat boxes",
-    },
-  );
   return out;
 }
 

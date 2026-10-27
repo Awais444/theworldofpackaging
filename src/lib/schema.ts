@@ -1,6 +1,6 @@
-import { site, siteUrl } from "@/config/site.config";
+import { site, siteUrl } from "@/config/site";
 
-/** Structured data builders (schema.org JSON-LD). All identity comes from site.config. */
+/** Structured data builders (schema.org JSON-LD). All identity comes from config/site.ts. */
 
 type Thing = Record<string, unknown>;
 

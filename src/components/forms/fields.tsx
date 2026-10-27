@@ -2,16 +2,15 @@
 
 import { useId, type ReactNode } from "react";
 import type { FieldError as RhfError, UseFormRegisterReturn } from "react-hook-form";
+import { controlClass } from "@/components/ui/Field";
 import { cn } from "@/lib/utils";
 
-const labelClass = "spec mb-2 block text-muted";
-const controlClass =
-  "w-full border-0 border-b border-line-strong bg-transparent px-0 text-lg outline-none transition-colors placeholder:text-muted/60 focus:border-fg focus-visible:outline-none aria-[invalid=true]:border-magenta";
+const labelClass = "mb-1.5 block text-sm font-semibold text-ink-900";
 
 export function ErrorText({ id, error }: { id: string; error?: RhfError | { message?: string } }) {
   if (!error?.message) return null;
   return (
-    <p id={id} role="alert" className="mt-2 text-sm text-magenta">
+    <p id={id} role="alert" className="mt-1.5 text-sm text-error">
       {error.message}
     </p>
   );
@@ -41,7 +40,7 @@ export function TextField({ label, reg, error, hint, className, type = "text", a
         {...reg}
       />
       {hint && !error && (
-        <p id={`${id}-h`} className="mt-2 text-sm text-muted">
+        <p id={`${id}-h`} className="mt-2 text-sm text-ink-500">
           {hint}
         </p>
       )}
@@ -66,7 +65,7 @@ export function TextArea({ label, reg, error, hint, className, rows = 4 }: Base 
         {...reg}
       />
       {hint && !error && (
-        <p id={`${id}-h`} className="mt-2 text-sm text-muted">
+        <p id={`${id}-h`} className="mt-2 text-sm text-ink-500">
           {hint}
         </p>
       )}
@@ -99,7 +98,7 @@ export function Chips({
           return (
             <label key={value} className="cursor-pointer">
               <input type={multiple ? "checkbox" : "radio"} value={value} className="peer sr-only" {...reg} />
-              <span className="inline-flex h-11 items-center border border-line-strong px-4 transition-colors peer-checked:border-fg peer-checked:bg-fg peer-checked:text-surface peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg hover:border-fg">
+              <span className="inline-flex h-11 items-center rounded-full border border-silver-300 bg-white px-4 text-[15px] font-medium transition peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white peer-focus-visible:shadow-[var(--ring)] hover:border-blue-600">
                 {label}
               </span>
             </label>
@@ -126,11 +125,11 @@ export function Honeypot({ reg }: { reg: UseFormRegisterReturn }) {
 /** Review list of answers. */
 export function ReviewList({ rows }: { rows: Array<{ label: string; value: ReactNode }> }) {
   return (
-    <dl className="divide-y divide-dashed divide-line border-y border-line">
+    <dl className="divide-y divide-silver-300 rounded-2xl bg-silver-50 px-5">
       {rows.map((r) => (
         <div key={r.label} className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr]">
-          <dt className="spec text-muted">{r.label}</dt>
-          <dd className="break-words">{r.value || <span className="text-muted">Not provided</span>}</dd>
+          <dt className="text-sm font-semibold text-ink-500">{r.label}</dt>
+          <dd className="break-words">{r.value || <span className="text-ink-500">Not provided</span>}</dd>
         </div>
       ))}
     </dl>

@@ -72,7 +72,9 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] `shipping.incoterms` per country (e.g. EXW, FOB, DDP): confirm which terms we offer.
 - [ ] City notes: confirm the port and hub notes.
 - [ ] Flags: pages show an ISO code badge. Add a local SVG flag set (needs a small dependency or hand-made SVGs) if you want real flags.
-- [ ] Tier 2 (~40) and Tier 3 (~130) countries are not built yet (COUNTRY_PAGES_PLAN.md §2).
+- [ ] `src/content/countries.tier2.ts`: 40 Tier 2 countries. Have a local adviser check each labelling summary and key points, especially fast-changing rules: front-of-pack warnings (Mexico, Chile, Colombia, Argentina, Peru, Brazil, Israel, Sri Lanka), halal phase-in (Indonesia), China import labelling, India Legal Metrology.
+- [ ] Tier 2 source links point to each authority's home page; confirm they open and add deeper guidance links where useful.
+- [ ] Tier 3 (~130 countries) not built yet (COUNTRY_PAGES_PLAN.md §2).
 
 ## 5. Media
 

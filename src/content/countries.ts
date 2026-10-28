@@ -2,6 +2,7 @@ import type { BoxRef } from "./designServices";
 import type { Faq } from "./rigidStyles";
 import { tier1Countries } from "./countries.tier1";
 import { tier1Extra } from "./countries.tier1.extra";
+import { tier2Countries } from "./countries.tier2";
 
 /**
  * Country landing pages (COUNTRY_PAGES_PLAN.md). Every page must carry country-specific content.
@@ -48,10 +49,13 @@ export type Country = {
   seasons?: string[];
 };
 
-export const countries: Country[] = tier1Countries.map((c) => {
-  const extra = tier1Extra[c.slug];
-  return extra ? { ...c, marketNotes: [...c.marketNotes, extra.note], faqs: [...c.faqs, ...extra.faqs], seasons: extra.seasons } : c;
-});
+export const countries: Country[] = [
+  ...tier1Countries.map((c) => {
+    const extra = tier1Extra[c.slug];
+    return extra ? { ...c, marketNotes: [...c.marketNotes, extra.note], faqs: [...c.faqs, ...extra.faqs], seasons: extra.seasons } : c;
+  }),
+  ...tier2Countries,
+];
 
 export const countryHref = (slug: string) => `/countries/${slug}`;
 export const getCountry = (slug: string) => countries.find((c) => c.slug === slug);

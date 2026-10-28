@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!c) return {};
   const description = `Packaging design and custom boxes for ${titleName(c)} brands: ${c.languages.join(" and ")} labels, ${c.currency.code} quotes, made in our own factory. Get a free quote.`;
   return {
-    title: c.tier === 1 ? `Packaging Design ${titleName(c)}` : `Packaging Design & Custom Boxes in ${titleName(c)}`,
+    title: `Packaging Design ${titleName(c)}`,
     description: description.length > 155 ? `${description.slice(0, 152)}...` : description,
     alternates: { canonical: countryHref(c.slug) },
     robots: isIndexable(c) ? undefined : { index: false, follow: true },

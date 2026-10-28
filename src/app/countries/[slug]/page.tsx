@@ -8,7 +8,7 @@ import { countries, countryHref, countryName, countryShippingFaqs, formatTime, g
 import { designHref, getDesignService, industryDesignService, type DesignService } from "@/content/designServices";
 import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
-import { FlagBadge } from "@/components/countries/FlagBadge";
+import { Flag } from "@/components/countries/Flag";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
@@ -85,7 +85,7 @@ export default async function CountryPage({ params }: Props) {
           <Breadcrumbs items={[{ label: "Countries", href: "/countries" }, { label: c.name }]} />
           <div className="mt-10 max-w-3xl">
             <div className="flex items-center gap-3">
-              <FlagBadge iso2={c.iso2} size="lg" />
+              <Flag iso2={c.iso2} size="md" />
               <p className="text-eyebrow text-blue-600">{c.region}</p>
             </div>
             <h1 className="text-h1 mt-5">Packaging design &amp; custom boxes for {c.name} brands</h1>
@@ -394,8 +394,8 @@ export default async function CountryPage({ params }: Props) {
           <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {nearby.map((n) => (
               <li key={n.slug}>
-                <Link href={countryHref(n.slug)} className="flex items-center gap-3 rounded-2xl border border-silver-300 bg-white p-3 font-semibold transition hover:border-blue-600 hover:text-blue-600">
-                  <FlagBadge iso2={n.iso2} size="sm" />
+                <Link href={countryHref(n.slug)} className="flex items-center gap-2 rounded-2xl border border-silver-300 bg-white p-3 font-semibold transition hover:border-blue-600 hover:text-blue-600">
+                  <Flag iso2={n.iso2} />
                   {n.name}
                 </Link>
               </li>

@@ -6,7 +6,7 @@ import { useId, useMemo, useState, type ReactNode } from "react";
 import type { Region } from "@/content/countries";
 import { cn } from "@/lib/utils";
 
-/** `flag` is rendered on the server (FlagBadge), so the flag set never ships to the browser. */
+/** `flag` is rendered on the server (Flag), so the flag set never ships to the browser. */
 type Item = { slug: string; name: string; region: Region; flag: ReactNode };
 
 /** Search and region tabs over every country page. Without JS every country shows, grouped by region. */
@@ -68,7 +68,7 @@ export function CountryBrowser({ items, regions }: { items: Item[]; regions: Reg
             <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {g.list.map((c) => (
                 <li key={c.slug}>
-                  <Link href={`/countries/${c.slug}`} className="flex items-center gap-3 rounded-2xl border border-silver-300 p-3 font-semibold transition hover:border-blue-600 hover:text-blue-600">
+                  <Link href={`/countries/${c.slug}`} className="flex items-center gap-2 rounded-2xl border border-silver-300 p-3 font-semibold transition hover:border-blue-600 hover:text-blue-600">
                     {c.flag}
                     {c.name}
                   </Link>

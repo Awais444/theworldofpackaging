@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Post } from "@/content/blog/posts";
 import { countryHref, type Country } from "@/content/countries";
-import { FlagBadge } from "@/components/countries/FlagBadge";
+import { Flag } from "@/components/countries/Flag";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 /** "Related guides" cards used on service, box and industry pages. */
@@ -33,8 +33,8 @@ export function RegionLinks({ countries, title = "Popular regions" }: { countrie
       <ul className="mt-4 flex flex-wrap gap-2">
         {countries.map((c) => (
           <li key={c.slug}>
-            <Link href={countryHref(c.slug)} className="inline-flex h-11 items-center gap-2 rounded-full border border-silver-300 bg-white pl-1.5 pr-4 text-sm font-semibold transition-colors hover:border-blue-600 hover:text-blue-600">
-              <FlagBadge iso2={c.iso2} size="sm" />
+            <Link href={countryHref(c.slug)} className="inline-flex h-11 items-center gap-2 rounded-full border border-silver-300 bg-white px-4 text-sm font-semibold transition-colors hover:border-blue-600 hover:text-blue-600">
+              <Flag iso2={c.iso2} />
               {c.name}
             </Link>
           </li>

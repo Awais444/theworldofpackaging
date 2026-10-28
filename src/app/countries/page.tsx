@@ -5,7 +5,7 @@ import { site } from "@/config/site";
 import { REGIONS, countries, countryHref, formatTime, shippingTimes } from "@/content/countries";
 import { quoteHref } from "@/content/navigation";
 import { CountryBrowser } from "@/components/countries/CountryBrowser";
-import { FlagBadge } from "@/components/countries/FlagBadge";
+import { Flag } from "@/components/countries/Flag";
 import { PageHero } from "@/components/sections/PageHero";
 import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
@@ -42,8 +42,8 @@ export default function CountriesHub() {
           {featured.map((c) => (
             <li key={c.slug}>
               <Link href={countryHref(c.slug)} className="flex h-full flex-col rounded-2xl border border-silver-300 p-5 transition hover:-translate-y-1 hover:border-blue-600 hover:shadow-md">
-                <div className="flex items-center gap-3">
-                  <FlagBadge iso2={c.iso2} />
+                <div className="flex items-center gap-2">
+                  <Flag iso2={c.iso2} />
                   <span className="font-heading text-lg font-bold leading-snug">{c.name}</span>
                 </div>
                 <p className="mt-3 text-sm text-ink-500">
@@ -64,7 +64,7 @@ export default function CountriesHub() {
       <Section bg="silver-50">
         <SectionHeader eyebrow="All countries" title="Find your country" highlight="your" />
         <div className="mt-10">
-          <CountryBrowser items={countries.map(({ slug, name, iso2, region }) => ({ slug, name, region, flag: <FlagBadge iso2={iso2} size="sm" /> }))} regions={REGIONS} />
+          <CountryBrowser items={countries.map(({ slug, name, iso2, region }) => ({ slug, name, region, flag: <Flag iso2={iso2} /> }))} regions={REGIONS} />
         </div>
       </Section>
 

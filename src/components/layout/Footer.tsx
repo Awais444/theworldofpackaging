@@ -1,7 +1,7 @@
 import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { FlagBadge } from "@/components/countries/FlagBadge";
+import { Flag } from "@/components/countries/Flag";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { CookieSettingsLink } from "@/components/providers/ConsentAndAnalytics";
 import { Logo } from "@/components/ui/Logo";
@@ -10,7 +10,7 @@ import { footerCountries, footerIndustries, footerNav, legalNav, quoteHref } fro
 import { FooterGroup } from "./FooterGroup";
 
 const link = "rounded-sm text-[15px] leading-9 text-white/[.72] underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:text-white focus-visible:outline-none focus-visible:shadow-[var(--ring)]";
-const chip = "inline-flex h-8 items-center gap-1.5 rounded-full bg-white/10 px-3 text-[14px] text-white/[.85] transition-colors hover:bg-white/20 hover:text-white focus-visible:outline-none focus-visible:shadow-[var(--ring)]";
+const chip = "inline-flex h-8 items-center gap-2 rounded-full bg-white/10 px-3 text-[15px] text-white/[.85] transition-colors hover:bg-white/20 hover:text-white focus-visible:outline-none focus-visible:shadow-[var(--ring)]";
 const btn = "inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring)] sm:w-auto";
 
 /** Simple marks: lucide has no brand icons. Shown only when the URL is set in site.ts. */
@@ -154,7 +154,7 @@ export function Footer() {
             <span className="mr-1 text-[14px] font-bold">Countries:</span>
             {footerCountries.map((l) => (
               <Link key={l.href} href={l.href} className={chip}>
-                {l.iso2 && <FlagBadge iso2={l.iso2} size="sm" className="h-3 w-4" />}
+                {l.iso2 && <Flag iso2={l.iso2} tone="dark" />}
                 {l.label}
               </Link>
             ))}

@@ -101,15 +101,6 @@ export const posts: Post[] = [
     tags: ["Shipping", "Rigid boxes"],
     illustration: "shipping-carton",
   },
-  {
-    slug: "choosing-board-thickness",
-    title: "Choosing board thickness for your boxes",
-    description: "Greyboard thickness for rigid boxes, paperboard weight for cartons and flute for mailers, and how to choose.",
-    date: "2026-10-27",
-    readingMinutes: 4,
-    tags: ["Materials", "Rigid boxes"],
-    illustration: "lid-and-base",
-  },
 ];
 
 export const getPost = (slug: string) => posts.find((p) => p.slug === slug);

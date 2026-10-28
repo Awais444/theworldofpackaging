@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Plane, Ship } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
-import { REGIONS, countries, countryHref } from "@/content/countries";
+import { REGIONS, countries, countryHref, formatTime, shippingTimes } from "@/content/countries";
 import { quoteHref } from "@/content/navigation";
 import { CountryBrowser } from "@/components/countries/CountryBrowser";
 import { FlagBadge } from "@/components/countries/FlagBadge";
@@ -50,7 +50,10 @@ export default function CountriesHub() {
                   {c.languages.join(" · ")} · {c.currency.code}
                 </p>
                 <p className="mt-1 text-sm text-ink-500">
-                  Air: {c.shipping.air ?? "on quote"} · Sea: {c.shipping.sea ?? "on quote"}
+                  {(() => {
+                    const s = shippingTimes(c);
+                    return `Air: ${formatTime(s.air, s.airApprox, "on quote")} · Sea: ${formatTime(s.sea, s.seaApprox, "on quote")}`;
+                  })()}
                 </p>
               </Link>
             </li>
@@ -76,6 +79,7 @@ export default function CountriesHub() {
             <Ship aria-hidden="true" className="h-6 w-6 text-blue-600" />
             <p className="mt-3 font-heading text-h4 font-bold">Sea freight</p>
             <p className="mt-2 text-ink-500">Economical for production volumes when the timeline allows.</p>
+            <p className="mt-3 text-sm text-ink-500">Times shown are approximate, after dispatch. Exact time and cost confirmed with your quote.</p>
           </div>
           <div className="rounded-2xl bg-blue-50 p-6">
             <p className="font-heading text-h4 font-bold">Ship flat, save more</p>

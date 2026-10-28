@@ -8,6 +8,23 @@ export type CurrencyCode = "USD" | "GBP" | "EUR" | "CAD" | "AUD" | "AED";
 
 const QUOTE_REPLY_HOURS = 24; // TODO confirm
 
+/**
+ * Approximate transit times by region, after dispatch from our factory. Shown as "Approx." everywhere.
+ * Per-country values in content/countries*.ts override these. TODO: confirm with shipping agent.
+ */
+export const shippingByRegion: Record<string, { air: string; sea: string }> = {
+  "Middle East": { air: "3–5 days", sea: "10–20 days" },
+  Europe: { air: "5–8 days", sea: "25–35 days" },
+  "North America": { air: "6–10 days", sea: "30–45 days" },
+  Oceania: { air: "7–10 days", sea: "30–40 days" },
+  Asia: { air: "4–7 days", sea: "15–30 days" },
+  Africa: { air: "7–12 days", sea: "30–50 days" },
+  "Latin America": { air: "7–12 days", sea: "30–50 days" },
+};
+
+/** Note shown with approximate transit times. */
+export const shippingNote = "Transit time after dispatch. Exact time and cost confirmed with your quote.";
+
 export const site = {
   name: "The World of Packaging",
   shortName: "TWOP",

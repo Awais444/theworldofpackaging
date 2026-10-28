@@ -1,3 +1,4 @@
+import { shippingByRegion } from "@/config/site";
 import type { BoxRef } from "./designServices";
 import type { Faq } from "./rigidStyles";
 import { tier1Countries } from "./countries.tier1";
@@ -62,13 +63,31 @@ export const countries: Country[] = [
 ];
 
 export const countryHref = (slug: string) => `/countries/${slug}`;
+
+/**
+ * Transit times for a country: its own values when set, otherwise its region's approximate range.
+ * `approx` is true for each value taken from the region.
+ */
+export function shippingTimes(c: Country): { air: string | null; sea: string | null; airApprox: boolean; seaApprox: boolean } {
+  const region = shippingByRegion[c.region];
+  return {
+    air: c.shipping.air ?? region?.air ?? null,
+    sea: c.shipping.sea ?? region?.sea ?? null,
+    airApprox: !c.shipping.air && Boolean(region?.air),
+    seaApprox: !c.shipping.sea && Boolean(region?.sea),
+  };
+}
+
+/** "Approx. 5–8 days" for region values, the plain value for confirmed ones, or the fallback. */
+export const formatTime = (value: string | null, approx: boolean, fallback = "Confirmed with your quote") => (value ? (approx ? `Approx. ${value}` : value) : fallback);
 export const getCountry = (slug: string) => countries.find((c) => c.slug === slug);
 export const countryName = (c: Country) => c.inText ?? c.name;
 
 /** Tier 3 pages are indexed only when every required field is filled (plan §3). */
 export function isIndexable(c: Country): boolean {
   if (c.tier < 3) return true;
-  return Boolean(c.name && c.region && c.currency.code && c.languages.length && c.measurement && c.labelling.authority && (c.shipping.air || c.shipping.sea) && c.marketNotes.length);
+  const ship = shippingTimes(c);
+  return Boolean(c.name && c.region && c.currency.code && c.languages.length && c.measurement && c.labelling.authority && (ship.air || ship.sea) && c.marketNotes.length);
 }
 
 export const REGIONS: Region[] = ["North America", "Europe", "Middle East", "Asia", "Oceania", "Africa", "Latin America"];

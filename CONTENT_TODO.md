@@ -68,7 +68,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 
 - [ ] `src/content/countries.tier1.ts`: have a local adviser check the labelling summary, key points and authority for each of the 20 Tier 1 countries (all marked "Last reviewed: 28 October 2026"). Gulf pages (Kuwait, Qatar, Oman, Bahrain) cite only the GSO site; add each country's own authority link once confirmed.
 - [ ] Confirm every official source link opens.
-- [ ] `shipping.air` / `shipping.sea` per country: real transit times from the logistics partner (pages say "Confirmed with your quote" until set).
+- [ ] Confirm region shipping ranges with shipping agent (`shippingByRegion` in `src/config/site.ts`). Per-country `shipping.air` / `shipping.sea` override them when added.
 - [ ] `shipping.incoterms` per country (e.g. EXW, FOB, DDP): confirm which terms we offer.
 - [ ] City notes: confirm the port and hub notes.
 - [ ] City pages (`/countries/[slug]/[city]`, plan phase 2) are not built. Tier 1 city cards have no links for now; add pages only with genuinely local content.

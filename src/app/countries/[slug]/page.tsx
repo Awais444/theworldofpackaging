@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CheckCircle2, ExternalLink, Factory, Plane, Ship, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { site } from "@/config/site";
+import { shippingNote, site } from "@/config/site";
 import { getPost } from "@/content/blog/posts";
-import { countries, countryHref, countryName, countryShippingFaqs, getCountry, isIndexable, nearbyCountries, type Country } from "@/content/countries";
+import { countries, countryHref, countryName, countryShippingFaqs, formatTime, getCountry, isIndexable, nearbyCountries, shippingTimes, type Country } from "@/content/countries";
 import { designHref, getDesignService, industryDesignService, type DesignService } from "@/content/designServices";
 import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
@@ -58,14 +58,15 @@ export default async function CountryPage({ params }: Props) {
   const nearby = nearbyCountries(c);
   const faqs = [...c.faqs, ...countryShippingFaqs];
   const full = c.tier < 3;
+  const ship = shippingTimes(c);
 
   const glance = [
     { label: "Currency", value: `${c.currency.name} (${c.currency.code})` },
     { label: "Label language", value: c.languages.join(", ") },
     { label: "Units", value: c.measurement === "both" ? "Metric and US customary" : c.measurement === "metric" ? "Metric" : "Imperial" },
     { label: "Labelling authority", value: c.labelling.authority || PENDING },
-    { label: "Air shipping", value: c.shipping.air ?? PENDING },
-    { label: "Sea shipping", value: c.shipping.sea ?? PENDING },
+    { label: "Air shipping", value: formatTime(ship.air, ship.airApprox, PENDING) },
+    { label: "Sea shipping", value: formatTime(ship.sea, ship.seaApprox, PENDING) },
   ];
 
   return (
@@ -117,6 +118,7 @@ export default async function CountryPage({ params }: Props) {
             </div>
           ))}
         </dl>
+        {(ship.airApprox || ship.seaApprox) && <p className="mt-4 text-sm text-ink-500">Shipping times are approximate. {shippingNote}</p>}
       </Section>
 
       {/* Full pages only: Tier 3 pages stay short (COUNTRY_PAGES_PLAN.md §2). */}
@@ -216,8 +218,8 @@ export default async function CountryPage({ params }: Props) {
         />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {[
-            { icon: Plane, title: "Air freight", time: c.shipping.air ?? PENDING, text: "For samples, launches and urgent stock. Delivered to your address, warehouse or 3PL." },
-            { icon: Ship, title: "Sea freight", time: c.shipping.sea ?? PENDING, text: "For production volumes. Usually to a port, then onward by road." },
+            { icon: Plane, title: "Air freight", time: ship.air ? `${formatTime(ship.air, ship.airApprox)} by air` : PENDING, text: "For samples, launches and urgent stock. Delivered to your address, warehouse or 3PL." },
+            { icon: Ship, title: "Sea freight", time: ship.sea ? `${formatTime(ship.sea, ship.seaApprox)} by sea` : PENDING, text: "For production volumes. Usually to a port, then onward by road." },
           ].map((m) => (
             <div key={m.title} className="rounded-2xl border border-silver-300 p-6">
               <m.icon aria-hidden="true" className="h-6 w-6 text-blue-600" />
@@ -227,6 +229,7 @@ export default async function CountryPage({ params }: Props) {
             </div>
           ))}
         </div>
+        {(ship.airApprox || ship.seaApprox) && <p className="mt-4 text-sm text-ink-500">{shippingNote}</p>}
         <div className="mt-6 rounded-2xl bg-blue-50 p-6">
           <p className="font-semibold text-ink-900">Ship flat, save space</p>
           <p className="mt-1 text-ink-500">{c.shipping.collapsibleTip}</p>

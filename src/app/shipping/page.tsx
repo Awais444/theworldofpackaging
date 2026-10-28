@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, Plane, Ship } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
 import { quoteHref } from "@/content/navigation";
+import { shippingByRegion, shippingNote } from "@/config/site";
 import { countries, countryHref } from "@/content/countries";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { FreightSlider } from "@/components/sections/FreightSlider";
@@ -129,6 +130,31 @@ export default function ShippingPage() {
               General guidance, not customs advice
             </Tag>
           </div>
+        </div>
+      </Section>
+
+      <Section>
+        <SectionHeader eyebrow="Transit times" title="Approximate shipping times by region" highlight="Approximate" lead={shippingNote} />
+        <div className="mt-10 overflow-x-auto rounded-2xl border border-silver-300">
+          <table className="w-full min-w-[30rem] border-collapse text-left">
+            <caption className="sr-only">Approximate transit times by region, after dispatch</caption>
+            <thead>
+              <tr className="bg-silver-50 text-sm text-ink-500">
+                <th scope="col" className="px-5 py-3 font-semibold">Region</th>
+                <th scope="col" className="px-5 py-3 font-semibold">Air (approx.)</th>
+                <th scope="col" className="px-5 py-3 font-semibold">Sea (approx.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(shippingByRegion).map(([region, t]) => (
+                <tr key={region} className="border-t border-silver-300">
+                  <th scope="row" className="px-5 py-3 font-semibold text-ink-900">{region}</th>
+                  <td className="px-5 py-3">Approx. {t.air}</td>
+                  <td className="px-5 py-3">Approx. {t.sea}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </Section>
 

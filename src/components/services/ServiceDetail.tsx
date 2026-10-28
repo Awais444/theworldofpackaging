@@ -1,5 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
-import { caseStudies } from "@/content/caseStudies";
+import { publicCaseStudies as caseStudies } from "@/content/caseStudies";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
 import type { ServicePage } from "@/content/servicePages";
@@ -14,6 +14,7 @@ import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StepList } from "@/components/ui/StepList";
 import { Tag } from "@/components/ui/Tag";
+import { priceLabel } from "@/content/pricing";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage, service as serviceSchema } from "@/lib/schema";
 
@@ -74,6 +75,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
         </div>
       </Section>
 
+      {related.length > 0 && (
       <Section bg="blue-50">
         <SectionHeader
           eyebrow="Related work"
@@ -91,6 +93,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
           ))}
         </div>
       </Section>
+      )}
 
       <Section>
         <SectionHeader eyebrow="Production" title="Pair it with production" highlight="production" lead="We make the boxes too. Designs go straight to our factory, with no hand-off to another printer." />
@@ -107,7 +110,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
             <div className="rounded-3xl bg-white p-8 shadow-sm">
               <p className="text-eyebrow text-blue-600">Starting price</p>
               {/* TODO: real "from" prices in agencyServices.ts */}
-              <p className="mt-3 font-heading text-4xl font-bold">{s.priceFrom ? `From $${s.priceFrom.toLocaleString("en-US")}` : "Quoted per project"}</p>
+              <p className="mt-3 font-heading text-4xl font-bold">{priceLabel(s.priceFrom)}</p>
               <p className="mt-2 text-sm text-ink-500">Timeline: {s.timeline}</p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <Tag tone="orange">Free design check</Tag>
@@ -130,6 +133,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
       <Section>
         <CTABand
           title={`Start your ${s.name.toLowerCase()} project`}
+          whatsapp={s.name}
           highlight="project"
           text="Tell us about your brand. We reply with a proposal and a fixed quote."
           actions={

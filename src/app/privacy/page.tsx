@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Privacy Policy", alternates: { canon
 // TODO: legal review. Template text only.
 export default function PrivacyPage() {
   return (
-    <LegalPage title="Privacy Policy" updated="TBC">
+    <LegalPage title="Privacy Policy">
       <p>This policy explains what personal data {site.name} collects through this website and how it is used.</p>
       <h2>What we collect</h2>
       <ul>
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
       <p>You can ask for a copy of your data, ask us to correct or delete it, or withdraw consent at any time by emailing {site.email}.</p>
       <h2>Contact</h2>
       <p>
-        {site.name}, {site.address}. Email: {site.email}.
+        {site.name}{site.address ? `, ${site.address}` : ""}. Email: {site.email}.
       </p>
     </LegalPage>
   );

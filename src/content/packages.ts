@@ -3,7 +3,7 @@ export type PackageBundle = {
   name: string;
   forWho: string;
   includes: string[];
-  /** USD. TODO: real "from" prices. null renders as "Quoted per project". */
+  /** USD. TODO: real "from" prices. null renders as "Get a quote". */
   priceFrom: number | null;
   featured?: boolean;
 };

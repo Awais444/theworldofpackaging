@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { caseStudies, getCaseStudy } from "@/content/caseStudies";
+import { getCaseStudy, publicCaseStudies as caseStudies } from "@/content/caseStudies";
 import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Media } from "@/components/media/Media";

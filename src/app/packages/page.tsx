@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Check, CheckCircle2, Minus } from "lucide-react";
 import { site } from "@/config/site";
 import { packageComparison, packages } from "@/content/packages";
-import { priceFromLabel } from "@/components/sections/AgencyBlocks";
+import { priceLabel } from "@/content/pricing";
 import { PageHero } from "@/components/sections/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
@@ -73,7 +73,7 @@ export default function PackagesPage() {
               <h2 className="text-h3">{p.name}</h2>
               <p className="mt-2 text-ink-500">{p.forWho}</p>
               {/* TODO: real prices in content/packages.ts */}
-              <p className="mt-6 font-heading text-3xl font-bold">{priceFromLabel(p.priceFrom)}</p>
+              <p className="mt-6 font-heading text-3xl font-bold">{priceLabel(p.priceFrom)}</p>
               <ul className="mt-6 space-y-3">
                 {p.includes.map((item) => (
                   <li key={item} className="flex gap-3">

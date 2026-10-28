@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { boxesMenu, industriesMenu, mainNav, primaryCta, servicesMenu, type NavLink } from "@/content/navigation";
+import { boxesMenu, brandingMenu, designMenu, mainNav, primaryCta, type MenuId, type NavLink } from "@/content/navigation";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
@@ -18,10 +18,10 @@ type MobileMenuProps = {
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-const groups: Record<string, Array<{ title?: string; links: NavLink[] }>> = {
-  boxes: boxesMenu.map((g) => ({ title: g.title, links: g.links })),
-  services: [{ links: servicesMenu }],
-  industries: [{ links: [...industriesMenu, { label: "All industries", href: "/industries" }] }],
+const groups: Record<MenuId, Array<{ title?: string; links: NavLink[] }>> = {
+  design: [...designMenu, { links: [{ label: "View all packaging design services", href: "/packaging-design" }] }],
+  branding: [{ links: brandingMenu }],
+  boxes: [...boxesMenu.map((g) => ({ title: g.title, links: g.links })), { links: [{ label: "All boxes", href: "/boxes" }] }],
 };
 
 /** Full-screen drawer: accordion groups, large tap targets, sticky quote button. */
@@ -71,7 +71,7 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[60] flex flex-col bg-white lg:hidden"
+          className="fixed inset-0 z-[60] flex flex-col bg-white xl:hidden"
         >
           <div className="container-x flex h-[var(--header-h)] shrink-0 items-center justify-between border-b border-silver-300/60">
             <Logo />

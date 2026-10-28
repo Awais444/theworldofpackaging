@@ -40,10 +40,10 @@ export const sustainability = [
   { title: "Less freight", body: "Collapsible boxes ship flat, reducing carton volume per box on international shipments." },
 ];
 
-// TODO: replace with the real founding story and dates.
+// TODO: add the real founding story and dates when available. Current copy states only what the business does.
 export const story = {
-  intro: "The World of Packaging started on a factory floor. We made rigid boxes for other people's designs, and kept seeing good products let down by packaging that was designed without knowing how it would be made.",
-  body: "So we built a design studio next to the production line. Today our designers and our factory team work on the same projects, from first sketch to delivered box, for brands across the USA, UK, Canada, Australia, the UAE and Europe.",
+  intro: "The World of Packaging is a packaging design studio with its own box factory in Pakistan. Our designers and our production team work on the same projects, so every design is drawn for the board, press and finishes it will be made with.",
+  body: "We design packaging for brands in the USA, UK, Canada, Australia, the UAE and Europe, and make rigid, collapsible and printed boxes in-house, from 500 boxes per design.",
   mission: "Make premium packaging possible for growing brands: well designed, made properly and delivered at a minimum order they can manage.",
 };
 
@@ -54,13 +54,7 @@ export const differences = [
   { title: "Built for export", text: "Collapsible boxes and export packing cut freight for international brands." },
 ];
 
-/** Numbers block. TODO: real, verified figures only. */
-export const companyNumbers = [
-  { value: "TBC", label: "Years making boxes" },
-  { value: "TBC", label: "Brands served" },
-  { value: "TBC", label: "Countries shipped to" },
-  { value: "TBC", label: "Boxes made per month" },
-];
+// TODO: add verified company numbers (years, brands served, countries, monthly output) to site.facts when available.
 
 export const values = [
   { title: "Honest numbers", text: "Clear quotes, real lead times and no surprise costs." },
@@ -82,3 +76,30 @@ export const productionSteps = [
 
 // TODO: real daily/monthly capacity.
 export const capacityNote = "Capacity depends on box style and finishes. We confirm a production slot and lead time with every quote.";
+
+/**
+ * Teams by role, used on /about and /team. Describes what each team does; no invented names.
+ * TODO: add real people (name, role, photo) to `team` above and set placeholder: false to show them on /team.
+ */
+export const teamGroups = [
+  {
+    name: "Packaging design studio",
+    summary: "Concepts, artwork and print-ready files on the real dieline.",
+    does: ["Packaging concepts and 3D mockups", "Label and box artwork", "Finish layers for foil, spot UV and embossing", "Range and SKU systems"],
+  },
+  {
+    name: "Brand designers",
+    summary: "Logos and identity systems built to work on packaging first.",
+    does: ["Logo and wordmark design", "Colour and type systems", "Brand guidelines", "Packaging-first brand strategy"],
+  },
+  {
+    name: "Structure and pre-press",
+    summary: "Dielines, white samples and file checks before anything is printed.",
+    does: ["Dielines and structural design", "Insert and cavity design", "Pre-press file checks", "Colour proofing"],
+  },
+  {
+    name: "Factory and quality control",
+    summary: "Cutting, printing, wrapping, inserts and checks on every batch.",
+    does: ["Rigid box production", "Printing and finishing", "Quality checks against the approved sample", "Export packing and shipping"],
+  },
+];

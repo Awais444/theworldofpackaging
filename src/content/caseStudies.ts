@@ -145,4 +145,7 @@ export const caseStudies: CaseStudy[] = [
   }),
 ];
 
-export const getCaseStudy = (slug: string) => caseStudies.find((c) => c.slug === slug);
+/** Real projects only. Sample (placeholder) projects stay in this file until replaced. */
+export const publicCaseStudies = caseStudies.filter((c) => !c.placeholder);
+
+export const getCaseStudy = (slug: string) => publicCaseStudies.find((c) => c.slug === slug);

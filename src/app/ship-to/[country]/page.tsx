@@ -157,6 +157,7 @@ export default async function ShipToPage({ params }: Props) {
       <Section className="!pt-0">
         <CTABand
           title={`Shipping to ${withThe(c.country)}?`}
+          whatsapp={`packaging shipped to ${withThe(c.country)}`}
           highlight="Shipping"
           text={`We quote delivered prices from ${site.country}, by air or sea.`}
           actions={

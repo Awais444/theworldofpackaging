@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
+import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
-import { servicePages } from "@/content/servicePages";
+import { quoteHref } from "@/content/navigation";
 import { packages } from "@/content/packages";
+import { designFeeNote, designPricing, designTiers, priceLabel } from "@/content/pricing";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
-import { priceFromLabel, ProjectCta } from "@/components/sections/AgencyBlocks";
+import { servicePages } from "@/content/servicePages";
 import { PageHero } from "@/components/sections/PageHero";
-import { FaqList } from "@/components/sections/StyleDetailBlocks";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
+import { CTABand } from "@/components/ui/CTABand";
+import { Section } from "@/components/ui/Layout";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Tabs } from "@/components/ui/Tabs";
+import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Pricing: rigid boxes, printed boxes, design and packages",
-  description: `How pricing works for rigid boxes (MOQ ${site.facts.rigidMoq}), printed boxes, design services and bundled packages.`,
+  title: "Pricing: packaging design, boxes and printing",
+  description: `How pricing works for packaging design (fee credited when we manufacture), rigid boxes from MOQ ${site.facts.rigidMoq}, printed boxes and packages.`,
   alternates: { canonical: "/pricing" },
 };
 
@@ -21,13 +28,13 @@ type Row = { href: string; name: string; cells: string[]; price: string };
 
 function PriceTable({ head, rows, caption }: { head: string[]; rows: Row[]; caption: string }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-2xl border border-silver-300">
       <table className="w-full min-w-[34rem] border-collapse text-left">
         <caption className="sr-only">{caption}</caption>
-        <thead>
-          <tr className="border-b border-silver-300">
-            {[...head, "From"].map((h) => (
-              <th key={h} scope="col" className="text-xs font-semibold uppercase tracking-wider py-3 pr-4 font-medium text-ink-500">
+        <thead className="bg-silver-50">
+          <tr>
+            {[...head, "Price"].map((h) => (
+              <th key={h} scope="col" className="px-5 py-3 text-sm font-semibold text-ink-500">
                 {h}
               </th>
             ))}
@@ -35,18 +42,18 @@ function PriceTable({ head, rows, caption }: { head: string[]; rows: Row[]; capt
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.href} className="border-b border-dashed border-silver-300">
-              <th scope="row" className="py-4 pr-4 font-medium">
+            <tr key={r.href} className="border-t border-silver-300">
+              <th scope="row" className="px-5 py-4 font-semibold">
                 <Link href={r.href} className="hover:text-blue-600">
                   {r.name}
                 </Link>
               </th>
               {r.cells.map((c, i) => (
-                <td key={i} className="py-4 pr-4 font-mono text-sm">
+                <td key={i} className="px-5 py-4 text-sm text-ink-500">
                   {c}
                 </td>
               ))}
-              <td className="py-4 font-mono text-sm">{r.price}</td>
+              <td className="px-5 py-4 text-sm font-semibold">{r.price}</td>
             </tr>
           ))}
         </tbody>
@@ -57,11 +64,12 @@ function PriceTable({ head, rows, caption }: { head: string[]; rows: Row[]; capt
 
 function Drivers({ items }: { items: string[] }) {
   return (
-    <div className="mt-12 grid gap-8 border-t border-silver-300 pt-8 md:grid-cols-[1fr_2fr]">
-      <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">What sets the price</p>
-      <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
+    <div className="mt-8 rounded-2xl bg-silver-50 p-6">
+      <p className="text-sm font-semibold text-ink-500">What sets the price</p>
+      <ul className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2">
         {items.map((d) => (
-          <li key={d} className="flex gap-3 before:mt-[0.75em] before:h-px before:w-3 before:shrink-0 before:bg-silver-300-strong">
+          <li key={d} className="flex items-center gap-2">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
             {d}
           </li>
         ))}
@@ -70,9 +78,59 @@ function Drivers({ items }: { items: string[] }) {
   );
 }
 
-const ON_QUOTE = "On quote"; // TODO: show real "from" prices once rates are confirmed
+const faqs = [
+  { q: "Is the design fee credited if you make my packaging?", a: `${designFeeNote} The amount and conditions are set out in your quote.` },
+  { q: "Why do most prices say “Get a quote”?", a: "Packaging prices depend on size, materials, finishes and quantity, so we quote each job instead of showing misleading averages." },
+  { q: "Are prices in USD?", a: "Quotes are in USD by default; other currencies on request." },
+  { q: "Is shipping included?", a: "No. We quote air and sea freight separately once we know quantity and destination." },
+  { q: "How do I pay?", a: "Payment terms are set out in your quote." }, // TODO: confirm deposit / balance terms
+];
 
 export default function PricingPage() {
+  const design = (
+    <>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {designPricing.map((p) => (
+          <div key={p.id} className="flex flex-col rounded-3xl border border-silver-300 p-6">
+            <h3 className="text-h4">{p.name}</h3>
+            <p className="mt-2 text-sm text-ink-500">{p.summary}</p>
+            {/* TODO: priceFrom values in content/pricing.ts */}
+            <p className="mt-4 font-heading text-2xl font-bold">{priceLabel(p.priceFrom)}</p>
+            <Button href={`${quoteHref}?service=${p.id}`} variant="secondary" className="mt-auto w-full" arrow>
+              Get a quote
+            </Button>
+          </div>
+        ))}
+      </div>
+      <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-orange-50 px-4 py-2 text-sm font-semibold text-orange-text">
+        <CheckCircle2 aria-hidden="true" className="h-4 w-4" /> {designFeeNote}
+      </p>
+      <div className="mt-10">
+        <h3 className="text-h4">Design tiers for every service</h3>
+        <div className="mt-4 grid gap-6 md:grid-cols-3">
+          {designTiers.map((t) => (
+            <div key={t.id} className={t.id === "standard" ? "rounded-3xl border-2 border-blue-600 p-6" : "rounded-3xl border border-silver-300 p-6"}>
+              <p className="font-heading text-lg font-bold">{t.name}</p>
+              <p className="mt-1 text-sm text-ink-500">{t.summary}</p>
+              <p className="mt-3 font-semibold">{priceLabel(t.priceFrom)}</p>
+              <ul className="mt-3 space-y-1.5 text-sm">
+                {t.includes.map((i) => (
+                  <li key={i} className="flex gap-2">
+                    <CheckCircle2 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" />
+                    {i}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+      <Button href="/packaging-design" variant="ghost" arrow className="mt-8">
+        All packaging design services
+      </Button>
+    </>
+  );
+
   const rigid = (
     <>
       <PriceTable
@@ -82,7 +140,7 @@ export default function PricingPage() {
           href: `/rigid-boxes/${s.slug}`,
           name: s.name,
           cells: [String(s.moq), `${Math.min(...s.boardMm).toFixed(1)}–${Math.max(...s.boardMm).toFixed(1)} mm`],
-          price: s.priceFrom ? `$${s.priceFrom.toFixed(2)}/unit` : ON_QUOTE,
+          price: priceLabel(s.priceFrom ?? null),
         }))}
       />
       <Drivers items={["Box size", "Board thickness", "Wrap material", "Finishes (foil, emboss, spot UV)", "Insert", "Quantity"]} />
@@ -94,27 +152,17 @@ export default function PricingPage() {
       <PriceTable
         caption="Printed box styles"
         head={["Style", "Material"]}
-        rows={printedStyles.map((s) => ({
-          href: `/printed-boxes/${s.slug}`,
-          name: s.name,
-          cells: [s.materials[0] ?? ""],
-          price: ON_QUOTE,
-        }))}
+        rows={printedStyles.map((s) => ({ href: `/printed-boxes/${s.slug}`, name: s.name, cells: [s.materials[0] ?? ""], price: priceLabel(null) }))}
       />
       <Drivers items={["Box size", "Board or flute", "Print sides and colours", "Finishes", "Quantity"]} />
     </>
   );
 
-  const design = (
+  const branding = (
     <PriceTable
-      caption="Design services"
-      head={["Service", "Studio"]}
-      rows={servicePages.map((s) => ({
-        href: `/services/${s.path}`,
-        name: s.name,
-        cells: [s.hub === "branding" ? "Branding" : "Packaging design"],
-        price: priceFromLabel(s.priceFrom),
-      }))}
+      caption="Branding and imagery services"
+      head={["Service"]}
+      rows={servicePages.map((s) => ({ href: `/services/${s.path}`, name: s.name, cells: [s.summary], price: priceLabel(s.priceFrom) }))}
     />
   );
 
@@ -123,9 +171,9 @@ export default function PricingPage() {
       <PriceTable
         caption="Packages"
         head={["Package", "For"]}
-        rows={packages.map((p) => ({ href: `/packages#${p.slug}`, name: p.name, cells: [p.forWho], price: priceFromLabel(p.priceFrom) }))}
+        rows={packages.map((p) => ({ href: `/packages#${p.slug}`, name: p.name, cells: [p.forWho], price: priceLabel(p.priceFrom) }))}
       />
-      <Button href="/packages" variant="link" arrow className="mt-8">
+      <Button href="/packages" variant="ghost" arrow className="mt-8">
         Compare packages
       </Button>
     </>
@@ -133,43 +181,55 @@ export default function PricingPage() {
 
   return (
     <>
+      <JsonLd data={faqPage(faqs)} />
       <PageHero
         crumbs={[{ label: "Pricing" }]}
-        spec={["Pricing", "USD", "Ex. shipping + duties"]}
-        title="What things cost, and why."
-        intro={
-          <p>
-            Box prices depend on size, materials and quantity, so most are quoted per job. Use the configurator for a
-            live estimate, or send a brief and get a fixed quote within {site.facts.quoteReplyHours} hours.
-          </p>
-        }
+        eyebrow="Pricing"
+        title="Clear pricing for design and boxes"
+        highlight="Clear"
+        intro={<p>Packaging design is priced per project, and the design fee is credited when we manufacture your order. Box prices depend on size, materials and quantity, so we quote each job {site.facts.quoteReply}.</p>}
         actions={
-          <>
-            <Button href="/get-a-quote" size="lg">
-              Get a Quote
-            </Button>
-          </>
+          <Button href={quoteHref} size="lg" arrow>
+            Get a Free Quote
+          </Button>
         }
+        whatsapp="pricing for packaging design and boxes"
       />
-      <section className="container-x pb-20 md:pb-28">
+      <Section className="!pt-0">
         <Tabs
           label="Pricing categories"
           items={[
-            { id: "rigid", label: "Rigid", content: rigid },
-            { id: "printed", label: "Printed", content: printed },
-            { id: "design", label: "Design", content: design },
+            { id: "packaging-design", label: "Packaging Design", content: design },
+            { id: "rigid", label: "Rigid Boxes", content: rigid },
+            { id: "printed", label: "Printed Boxes", content: printed },
+            { id: "branding", label: "Branding", content: branding },
             { id: "packages", label: "Packages", content: bundles },
           ]}
         />
-      </section>
-      <FaqList
-        faqs={[
-          { q: "Are prices in USD?", a: "Quotes are in USD by default. The configurator can show estimates in GBP, EUR, CAD, AUD and AED for reference." },
-          { q: "Is shipping included?", a: "No. We quote air and sea freight separately once we know quantity and destination." },
-          { q: "How do I pay?", a: "Payment terms are set out in your quote." }, // TODO: confirm deposit / balance terms
-        ]}
-      />
-      <ProjectCta title="Get a real number." body="Send the size, quantity and materials you have in mind. We reply with a fixed quote." />
+      </Section>
+      <Section bg="silver">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="FAQ" title="Pricing questions" highlight="questions" />
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} />
+          </div>
+        </div>
+      </Section>
+      <Section>
+        <CTABand
+          title="Get a real number"
+          highlight="real"
+          text="Send your product, size and quantity. We reply with a fixed quote."
+          whatsapp="pricing for packaging design and boxes"
+          actions={
+            <Button href={quoteHref} variant="accent" size="lg" arrow>
+              Get a Free Quote
+            </Button>
+          }
+        />
+      </Section>
     </>
   );
 }

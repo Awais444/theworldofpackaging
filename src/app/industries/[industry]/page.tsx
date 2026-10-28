@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Gift, Info, ShieldCheck, Store, type LucideIcon } from "lucide-react";
-import { caseStudies } from "@/content/caseStudies";
+import { ArrowRight, Gift, Info, ShieldCheck, Store, type LucideIcon } from "lucide-react";
+import Link from "next/link";
+import { publicCaseStudies } from "@/content/caseStudies";
+import { designHref, getDesignService, industryDesignService } from "@/content/designServices";
 import { getIndustry, industries } from "@/content/industries";
 import { industryCase, industryFinishes, industrySharedFaqs } from "@/content/industryDetails";
 import { quoteHref } from "@/content/navigation";
@@ -16,7 +18,6 @@ import { CaseCard, ProductCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Tag } from "@/components/ui/Tag";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
 
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ind = getIndustry((await params).industry);
   if (!ind) return {};
   return {
-    title: `${ind.name} Packaging: custom boxes and design`,
+    title: `${ind.name} Boxes & Packaging Supplies`,
     description: ind.intro,
     alternates: { canonical: `/industries/${ind.slug}` },
   };
@@ -54,8 +55,9 @@ export default async function IndustryPage({ params }: Props) {
       return s ? [printedCard(s)] : [];
     }),
   ].slice(0, 6);
-  const study = caseStudies.find((c) => c.slug === industryCase[ind.slug]) ?? caseStudies[0]!;
+  const study = publicCaseStudies.find((c) => c.slug === industryCase[ind.slug]) ?? publicCaseStudies[0];
   const faqs = [...ind.faqs, ...industrySharedFaqs].slice(0, 5);
+  const design = getDesignService(industryDesignService[ind.slug] ?? "");
   const finishes = industryFinishes[ind.slug] ?? [];
 
   return (
@@ -64,8 +66,8 @@ export default async function IndustryPage({ params }: Props) {
       <PageHero
         crumbs={[{ label: "Industries", href: "/industries" }, { label: ind.name }]}
         eyebrow="Industry"
-        title={`${ind.name} packaging`}
-        highlight="packaging"
+        title={`${ind.name} boxes and packaging`}
+        highlight="boxes"
         intro={<p>{ind.intro}</p>}
         slotId={`industry-${ind.slug}-hero`}
         actions={
@@ -79,6 +81,24 @@ export default async function IndustryPage({ params }: Props) {
           </>
         }
       />
+
+      {design && (
+        <Section className="!py-0">
+          <Link
+            href={designHref(design.slug)}
+            className="group flex flex-col gap-4 rounded-3xl bg-blue-600 p-6 text-white transition hover:bg-blue-700 md:flex-row md:items-center md:justify-between md:p-8"
+          >
+            <div>
+              <p className="text-eyebrow text-white/80">Need it designed?</p>
+              <p className="text-h3 mt-2">{design.name}</p>
+              <p className="mt-1 text-white/80">{design.short} Designed by our studio, made in our factory.</p>
+            </div>
+            <span className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-white px-6 font-semibold text-blue-600">
+              View the design service <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
+        </Section>
+      )}
 
       <Section bg="silver">
         <FadeIn>
@@ -104,9 +124,6 @@ export default async function IndustryPage({ params }: Props) {
             </span>
             <h3 className="text-h4 mt-4">Compliance notes</h3>
             <p className="mt-2 text-ink-500">{ind.compliance}</p>
-            <Tag tone="orange" className="mt-4">
-              To verify
-            </Tag>
           </li>
         </ul>
       </Section>
@@ -146,12 +163,14 @@ export default async function IndustryPage({ params }: Props) {
               All finishes
             </Button>
           </div>
-          <div className="lg:col-span-6">
-            <p className="text-eyebrow text-blue-600">Case study</p>
-            <div className="mt-4">
-              <CaseCard href={`/work/${study.slug}`} title={study.client} text={study.summary} slot={study.coverSlot} industry={study.industry} placeholder={study.placeholder} />
+          {study && (
+            <div className="lg:col-span-6">
+              <p className="text-eyebrow text-blue-600">Case study</p>
+              <div className="mt-4">
+                <CaseCard href={`/work/${study.slug}`} title={study.client} text={study.summary} slot={study.coverSlot} industry={study.industry} />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Section>
 
@@ -169,6 +188,7 @@ export default async function IndustryPage({ params }: Props) {
       <Section className="!pt-0">
         <CTABand
           title={`Launching in ${ind.name.toLowerCase()}?`}
+          whatsapp={`${ind.name} packaging`}
           highlight="Launching"
           text="Tell us about the product. We recommend a box and send a quote."
           actions={

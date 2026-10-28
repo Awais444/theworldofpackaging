@@ -18,8 +18,8 @@ export function organization(): Thing {
     url: siteUrl(),
     email: site.email,
     description: site.description,
-    address: { "@type": "PostalAddress", streetAddress: site.address, addressCountry: site.country },
-    contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: site.email, telephone: site.whatsapp }],
+    address: { "@type": "PostalAddress", ...(site.address ? { streetAddress: site.address } : {}), addressCountry: site.country },
+    contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: site.email, ...(site.phone ? { telephone: site.phone } : {}) }],
     ...(sameAs.length ? { sameAs } : {}),
   };
 }

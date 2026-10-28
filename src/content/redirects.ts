@@ -1,18 +1,23 @@
 // No imports: next.config.ts loads this file directly, outside the @/ alias.
-/** Old /branding and /packaging-design URLs and where they now live. */
+/**
+ * Old service URLs and where they now live. /packaging-design is the packaging design hub
+ * (design-first focus); /services keeps branding and imagery services.
+ */
 export const legacyServiceRedirects: Record<string, string> = {
   "/branding": "/services",
-  "/packaging-design": "/services",
-  "/branding/strategy-naming": "/services/brand-identity",
+  "/branding/strategy-naming": "/packaging-design/packaging-brand-strategy",
   "/branding/logo-design": "/services/logo-design",
   "/branding/brand-identity": "/services/brand-identity",
   "/branding/brand-guidelines": "/services/brand-identity",
-  "/branding/rebranding": "/services/brand-identity",
-  "/packaging-design/packaging-design": "/services/packaging-design",
-  "/packaging-design/rigid-box-design": "/services/packaging-design",
-  "/packaging-design/label-design": "/services/label-design",
-  "/packaging-design/structural-dieline": "/services/structural-dieline-design",
-  "/packaging-design/3d-mockups": "/services/3d-mockups",
+  "/branding/rebranding": "/packaging-design/packaging-redesign",
+  "/packaging-design/packaging-design": "/packaging-design/box-packaging-design",
+  "/packaging-design/rigid-box-design": "/packaging-design/rigid-luxury-box-design",
+  "/packaging-design/structural-dieline": "/packaging-design/structural-dieline-design",
+  "/packaging-design/3d-mockups": "/packaging-design/3d-packaging-mockups",
+  "/services/packaging-design": "/packaging-design",
+  "/services/label-design": "/packaging-design/label-design",
+  "/services/structural-dieline-design": "/packaging-design/structural-dieline-design",
+  "/services/3d-mockups": "/packaging-design/3d-packaging-mockups",
 };
 
 /** Phase 5 renamed this industry slug to match CLAUDE.md §9. */
@@ -32,4 +37,8 @@ export const legacyCompanyRedirects: Record<string, string> = {
 /** Phase 7 moved the quote form (CLAUDE.md §9). */
 export const legacyQuoteRedirects: Record<string, string> = {
   "/quote": "/get-a-quote",
+  // Browsers ask for these by convention; the real icons are app/icon.svg and app/apple-icon.
+  "/favicon.ico": "/icon.svg",
+  "/apple-touch-icon.png": "/apple-icon",
+  "/apple-touch-icon-precomposed.png": "/apple-icon",
 };

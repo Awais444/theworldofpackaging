@@ -17,8 +17,9 @@ export type Industry = {
   faqs: Faq[];
 };
 
+// TODO verify: add market-specific labelling notes per industry once reviewed by a compliance adviser.
 const COMPLIANCE_NOTE =
-  "Placeholder: list the labelling and material rules that apply in your main markets. We lay out the required text; the content must come from you or your compliance adviser.";
+  "Labelling rules depend on your product and the markets you sell in. We lay out the required text and symbols on the box; the wording itself comes from you or your compliance adviser.";
 
 export const industries: Industry[] = [
   {

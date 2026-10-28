@@ -58,22 +58,28 @@ export function Footer() {
           <div className="lg:col-span-3">
             <h2 className="font-heading text-base font-bold">Contact</h2>
             <ul className="mt-4 space-y-3 text-sm text-white/80">
-              <li>
-                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 hover:text-white">
-                  <MessageCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> WhatsApp {site.whatsapp}
-                </a>
-              </li>
+              {site.whatsapp && (
+                <li>
+                  <a href={whatsappUrl() ?? undefined} target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 hover:text-white">
+                    <MessageCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> WhatsApp {site.whatsapp}
+                  </a>
+                </li>
+              )}
               <li>
                 <a href={`mailto:${site.email}`} className="inline-flex gap-2 break-all hover:text-white">
                   <Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.email}
                 </a>
               </li>
-              <li className="flex gap-2">
-                <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.address}
-              </li>
-              <li className="flex gap-2">
-                <Clock aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.hours}
-              </li>
+              {site.address && (
+                <li className="flex gap-2">
+                  <MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.address}
+                </li>
+              )}
+              {site.hours && (
+                <li className="flex gap-2">
+                  <Clock aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" /> {site.hours}
+                </li>
+              )}
             </ul>
           </div>
         </div>

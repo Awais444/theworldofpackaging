@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import type { CurrencyCode } from "@/config/site";
+import { site, type CurrencyCode } from "@/config/site";
 import { finishes as allFinishes } from "@/content/materials";
 import { printedStyles } from "@/content/printedStyles";
 import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
@@ -303,8 +303,12 @@ export function Configurator() {
     setTimeout(() => setAdded(false), 2200);
   };
 
+  // Example rates are never shown publicly: prices appear only once RATES.ratesConfirmed is true.
+  const showPrices = RATES.ratesConfirmed;
+
   const summary = (
     <div className="space-y-6">
+      {showPrices ? (
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-ink-500">Estimated total</p>
@@ -326,8 +330,14 @@ export function Configurator() {
           </select>
         </label>
       </div>
+      ) : (
+        <div className="rounded-2xl bg-blue-50 p-5">
+          <p className="font-heading text-lg font-bold">Get a quote for this spec</p>
+          <p className="mt-1 text-sm text-ink-500">Send it to us and we reply {site.facts.quoteReply} with a price.</p>
+        </div>
+      )}
       <dl className="divide-y divide-dashed divide-silver-300 border-y border-silver-300 text-sm">
-        {est.lines.map((l) => (
+        {showPrices && est.lines.map((l) => (
           <div key={l.label} className="flex justify-between gap-4 py-2">
             <dt className="text-ink-500">{l.label}</dt>
             <dd>{money(l.amount)}</dd>
@@ -338,17 +348,20 @@ export function Configurator() {
           <dd>{est.cbm} m³</dd>
         </div>
       </dl>
-      <p className="text-sm text-ink-500">
-        Estimated, final price confirmed in quote.
-        {!RATES.ratesConfirmed && <span className="text-xs font-semibold uppercase tracking-wider ml-2 bg-orange-50 rounded-full px-1.5 py-0.5 text-ink-900">Example rates</span>}
-      </p>
+      {showPrices && <p className="text-sm text-ink-500">Estimated, final price confirmed in quote.</p>}
       <div className="flex flex-wrap gap-3">
         <Button onClick={sendAsQuote} arrow disabled={!dimOk || !qtyOk}>
           Send as quote
         </Button>
-        <Button variant="secondary" onClick={addSample}>
-          {added ? "Added to cart" : `Add sample · ${money(RATES.samplePrice[c.type])}`}
-        </Button>
+        {showPrices ? (
+          <Button variant="secondary" onClick={addSample}>
+            {added ? "Added to cart" : `Add sample · ${money(RATES.samplePrice[c.type])}`}
+          </Button>
+        ) : (
+          <Button variant="secondary" href="/samples">
+            Ask about a sample
+          </Button>
+        )}
       </div>
       <p aria-live="polite" className="sr-only">
         {added ? "Sample added to cart" : ""}
@@ -428,7 +441,13 @@ export function Configurator() {
       {/* Mobile: total always in reach. */}
       <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between border-t border-silver-300 bg-white px-4 py-3 lg:hidden">
         <span className="text-sm">
-          {money(est.total)} <span className="text-ink-500">· {money(est.unit)}/box</span>
+          {showPrices ? (
+            <>
+              {money(est.total)} <span className="text-ink-500">· {money(est.unit)}/box</span>
+            </>
+          ) : (
+            "Ready for a quote"
+          )}
         </span>
         <Button size="md" onClick={sendAsQuote} disabled={!dimOk || !qtyOk}>
           Quote

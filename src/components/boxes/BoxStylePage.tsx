@@ -17,6 +17,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SpecTable } from "@/components/ui/SpecTable";
 import { StepList } from "@/components/ui/StepList";
 import { Tag } from "@/components/ui/Tag";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import type { BoxView } from "@/lib/boxView";
 import { faqPage, product } from "@/lib/schema";
 import { ProductGallery } from "./ProductGallery";
@@ -76,6 +77,7 @@ export function BoxStylePage({ box }: { box: BoxView }) {
                 <Button href={`/samples?style=${box.slug}`} size="lg" variant="secondary">
                   Request Sample
                 </Button>
+                <WhatsAppButton topic={box.name.endsWith("Box") ? `${box.name}es` : `${box.name}s`} variant="ghost" />
               </div>
               <p className="mt-4 text-sm text-ink-500">Free design support included.</p>
             </div>
@@ -212,6 +214,7 @@ export function BoxStylePage({ box }: { box: BoxView }) {
       <Section>
         <CTABand
           title={`Get a price for your ${box.name.toLowerCase()}`}
+          whatsapp={box.name.endsWith("Box") ? `${box.name}es` : `${box.name}s`}
           highlight="price"
           text="Send your size and quantity. Free design support with every order."
           actions={

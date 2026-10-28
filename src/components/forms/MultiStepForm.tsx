@@ -3,7 +3,8 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRef, useState, type ReactNode } from "react";
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
-import { site, whatsappUrl } from "@/config/site";
+import { site } from "@/config/site";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import type { ActionResult } from "@/app/actions/contact";
 import { Button } from "@/components/ui/Button";
 import { CopyButton } from "@/components/ui/CopyButton";
@@ -30,10 +31,12 @@ export function DirectContact() {
         </a>
         <CopyButton value={site.email} label="email address" />
       </p>
-      <p className="flex flex-wrap items-center gap-3">
-        <span>WhatsApp {site.whatsapp}</span>
-        <CopyButton value={site.whatsapp} label="WhatsApp number" />
-      </p>
+      {site.whatsapp && (
+        <p className="flex flex-wrap items-center gap-3">
+          <span>WhatsApp {site.whatsapp}</span>
+          <CopyButton value={site.whatsapp} label="WhatsApp number" />
+        </p>
+      )}
     </div>
   );
 }
@@ -45,9 +48,7 @@ function Success({ title, body }: { title: string; body: string }) {
       <h2 className="text-h2 mt-6">{title}</h2>
       <p className="text-lead mt-4 text-ink-500">{body}</p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Button href={whatsappUrl("Hi, I just sent a project brief on your website.")} size="lg" arrow>
-          Message us on WhatsApp
-        </Button>
+        <WhatsAppButton message="Hi, I just sent a project brief on your website." label="Message us on WhatsApp" variant="primary" />
         <Button href="/work" size="lg" variant="secondary">
           Browse our work
         </Button>

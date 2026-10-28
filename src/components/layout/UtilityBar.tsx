@@ -10,11 +10,13 @@ export function UtilityBar() {
           MOQ {site.facts.rigidMoq} · Free design support · Ships worldwide
         </p>
         <ul className="hidden items-center gap-6 md:flex">
-          <li>
-            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:underline">
-              <MessageCircle aria-hidden="true" className="h-3.5 w-3.5" /> WhatsApp {site.whatsapp}
-            </a>
-          </li>
+          {site.whatsapp && (
+            <li>
+              <a href={whatsappUrl() ?? undefined} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:underline">
+                <MessageCircle aria-hidden="true" className="h-3.5 w-3.5" /> WhatsApp {site.whatsapp}
+              </a>
+            </li>
+          )}
           <li>
             <a href={`mailto:${site.email}`} className="inline-flex items-center gap-1.5 hover:underline">
               <Mail aria-hidden="true" className="h-3.5 w-3.5" /> {site.email}

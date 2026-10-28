@@ -1,4 +1,5 @@
 import type { IllustrationKey } from "@/components/illustrations";
+import { designServices } from "./designServices";
 import { servicePages } from "./servicePages";
 import { caseStudies } from "./caseStudies";
 import { industries } from "./industries";
@@ -169,6 +170,21 @@ function generatedSlots(): MediaSlot[] {
       size: "2400×1800",
       shot: `Representative ${s.name.toLowerCase()} work from a real project`,
     });
+  }
+  const designShots = ["hero pack on a Pale Silver background", "range lined up together", "detail: finish and print close-up", "open, product in pack", "in use or on shelf", "flat dieline and artwork"];
+  for (const d of designServices) {
+    d.portfolioSlots.forEach((id, i) =>
+      out.push({
+        id,
+        alt: `${d.name}: ${designShots[i]}`,
+        illustration: i === 5 ? "dieline-flat" : d.illustration,
+        variant: galleryVariants[i % galleryVariants.length],
+        aspect: "4/3",
+        page: `/packaging-design/${d.slug}`,
+        size: "2400×1800",
+        shot: `${d.name.replace(/ Design$/, "")}, ${designShots[i]}`,
+      }),
+    );
   }
   const caseShots = ["identity applied: logo, palette, stationery or labels", "finished packaging, open, with product", "detail: finish and print close-up", "the range together", "on our factory floor", "in the customer's hands"];
   for (const c of caseStudies) {

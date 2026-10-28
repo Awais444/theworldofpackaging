@@ -1,22 +1,28 @@
 import type { ReactNode } from "react";
+import { promises } from "@/config/site";
 import { Container } from "./Layout";
+import { WhatsAppButton } from "./WhatsAppButton";
 import { withHighlight } from "./withHighlight";
 
 /**
  * Vibrant Blue call-to-action panel (CLAUDE.md §4.4). The highlight word stays white
  * here (never orange text on blue); the swoosh carries the accent.
+ * Every band shows the confirmed promises and a WhatsApp alternative naming the page topic.
  */
 export function CTABand({
   title,
   highlight,
   text,
   actions,
+  whatsapp,
 }: {
   title: string;
   highlight?: string;
   text: string;
   /** Typically an accent button and a white button. */
   actions: ReactNode;
+  /** Topic for the pre-filled WhatsApp message, e.g. "Magnetic Closure Boxes"; false hides it. */
+  whatsapp?: string | false;
 }) {
   return (
     <section className="section-y">
@@ -28,8 +34,19 @@ export function CTABand({
             <div className="max-w-2xl">
               <h2 className="text-h2 on-dark">{withHighlight(title, highlight)}</h2>
               <p className="mt-4 text-lg text-white/85">{text}</p>
+              <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-white">
+                {promises().map((p) => (
+                  <li key={p} className="inline-flex items-center gap-2">
+                    <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
+                    {p}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="flex flex-wrap gap-3">{actions}</div>
+            <div className="flex flex-wrap gap-3">
+              {actions}
+              {whatsapp !== false && <WhatsAppButton topic={whatsapp || undefined} variant="white" />}
+            </div>
           </div>
         </div>
       </Container>

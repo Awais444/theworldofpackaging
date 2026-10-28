@@ -27,3 +27,6 @@ export const testimonials: Testimonial[] = [
     placeholder: true,
   },
 ];
+
+/** Real, approved quotes only. */
+export const publicTestimonials = testimonials.filter((t) => !t.placeholder);

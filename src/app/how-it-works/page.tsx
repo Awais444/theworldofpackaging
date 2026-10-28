@@ -12,7 +12,6 @@ import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SpecTable } from "@/components/ui/SpecTable";
-import { Tag } from "@/components/ui/Tag";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -80,10 +79,7 @@ export default function HowItWorksPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeader eyebrow="Timeline" title="An example timeline" highlight="example" />
-            <Tag tone="orange" className="mt-6">
-              Example only
-            </Tag>
+            <SectionHeader eyebrow="Timeline" title="A typical timeline" highlight="typical" lead="Exact dates are set in your quote." />
             <div className="mt-8">
               <SpecTable caption="Example project timeline" rows={exampleTimeline.map((t) => ({ label: t.step, value: t.time }))} />
             </div>

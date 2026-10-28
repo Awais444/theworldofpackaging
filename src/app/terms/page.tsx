@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Terms", alternates: { canonical: "/t
 // TODO: legal review. Template text only.
 export default function TermsPage() {
   return (
-    <LegalPage title="Terms" updated="TBC">
+    <LegalPage title="Terms">
       <p>These terms cover use of this website and orders placed with {site.name}. Each project is also governed by its written quote.</p>
       <h2>Quotes and estimates</h2>
       <p>Configurator figures are estimates. Prices are confirmed only in a written quote.</p>

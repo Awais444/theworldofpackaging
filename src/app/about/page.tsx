@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { CheckCircle2, UserRound } from "lucide-react";
-import { site } from "@/config/site";
-import { companyNumbers, differences, story, team, values } from "@/content/company";
+import { CheckCircle2 } from "lucide-react";
+import { factStats, site } from "@/config/site";
+import { differences, story, teamGroups, values } from "@/content/company";
 import { quoteHref } from "@/content/navigation";
 import { Media } from "@/components/media/Media";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -11,7 +11,6 @@ import { StatCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Tag } from "@/components/ui/Tag";
 
 export const metadata: Metadata = {
   title: "About us: a design studio with its own box factory",
@@ -44,11 +43,7 @@ export default function AboutPage() {
       <Section bg="silver">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <SectionHeader eyebrow="Our story" title="Started on the factory floor" highlight="floor" />
-            {/* TODO: real founding story */}
-            <Tag tone="orange" className="mt-6">
-              Story to confirm
-            </Tag>
+            <SectionHeader eyebrow="Who we are" title="Designers and box makers, one team" highlight="one" />
           </div>
           <div className="space-y-5 text-lg lg:col-span-7">
             <p>{story.intro}</p>
@@ -78,29 +73,30 @@ export default function AboutPage() {
       </Section>
 
       <Section bg="blue-50">
-        <SectionHeader eyebrow="In numbers" title="The studio and factory today" highlight="today" />
+        <SectionHeader eyebrow="Our promises" title="What you can count on" highlight="count" />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {companyNumbers.map((n) => (
-            <StatCard key={n.label} value={n.value} label={n.label} placeholder />
+          {factStats().map((n) => (
+            <StatCard key={n.label} value={n.value} label={n.label} />
           ))}
         </div>
       </Section>
 
       <Section>
-        <SectionHeader eyebrow="Team" title="The people behind your boxes" highlight="people" />
+        <SectionHeader
+          eyebrow="Team"
+          title="The people behind your boxes"
+          highlight="people"
+          action={
+            <Button href="/team" variant="ghost" arrow>
+              Meet the team
+            </Button>
+          }
+        />
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((m, i) => (
-            <li key={`${m.role}-${i}`} className="rounded-2xl bg-silver-100 p-6">
-              <div className="flex aspect-square items-center justify-center rounded-xl bg-white text-silver-300" aria-hidden="true">
-                <UserRound className="h-16 w-16" />
-              </div>
-              <p className="mt-4 font-heading text-lg font-bold">{m.placeholder ? "Name to come" : m.name}</p>
-              <p className="text-sm text-ink-500">{m.role}</p>
-              {m.placeholder && (
-                <Tag tone="orange" className="mt-3">
-                  Placeholder
-                </Tag>
-              )}
+          {teamGroups.map((g) => (
+            <li key={g.name} className="rounded-2xl bg-silver-100 p-6">
+              <h3 className="text-h4">{g.name}</h3>
+              <p className="mt-2 text-ink-500">{g.summary}</p>
             </li>
           ))}
         </ul>

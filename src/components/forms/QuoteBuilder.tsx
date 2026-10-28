@@ -5,7 +5,8 @@ import { Check, ChevronUp, CircleCheck, FileUp, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { submitQuoteRequest } from "@/app/actions/forms";
-import { site, whatsappUrl } from "@/config/site";
+import { promises, site } from "@/config/site";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { finishes as finishOptions, inserts, printedMaterials, wraps } from "@/content/materials";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
@@ -173,9 +174,7 @@ function Success({ onRestart }: { onRestart: () => void }) {
       <h2 className="text-h2 mt-6">Quote request sent</h2>
       <p className="text-lead mt-4 text-ink-500">Thank you. We&apos;ll reply {site.facts.quoteReply} with a price and any questions about your spec.</p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
-        <Button href={whatsappUrl("Hi, I just sent a quote request on your website.")} size="lg" arrow>
-          Message us on WhatsApp
-        </Button>
+        <WhatsAppButton message="Hi, I just sent a quote request on your website." label="Message us on WhatsApp" variant="primary" />
         <Button href="/work" size="lg" variant="secondary">
           Browse our work
         </Button>
@@ -219,6 +218,8 @@ export function QuoteBuilder() {
       }
       const country = shipTo.find((s) => s.slug === q.get("country"))?.country;
       if (country && !draft.country) patch({ country });
+      const service = q.get("service");
+      if (service && !draft.notes) patch({ notes: `Design service: ${service.replace(/-/g, " ")}${q.get("tier") ? ` (${q.get("tier")} tier)` : ""}. ` });
       const industry = q.get("industry");
       if (industry && !draft.notes) patch({ notes: `Industry: ${industry.replace(/-/g, " ")}. ` });
     })();
@@ -540,7 +541,18 @@ export function QuoteBuilder() {
           <div className="mt-2">
             <Summary d={d} onEdit={move} compact />
           </div>
-          <p className="mt-4 text-sm text-ink-500">We reply {site.facts.quoteReply}. Free design support with every order.</p>
+          <ul className="mt-4 space-y-1.5 text-sm font-medium">
+            {promises().map((p) => (
+              <li key={p} className="flex items-center gap-2">
+                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
+                {p}
+              </li>
+            ))}
+            <li className="flex items-center gap-2">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
+              Free design support with every order
+            </li>
+          </ul>
         </div>
       </aside>
 

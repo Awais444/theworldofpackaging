@@ -12,7 +12,6 @@ import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StepList } from "@/components/ui/StepList";
-import { Tag } from "@/components/ui/Tag";
 
 export const metadata: Metadata = {
   title: "Our factory: rigid box manufacturing in-house",
@@ -95,9 +94,6 @@ export default function FactoryPage() {
       <Section>
         <SectionHeader eyebrow="Sustainability" title="Materials and footprint" highlight="footprint" />
         {/* TODO: verify sustainability claims before launch (content/company.ts). */}
-        <Tag tone="orange" className="mt-6">
-          Wording to verify
-        </Tag>
         <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {sustainability.map((s) => (
             <li key={s.title} className="rounded-2xl border border-silver-300 p-6">

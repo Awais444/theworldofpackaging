@@ -116,18 +116,13 @@ export default function SamplesPage() {
         <FadeIn>
           <SectionHeader eyebrow="Choose" title="Pick your sample" highlight="sample" />
         </FadeIn>
-        {!RATES.ratesConfirmed && (
-          <p className="mt-6">
-            <Tag tone="orange">Example prices, to be confirmed</Tag>
-          </p>
-        )}
         <ul className="mt-10 grid gap-8 md:grid-cols-2">
           {samples.map((s) => (
             <li key={s.id} className="rounded-3xl border border-silver-300 p-4 md:p-6">
               <Media slot={s.slot} sizes="(min-width: 768px) 45vw, 100vw" />
               <div className="mt-6 flex items-baseline justify-between gap-4">
                 <h3 className="text-h3">{s.title}</h3>
-                <p className="font-heading text-2xl font-bold text-blue-600">${s.priceUsd}</p>
+                {RATES.ratesConfirmed && <p className="font-heading text-2xl font-bold text-blue-600">${s.priceUsd}</p>}
               </div>
               <p className="mt-2 text-ink-500">{s.body}</p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -136,7 +131,13 @@ export default function SamplesPage() {
                 ))}
               </div>
               <div className="mt-6">
-                <AddToCartButton item={{ id: s.id, kind: s.id === "swatch-kit" ? "swatches" : "sample", title: s.title, spec: s.spec, priceUsd: s.priceUsd }} />
+                {RATES.ratesConfirmed ? (
+                  <AddToCartButton item={{ id: s.id, kind: s.id === "swatch-kit" ? "swatches" : "sample", title: s.title, spec: s.spec, priceUsd: s.priceUsd }} />
+                ) : (
+                  <Button href="#request" variant="secondary" arrow>
+                    Request this sample
+                  </Button>
+                )}
               </div>
             </li>
           ))}

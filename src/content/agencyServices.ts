@@ -14,7 +14,7 @@ export type AgencyService = {
   intro: string;
   deliverables: Option[];
   process: { title: string; body: string }[];
-  /** USD. TODO: real "from" prices. null renders as "Quoted per project". */
+  /** USD. TODO: real "from" prices. null renders as "Get a quote". */
   priceFrom: number | null;
   /** Typical duration, neutral wording until confirmed. */
   timeline: string;
@@ -253,6 +253,66 @@ export const agencyServices: AgencyService[] = [
     workCategory: "Packaging",
     illustration: "magnetic-closed",
     faqs: [{ q: "Can renders replace photography?", a: "For launch, often yes. Once stock exists we recommend real photography for product pages." }],
+  },
+  {
+    slug: "amazon-packaging-and-listing-images",
+    hub: "packaging-design",
+    name: "Amazon Packaging & Listing Images",
+    summary: "Packaging and the listing images that sell it: main image, infographics and lifestyle shots.",
+    intro:
+      "On Amazon, most shoppers see your packaging as a small image before they ever hold it. We design packaging that reads at thumbnail size and create the listing image set around it: main image, infographics, size and contents images and A+ content.",
+    deliverables: [
+      { name: "Main image", detail: "Packaging render on white, sized to marketplace requirements." },
+      { name: "Infographic images", detail: "Benefits, dimensions, contents and how-to-use panels." },
+      { name: "Lifestyle composites", detail: "Your product in context, built from renders or your photos." },
+      { name: "A+ content modules", detail: "Brand story and comparison layouts." },
+      { name: "Packaging check", detail: "Front panel tested for thumbnail legibility." },
+    ],
+    process: [
+      { title: "Listing audit", body: "We review your current listing, competitors and category image rules." },
+      { title: "Image plan", body: "A shot list: which image answers which shopper question." },
+      { title: "Design", body: "Renders, infographics and lifestyle composites, in your brand style." },
+      { title: "Delivery", body: "Files sized and named for upload, with source files." },
+    ],
+    priceFrom: null, // TODO
+    timeline: "Agreed per project",
+    workCategory: "Packaging",
+    illustration: "mailer-box",
+    faqs: [
+      { q: "Do you follow Amazon's image rules?", a: "Yes. We design to the current requirements for your category, such as a pure white main image background. Rules change, so we check them at the start of each project." },
+      { q: "Can you make listing images before my stock arrives?", a: "Yes. We build images from 3D renders of your packaging." },
+      { q: "Do you write the listing copy?", a: "We write the short text inside images; full listing copy can be quoted separately." },
+    ],
+  },
+  {
+    slug: "product-mockups-for-ecommerce",
+    hub: "packaging-design",
+    name: "Product Mockups for E-commerce",
+    summary: "Photo-real product and packaging mockups for your store, ads and social.",
+    intro:
+      "Launch your store before the first box is made. We create photo-real mockups of your product and packaging for Shopify, ads, social and crowdfunding, matched to your real dieline and colours.",
+    deliverables: [
+      { name: "Hero product images", detail: "Packshots on white or brand colour backgrounds." },
+      { name: "Open and in-use views", detail: "Product in box, lid off, insert visible." },
+      { name: "Range and bundle scenes", detail: "Several products together for collections." },
+      { name: "Social and ad crops", detail: "Square, portrait and story formats." },
+      { name: "Optional animation", detail: "Short turntables or unboxing loops." },
+    ],
+    process: [
+      { title: "Files", body: "We take your dieline, artwork and product references." },
+      { title: "Model", body: "A 3D model built to the real sizes." },
+      { title: "Scenes", body: "Angles, lighting and backgrounds agreed with you." },
+      { title: "Delivery", body: "Images in every size you need, plus source files on request." },
+    ],
+    priceFrom: null, // TODO
+    timeline: "Agreed per project",
+    workCategory: "Packaging",
+    illustration: "magnetic-open",
+    faqs: [
+      { q: "Do mockups look like real photos?", a: "Yes, photo-real renders built from the production dieline and colours." },
+      { q: "Can you mock up packaging we did not design?", a: "Yes, from your print-ready files and dieline." },
+      { q: "Should we still do real photography later?", a: "For product detail pages, real photography once stock exists is a good addition." },
+    ],
   },
 ];
 

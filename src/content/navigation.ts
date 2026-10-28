@@ -1,3 +1,4 @@
+import { designByGroup, designHref, designServices } from "./designServices";
 import { industries } from "./industries";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
@@ -34,29 +35,58 @@ export const boxesPromo = {
   href: "/collapsible-rigid-boxes",
 };
 
-export const servicesMenu: NavLink[] = [
+/** Packaging Design mega menu: By Product (top 12), By Format, By Service. */
+const designLink = (slug: string): NavLink => {
+  const d = designServices.find((x) => x.slug === slug)!;
+  return { label: d.name.replace(/ Design$/, "").replace(/ Packaging$/, ""), href: designHref(slug) };
+};
+
+export const designMenu: NavGroup[] = [
+  {
+    title: "By Product",
+    links: [
+      "cosmetic-packaging-design",
+      "skincare-packaging-design",
+      "perfume-packaging-design",
+      "food-packaging-design",
+      "coffee-tea-packaging-design",
+      "chocolate-packaging-design",
+      "supplement-packaging-design",
+      "cbd-packaging-design",
+      "candle-packaging-design",
+      "jewelry-packaging-design",
+      "apparel-packaging-design",
+      "gift-box-pr-kit-design",
+    ].map(designLink),
+  },
+  { title: "By Format", links: designByGroup("format").map((d) => designLink(d.slug)) },
+  { title: "By Service", links: designByGroup("service").map((d) => designLink(d.slug)) },
+];
+
+export const brandingMenu: NavLink[] = [
   { label: "Brand Identity", href: "/services/brand-identity", description: "Logo, colour and type as one system" },
   { label: "Logo Design", href: "/services/logo-design", description: "A mark that works from box to favicon" },
-  { label: "Packaging Design", href: "/services/packaging-design", description: "Structure and artwork, print-ready" },
-  { label: "Label Design", href: "/services/label-design", description: "Labels for jars, bottles and tubes" },
-  { label: "Structural & Dieline Design", href: "/services/structural-dieline-design", description: "Custom shapes and inserts" },
-  { label: "3D Mockups & Renders", href: "/services/3d-mockups", description: "See the box before it is made" },
-  { label: "Packages", href: "/packages", description: "Design bundles at a fixed scope" },
+  { label: "Packaging Brand Strategy", href: designHref("packaging-brand-strategy"), description: "Positioning and on-pack messaging" },
+  { label: "Amazon Packaging & Listing Images", href: "/services/amazon-packaging-and-listing-images", description: "Packaging plus the images that sell it" },
+  { label: "Product Mockups for E-commerce", href: "/services/product-mockups-for-ecommerce", description: "Photo-real images before stock arrives" },
+  { label: "Packages", href: "/packages", description: "Brand and packaging bundles" },
 ];
 
 export const industriesMenu: NavLink[] = industries.map((i) => ({ label: i.name, href: `/industries/${i.slug}` }));
 
-export type MainNavItem = { kind: "link"; label: string; href: string } | { kind: "menu"; label: string; id: "boxes" | "services" | "industries" };
+export type MenuId = "design" | "branding" | "boxes";
+export type MainNavItem = { kind: "link"; label: string; href: string } | { kind: "menu"; label: string; id: MenuId; href: string };
 
 export const mainNav: MainNavItem[] = [
-  { kind: "menu", label: "Boxes", id: "boxes" },
-  { kind: "menu", label: "Services", id: "services" },
-  { kind: "menu", label: "Industries", id: "industries" },
+  { kind: "menu", label: "Packaging Design", id: "design", href: "/packaging-design" },
+  { kind: "menu", label: "Branding", id: "branding", href: "/services" },
+  { kind: "menu", label: "Boxes & Printing", id: "boxes", href: "/boxes" },
+  { kind: "link", label: "Industries", href: "/industries" },
   { kind: "link", label: "Work", href: "/work" },
-  { kind: "link", label: "About", href: "/about" },
+  { kind: "link", label: "Pricing", href: "/pricing" },
 ];
 
-export const primaryCta: NavLink = { label: "Get a Quote", href: quoteHref };
+export const primaryCta: NavLink = { label: "Get a Free Quote", href: quoteHref };
 
 export const footerNav: NavGroup[] = [
   {
@@ -71,12 +101,21 @@ export const footerNav: NavGroup[] = [
       { label: "Samples", href: "/samples" },
     ],
   },
-  { title: "Services", links: servicesMenu.map(({ label, href }) => ({ label, href })) },
+  {
+    title: "Packaging Design",
+    links: [
+      { label: "All design services", href: "/packaging-design" },
+      ...["cosmetic-packaging-design", "food-packaging-design", "coffee-tea-packaging-design", "supplement-packaging-design", "label-design", "rigid-luxury-box-design"].map(designLink),
+    ],
+  },
+  { title: "Branding", links: brandingMenu.map(({ label, href }) => ({ label, href })) },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Team", href: "/team" },
       { label: "Factory", href: "/factory" },
+      { label: "Industries", href: "/industries" },
       { label: "How It Works", href: "/how-it-works" },
       { label: "Work", href: "/work" },
       { label: "Shipping", href: "/shipping" },
@@ -90,5 +129,5 @@ export const footerNav: NavGroup[] = [
 export const legalNav: NavLink[] = [
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
-  { label: "Sitemap", href: "/sitemap/core.xml" },
+  { label: "Sitemap", href: "/sitemap.xml" },
 ];

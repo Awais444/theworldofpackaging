@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Breadcrumbs, type Crumb } from "@/components/layout/Breadcrumbs";
 import { Media } from "@/components/media/Media";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { withHighlight } from "@/components/ui/withHighlight";
 
 type PageHeroProps = {
@@ -15,13 +16,16 @@ type PageHeroProps = {
   /** Media slot for the visual; or pass `visual` for a custom element. */
   slotId?: string;
   visual?: ReactNode;
+  /** Topic for the WhatsApp alternative next to the actions; defaults to the page crumb. false hides it. */
+  whatsapp?: string | false;
   /** Older call sites still pass these; the hero no longer shows them. */
   spec?: string[];
   tone?: string;
 };
 
 /** Inner-page hero: breadcrumbs, eyebrow, H1, lead, actions, optional visual. */
-export function PageHero({ crumbs, title, highlight, eyebrow, intro, actions, slotId, visual }: PageHeroProps) {
+export function PageHero({ crumbs, title, highlight, eyebrow, intro, actions, slotId, visual, whatsapp }: PageHeroProps) {
+  const topic = whatsapp === false ? null : (whatsapp ?? crumbs[crumbs.length - 1]?.label);
   const media = visual ?? (slotId ? <Media slot={slotId} priority panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" /> : null);
   return (
     <section className="relative overflow-hidden bg-white pb-16 pt-8 md:pb-24">
@@ -33,7 +37,12 @@ export function PageHero({ crumbs, title, highlight, eyebrow, intro, actions, sl
             {eyebrow && <p className="text-eyebrow text-blue-600">{eyebrow}</p>}
             <h1 className="text-h1 mt-3">{withHighlight(title, highlight)}</h1>
             <div className="text-lead mt-5 max-w-2xl text-ink-500">{intro}</div>
-            {actions && <div className="mt-8 flex flex-wrap items-center gap-3">{actions}</div>}
+            {actions && (
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                {actions}
+                {topic && <WhatsAppButton topic={topic} variant="ghost" />}
+              </div>
+            )}
           </div>
           {media && <div className="lg:col-span-6">{media}</div>}
         </div>

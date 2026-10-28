@@ -9,7 +9,8 @@ Find them in code with `grep -rn "TODO" src` and `grep -rn "placeholder: true" s
 Changing these updates the header, utility bar, footer, contact page, metadata, OG images and JSON-LD everywhere.
 
 - [ ] `url` (or `NEXT_PUBLIC_SITE_URL` in `.env`): confirm the domain and TLD
-- [ ] `email`, `whatsapp`, `phone`, `address`, `hours`
+- [ ] `email`; and `whatsapp`, `phone`, `address`, `hours` (all null now, so they are **hidden** site-wide; every WhatsApp button appears once `whatsapp` is set)
+- [ ] `facts.sampleDays`: working days to a physical sample (hidden while null; shows in the promises row)
 - [ ] `socials`: Instagram, LinkedIn, Facebook, Pinterest, Behance (empty links stay hidden)
 - [ ] `facts.printedMoq`: printed box minimum (pages say "On quote" until set; also update `MOQ.printed` in `src/lib/pricing.ts`)
 - [ ] `facts.rigidLeadTime`, `facts.printedLeadTime`: e.g. "3–4 weeks" (pages say "Confirmed with your quote" until set)
@@ -18,6 +19,10 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Logo: replace the temporary wordmark with `/public/brand/logo.svg` (see `src/components/ui/Logo.tsx`)
 
 ## 2. Prices and rates
+
+- [ ] `src/content/pricing.ts`: `designTiers` (Basic/Standard/Premium) and `designPricing` (Label, Box, Range, Brand + packaging). All show "Get a quote" while null.
+- [ ] `src/content/designServices.*.ts`: optional `priceFrom` and `turnaround` per design service
+- [ ] Confirm the wording "Design fee credited when we manufacture your order" (`designFeeNote` in `src/content/pricing.ts`)
 
 - [ ] `src/lib/pricing.ts` → `RATES`: every unit, finish, insert, tooling, freight and sample rate. Set `ratesConfirmed: true` to remove the "Example prices" labels (configurator, samples, pricing).
 - [ ] `src/content/rigidStyles.ts` / `printedStyles.ts` → `priceTiers[].unitUsd`
@@ -29,9 +34,9 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 
 ## 3. Placeholder records (`placeholder: true`)
 
-- [ ] `src/content/caseStudies.ts`: 6 fictional projects (labelled "Sample project", noindex, left out of the sitemap). Replace with real work; results must be real, approved figures.
-- [ ] `src/content/testimonials.ts`: 3 placeholder quotes (homepage). Use real quotes with written permission.
-- [ ] `src/components/home/HomeSections.tsx` → `ClientLogos`: 8 placeholder brand names in the logo strip. Replace with real client logos (with permission).
+- [ ] `src/content/caseStudies.ts`: 6 fictional projects. They are **not published** while `placeholder: true`; `/work` shows "Packaging we design and make" until a real project exists. Replace with real work; results must be real, approved figures.
+- [ ] `src/content/testimonials.ts`: 3 placeholder quotes, **hidden** until real ones are added (homepage then shows them beside the FAQ). Use real quotes with written permission.
+- [ ] Client logos: the homepage strip now lists what we make (`WhatWeMake` in `src/components/home/HomeSections.tsx`). Swap in real client logos with permission.
 - [ ] `src/content/company.ts`:
   - [ ] `team`: 4 role placeholders (names, photos, bios)
   - [ ] `machines`: generic machine types; add make, model and format
@@ -40,6 +45,9 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
   - [ ] `capacityNote`: real capacity on `/factory`
 
 ## 4. Wording to verify
+
+- [ ] Regulatory notes on the 47 packaging design pages (`categoryNotes` marked `TODO verify` in `src/content/designServices.*.ts`)
+- [ ] Amazon image and packaging rules on `/services/amazon-packaging-and-listing-images` and `/packaging-design/amazon-ecommerce-packaging-design`
 
 - [ ] Sustainability: `sustainability` in `src/content/company.ts` (`/factory`), recycled/FSC card and FAQ in `src/content/optionPages.ts` (`/materials`), FAQ in `src/content/faqs.ts`
 - [ ] Industry compliance notes: `COMPLIANCE_NOTE` in `src/content/industries.ts` (dashed "To verify" card on every industry page)
@@ -50,7 +58,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Sample lead time and shipping cost: FAQs on `/samples`
 - [ ] Production lead time FAQs in `src/content/boxDetails.ts`
 - [ ] Privacy policy and terms (`/privacy`, `/terms`): template text, needs legal review; set the "Last updated" date
-- [ ] Blog publish dates in `src/content/blog/posts.ts`
+- [ ] Blog publish dates for all 9 articles in `src/content/blog/posts.ts`
 
 ## 5. Media
 
@@ -64,5 +72,6 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Rate limiting in `src/lib/rateLimit.ts` is in-memory per server instance. Move to a shared store (e.g. Upstash Redis) if spam appears.
 - [ ] Newsletter: connect an email list provider.
 - [ ] Checkout (`/checkout`) records an order request only; no payment provider is connected.
-- [ ] GA4: set `NEXT_PUBLIC_GA4_ID` in `.env` (loads only after cookie consent).
+- [ ] GA4: set `NEXT_PUBLIC_GA4_ID` in `.env` (loads only after the visitor clicks Accept).
+- [ ] Optional chat widget: set `NEXT_PUBLIC_CHAT_WIDGET_SRC` (also loads only after Accept).
 - [ ] OG images use a system sans-serif. Optionally load the Space Grotesk TTF in `src/lib/og.tsx`.

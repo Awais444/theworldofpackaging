@@ -123,6 +123,7 @@ export default function CollapsiblePage() {
       <Section>
         <CTABand
           title="Get a price for collapsible boxes"
+          whatsapp="Collapsible Rigid Boxes"
           highlight="collapsible"
           text="Send your size and quantity. We include freight options in the quote."
           actions={

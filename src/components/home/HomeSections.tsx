@@ -11,14 +11,14 @@ import {
   Truck,
   type LucideIcon,
 } from "lucide-react";
-import { site, whatsappUrl } from "@/config/site";
-import { caseStudies } from "@/content/caseStudies";
+import { site } from "@/config/site";
+import { publicCaseStudies } from "@/content/caseStudies";
 import { faqGroups } from "@/content/faqs";
 import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
-import { testimonials } from "@/content/testimonials";
+import { publicTestimonials } from "@/content/testimonials";
 import { Media } from "@/components/media/Media";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -42,21 +42,23 @@ import { industryIcon } from "@/components/industries/industryIcons";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
 
-export function ClientLogos() {
-  // TODO: replace with real client logos (with permission).
-  const logos = [
-    "Halden",
-    "Ostra",
-    "Kiri Atelier",
-    "Marrow & Vale",
-    "Nove",
-    "Brightleaf",
-    "Solace",
-    "Umber",
-  ].map((name) => ({ name, placeholder: true }));
+/** "What we make" strip. Replace with real client logos (with permission) once available. */
+export function WhatWeMake() {
+  const items = [
+    "Cosmetic packaging",
+    "Rigid gift boxes",
+    "Collapsible boxes",
+    "Mailer boxes",
+    "Labels",
+    "Folding cartons",
+    "Coffee & tea packaging",
+    "Candle boxes",
+    "Jewellery boxes",
+    "PR kits",
+  ].map((name) => ({ name, placeholder: false }));
   return (
     <div className="border-y border-silver-300/60 bg-white py-10">
-      <LogoMarquee title="Trusted by growing brands" logos={logos} />
+      <LogoMarquee title="What we design and make" logos={items} />
     </div>
   );
 }
@@ -304,6 +306,8 @@ export function WhyUs() {
 }
 
 export function FeaturedWork() {
+  // Only real projects are shown; the section is hidden until there is one.
+  if (publicCaseStudies.length === 0) return null;
   return (
     <Section bg="silver">
       <FadeIn>
@@ -319,7 +323,7 @@ export function FeaturedWork() {
         />
       </FadeIn>
       <div className="mt-12 grid gap-8 md:grid-cols-3">
-        {caseStudies.slice(0, 3).map((c, i) => (
+        {publicCaseStudies.slice(0, 3).map((c, i) => (
           <FadeIn key={c.slug} delay={i * 0.08}>
             <CaseCard
               href={`/work/${c.slug}`}
@@ -465,9 +469,11 @@ export function Finishes() {
 
 export function TestimonialsAndFaq() {
   const faqs = faqGroups.flatMap((g) => g.faqs).slice(0, 6);
+  const quotes = publicTestimonials.slice(0, 3);
   return (
     <Section bg="silver">
-      <div className="grid gap-16 lg:grid-cols-2">
+      <div className={quotes.length ? "grid gap-16 lg:grid-cols-2" : "mx-auto max-w-3xl"}>
+        {quotes.length > 0 && (
         <div>
           <FadeIn>
             <SectionHeader
@@ -477,7 +483,7 @@ export function TestimonialsAndFaq() {
             />
           </FadeIn>
           <div className="mt-10 space-y-6">
-            {testimonials.slice(0, 3).map((t, i) => (
+            {quotes.map((t, i) => (
               <TestimonialCard
                 key={i}
                 quote={t.quote}
@@ -488,6 +494,7 @@ export function TestimonialsAndFaq() {
             ))}
           </div>
         </div>
+        )}
         <div>
           <FadeIn>
             <SectionHeader
@@ -515,20 +522,13 @@ export function FinalCta() {
       <CTABand
         title="Ready to create your packaging?"
         highlight="packaging"
-        text="Free design check · Sample before production"
+        text="Packaging design and manufacturing from one team. Sample before production."
+        whatsapp="packaging design and boxes"
         actions={
           <>
             <Button href={quoteHref} variant="accent" size="lg" arrow>
               Get a Quote
             </Button>
-            <a
-              href={whatsappUrl("Hi, I'd like to talk about packaging.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-14 items-center rounded-full bg-white px-8 font-semibold text-blue-600 hover:bg-blue-50"
-            >
-              WhatsApp us
-            </a>
           </>
         }
       />

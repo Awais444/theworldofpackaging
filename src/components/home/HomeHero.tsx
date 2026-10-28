@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/Button";
 import { Highlight } from "@/components/ui/Highlight";
 import { getMedia } from "@/content/media";
 import { quoteHref } from "@/content/navigation";
+import { promises, site } from "@/config/site";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { gsap, useGSAP } from "@/lib/gsap";
 
-const trust = ["Own factory", "MOQ 500", "Collapsible rigid boxes", "Ships worldwide"];
+// Promises come from confirmed facts in config/site.ts; null facts are skipped.
+const trust = [...promises(), "Own factory", `MOQ ${site.facts.rigidMoq}`];
 const chips = [
   { label: "2 mm greyboard", className: "left-[2%] top-[14%]" },
   { label: "Gold foil", className: "right-[4%] top-[6%]" },
@@ -51,9 +54,10 @@ export function HomeHero() {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.from("[data-hero-line]", { yPercent: 40, opacity: 0, duration: 0.7, stagger: 0.1 })
-          .from("[data-hero-art]", { scale: 0.92, opacity: 0, duration: 0.8, stagger: 0.12 }, 0.15)
-          .from("[data-hero-chip]", { y: 12, opacity: 0, duration: 0.5, stagger: 0.1 }, 0.6);
+        // Animate from an already-visible state only: content is fully readable without JS.
+        tl.from("[data-hero-line]", { y: 14, duration: 0.5, stagger: 0.06 })
+          .from("[data-hero-art]", { scale: 0.97, duration: 0.6, stagger: 0.08 }, 0)
+          .from("[data-hero-chip]", { y: 8, duration: 0.4, stagger: 0.06 }, 0.2);
         gsap.to("[data-hero-art]", { y: -8, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.6, delay: 1.2 });
       });
       return () => mm.revert();
@@ -67,21 +71,22 @@ export function HomeHero() {
       <div className="container-x relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-6">
           <p data-hero-line className="text-eyebrow text-blue-600">
-            Packaging design + manufacturing
+            Packaging design studio + own factory
           </p>
           <h1 data-hero-line className="text-display mt-4">
-            Custom boxes that make your brand <Highlight>unforgettable</Highlight>.
+            Packaging design that <span className="whitespace-nowrap"><Highlight>sells</Highlight>.</span> Made in our own factory.
           </h1>
           <p data-hero-line className="text-lead mt-6 max-w-xl text-ink-500">
-            Brand identity, packaging design and rigid boxes made in our own factory. From first sketch to delivery, worldwide.
+            Boxes, labels and pouches designed for your product, then printed and made in our own factory. One team from first sketch to delivered box.
           </p>
           <div data-hero-line className="mt-8 flex flex-wrap gap-3">
             <Button href={quoteHref} size="lg" arrow>
-              Get a Quote
+              Get a Free Quote
             </Button>
-            <Button href="/boxes" size="lg" variant="secondary">
-              Explore Boxes
+            <Button href="/packaging-design" size="lg" variant="secondary">
+              Explore design services
             </Button>
+            <WhatsAppButton topic="packaging design" variant="ghost" />
           </div>
           <ul data-hero-line className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-ink-900">
             {trust.map((t) => (

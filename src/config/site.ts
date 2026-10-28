@@ -17,10 +17,11 @@ export const site = {
     "Packaging design and branding agency with its own factory. Rigid boxes, collapsible rigid boxes and printed boxes, designed and made in-house and shipped worldwide.",
   url: "https://theworldofpackaging.com", // TODO confirm
   email: "hello@theworldofpackaging.com", // TODO confirm
-  whatsapp: "+92 300 0000000", // TODO
-  phone: "+92 300 0000000", // TODO
-  address: "Factory address, Pakistan", // TODO
-  hours: "Mon–Sat, 9:00–18:00 PKT", // TODO
+  // Contact details stay hidden on the site while null. TODO: real values.
+  whatsapp: null as string | null, // e.g. "+92 300 1234567"
+  phone: null as string | null,
+  address: null as string | null, // e.g. "Plot 12, Industrial Area, Lahore, Pakistan"
+  hours: null as string | null, // e.g. "Mon–Sat, 9:00–18:00 PKT"
   country: "Pakistan",
   markets: ["USA", "UK", "Canada", "Australia", "UAE", "EU"],
   socials: { instagram: "", linkedin: "", facebook: "", pinterest: "", behance: "" }, // TODO
@@ -33,6 +34,8 @@ export const site = {
     quoteReply: `within ${QUOTE_REPLY_HOURS} hours`,
     quoteReplyHours: QUOTE_REPLY_HOURS,
     firstConceptHours: 48, // TODO confirm
+    /** Working days from approved artwork to a finished sample. null = hidden. TODO */
+    sampleDays: null as number | null,
   },
   currency: {
     base: "USD" as CurrencyCode,
@@ -48,10 +51,36 @@ export function leadTimeLabel(value: string = site.facts.rigidLeadTime) {
   return value === "TODO" ? "Confirmed with your quote" : value;
 }
 
-/** WhatsApp click-to-chat URL built from the configured number. */
-export function whatsappUrl(message?: string) {
+/** WhatsApp click-to-chat URL, or null while no real number is configured. */
+export function whatsappUrl(message?: string): string | null {
+  if (!site.whatsapp) return null;
   const digits = site.whatsapp.replace(/[^\d]/g, "");
   return `https://wa.me/${digits}${message ? `?text=${encodeURIComponent(message)}` : ""}`;
+}
+
+/** Pre-filled WhatsApp message naming the page, e.g. "Hi, I'd like a quote for Magnetic Closure Boxes." */
+export const whatsappMessage = (topic?: string) => (topic ? `Hi, I'd like a quote for ${topic}.` : "Hi, I'd like to ask about custom packaging.");
+
+/** Stats built only from confirmed facts; null facts are skipped. */
+export function factStats(): Array<{ value: string; label: string }> {
+  const f = site.facts;
+  return [
+    { value: String(f.rigidMoq), label: "Minimum order, rigid boxes" },
+    { value: `${f.quoteReplyHours} h`, label: "Quote reply time" },
+    { value: `${f.firstConceptHours} h`, label: "To first design concepts" },
+    f.sampleDays ? { value: `${f.sampleDays} days`, label: "To a physical sample" } : null,
+    f.printedMoq ? { value: String(f.printedMoq), label: "Minimum order, printed boxes" } : null,
+  ].filter((x): x is { value: string; label: string } => Boolean(x));
+}
+
+/** Customer-facing promises in display order; null facts are skipped. */
+export function promises(): string[] {
+  const f = site.facts;
+  return [
+    `Quote reply ${f.quoteReply}`,
+    `First concepts in ${f.firstConceptHours} hours`,
+    f.sampleDays ? `Sample in ${f.sampleDays} working days` : null,
+  ].filter((p): p is string => Boolean(p));
 }
 
 export function siteUrl() {

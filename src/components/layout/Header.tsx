@@ -5,7 +5,8 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { boxesMenu, boxesPromo, industriesMenu, mainNav, primaryCta, servicesMenu, type MainNavItem } from "@/content/navigation";
+import { site } from "@/config/site";
+import { boxesMenu, boxesPromo, brandingMenu, designMenu, mainNav, primaryCta, type MenuId } from "@/content/navigation";
 import { CartLink } from "@/components/cart/CartLink";
 import { MagneticBoxClosed } from "@/components/illustrations";
 import { Button } from "@/components/ui/Button";
@@ -14,11 +15,10 @@ import { cn } from "@/lib/utils";
 import { MobileMenu } from "./MobileMenu";
 import { UtilityBar } from "./UtilityBar";
 
-type MenuId = Extract<MainNavItem, { kind: "menu" }>["id"];
 
 const MOBILE_ID = "mobile-menu";
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
-const topLink = "inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-[15px] font-medium text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
+const topLink = "inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3.5 py-2 text-[15px] font-medium text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
 const menuLink = "block rounded-lg px-2 py-1.5 text-[15px] text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
 
 function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
@@ -60,10 +60,41 @@ function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
+function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
+  return (
+    <div>
+      <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-8">
+        {designMenu.map((group) => (
+          <div key={group.title}>
+            <p className="text-eyebrow text-blue-600">{group.title}</p>
+            <ul className={cn("mt-3 gap-x-6 gap-y-0.5", group.title === "By Product" ? "grid grid-cols-2" : "space-y-0.5")}>
+              {group.links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={onNavigate} className={menuLink}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 flex items-center justify-between rounded-2xl bg-blue-50 px-5 py-4">
+        <p className="text-sm text-ink-900">
+          <span className="font-semibold">Designed here, made here.</span> We also make your boxes, from {site.facts.rigidMoq} units.
+        </p>
+        <Button href="/packaging-design" variant="ghost" arrow onClick={onNavigate}>
+          View all services
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function BrandingPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <ul className="grid grid-cols-3 gap-2">
-      {servicesMenu.map((s) => (
+      {brandingMenu.map((s) => (
         <li key={s.href}>
           <Link href={s.href} onClick={onNavigate} className="block rounded-xl p-3 transition-colors hover:bg-blue-50">
             <span className="block font-semibold text-ink-900">{s.label}</span>
@@ -75,33 +106,10 @@ function ServicesPanel({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-function IndustriesPanel({ onNavigate }: { onNavigate: () => void }) {
-  return (
-    <div className="flex gap-10">
-      <ul className="grid flex-1 grid-cols-2 gap-x-8 gap-y-0.5">
-        {industriesMenu.map((l) => (
-          <li key={l.href}>
-            <Link href={l.href} onClick={onNavigate} className={menuLink}>
-              {l.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="w-64 rounded-2xl bg-silver-100 p-5">
-        <p className="font-heading text-lg font-bold">Packaging by industry</p>
-        <p className="mt-1 text-sm text-ink-500">Recommended box styles and finishes for your product.</p>
-        <Button href="/industries" variant="ghost" arrow className="mt-3" onClick={onNavigate}>
-          All industries
-        </Button>
-      </div>
-    </div>
-  );
-}
-
 const panels: Record<MenuId, (p: { onNavigate: () => void }) => React.ReactNode> = {
+  design: DesignPanel,
+  branding: BrandingPanel,
   boxes: BoxesPanel,
-  services: ServicesPanel,
-  industries: IndustriesPanel,
 };
 
 export function Header() {
@@ -152,7 +160,7 @@ export function Header() {
         <div className="container-x flex h-full items-center justify-between gap-6">
           <Logo />
 
-          <nav ref={navRef} aria-label="Main" className="hidden lg:block" onMouseLeave={closeMenu}>
+          <nav ref={navRef} aria-label="Main" className="hidden xl:block" onMouseLeave={closeMenu}>
             <ul className="flex items-center gap-1">
               {mainNav.map((item) =>
                 item.kind === "link" ? (
@@ -211,7 +219,7 @@ export function Header() {
             <button
               ref={mobileToggle}
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 hover:bg-blue-50 lg:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 hover:bg-blue-50 xl:hidden"
               aria-expanded={mobileOpen}
               aria-controls={MOBILE_ID}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}

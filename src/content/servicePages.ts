@@ -18,10 +18,8 @@ const extraFaqs: Faq[] = [
 const config: Array<{ agency: string; path: string; icon: ServicePage["icon"]; pairWith: ServicePage["pairWith"] }> = [
   { agency: "brand-identity", path: "brand-identity", icon: "palette", pairWith: [{ kind: "rigid", slug: "magnetic-closure" }, { kind: "printed", slug: "mailer" }, { kind: "rigid", slug: "drawer" }, { kind: "printed", slug: "tuck-end" }] },
   { agency: "logo-design", path: "logo-design", icon: "pen", pairWith: [{ kind: "rigid", slug: "lid-and-base" }, { kind: "printed", slug: "mailer" }, { kind: "printed", slug: "sleeve" }, { kind: "rigid", slug: "book-style" }] },
-  { agency: "packaging-design", path: "packaging-design", icon: "package", pairWith: [{ kind: "rigid", slug: "magnetic-closure" }, { kind: "rigid", slug: "collapsible" }, { kind: "printed", slug: "folding-carton" }, { kind: "printed", slug: "mailer" }] },
-  { agency: "label-design", path: "label-design", icon: "tag", pairWith: [{ kind: "rigid", slug: "tube" }, { kind: "rigid", slug: "shoulder-neck" }, { kind: "printed", slug: "tuck-end" }, { kind: "printed", slug: "sleeve" }] },
-  { agency: "structural-dieline", path: "structural-dieline-design", icon: "ruler", pairWith: [{ kind: "printed", slug: "folding-carton" }, { kind: "printed", slug: "display" }, { kind: "rigid", slug: "drawer" }, { kind: "rigid", slug: "window" }] },
-  { agency: "3d-mockups", path: "3d-mockups", icon: "box", pairWith: [{ kind: "rigid", slug: "magnetic-closure" }, { kind: "rigid", slug: "book-style" }, { kind: "printed", slug: "mailer" }, { kind: "printed", slug: "gable" }] },
+  { agency: "amazon-packaging-and-listing-images", path: "amazon-packaging-and-listing-images", icon: "box", pairWith: [{ kind: "printed", slug: "mailer" }, { kind: "printed", slug: "shipping" }, { kind: "rigid", slug: "collapsible" }, { kind: "printed", slug: "tuck-end" }] },
+  { agency: "product-mockups-for-ecommerce", path: "product-mockups-for-ecommerce", icon: "package", pairWith: [{ kind: "rigid", slug: "magnetic-closure" }, { kind: "printed", slug: "mailer" }, { kind: "rigid", slug: "book-style" }, { kind: "printed", slug: "sleeve" }] },
 ];
 
 export const servicePages: ServicePage[] = config.map((c) => {

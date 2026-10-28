@@ -18,6 +18,11 @@ export const legacyServiceRedirects: Record<string, string> = {
   "/services/label-design": "/packaging-design/label-design",
   "/services/structural-dieline-design": "/packaging-design/structural-dieline-design",
   "/services/3d-mockups": "/packaging-design/3d-packaging-mockups",
+  "/services/brand-guidelines": "/services/brand-identity",
+  "/services/rebranding": "/packaging-design/packaging-redesign",
+  "/services/strategy-naming": "/packaging-design/packaging-brand-strategy",
+  "/services/rigid-box-design": "/packaging-design/rigid-luxury-box-design",
+  "/services/structural-dieline": "/packaging-design/structural-dieline-design",
   // SEO plan slugs (2026-10-28): old URLs move to the keyword-matched ones.
   "/packaging-design/perfume-packaging-design": "/packaging-design/perfume-fragrance-packaging-design",
   "/packaging-design/supplement-packaging-design": "/packaging-design/supplement-label-design",

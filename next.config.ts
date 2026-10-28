@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
   // Old URLs moved in Phases 3–7 (CLAUDE.md §9).
   async redirects() {
     return [
-      ...["materials", "finishes", "inserts"].map((p) => ({ source: `/rigid-boxes/${p}`, destination: `/${p}`, permanent: true })),
-      ...Object.entries({ ...legacyServiceRedirects, ...legacyIndustryRedirects, ...legacyCompanyRedirects, ...legacyCountryRedirects, ...legacyQuoteRedirects }).map(([source, destination]) => ({ source, destination, permanent: true })),
+      ...["materials", "finishes", "inserts"].map((p) => ({ source: `/rigid-boxes/${p}`, destination: `/${p}`, statusCode: 301 as const })),
+      ...Object.entries({ ...legacyServiceRedirects, ...legacyIndustryRedirects, ...legacyCompanyRedirects, ...legacyCountryRedirects, ...legacyQuoteRedirects }).map(([source, destination]) => ({ source, destination, statusCode: 301 as const })),
     ];
   },
   images: {

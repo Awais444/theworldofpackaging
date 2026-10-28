@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, posts } from "@/content/blog/posts";
+import { designHref, getDesignService, type DesignService } from "@/content/designServices";
 import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { illustrations } from "@/components/illustrations";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { Tag } from "@/components/ui/Tag";
-import { article } from "@/lib/schema";
+import { article, faqPage } from "@/lib/schema";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -24,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return {};
   return {
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: { type: "article", publishedTime: post.date },
@@ -38,11 +40,17 @@ export default async function PostPage({ params }: Props) {
   if (!post) notFound();
   const { default: Body } = await import(`@/content/blog/${post.slug}.mdx`);
   const Art = illustrations[post.illustration];
-  const others = posts.filter((p) => p.slug !== post.slug);
+  // Up to four related guides, same kind first.
+  const others = posts
+    .filter((p) => p.slug !== post.slug)
+    .sort((a, b) => Number(b.kind === post.kind) - Number(a.kind === post.kind))
+    .slice(0, 4);
+  const services = (post.services ?? []).map(getDesignService).filter((s): s is DesignService => Boolean(s));
 
   return (
     <article>
-      <JsonLd data={article({ title: post.title, description: post.description, path: `/blog/${post.slug}`, date: post.date })} />
+      <JsonLd data={article({ title: post.title, description: post.description, path: `/blog/${post.slug}`, date: post.date, modified: post.reviewed })} />
+      {post.faqs && post.faqs.length > 0 && <JsonLd data={faqPage(post.faqs)} />}
       <header className="bg-white pt-8">
         <div className="container-x">
           <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: post.title }]} />
@@ -57,6 +65,7 @@ export default async function PostPage({ params }: Props) {
             <p className="mt-4 text-sm text-ink-500">
               {dateFmt.format(new Date(post.date))} · {post.readingMinutes} min read
             </p>
+            {post.reviewed && <p className="mt-1 text-sm font-semibold text-ink-900">Last reviewed: {dateFmt.format(new Date(post.reviewed))}</p>}
           </div>
           <div className="mx-auto mt-10 max-w-4xl rounded-3xl bg-blue-50 p-[4%]" aria-hidden="true" style={{ aspectRatio: "16 / 9" }}>
             <Art />
@@ -66,6 +75,57 @@ export default async function PostPage({ params }: Props) {
       <div className="container-x py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
           <Body />
+
+          {post.kind === "compliance" && (
+            <aside className="mt-12 rounded-2xl border border-silver-300 bg-silver-50 p-6">
+              <p className="text-eyebrow text-blue-600">Disclaimer</p>
+              <p className="mt-2 text-ink-900">
+                This guide is general information, not legal or regulatory advice. Rules change and depend on your product and market. We lay out the text you supply; final regulatory review is yours, with your adviser.
+              </p>
+            </aside>
+          )}
+
+          {post.sources && post.sources.length > 0 && (
+            <section className="mt-10">
+              <h2 className="text-h4">Official sources</h2>
+              <ul className="mt-4 space-y-2">
+                {post.sources.map((s) => (
+                  <li key={s.url}>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer" className="font-medium text-blue-600 underline decoration-blue-100 underline-offset-4 hover:decoration-blue-600">
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {services.length > 0 && (
+            <section className="mt-10 rounded-2xl bg-blue-50 p-6">
+              <h2 className="text-h4">Need this on your packaging?</h2>
+              <ul className="mt-4 space-y-2">
+                {services.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={designHref(s.slug)} className="font-semibold text-blue-600 hover:underline">
+                      {s.name} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Button href={quoteHref} size="sm" arrow className="mt-5">
+                Get a Free Quote
+              </Button>
+            </section>
+          )}
+
+          {post.faqs && post.faqs.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-h3">Questions</h2>
+              <div className="mt-6">
+                <Accordion items={post.faqs} defaultOpen={null} />
+              </div>
+            </section>
+          )}
         </div>
       </div>
       <Section bg="silver">

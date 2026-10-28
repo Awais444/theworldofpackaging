@@ -59,6 +59,12 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Privacy policy and terms (`/privacy`, `/terms`): template text, needs legal review; set the "Last updated" date
 - [ ] Blog publish dates for all 9 articles in `src/content/blog/posts.ts`
 
+## 4b. Compliance guides (verify before launch)
+
+- [ ] Have a qualified regulatory adviser review all 13 compliance guides in `src/content/blog/` (listed in `src/content/blog/compliancePosts.ts`). Each shows "Last reviewed: 28 October 2026"; update `REVIEWED` after the check.
+- [ ] Re-check fast-moving topics every 6 months: CBD (US/UK/EU), MoCRA fragrance allergens, EU fragrance allergen list, sunscreen rules, EU green claims and packaging regulation, UK EPR.
+- [ ] Confirm source links still work.
+
 ## 5. Media
 
 - [ ] Real photos for the 189 image slots listed in `MEDIA_SLOTS.md`. Until then every slot shows a brand illustration.

@@ -1,4 +1,6 @@
 import type { IllustrationKey } from "@/components/illustrations";
+import type { Faq } from "../rigidStyles";
+import { compliancePosts } from "./compliancePosts";
 
 export type Post = {
   slug: string;
@@ -9,10 +11,22 @@ export type Post = {
   readingMinutes: number;
   tags: string[];
   illustration: IllustrationKey;
+  /** Compliance guides (SEO plan Priority 2) carry a review date, sources and a disclaimer. */
+  kind?: "compliance" | "guide";
+  /** Page title before " | The World of Packaging" when it differs from the H1. */
+  seoTitle?: string;
+  /** ISO date the facts were last checked against the sources. */
+  reviewed?: string;
+  /** Official sources, listed under the article. */
+  sources?: Array<{ label: string; url: string }>;
+  /** Two related packaging design services (slugs). */
+  services?: string[];
+  faqs?: Faq[];
 };
 
 // Bodies live in ./<slug>.mdx and are imported dynamically by the post route.
 export const posts: Post[] = [
+  ...compliancePosts,
   {
     slug: "rigid-vs-folding-carton-boxes",
     title: "Rigid vs folding carton boxes: which does your product need?",

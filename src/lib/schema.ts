@@ -83,13 +83,14 @@ export function product(p: { name: string; description: string; path: string; ca
   };
 }
 
-export function article(a: { title: string; description: string; path: string; date: string }): Thing {
+export function article(a: { title: string; description: string; path: string; date: string; modified?: string }): Thing {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: a.title,
     description: a.description,
     datePublished: a.date,
+    ...(a.modified ? { dateModified: a.modified } : {}),
     url: abs(a.path),
     author: { "@id": ORG_ID() },
     publisher: { "@id": ORG_ID() },

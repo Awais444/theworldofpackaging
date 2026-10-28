@@ -1,0 +1,120 @@
+A barcode looks like the least interesting part of a package, but if it does not scan, nothing else matters. Retailers can refuse products with unreadable barcodes, and marketplaces may require them for listings. This guide explains the barcodes used on retail packaging, how to get legitimate numbers, and how to size, place and colour a barcode so it scans first time.
+
+It is a practical summary. The definitive technical reference is the GS1 General Specifications, linked below, and your retailers may have their own rules on top. Ask your retail buyer for their packaging guidelines before you finalise artwork.
+
+## What a retail barcode actually is
+
+The barcode you see on most retail products is a **symbol** that encodes a number. The number is a **Global Trade Item Number (GTIN)**, a unique identifier for that specific product, size and variant. The barcode lets a scanner read the GTIN, and the retailer's system looks up the price and product details.
+
+The two common symbols on retail packaging are:
+
+- **UPC-A**, which encodes a 12-digit GTIN (GTIN-12). It is traditional in the United States and Canada.
+- **EAN-13**, which encodes a 13-digit GTIN (GTIN-13). It is used in most other countries.
+
+There are also smaller versions for small packages: **UPC-E** and **EAN-8**. These have restrictions on when they can be used, so check with your GS1 organisation before choosing one.
+
+## UPC vs EAN: which do you need?
+
+For most brands the answer is simpler than it seems. Modern point-of-sale scanners in North America and elsewhere read both UPC-A and EAN-13. A UPC-A number is effectively an EAN-13 with a leading zero. So:
+
+- If you are based in the US or Canada and sell mainly there, a UPC-A is usual.
+- If you are based elsewhere, you will typically be issued EAN-13 numbers by your local GS1 organisation.
+- Either symbol will generally scan in both regions. If a specific retailer requires one type, follow their rule.
+
+## Where to get barcode numbers
+
+GTINs should come from **GS1**, the not-for-profit organisation that manages the global barcode system. You join your local GS1 member organisation, such as GS1 US or GS1 UK, and license a **company prefix**. You then assign GTINs to your products from that prefix.
+
+Cheap resold barcodes are widely advertised online. They are often numbers originally licensed to another company. Many large retailers and marketplaces check that the GTIN's company prefix matches the brand owner, and products with resold numbers can be rejected or delisted. Licensing from GS1 avoids that risk.
+
+### One GTIN per variant
+
+Each product that is different to the customer needs its own GTIN. That usually means a separate GTIN for each:
+
+- size or quantity
+- flavour, scent or colour
+- multipack or bundle
+
+Changes to a product can also require a new GTIN. GS1 publishes rules for when a new number is needed.
+
+## Barcode size
+
+Barcode size is set by **magnification**. At 100% magnification, an EAN-13 or UPC-A symbol is about 37.3 mm wide and about 26 mm high, including the human-readable numbers and quiet zones. GS1 allows retail point-of-sale barcodes to be scaled within a range, commonly from 80% to 200%.
+
+Practical guidance:
+
+- **Do not go below the minimum magnification** for your scanning environment. Smaller barcodes are harder to print accurately and harder to scan.
+- **Do not cut the bar height** (often called truncation). Shortening the bars makes the barcode harder to scan from different angles, and many retailers do not accept it.
+- **Print method matters.** Flexographic printing on corrugated board or film can spread ink, so larger magnifications are often recommended. Ask your printer what they can reliably achieve.
+
+## Quiet zones
+
+A **quiet zone** is the clear space on either side of the bars. Scanners need it to recognise where the barcode starts and ends. Do not place text, lines, edges or graphics inside the quiet zone. For EAN-13 the left quiet zone is wider than the right, and the human-readable numbers are positioned to help indicate it.
+
+## Colour and contrast
+
+Scanners read barcodes using red light. That means:
+
+- **Dark bars on a light background** scan best. Black on white is ideal.
+- **Red, orange and yellow bars** are hard for scanners to see and often fail.
+- **Blue, green and dark brown bars** usually work if the background is light enough.
+- **White or light backgrounds** work well. Red and orange backgrounds can also work because they reflect red light, but test them.
+- **Metallic inks, foils and clear films** need care. A white underprint behind the barcode on clear or metallic materials is usually needed.
+
+If you need the barcode to sit inside a coloured design, place a white or light box behind it rather than printing the bars directly on a dark or busy background.
+
+## Placement
+
+GS1 publishes placement guidelines for different package shapes. The general principles are:
+
+- Place the barcode on the **back or bottom** of the package, on a flat surface where possible.
+- Keep it away from **edges, folds, seams and creases**. A barcode that wraps around a corner will not scan.
+- On **curved surfaces** such as small bottles, the curve can distort the symbol. The usual fix is to rotate it so the bars are horizontal (ladder orientation), keeping the barcode's length along the flat height of the bottle. Check GS1's guidance on curvature for your container size.
+- On **bags and pouches,** avoid areas that will crease or be sealed.
+- Keep a **consistent position** across your range, which makes life easier for checkout staff.
+
+## Outer cases and shipping cartons
+
+Shipping cartons and outer cases often need their own barcodes, typically using **GTIN-14** encoded in an **ITF-14** symbol, which is designed to print on corrugated board. Some retailers and warehouses also require GS1-128 logistics labels. These are separate from the retail barcode on the consumer pack.
+
+## Testing
+
+Before printing in volume:
+
+1. **Check the number.** Make sure the GTIN on the artwork matches the product and that the check digit is correct.
+2. **Check the artwork.** Use barcode generation software or a trusted source rather than redrawing bars by hand.
+3. **Verify a proof.** For important launches, use a barcode verifier, or ask your printer or GS1 organisation to verify a printed sample.
+4. **Scan the sample.** At minimum, scan a printed sample with several scanners or apps.
+
+## Marketplaces and online sales
+
+Barcodes matter online too. Large marketplaces use GTINs to match listings to products, and some check GTINs against the GS1 database to confirm the brand owner. If you sell on marketplaces:
+
+- **Use GS1-licensed GTINs** that are registered to your company.
+- **Keep your product data** in GS1's registry up to date, including brand name and product description, where your GS1 organisation offers this.
+- **Check the marketplace's own rules,** such as exemptions for brand-registered sellers or requirements for fulfilment labels. Fulfilment labels, such as those used by some warehouse programmes, are separate from your retail barcode and may need their own space on the pack.
+
+## A barcode checklist for designers
+
+Before you send artwork to print, check:
+
+1. The **GTIN** is correct for this exact product and variant.
+2. The symbol type is right: **UPC-A or EAN-13** for retail, **ITF-14** for outer cases if needed.
+3. **Magnification** is within the allowed range and suits the print process.
+4. **Bar height** has not been reduced.
+5. **Quiet zones** are clear on both sides.
+6. **Colours** give dark bars on a light background with enough contrast.
+7. The barcode sits on a **flat area,** away from folds, seams and edges.
+8. On clear or metallic materials, there is a **white underprint** behind it.
+9. The **human-readable number** is present and matches the bars.
+10. A **printed sample** has been scanned or verified.
+
+## Other codes you may see on packaging
+
+Barcodes are not the only codes on modern packaging. **QR codes** are often used for product information, certificates of analysis or recycling instructions. GS1 has also introduced **GS1 Digital Link**, which allows a QR code to carry a GTIN that point-of-sale systems can read, alongside a web link for consumers. Retailers are gradually adopting it, and it may eventually replace the traditional barcode on some products. For now, keep a standard EAN-13 or UPC-A unless your retailer says otherwise.
+
+## How we help
+
+We design retail packaging and labels and make printed boxes in our own factory. We place the barcode you supply at a scannable size and position, with the right contrast and quiet zones, and check it on a printed sample. We do not issue barcode numbers; license them from your local GS1 organisation.
+
+See our [retail packaging design](/packaging-design/retail-packaging-design) and [label design](/packaging-design/label-design) services, or [get a free quote](/get-a-quote) for your packaging.

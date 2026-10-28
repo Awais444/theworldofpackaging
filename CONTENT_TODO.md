@@ -74,7 +74,10 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Flags: pages show an ISO code badge. Add a local SVG flag set (needs a small dependency or hand-made SVGs) if you want real flags.
 - [ ] `src/content/countries.tier2.ts`: 40 Tier 2 countries. Have a local adviser check each labelling summary and key points, especially fast-changing rules: front-of-pack warnings (Mexico, Chile, Colombia, Argentina, Peru, Brazil, Israel, Sri Lanka), halal phase-in (Indonesia), China import labelling, India Legal Metrology.
 - [ ] Tier 2 source links point to each authority's home page; confirm they open and add deeper guidance links where useful.
-- [ ] Tier 3 (~130 countries) not built yet (COUNTRY_PAGES_PLAN.md §2).
+- [ ] `src/content/countries.tier3.ts`: 131 Tier 3 countries are live but **noindex, follow** and out of the sitemap, by design. A page becomes indexable once its labelling authority, an editorial market note and an air or sea shipping time are filled in (see `isIndexable` in `src/content/countries.ts`). Fill those per country, with a local adviser for the authority.
+- [ ] Tier 3 currencies and official languages: spot-check before launch (e.g. Bulgaria now uses the euro; Zimbabwe uses ZiG).
+- [ ] Excluded countries: North Korea, Iran, Syria, Cuba, Russia and Belarus have no page, pending an export and sanctions check. Add them only if you can legally ship there.
+- [ ] Utility bar still says "Ships worldwide". Switch it to a "Ships to 190+ countries" link to /countries if you want (COUNTRY_PAGES_PLAN.md §6).
 
 ## 5. Media
 

@@ -30,7 +30,7 @@ type T2 = {
   guides?: string[];
 };
 
-const TIPS: Record<Region, string> = {
+export const TIPS: Record<Region, string> = {
   Europe: "European storage and freight are priced on space. Collapsible rigid boxes ship and store flat, so far more fit per pallet.",
   Asia: "For regular restocks, sea freight with flat-packed collapsible rigid boxes keeps the cost per box low.",
   "Middle East": "The route from our factory is short. Flat-packed collapsible boxes make sea freight even more efficient for larger orders.",
@@ -40,7 +40,7 @@ const TIPS: Record<Region, string> = {
   Oceania: "Long sea routes make freight volume expensive. Collapsible rigid boxes ship flat and cut the cost per box.",
 };
 
-const BOXES: Record<Region, BoxRef[]> = {
+export const BOXES: Record<Region, BoxRef[]> = {
   Europe: ["printed:mailer", "rigid:lid-and-base", "printed:folding-carton", "rigid:collapsible", "rigid:magnetic-closure", "printed:tuck-end"],
   Asia: ["rigid:magnetic-closure", "printed:mailer", "rigid:drawer", "printed:folding-carton", "rigid:lid-and-base", "rigid:collapsible"],
   "Middle East": ["rigid:magnetic-closure", "rigid:shoulder-neck", "rigid:drawer", "rigid:book-style", "printed:folding-carton", "rigid:collapsible"],
@@ -50,7 +50,7 @@ const BOXES: Record<Region, BoxRef[]> = {
   Oceania: ["rigid:collapsible", "printed:mailer", "rigid:magnetic-closure", "printed:tuck-end", "printed:shipping", "rigid:drawer"],
 };
 
-const GUIDES: Record<Region, string[]> = {
+export const GUIDES: Record<Region, string[]> = {
   Europe: ["eu-food-labelling-rules", "packaging-for-international-markets", "fsc-sustainable-packaging-certifications"],
   Asia: ["packaging-for-international-markets", "cosmetic-labelling-requirements", "unboxing-experience-design"],
   "Middle East": ["packaging-for-international-markets", "luxury-packaging-what-makes-premium-work", "typography-in-packaging-design"],

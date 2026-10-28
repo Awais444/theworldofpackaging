@@ -31,14 +31,16 @@ export function generateStaticParams() {
 const PENDING = "Confirmed with your quote";
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" });
 /** Short name for titles, so "United Arab Emirates" fits the 60-character limit. */
-const titleName = (c: Country) => (c.slug === "uae" ? "UAE" : c.name);
+const titleName = (c: Country) => (c.slug === "uae" ? "UAE" : (c.short ?? c.name));
+/** "Packaging Design X", or "Packaging: X" when that would push the full title past 60 characters. */
+const pageTitle = (c: Country) => (`Packaging Design ${titleName(c)}`.length > 35 ? `Packaging: ${titleName(c)}` : `Packaging Design ${titleName(c)}`);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = getCountry((await params).slug);
   if (!c) return {};
   const description = `Packaging design and custom boxes for ${titleName(c)} brands: ${c.languages.join(" and ")} labels, ${c.currency.code} quotes, made in our own factory. Get a free quote.`;
   return {
-    title: `Packaging Design ${titleName(c)}`,
+    title: pageTitle(c),
     description: description.length > 155 ? `${description.slice(0, 152)}...` : description,
     alternates: { canonical: countryHref(c.slug) },
     robots: isIndexable(c) ? undefined : { index: false, follow: true },
@@ -55,12 +57,13 @@ export default async function CountryPage({ params }: Props) {
   const guides = (c.guideSlugs ?? []).map(getPost).filter((p): p is NonNullable<ReturnType<typeof getPost>> => Boolean(p));
   const nearby = nearbyCountries(c);
   const faqs = [...c.faqs, ...countryShippingFaqs];
+  const full = c.tier < 3;
 
   const glance = [
     { label: "Currency", value: `${c.currency.name} (${c.currency.code})` },
     { label: "Label language", value: c.languages.join(", ") },
     { label: "Units", value: c.measurement === "both" ? "Metric and US customary" : c.measurement === "metric" ? "Metric" : "Imperial" },
-    { label: "Labelling authority", value: c.labelling.authority },
+    { label: "Labelling authority", value: c.labelling.authority || PENDING },
     { label: "Air shipping", value: c.shipping.air ?? PENDING },
     { label: "Sea shipping", value: c.shipping.sea ?? PENDING },
   ];
@@ -116,6 +119,9 @@ export default async function CountryPage({ params }: Props) {
         </dl>
       </Section>
 
+      {/* Full pages only: Tier 3 pages stay short (COUNTRY_PAGES_PLAN.md §2). */}
+      {full && (
+        <>
       {/* Packaging design for the country */}
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">
@@ -147,7 +153,19 @@ export default async function CountryPage({ params }: Props) {
         </div>
       </Section>
 
-      {/* Labelling */}
+        </>
+      )}
+
+      {/* Labelling: Tier 3 pages have no verified summary yet, so they show a short note instead. */}
+      {!c.labelling.summary ? (
+        <Section bg="silver" className="!py-12 md:!py-16">
+          <SectionHeader eyebrow="Labelling and compliance" title={`Labelling in ${name}`} highlight="Labelling" />
+          <p className="mt-5 max-w-3xl text-ink-500">
+            Labelling requirements in {name} depend on your product, whether it is food, cosmetics, supplements or another regulated category. Confirm the required language, text and any registration with your importer or adviser before artwork is final. We lay out the text you supply; final regulatory review stays with you.
+          </p>
+        </Section>
+      ) : (
+        <>
       <Section bg="silver">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -180,6 +198,9 @@ export default async function CountryPage({ params }: Props) {
           </div>
         </div>
       </Section>
+
+        </>
+      )}
 
       {/* Shipping */}
       <Section>
@@ -215,6 +236,9 @@ export default async function CountryPage({ params }: Props) {
         </div>
       </Section>
 
+      {/* Full pages only: Tier 3 pages stay short (COUNTRY_PAGES_PLAN.md §2). */}
+      {full && (
+        <>
       {/* Ordering */}
       <Section bg="silver">
         <SectionHeader eyebrow="Ordering" title={`Ordering from ${name}`} highlight="Ordering" />
@@ -257,7 +281,7 @@ export default async function CountryPage({ params }: Props) {
               {[
                 `Prepare mandatory label text in ${c.languages.join(" and ")} with your adviser.`,
                 `Show net quantity in ${c.measurement === "both" ? "metric and US customary units" : "metric units"}.`,
-                `Check product-specific rules with ${c.labelling.authority}.`,
+                `Check product-specific rules with ${c.labelling.authority || "your importer or adviser"}.`,
                 boxes.length >= 2 ? `Consider ${boxes[0]!.name.toLowerCase()} or ${boxes[1]!.name.toLowerCase()}, popular with ${c.name} brands.` : "Choose a box style that suits your product and channel.",
                 "Choose air for launches and samples, sea for production volumes.",
                 guides[0] ? `Read our guide: ${guides[0].title}.` : "Approve a physical sample before production.",
@@ -271,6 +295,9 @@ export default async function CountryPage({ params }: Props) {
           </div>
         </div>
       </Section>
+
+        </>
+      )}
 
       {/* Popular packaging */}
       <Section bg="silver-50">
@@ -324,7 +351,7 @@ export default async function CountryPage({ params }: Props) {
       </Section>
 
       {/* Guides */}
-      {guides.length > 0 && (
+      {full && guides.length > 0 && (
         <Section bg="silver-50">
           <SectionHeader eyebrow="Guides" title={`Guides for ${c.name} brands`} highlight="Guides" />
           <ul className="mt-8 grid gap-4 md:grid-cols-2">

@@ -3,6 +3,7 @@ import type { Faq } from "./rigidStyles";
 import { tier1Countries } from "./countries.tier1";
 import { tier1Extra } from "./countries.tier1.extra";
 import { tier2Countries } from "./countries.tier2";
+import { tier3Countries } from "./countries.tier3";
 
 /**
  * Country landing pages (COUNTRY_PAGES_PLAN.md). Every page must carry country-specific content.
@@ -17,6 +18,8 @@ export type Country = {
   name: string;
   /** Short name used in running text, e.g. "the UK". */
   inText?: string;
+  /** Short name for page titles, e.g. "Bosnia & Herzegovina". */
+  short?: string;
   iso2: string;
   tier: 1 | 2 | 3;
   region: Region;
@@ -55,6 +58,7 @@ export const countries: Country[] = [
     return extra ? { ...c, marketNotes: [...c.marketNotes, extra.note], faqs: [...c.faqs, ...extra.faqs], seasons: extra.seasons } : c;
   }),
   ...tier2Countries,
+  ...tier3Countries,
 ];
 
 export const countryHref = (slug: string) => `/countries/${slug}`;

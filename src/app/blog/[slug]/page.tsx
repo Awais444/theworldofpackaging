@@ -7,7 +7,6 @@ import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { illustrations } from "@/components/illustrations";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
@@ -121,9 +120,14 @@ export default async function PostPage({ params }: Props) {
           {post.faqs && post.faqs.length > 0 && (
             <section className="mt-12">
               <h2 className="text-h3">Questions</h2>
-              <div className="mt-6">
-                <Accordion items={post.faqs} defaultOpen={null} />
-              </div>
+              <dl className="mt-6 divide-y divide-silver-300 border-y border-silver-300">
+                {post.faqs.map((f) => (
+                  <div key={f.q} className="py-5">
+                    <dt className="text-[17px] font-semibold text-ink-900">{f.q}</dt>
+                    <dd className="mt-2 text-ink-500">{f.a}</dd>
+                  </div>
+                ))}
+              </dl>
             </section>
           )}
         </div>

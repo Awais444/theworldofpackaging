@@ -1,6 +1,7 @@
 import type { IllustrationKey } from "@/components/illustrations";
 import type { Faq } from "../rigidStyles";
 import { compliancePosts } from "./compliancePosts";
+import { guidePosts } from "./guidePosts";
 
 export type Post = {
   slug: string;
@@ -27,6 +28,7 @@ export type Post = {
 // Bodies live in ./<slug>.mdx and are imported dynamically by the post route.
 export const posts: Post[] = [
   ...compliancePosts,
+  ...guidePosts,
   {
     slug: "rigid-vs-folding-carton-boxes",
     title: "Rigid vs folding carton boxes: which does your product need?",

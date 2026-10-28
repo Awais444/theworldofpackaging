@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { processLines } from "@/components/illustrations/ProcessLine";
 import { site } from "@/config/site";
 import { quoteHref } from "@/content/navigation";
@@ -25,7 +25,8 @@ const steps = [
 const ticks = (color: string) => ({ backgroundImage: `repeating-linear-gradient(90deg, ${color} 0 1px, transparent 1px 6px)` });
 
 /** Homepage "How it works": step tabs, a ruler that fills on scroll, and four illustrated columns. */
-export function HowItWorks() {
+/** `visuals` optionally replaces a step illustration with a photo rendered on the server, keyed by step index. */
+export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNode> }) {
   const root = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -115,9 +116,13 @@ export function HowItWorks() {
                 <div className="mt-4 h-7">
                   {s.time && <span className="inline-flex h-7 items-center rounded-full bg-orange-50 px-3 text-xs font-semibold text-orange-text">{s.time}</span>}
                 </div>
+                {visuals[i] ? (
+                  <div className={cn("mt-5 transition-transform duration-300", on && "-translate-y-1")}>{visuals[i]}</div>
+                ) : (
                 <div className={cn("mt-5 aspect-[4/3] rounded-2xl p-6 transition-colors duration-300", on ? "bg-blue-50" : "bg-silver-50")}>
                   <Illo className={cn("h-full w-full transition-transform duration-300", on && "-translate-y-1")} />
                 </div>
+                )}
               </li>
             );
           })}

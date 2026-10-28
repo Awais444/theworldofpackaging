@@ -2,6 +2,7 @@ import type { IllustrationKey } from "@/components/illustrations";
 import { designServices } from "./designServices";
 import { servicePages } from "./servicePages";
 import { caseStudies } from "./caseStudies";
+import { PHOTOS, type Photo, type PhotoKey } from "./photos";
 import { industries } from "./industries";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
@@ -16,6 +17,12 @@ export type MediaSlot = {
   alt: string;
   /** Path under /public, e.g. "/images/rigid/rigid-magnetic-hero.webp". Empty = illustration. */
   src?: string;
+  /** 1200px version of the photo for cards. */
+  srcCard?: string;
+  /** CSS object-position, chosen so the product is not cropped. */
+  position?: string;
+  /** "contain" for portrait shots (e.g. flat dielines) that must not be cropped. */
+  fit?: "cover" | "contain";
   /** Optional short looping video (MP4/WebM under /public). Used where a slot supports motion, e.g. the home hero. */
   video?: string;
   illustration: IllustrationKey;
@@ -33,6 +40,33 @@ export type MediaSlot = {
  * /public/images/<section>/<slot-id>.webp and fill `src`. Nothing else changes.
  */
 const fixedSlots = {
+  "packaging-design-hub": {
+    id: "packaging-design-hub",
+    alt: "Packaging design services: illustrated folding carton artwork laid out flat on its dieline",
+    illustration: "dieline-flat",
+    aspect: "4/3",
+    page: "/packaging-design",
+    size: "2400×1800",
+    shot: "Printed carton artwork shown flat on its dieline",
+  },
+  "how-it-works-design": {
+    id: "how-it-works-design",
+    alt: "Design step: printed carton artwork shown flat on its dieline before folding",
+    illustration: "dieline-flat",
+    aspect: "4/3",
+    page: "/how-it-works (Design step)",
+    size: "1600×1200",
+    shot: "Flat printed carton on its dieline",
+  },
+  "home-how-step-2": {
+    id: "home-how-step-2",
+    alt: "Design and sample: a flat printed film box carton laid out on its dieline",
+    illustration: "dieline-flat",
+    aspect: "4/3",
+    page: "/ (How it works, step 2)",
+    size: "1200×900",
+    shot: "Flat printed carton on its dieline",
+  },
   "home-hero": {
     id: "home-hero",
     alt: "A rigid gift box, a mailer box and a tube, made in our factory",
@@ -186,30 +220,26 @@ function generatedSlots(): MediaSlot[] {
       }),
     );
   }
-  const caseShots = ["identity applied: logo, palette, stationery or labels", "finished packaging, open, with product", "detail: finish and print close-up", "the range together", "on our factory floor", "in the customer's hands"];
+  // Case studies: real project photos (see content/photos.ts).
   for (const c of caseStudies) {
-    out.push({
-      id: c.coverSlot,
-      alt: `${c.client}: ${c.summary.split(":")[0]!.toLowerCase()}`,
-      illustration: c.illustration,
-      variant: "blue",
-      aspect: "4/3",
-      page: `/work/${c.slug}, /work, /`,
-      size: "2400×1800",
-      shot: `Hero shot of the finished ${c.spec[0]!.toLowerCase()} for ${c.client}`,
-    });
-    c.gallery.forEach((id, i) =>
-      out.push({
+    const toSlot = (id: string, key: PhotoKey): MediaSlot => {
+      const p = PHOTOS[key] as Photo;
+      return {
         id,
-        alt: `${c.client}: ${caseShots[i]}`,
-        illustration: i === 0 ? "brand-board" : c.illustration,
-        variant: galleryVariants[(i + 1) % galleryVariants.length],
+        alt: p.alt,
+        src: `${p.file}.webp`,
+        srcCard: `${p.file}-1200.webp`,
+        position: p.position,
+        fit: p.fit,
+        illustration: c.illustration,
         aspect: "4/3",
         page: `/work/${c.slug}`,
-        size: "2400×1800",
-        shot: `${c.client}, ${caseShots[i]}`,
-      }),
-    );
+        size: "2400 px long side",
+        shot: `${c.client}: ${c.project}`,
+      };
+    };
+    out.push(toSlot(c.coverSlot, c.photos.cover));
+    c.photos.gallery.forEach((key, i) => out.push(toSlot(c.gallery[i]!, key)));
   }
   return out;
 }
@@ -219,14 +249,43 @@ function generatedSlots(): MediaSlot[] {
  * Example: "rigid-magnetic-closure-hero": "/images/rigid/rigid-magnetic-closure-hero.webp"
  * Fixed slots above take `src` directly.
  */
-const photos: Record<string, string> = {};
+/**
+ * Real photos of our own projects, by slot id. Never used on /blog (posts keep their illustrations).
+ * Each file exists at 2400px (`.webp`) and 1200px (`-1200.webp`, used for cards).
+ */
+const photos: Record<string, Photo> = {
+  "home-hero": PHOTOS.magnetic,
+  "rigid-magnetic-closure-hero": PHOTOS.magnetic,
+  "design-luxury-packaging-design-1": PHOTOS.magnetic,
+  "rigid-tube-hero": PHOTOS.tube,
+  "design-sustainable-packaging-design-1": PHOTOS.tube,
+  "printed-sleeve-hero": PHOTOS.sleeve,
+  "design-unboxing-packaging-design-1": PHOTOS.sleeve,
+  "printed-folding-carton-hero": PHOTOS.soapCartons,
+  "design-soap-bath-packaging-design-1": PHOTOS.soapCartons,
+  "industry-gifts-pr-kits-hero": PHOTOS.floral,
+  "design-gift-box-pr-kit-design-1": PHOTOS.floral,
+  "design-structural-dieline-design-1": PHOTOS.dielineDaylight,
+  "home-how-step-2": PHOTOS.dielineDaylight,
+  "packaging-design-hub": PHOTOS.dielineIllustrated,
+  "how-it-works-design": PHOTOS.dielineIllustrated,
+  "design-soap-bath-packaging-design-2": PHOTOS.soapSet,
+  "design-coffee-tea-packaging-design-1": PHOTOS.tea,
+  "printed-mailer-hero": PHOTOS.mailer,
+  "design-subscription-box-design-1": PHOTOS.mailer,
+  "design-pouch-packaging-design-1": PHOTOS.pouch,
+  "design-coffee-tea-packaging-design-2": PHOTOS.coffeeRange,
+  "service-brand-identity-hero": PHOTOS.coffeeRange,
+};
+
+const withPhoto = (s: MediaSlot): MediaSlot => {
+  const p = photos[s.id];
+  return p ? { ...s, src: `${p.file}.webp`, srcCard: `${p.file}-1200.webp`, alt: p.alt, position: p.position, fit: p.fit } : s;
+};
 
 /** Central image registry: every slot on the site. See MEDIA_SLOTS.md for the shot list. */
 export const media: Record<string, MediaSlot> = Object.fromEntries(
-  [...generatedSlots(), ...Object.values(fixedSlots)].map((s: MediaSlot) => [
-    s.id,
-    photos[s.id] ? { ...s, src: photos[s.id] } : s,
-  ]),
+  [...generatedSlots(), ...Object.values(fixedSlots)].map((s: MediaSlot) => [s.id, withPhoto(s)]),
 );
 
 export type MediaSlotId = string;

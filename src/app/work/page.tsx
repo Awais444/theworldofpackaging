@@ -96,7 +96,7 @@ export default function WorkPage() {
             items={publicCaseStudies.map((c) => ({
               slug: c.slug,
               categories: c.categories,
-              card: <CaseCard href={`/work/${c.slug}`} title={c.client} text={c.summary} slot={c.coverSlot} industry={c.industry} />,
+              card: <CaseCard href={`/work/${c.slug}`} title={`${c.client}: ${c.project}`} text={c.summary} slot={c.coverSlot} industry={c.industry} />,
             }))}
           />
         </Section>

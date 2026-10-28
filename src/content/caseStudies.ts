@@ -1,151 +1,276 @@
 import type { IllustrationKey } from "@/components/illustrations";
+import type { BoxRef } from "./designServices";
+import type { PhotoKey } from "./photos";
 
 export type WorkCategory = "Branding" | "Packaging" | "Rigid" | "Printed";
 
+/** Services offered on case studies (confirm per project with the team). */
+export type CaseService = "Packaging design" | "Label design" | "Rigid box manufacturing" | "Printing";
+
 export type CaseStudy = {
   slug: string;
+  /** Brand name as printed on the pack. */
   client: string;
+  /** Short project title, e.g. "Magnetic rigid gift box". */
+  project: string;
   industry: string;
-  services: string[];
+  services: CaseService[];
   categories: WorkCategory[];
-  year: number;
+  /** TODO: confirm year with the team. Hidden while null. */
+  year: string | null;
   summary: string;
   challenge: string;
   solution: string[];
-  /** Box illustration used for the cover and gallery until photos exist. */
+  /** What we made: formats, materials and finishes visible in the photos. */
+  made: string[];
+  /** Approved results only. TODO: confirm with the client; the section shows a neutral note while empty. */
+  results: Array<{ value: string; label: string }>;
+  /** Fallback illustration if a photo is missing. */
   illustration: IllustrationKey;
   coverSlot: string;
-  /** Gallery slot ids (see media.ts). */
   gallery: string[];
-  /** Spec line, e.g. box style and board. */
+  photos: { cover: PhotoKey; gallery: PhotoKey[] };
   spec: string[];
-  /** Placeholder results. TODO: real, approved figures only. */
-  results: Array<{ value: string; label: string }>;
-  /** True until replaced with a real client project. Shows a "Sample project" badge. */
+  /** Pages that link to this project as "Related work". */
+  related: { designServices: string[]; boxes: BoxRef[]; industries: string[] };
   placeholder: boolean;
 };
 
-const GALLERY_SIZE = 6;
+type Input = Omit<CaseStudy, "coverSlot" | "gallery" | "results" | "placeholder" | "year">;
+
 export const caseCover = (slug: string) => `case-${slug}-cover`;
-export const caseGallery = (slug: string) => Array.from({ length: GALLERY_SIZE }, (_, i) => `case-${slug}-gallery-${i + 1}`);
 
-const PLACEHOLDER_RESULTS = [
-  { value: "TBC", label: "Result 1: add a real, approved figure" },
-  { value: "TBC", label: "Result 2: add a real, approved figure" },
-  { value: "TBC", label: "Result 3: add a real, approved figure" },
-];
+const real = (c: Input): CaseStudy => ({
+  ...c,
+  year: null,
+  results: [],
+  coverSlot: caseCover(c.slug),
+  gallery: c.photos.gallery.map((_, i) => `case-${c.slug}-gallery-${i + 1}`),
+  placeholder: false,
+});
 
-type Input = Omit<CaseStudy, "coverSlot" | "gallery" | "results" | "placeholder">;
-
-const sample = (c: Input): CaseStudy => ({ ...c, coverSlot: caseCover(c.slug), gallery: caseGallery(c.slug), results: PLACEHOLDER_RESULTS, placeholder: true });
-
-// TODO: replace all six with real projects. Brand names are fictional on purpose.
+/**
+ * Our own packaging projects, written from what is visible in the photos. Business claims stay
+ * neutral. TODO per project (see CONTENT_TODO.md "Case studies – confirm with team"): year,
+ * services, client quote and approved results.
+ */
 export const caseStudies: CaseStudy[] = [
-  sample({
-    slug: "halden-apothecary",
-    client: "Halden Apothecary",
+  real({
+    slug: "united-gift-club-magnetic-gift-box",
+    client: "United Gift Club",
+    project: "Magnetic closure rigid gift box",
+    industry: "Gifts & PR kits",
+    services: ["Packaging design", "Rigid box manufacturing"],
+    categories: ["Packaging", "Rigid"],
+    summary: "A dark green magnetic closure gift box with a gold foil crest on the lid and inside the flap.",
+    challenge: "A gifting brand needed a box that feels premium the moment it is handed over, carries its crest clearly and opens to a thank-you message.",
+    solution: [
+      "We kept the outside quiet: a deep green wrap with one gold foil crest and fine foil leaf illustrations at the corners.",
+      "The crest repeats inside the magnetic flap with a short thank-you line, so the brand is the first thing seen on opening.",
+      "A small social handle on the front edge gives customers a next step without crowding the lid.",
+    ],
+    made: ["Magnetic closure rigid box", "Dark green wrap paper", "Gold foil crest and leaf details", "Printed inside flap"],
+    illustration: "magnetic-open",
+    photos: { cover: "magnetic", gallery: [] },
+    spec: ["Magnetic closure", "Gold foil", "Inside print"],
+    related: { designServices: ["luxury-packaging-design", "gift-box-pr-kit-design", "rigid-luxury-box-design"], boxes: ["rigid:magnetic-closure"], industries: ["gifts-pr-kits"] },
+  }),
+  real({
+    slug: "springwater-soaps-window-cartons",
+    client: "Springwater Soaps",
+    project: "Window folding cartons for a soap range",
     industry: "Cosmetics",
-    services: ["Brand identity", "Packaging design", "Rigid boxes"],
-    categories: ["Branding", "Packaging", "Rigid"],
-    year: 2026,
-    summary: "A skincare launch: identity, a three-SKU carton system and a magnetic gift box with a foiled lid.",
-    challenge: "A new skincare line needed a brand, retail cartons for three products and a gift box for launch, all ready for one production window.",
-    solution: [
-      "We positioned the range as quiet and clinical, so the gift box could carry the only flourish: a gold foil mark on the lid.",
-      "Tuck end cartons for each SKU share one layout. A magnetic rigid box with an EVA insert holds all three for gifting.",
-      "Cartons and rigid boxes were printed and made in our factory, with one foil die shared across both.",
-    ],
-    illustration: "magnetic-closed",
-    spec: ["Magnetic closure", "2.0 mm board", "Gold foil"],
-  }),
-  sample({
-    slug: "ostra-tea",
-    client: "Ostra Tea Co.",
-    industry: "Food & beverage",
-    services: ["Packaging design", "Printed boxes"],
+    services: ["Packaging design", "Printing"],
     categories: ["Packaging", "Printed"],
-    year: 2026,
-    summary: "Subscription mailers printed inside and out, with a dieline built around a tin and two sachets.",
-    challenge: "A tea subscription needed a mailer that posts without an outer box and turns the unboxing into part of the brand.",
+    summary: "Pink and green soap cartons with leaf-shaped die-cut windows that show the bar inside.",
+    challenge: "A handmade soap range needed retail cartons that let shoppers see the soap, separate the scents at a glance and still carry the product details.",
     solution: [
-      "We built an E-flute mailer around the tin and two sachets, with a card insert that keeps everything in place.",
-      "The outside carries a bold pattern; the inside has a welcome message and brewing guide.",
-      "Mailers ship flat to the fulfilment centre and fold up in seconds.",
+      "A leaf-shaped die-cut window on each lid shows the bar and echoes the botanical ingredients.",
+      "Two colourways, pink and green, separate the ranges, with the scent name and weight in a white panel on every carton.",
+      "Icons along the side panel keep usage and ingredient notes short and consistent across the range.",
     ],
-    illustration: "mailer-box",
-    spec: ["Mailer", "E-flute", "CMYK inside + out"],
-  }),
-  sample({
-    slug: "kiri-atelier",
-    client: "Kiri Atelier",
-    industry: "Jewellery",
-    services: ["Logo design", "Brand identity", "Rigid boxes"],
-    categories: ["Branding", "Rigid"],
-    year: 2025,
-    summary: "A wordmark, palette and pattern system for a small-batch jeweller, built to work at ring-box scale.",
-    challenge: "A jeweller selling online and at markets needed a brand that holds up on a 40 mm ring box as well as on a website.",
-    solution: [
-      "A compact wordmark that stays legible when debossed small, with a pattern for tissue and inside lids.",
-      "Drawer boxes in linen wrap with a velvet insert, in three sizes from one system.",
-      "Foil and deboss tests on our press settled the minimum logo size before production.",
-    ],
-    illustration: "drawer",
-    spec: ["Drawer box", "Linen wrap", "Blind deboss"],
-  }),
-  sample({
-    slug: "marrow-and-vale",
-    client: "Marrow & Vale",
-    industry: "Candles",
-    services: ["Packaging design", "Rigid boxes"],
-    categories: ["Packaging", "Rigid"],
-    year: 2025,
-    summary: "Collapsible rigid boxes for a candle brand shipping to the UK and US, packed flat to cut freight.",
-    challenge: "A candle brand selling abroad was paying to ship air: assembled rigid boxes filled cartons long before the weight limit.",
-    solution: [
-      "We moved the range to collapsible rigid boxes with a magnetic lid, so boxes ship and store flat.",
-      "A kraft wrap with a debossed logo keeps the natural look of the brand.",
-      "Card inserts hold each candle upright; assembly takes seconds at the packing table.",
-    ],
-    illustration: "collapsible-assembled",
-    spec: ["Collapsible rigid", "Kraft wrap", "Ships flat"],
-  }),
-  sample({
-    slug: "northline-audio",
-    client: "Northline Audio",
-    industry: "Electronics",
-    services: ["Structural & dieline design", "3D mockups", "Rigid boxes"],
-    categories: ["Packaging", "Rigid"],
-    year: 2026,
-    summary: "A lid-and-base box with a two-layer EVA insert for wireless earbuds, cables and a manual.",
-    challenge: "A headphone brand needed premium retail packaging that protects the product in transit and presents several parts neatly.",
-    solution: [
-      "A two-layer insert: earbuds on top, a lift-out tray below for cables and the manual.",
-      "3D renders were approved before sampling, so the store listing went live before production finished.",
-      "Soft-touch wrap with spot UV on the logo, made in our factory.",
-    ],
-    illustration: "lid-and-base",
-    spec: ["Lid & base", "Two-layer EVA", "Soft-touch + spot UV"],
-  }),
-  sample({
-    slug: "sola-botanics",
-    client: "Sola Botanics",
-    industry: "Supplements",
-    services: ["Label design", "Packaging design", "Printed boxes"],
-    categories: ["Packaging", "Printed"],
-    year: 2025,
-    summary: "Labels and tuck end cartons for a six-product supplement range, one system with a colour per product.",
-    challenge: "A supplement range had grown product by product, with no shared look between jars, labels and cartons.",
-    solution: [
-      "One label and carton template, with a colour band per product so the range reads together on a shelf.",
-      "Text panels laid out with room for the regulatory copy supplied by the client.",
-      "Cartons printed on SBS board with matte lamination and a spot UV logo.",
-    ],
+    made: ["Folding cartons", "Die-cut windows", "Two-colour range system", "Metallic gold logo"],
     illustration: "tuck-end",
-    spec: ["Tuck end", "SBS board", "Matte + spot UV"],
+    photos: { cover: "soapCartons", gallery: [] },
+    spec: ["Folding carton", "Die-cut window", "Range of SKUs"],
+    related: { designServices: ["soap-bath-packaging-design", "retail-packaging-design", "box-packaging-design"], boxes: ["printed:folding-carton", "printed:tuck-end"], industries: ["cosmetics"] },
+  }),
+  real({
+    slug: "hip-hip-coffee-pouches",
+    client: "Hip Hip! Coffee",
+    project: "Coffee pouches and brand packaging range",
+    industry: "Food & drink",
+    services: ["Packaging design", "Label design", "Printing"],
+    categories: ["Branding", "Packaging"],
+    summary: "Stand-up pouches for the Radical Toast and Café Fugaz coffees, with matching cups and a coffee guide.",
+    challenge: "A coffee brand wanted each roast to have its own character while the whole range, from pouches to takeaway cups, still looked like one brand.",
+    solution: [
+      "Each coffee gets its own colour and illustration: navy and a planet for Radical Toast, orange and a molecule for Café Fugaz.",
+      "A wavy white band and the same type system run across every pouch, so the range lines up on a shelf.",
+      "The wave pattern carries onto takeaway cups and a small coffee guide, extending the brand beyond the pouch.",
+    ],
+    made: ["Stand-up coffee pouches", "Takeaway cup designs", "Coffee guide booklet", "Badge and brand illustrations"],
+    illustration: "brand-board",
+    photos: { cover: "coffeeRange", gallery: ["pouch"] },
+    spec: ["Stand-up pouch", "Range system", "Brand illustrations"],
+    related: { designServices: ["coffee-tea-packaging-design", "pouch-packaging-design", "packaging-brand-strategy"], boxes: [], industries: ["food-bakery"] },
+  }),
+  real({
+    slug: "barkers-secret-handmade-soap-packaging",
+    client: "Barker's Secret",
+    project: "Handmade soap packaging set",
+    industry: "Cosmetics",
+    services: ["Packaging design", "Printing"],
+    categories: ["Packaging", "Printed"],
+    summary: "A family of soap cartons, a drawer box, a carrier box and a tall gift carton for a handmade soap brand.",
+    challenge: "A handmade soap brand needed packaging for single bars, gift sets and a carry-out box, all clearly part of one vintage-inspired brand.",
+    solution: [
+      "Every pack uses the same cream stock, script lettering and fine line illustrations, with one illustration per scent.",
+      "Single bars sit in compact cartons; a two-drawer box and a tall carton turn several bars into a gift.",
+      "A carrier box with handles makes the set easy to take away, with the brand mark centred on the front.",
+    ],
+    made: ["Soap cartons", "Drawer box", "Carrier box with handles", "Tall gift carton"],
+    illustration: "tuck-end",
+    photos: { cover: "soapSet", gallery: [] },
+    spec: ["Folding cartons", "Drawer box", "Gift set"],
+    related: { designServices: ["soap-bath-packaging-design", "box-packaging-design"], boxes: ["printed:folding-carton", "printed:tuck-end", "rigid:drawer"], industries: ["cosmetics", "gifts-pr-kits"] },
+  }),
+  real({
+    slug: "olivia-boutique-kraft-box-sleeve",
+    client: "Olivia Boutique",
+    project: "Kraft box with printed sleeve",
+    industry: "Retail & gifting",
+    services: ["Packaging design", "Printing"],
+    categories: ["Packaging", "Printed"],
+    summary: "A kraft box wrapped in a printed paper sleeve reading Sealed with love, for a boutique's orders.",
+    challenge: "A boutique wanted orders to feel personal without the cost of fully printed boxes.",
+    solution: [
+      "A plain kraft box keeps the base cost low, while a printed sleeve carries all of the branding.",
+      "The sleeve pairs the boutique's olive logo with a short Sealed with love message and a hand-drawn stamp.",
+      "Website and social handle on the sleeve give customers an easy way back to the shop.",
+    ],
+    made: ["Kraft box", "Printed paper sleeve", "Logo and stamp artwork"],
+    illustration: "sleeve-box",
+    photos: { cover: "sleeve", gallery: [] },
+    spec: ["Kraft box", "Printed sleeve"],
+    related: { designServices: ["unboxing-packaging-design", "box-packaging-design"], boxes: ["printed:sleeve", "printed:mailer"], industries: ["apparel", "gifts-pr-kits"] },
+  }),
+  real({
+    slug: "fruits-and-berries-candle-tube",
+    client: "Fruits & Berries",
+    project: "Kraft tube for an aroma candle",
+    industry: "Candles",
+    services: ["Packaging design", "Label design", "Rigid box manufacturing"],
+    categories: ["Packaging", "Rigid"],
+    summary: "A kraft paper tube with a printed label for an aroma candle, in soft sage and blush tones.",
+    challenge: "An aroma candle needed protective packaging that looks natural and gift-worthy, with a label that carries the brand's heritage feel.",
+    solution: [
+      "A kraft paper tube protects the candle and gives a natural, tactile finish.",
+      "The wraparound label combines an engraved-style fruit illustration with soft landscape shapes in sage and blush.",
+      "The same label artwork works on flat cards and inserts, so the brand looks consistent across the order.",
+    ],
+    made: ["Kraft paper tube", "Wraparound printed label", "Matching printed cards"],
+    illustration: "label-bottle",
+    photos: { cover: "tube", gallery: [] },
+    spec: ["Kraft tube", "Printed label"],
+    related: { designServices: ["candle-packaging-design", "sustainable-packaging-design", "label-design"], boxes: ["rigid:tube"], industries: ["candles"] },
+  }),
+  real({
+    slug: "crampless-tea-kraft-packaging",
+    client: "Crampless Tea",
+    project: "Kraft tea box and pouches",
+    industry: "Food & drink",
+    services: ["Packaging design", "Label design", "Printing"],
+    categories: ["Packaging", "Printed"],
+    summary: "A long kraft box with a printed label sleeve and kraft tea pouches with white labels.",
+    challenge: "A wellness tea needed packaging that explains how and when to drink it, while looking natural and calm.",
+    solution: [
+      "A long kraft box holds individually wrapped tea pouches, with a printed sleeve wrapped around the box.",
+      "The sleeve explains the tea in two simple panels, The How and The When, with numbered icons.",
+      "Each kraft pouch carries a small white label, so single servings stay on brand outside the box.",
+    ],
+    made: ["Kraft folding box", "Printed label sleeve", "Kraft tea pouches", "Pouch labels"],
+    illustration: "tuck-end",
+    photos: { cover: "tea", gallery: [] },
+    spec: ["Kraft box", "Printed sleeve", "Pouch labels"],
+    related: { designServices: ["coffee-tea-packaging-design", "label-design", "pouch-packaging-design"], boxes: ["printed:folding-carton", "printed:sleeve"], industries: ["food-bakery", "supplements"] },
+  }),
+  real({
+    slug: "mr-negative-film-box-cartons",
+    client: "Mr. Negative",
+    project: "35mm film box cartons",
+    industry: "Retail",
+    services: ["Packaging design", "Printing"],
+    categories: ["Packaging", "Printed"],
+    summary: "Two printed tuck cartons for 35mm films, DayLIGHT Robbery and Same Same, shown flat on their dielines.",
+    challenge: "A film brand needed small cartons with strong personality for each film stock, plus the technical details photographers look for.",
+    solution: [
+      "Each film gets its own character: a sunset palette for DayLIGHT Robbery, a magic trick illustration for Same Same.",
+      "ISO, exposure count and storage notes sit in consistent places on every carton, with a barcode on the back panel.",
+      "A recurring camera mascot and an Instagram call to action tie the range together.",
+    ],
+    made: ["Printed tuck end cartons", "Two film designs", "Mascot illustrations"],
+    illustration: "dieline-flat",
+    photos: { cover: "dielineDaylight", gallery: ["dielineIllustrated"] },
+    spec: ["Tuck end carton", "Range of SKUs"],
+    related: { designServices: ["box-packaging-design", "structural-dieline-design", "retail-packaging-design"], boxes: ["printed:tuck-end", "printed:folding-carton"], industries: [] },
+  }),
+  real({
+    slug: "submersible-mailer-unboxing",
+    client: "Submersible",
+    project: "E-commerce mailer and unboxing kit",
+    industry: "E-commerce",
+    services: ["Packaging design", "Printing"],
+    categories: ["Packaging", "Printed"],
+    summary: "A striped mailer, illustrated kraft wrap and insert cards that turn an online order into an unboxing.",
+    challenge: "An online brand wanted its orders to feel playful and memorable, and to bring customers back.",
+    solution: [
+      "A bold striped mailer in orange and blue makes the parcel recognisable before it is opened.",
+      "Inside, kraft wrap printed with hand-drawn activity illustrations sets a playful tone.",
+      "Insert cards add a joke and a follow-us discount code, giving customers a reason to order again.",
+    ],
+    made: ["Printed mailer", "Printed kraft wrap", "Insert cards"],
+    illustration: "mailer-box",
+    photos: { cover: "mailer", gallery: [] },
+    spec: ["Mailer box", "Printed wrap", "Insert cards"],
+    related: { designServices: ["unboxing-packaging-design", "subscription-box-design", "amazon-packaging-design"], boxes: ["printed:mailer", "printed:shipping"], industries: ["apparel", "gifts-pr-kits"] },
+  }),
+  real({
+    slug: "wild-flowers-floral-gift-box",
+    client: "Wild Flowers",
+    project: "Floral printed gift box",
+    industry: "Gifts & PR kits",
+    services: ["Packaging design", "Printing"],
+    categories: ["Packaging", "Printed"],
+    summary: "A square gift box printed all over with a watercolour wild flowers design.",
+    challenge: "A gift product needed a box that looks good from every side, on a shelf or in a customer's hands.",
+    solution: [
+      "Watercolour flowers wrap around every panel, so the box looks finished from any angle.",
+      "A sage band and white panels give the name room to read clearly on the front and lid.",
+      "The design is laid out on the dieline so the flowers continue across the folds.",
+    ],
+    made: ["Printed square gift box", "All-over watercolour artwork"],
+    illustration: "lid-and-base",
+    photos: { cover: "floral", gallery: [] },
+    spec: ["Printed box", "All-over print"],
+    related: { designServices: ["gift-box-pr-kit-design", "box-packaging-design"], boxes: ["printed:folding-carton", "printed:mailer"], industries: ["gifts-pr-kits"] },
   }),
 ];
 
-/** Real projects only. Sample (placeholder) projects stay in this file until replaced. */
 export const publicCaseStudies = caseStudies.filter((c) => !c.placeholder);
 
 export const getCaseStudy = (slug: string) => publicCaseStudies.find((c) => c.slug === slug);
+
+/** Homepage "Featured work": the three strongest projects. */
+export const featuredCaseSlugs = ["united-gift-club-magnetic-gift-box", "springwater-soaps-window-cartons", "hip-hip-coffee-pouches"];
+
+/** Case studies linked from a page (service, box style or industry). */
+export const relatedWork = (by: { designService?: string; box?: BoxRef; industry?: string }, n = 3) =>
+  publicCaseStudies
+    .filter(
+      (c) =>
+        (by.designService && c.related.designServices.includes(by.designService)) ||
+        (by.box && c.related.boxes.includes(by.box)) ||
+        (by.industry && c.related.industries.includes(by.industry)),
+    )
+    .slice(0, n);

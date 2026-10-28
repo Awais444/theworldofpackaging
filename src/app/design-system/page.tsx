@@ -144,7 +144,7 @@ export default function DesignSystemPage() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <ServiceCard icon={Palette} title="Brand identity" text="Logo, colour and type for new brands." href="/services/brand-identity" bullets={["Logo system", "Brand guidelines"]} />
               <ProductCard href="/rigid-boxes" name="Magnetic box" text="Rigid board, magnetic flap." slot="home-hero" tags={["Rigid", "MOQ 500"]} />
-              <CaseCard href="/work" title="Sample project" text="Shown for layout only." slot="case-halden-apothecary-cover" industry="Beauty" placeholder />
+              <CaseCard href="/work" title="Sample project" text="Shown for layout only." slot="case-united-gift-club-magnetic-gift-box-cover" industry="Beauty" placeholder />
               <IndustryCard href="/industries" name="Jewellery" icon={Gem} boxes={["Drawer", "Ring box", "Magnetic"]} />
               <StatCard value="500" label="Minimum order, rigid boxes" />
               <TestimonialCard quote="Placeholder quote shown for layout." name="Client name" role="Founder" placeholder />

@@ -34,7 +34,6 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 
 ## 3. Placeholder records (`placeholder: true`)
 
-- [ ] `src/content/caseStudies.ts`: 6 fictional projects. They are **not published** while `placeholder: true`; `/work` shows "Packaging we design and make" until a real project exists. Replace with real work; results must be real, approved figures.
 - [ ] `src/content/testimonials.ts`: 3 placeholder quotes, **hidden** until real ones are added (homepage then shows them beside the FAQ). Use real quotes with written permission.
 - [ ] Client logos: the homepage strip now lists what we make (`WhatWeMake` in `src/components/home/HomeSections.tsx`). Swap in real client logos with permission.
 - [ ] `src/content/company.ts`:
@@ -43,6 +42,23 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
   - [ ] `companyNumbers`: 4 "TBC" figures on `/about`
   - [ ] `story`: founding story on `/about`
   - [ ] `capacityNote`: real capacity on `/factory`
+
+## Case studies – confirm with team
+
+All 10 are live in `src/content/caseStudies.ts` (placeholder: false). For each, confirm: year, services delivered (we design/print/manufacture?), client permission to show the work, a client quote, approved results figures, and 2–4 more gallery photos (most have only one).
+
+- [ ] **United Gift Club** (`/work/united-gift-club-magnetic-gift-box`): year, services, permission, client quote, results, extra photos
+- [ ] **Springwater Soaps** (`/work/springwater-soaps-window-cartons`): year, services, permission, client quote, results, extra photos
+- [ ] **Hip Hip! Coffee (Radical Toast, Café Fugaz): confirm the brand name** (`/work/hip-hip-coffee-pouches`): year, services, permission, client quote, results, extra photos
+- [ ] **Barker's Secret** (`/work/barkers-secret-handmade-soap-packaging`): year, services, permission, client quote, results, extra photos
+- [ ] **Olivia Boutique** (`/work/olivia-boutique-kraft-box-sleeve`): year, services, permission, client quote, results, extra photos
+- [ ] **Fruits & Berries** (`/work/fruits-and-berries-candle-tube`): year, services, permission, client quote, results, extra photos
+- [ ] **Crampless Tea** (`/work/crampless-tea-kraft-packaging`): year, services, permission, client quote, results, extra photos
+- [ ] **Mr. Negative** (`/work/mr-negative-film-box-cartons`): year, services, permission, client quote, results, extra photos
+- [ ] **Submersible: confirm the brand name and product** (`/work/submersible-mailer-unboxing`): year, services, permission, client quote, results, extra photos
+- [ ] **Wild Flowers: confirm the brand name (small logo unreadable)** (`/work/wild-flowers-floral-gift-box`): year, services, permission, client quote, results, extra photos
+- [ ] Two more photos are ready to add if approved: the Gruposeripafer shopping bag and the chilli chocolate retail display (skipped for now).
+- [ ] No photo yet for: lid-and-base navy/gold box, beverage bottle labels, shopping bag.
 
 ## 4. Wording to verify
 

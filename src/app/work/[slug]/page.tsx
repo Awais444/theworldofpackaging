@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCaseStudy, publicCaseStudies as caseStudies } from "@/content/caseStudies";
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const study = getCaseStudy((await params).slug);
   if (!study) return {};
   return {
-    title: `${study.client}: ${study.services.join(", ")}`,
+    title: `${study.client} Packaging`,
     description: study.summary,
     alternates: { canonical: `/work/${study.slug}` },
     // Sample projects stay out of search until replaced with real work.
@@ -44,7 +44,7 @@ export default async function CaseStudyPage({ params }: Props) {
     { label: "Client", value: study.client },
     { label: "Industry", value: study.industry },
     { label: "Services", value: study.services.join(", ") },
-    { label: "Year", value: String(study.year) },
+    ...(study.year ? [{ label: "Year", value: study.year }] : []),
   ];
 
   return (
@@ -57,11 +57,13 @@ export default async function CaseStudyPage({ params }: Props) {
               <Tag tone="orange">{study.industry}</Tag>
               {study.placeholder && <Tag tone="white" className="border border-silver-300">Sample project</Tag>}
             </div>
-            <h1 className="text-h1 mt-4">{study.client}</h1>
+            <h1 className="text-h1 mt-4">
+              {study.client}: {study.project}
+            </h1>
             <p className="text-lead mt-4 text-ink-500">{study.summary}</p>
           </div>
-          <Media slot={study.coverSlot} priority panel="blue" className="mt-10" sizes="100vw" />
-          <dl className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <Media slot={study.coverSlot} panel="blue" className="mt-10" sizes="(min-width: 1280px) 1240px, 100vw" />
+          <dl className={`mt-8 grid grid-cols-2 gap-4 ${meta.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
             {meta.map((m) => (
               <div key={m.label} className="rounded-2xl bg-silver-50 px-5 py-4">
                 <dt className="text-xs font-semibold uppercase tracking-wider text-ink-500">{m.label}</dt>
@@ -84,7 +86,7 @@ export default async function CaseStudyPage({ params }: Props) {
       <Section bg="silver">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeader eyebrow="Solution" title="What we made" highlight="made" />
+            <SectionHeader eyebrow="Solution" title="Our approach" highlight="approach" />
             <div className="mt-6 flex flex-wrap gap-2">
               {study.spec.map((s) => (
                 <Tag key={s}>{s}</Tag>
@@ -103,28 +105,46 @@ export default async function CaseStudyPage({ params }: Props) {
       </Section>
 
       <Section>
-        <SectionHeader eyebrow="Gallery" title="The finished work" highlight="finished" />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
-          {study.gallery.map((slot) => (
-            <Media key={slot} slot={slot} sizes="(min-width: 1024px) 33vw, 50vw" />
-          ))}
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="What we made" title="The finished packaging" highlight="finished" />
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-2 lg:col-span-8">
+            {study.made.map((m) => (
+              <li key={m} className="flex gap-3 rounded-2xl border border-silver-300 p-4">
+                <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+                <span>{m}</span>
+              </li>
+            ))}
+          </ul>
         </div>
+        {study.gallery.length > 0 && (
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 md:gap-6">
+            {study.gallery.map((slot) => (
+              <Media key={slot} slot={slot} card sizes="(min-width: 640px) 50vw, 100vw" />
+            ))}
+          </div>
+        )}
       </Section>
 
       <Section bg="blue-50">
-        <SectionHeader eyebrow="Results" title="What changed" highlight="changed" />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {study.results.map((r) => (
-            <StatCard key={r.label} value={r.value} label={r.label} placeholder={study.placeholder} />
-          ))}
-        </div>
+        <SectionHeader eyebrow="Results" title="Results" highlight="Results" />
+        {study.results.length > 0 ? (
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {study.results.map((r) => (
+              <StatCard key={r.label} value={r.value} label={r.label} />
+            ))}
+          </div>
+        ) : (
+          <p className="mt-6 max-w-2xl text-ink-500">Results for this project are being confirmed with the client and will be added here.</p>
+        )}
       </Section>
 
       <Link href={`/work/${next.slug}`} className="group block border-t border-silver-300 bg-white">
         <div className="container-x flex flex-wrap items-center justify-between gap-6 py-14 md:py-20">
           <div>
             <p className="text-eyebrow text-blue-600">Next project</p>
-            <p className="text-h2 mt-3 transition-colors group-hover:text-blue-600">{next.client}</p>
+            <p className="text-h2 mt-3 transition-colors group-hover:text-blue-600">{next.client}: {next.project}</p>
             <p className="mt-2 text-ink-500">{next.summary}</p>
           </div>
           <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white transition-transform group-hover:translate-x-1">

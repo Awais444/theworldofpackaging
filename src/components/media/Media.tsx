@@ -20,6 +20,8 @@ type MediaProps = {
   priority?: boolean;
   /** Panel colour behind an illustration (ignored once a photo is set). */
   panel?: MediaPanel;
+  /** Use the 1200px card version of the photo. */
+  card?: boolean;
 };
 
 /**
@@ -27,14 +29,22 @@ type MediaProps = {
  * otherwise the slot's illustration in the same aspect box. Swapping a photo in
  * needs no code change.
  */
-export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority = false, panel = "silver" }: MediaProps) {
+export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority = false, panel = "silver", card = false }: MediaProps) {
   const slot = getMedia(slotId);
   const Illustration = illustrations[slot.illustration];
 
   return (
-    <figure className={cn("relative overflow-hidden rounded-3xl", !slot.src && panels[panel], className)} style={{ aspectRatio: slot.aspect }}>
+    <figure className={cn("relative overflow-hidden rounded-3xl", (!slot.src || slot.fit === "contain") && (slot.src ? "bg-silver-50" : panels[panel]), className)} style={{ aspectRatio: slot.aspect }}>
       {slot.src ? (
-        <Image src={slot.src} alt={slot.alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={card && slot.srcCard ? slot.srcCard : slot.src}
+          alt={slot.alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={slot.fit === "contain" ? "object-contain p-[4%]" : "object-cover"}
+          style={slot.position ? { objectPosition: slot.position } : undefined}
+        />
       ) : (
         <div role="img" aria-label={slot.alt} className="absolute inset-0 p-[6%]">
           {/* Soft background shapes keep illustration panels from looking empty. */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle2 } from "lucide-react";
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import type { ProcessStep } from "@/content/process";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
  * Zigzag timeline: a centre line (left on mobile) that fills blue→orange on scroll, numbered
  * circles, and cards that light up as they are reached. Without motion everything shows filled.
  */
-export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
+/** `visuals` optionally adds a server-rendered photo to a step card, keyed by step title. */
+export function ProcessTimeline({ steps, visuals = {} }: { steps: ProcessStep[]; visuals?: Record<string, ReactNode> }) {
   const root = useRef<HTMLOListElement>(null);
 
   useGSAP(
@@ -71,6 +72,7 @@ export function ProcessTimeline({ steps }: { steps: ProcessStep[] }) {
                   </span>
                 </div>
                 <p className="mt-3 text-ink-500">{s.body}</p>
+                {visuals[s.title] && <div className="mt-5">{visuals[s.title]}</div>}
                 <ul className="mt-5 space-y-2.5">
                   {s.deliverables.map((d) => (
                     <li key={d} className="flex gap-3">

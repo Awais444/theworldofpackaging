@@ -5,6 +5,8 @@ import { designHref, getDesignService, type DesignService } from "@/content/desi
 import { countriesForService, guidesForService, industryForService } from "@/content/linking";
 import { getIndustry } from "@/content/industries";
 import { GuideCards, RegionLinks } from "@/components/sections/RelatedLinks";
+import { RelatedWork } from "@/components/sections/RelatedWork";
+import { relatedWork } from "@/content/caseStudies";
 import { quoteHref } from "@/content/navigation";
 import { designFeeNote, designTiers, priceLabel } from "@/content/pricing";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -72,7 +74,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
               </div>
             </div>
             <div className="lg:col-span-6">
-              <Media slot={s.portfolioSlots[0]!} priority panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" />
+              <Media slot={s.portfolioSlots[0]!} panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" />
             </div>
           </div>
         </div>
@@ -259,6 +261,8 @@ export function DesignServicePage({ s }: { s: DesignService }) {
           <RegionLinks countries={regions} />
         </div>
       </Section>
+
+      <RelatedWork studies={relatedWork({ designService: s.slug })} bg="silver-50" />
 
       {/* Related */}
       {related.length > 0 && (

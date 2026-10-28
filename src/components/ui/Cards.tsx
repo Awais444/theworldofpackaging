@@ -50,7 +50,7 @@ export function ProductCard({ href, name, text, slot, tags = [] }: { href: strin
   return (
     <Link href={href} className="group block">
       <div className="overflow-hidden rounded-2xl bg-silver-100">
-        <Media slot={slot} panel="none" className="rounded-none transition-transform duration-500 group-hover:scale-[1.04]" sizes="(min-width: 1024px) 25vw, 50vw" />
+        <Media slot={slot} card panel="none" className="rounded-none transition-transform duration-500 group-hover:scale-[1.04]" sizes="(min-width: 1024px) 25vw, 50vw" />
       </div>
       <h3 className="text-h4 mt-4 group-hover:text-blue-600">{name}</h3>
       <p className="mt-1 text-[15px] text-ink-500">{text}</p>
@@ -84,7 +84,7 @@ export function CaseCard({
   return (
     <Link href={href} className="group block">
       <div className="relative overflow-hidden rounded-3xl">
-        <Media slot={slot} className="rounded-3xl transition-transform duration-500 group-hover:scale-[1.03]" sizes="(min-width: 768px) 33vw, 100vw" />
+        <Media slot={slot} card className="rounded-3xl transition-transform duration-500 group-hover:scale-[1.03]" sizes="(min-width: 768px) 33vw, 100vw" />
         {placeholder && (
           <span className="absolute right-4 top-4">
             <Tag tone="white">Sample project</Tag>

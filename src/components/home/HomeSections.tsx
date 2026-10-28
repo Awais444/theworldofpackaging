@@ -14,7 +14,7 @@ import {
 import { site } from "@/config/site";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { publicCaseStudies } from "@/content/caseStudies";
+import { featuredCaseSlugs, publicCaseStudies } from "@/content/caseStudies";
 import { faqGroups } from "@/content/faqs";
 import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
@@ -314,8 +314,8 @@ export function FeaturedWork() {
       <FadeIn>
         <SectionHeader
           eyebrow="Featured work"
-          title="Brands we helped launch"
-          highlight="launch"
+          title="Packaging we have made"
+          highlight="made"
           action={
             <Button href="/work" variant="ghost" arrow>
               View all work
@@ -324,11 +324,14 @@ export function FeaturedWork() {
         />
       </FadeIn>
       <div className="mt-12 grid gap-8 md:grid-cols-3">
-        {publicCaseStudies.slice(0, 3).map((c, i) => (
+        {featuredCaseSlugs
+          .map((slug) => publicCaseStudies.find((c) => c.slug === slug))
+          .filter((c): c is (typeof publicCaseStudies)[number] => Boolean(c))
+          .map((c, i) => (
           <FadeIn key={c.slug} delay={i * 0.08}>
             <CaseCard
               href={`/work/${c.slug}`}
-              title={c.client}
+              title={`${c.client}: ${c.project}`}
               text={c.summary}
               slot={c.coverSlot}
               industry={c.industry}

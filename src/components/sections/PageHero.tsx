@@ -26,7 +26,7 @@ type PageHeroProps = {
 /** Inner-page hero: breadcrumbs, eyebrow, H1, lead, actions, optional visual. */
 export function PageHero({ crumbs, title, highlight, eyebrow, intro, actions, slotId, visual, whatsapp }: PageHeroProps) {
   const topic = whatsapp === false ? null : (whatsapp ?? crumbs[crumbs.length - 1]?.label);
-  const media = visual ?? (slotId ? <Media slot={slotId} priority panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" /> : null);
+  const media = visual ?? (slotId ? <Media slot={slotId} panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" /> : null);
   return (
     <section className="relative overflow-hidden bg-white pb-16 pt-8 md:pb-24">
       <span aria-hidden="true" className="absolute -right-48 -top-48 h-[30rem] w-[30rem] rounded-full bg-blue-50" />

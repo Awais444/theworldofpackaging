@@ -5,6 +5,7 @@ import { processSteps, whatWeNeed } from "@/content/process";
 import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ProcessTimeline } from "@/components/process/ProcessTimeline";
+import { Media } from "@/components/media/Media";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
@@ -55,7 +56,7 @@ export default function HowItWorksPage() {
       </section>
 
       <Section className="!pt-8">
-        <ProcessTimeline steps={processSteps} />
+        <ProcessTimeline steps={processSteps} visuals={{ Design: <Media slot="how-it-works-design" card className="rounded-2xl" sizes="(min-width: 1024px) 40vw, 100vw" /> }} />
       </Section>
 
       <Section bg="silver-50">

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { designHref } from "@/content/designServices";
 import { guidesForBox, servicesForBox } from "@/content/linking";
 import { GuideCards } from "@/components/sections/RelatedLinks";
+import { RelatedWork } from "@/components/sections/RelatedWork";
+import { relatedWork } from "@/content/caseStudies";
 import { getMedia } from "@/content/media";
 import { orderSteps } from "@/content/boxDetails";
 import { getIndustry } from "@/content/industries";
@@ -46,8 +48,8 @@ export function BoxStylePage({ box }: { box: BoxView }) {
             <div className="lg:col-span-7">
               <ProductGallery
                 labels={gallerySlots.map((s) => getMedia(s).alt)}
-                main={gallerySlots.map((s, i) => (
-                  <Media key={s} slot={s} priority={i === 0} sizes="(min-width: 1024px) 55vw, 100vw" />
+                main={gallerySlots.map((s) => (
+                  <Media key={s} slot={s} sizes="(min-width: 1024px) 55vw, 100vw" />
                 ))}
                 thumbs={gallerySlots.map((s) => (
                   <Media key={s} slot={s} className="rounded-xl" sizes="120px" />
@@ -213,6 +215,8 @@ export function BoxStylePage({ box }: { box: BoxView }) {
           </div>
         )}
       </Section>
+
+      <RelatedWork studies={relatedWork({ box: `${box.kind}:${box.slug}` })} bg="silver-50" />
 
       {/* 10. Related */}
       <Section bg="silver">

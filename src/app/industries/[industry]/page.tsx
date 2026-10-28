@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowRight, Gift, Info, ShieldCheck, Store, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { publicCaseStudies } from "@/content/caseStudies";
+import { relatedWork } from "@/content/caseStudies";
+import { RelatedWork } from "@/components/sections/RelatedWork";
 import { designHref, getDesignService, industryDesignService } from "@/content/designServices";
 import { getIndustry, industries } from "@/content/industries";
-import { industryCase, industryFinishes, industrySharedFaqs } from "@/content/industryDetails";
+import { industryFinishes, industrySharedFaqs } from "@/content/industryDetails";
 import { quoteHref } from "@/content/navigation";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
@@ -14,7 +15,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
-import { CaseCard, ProductCard } from "@/components/ui/Cards";
+import { ProductCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -57,7 +58,7 @@ export default async function IndustryPage({ params }: Props) {
       return s ? [printedCard(s)] : [];
     }),
   ].slice(0, 6);
-  const study = publicCaseStudies.find((c) => c.slug === industryCase[ind.slug]) ?? publicCaseStudies[0];
+  const work = relatedWork({ industry: ind.slug });
   const faqs = [...ind.faqs, ...industrySharedFaqs].slice(0, 5);
   const design = getDesignService(industryDesignService[ind.slug] ?? "");
   const finishes = industryFinishes[ind.slug] ?? [];
@@ -165,16 +166,10 @@ export default async function IndustryPage({ params }: Props) {
               All finishes
             </Button>
           </div>
-          {study && (
-            <div className="lg:col-span-6">
-              <p className="text-eyebrow text-blue-600">Case study</p>
-              <div className="mt-4">
-                <CaseCard href={`/work/${study.slug}`} title={study.client} text={study.summary} slot={study.coverSlot} industry={study.industry} />
-              </div>
-            </div>
-          )}
         </div>
       </Section>
+
+      <RelatedWork studies={work} />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-12">

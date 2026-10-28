@@ -11,5 +11,5 @@ export const contentType = ogContentType;
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const s = getCaseStudy(slug);
-  return renderOg({ eyebrow: `Case study / ${s?.industry ?? ""}`, title: s?.client ?? "Case study", tone: "paper" });
+  return renderOg({ eyebrow: `Case study / ${s?.industry ?? ""}`, title: s ? `${s.client}: ${s.project}` : "Case study", tone: "paper" });
 }

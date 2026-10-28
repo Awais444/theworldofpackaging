@@ -17,22 +17,6 @@ export const industryFinishes: Record<string, string[]> = {
   "gifts-pr-kits": ["Foil logo", "Custom multi-cavity insert", "Inside print", "Ribbon", "Magnetic closure"],
 };
 
-/** Which sample case study to show per industry (by case study slug). */
-export const industryCase: Record<string, string> = {
-  cosmetics: "halden-apothecary",
-  perfume: "halden-apothecary",
-  supplements: "halden-apothecary",
-  cbd: "halden-apothecary",
-  jewelry: "kiri-atelier",
-  watches: "kiri-atelier",
-  "food-bakery": "ostra-tea",
-  chocolates: "ostra-tea",
-  candles: "marrow-and-vale",
-  apparel: "marrow-and-vale",
-  electronics: "kiri-atelier",
-  "gifts-pr-kits": "marrow-and-vale",
-};
-
 /** Shared questions so every industry page has five FAQs. */
 export const industrySharedFaqs: Faq[] = [
   { q: "What is the minimum order?", a: `${site.facts.rigidMoq} boxes per design for rigid and collapsible rigid boxes. Printed box minimums are confirmed with your quote.` },

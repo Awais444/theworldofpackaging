@@ -44,7 +44,7 @@ export default function PackagingDesignHub() {
         title="Packaging design services for every product"
         highlight="every"
         intro={<p>Our packaging design services cover boxes, labels, pouches and displays, designed by our studio and made in our own factory. Choose your product or format below.</p>}
-        slotId="design-cosmetic-packaging-design-1"
+        slotId="packaging-design-hub"
         actions={
           <>
             <Button href={quoteHref} size="lg" arrow>

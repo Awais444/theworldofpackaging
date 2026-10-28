@@ -13,34 +13,26 @@ import { gsap, useGSAP } from "@/lib/gsap";
 
 // Promises come from confirmed facts in config/site.ts; null facts are skipped.
 const trust = [...promises(), "Own factory", `MOQ ${site.facts.rigidMoq}`];
+
+/** Chips sit inside the visual panel with 16px insets, in the corners clear of the product. */
 const chips = [
-  { label: "2 mm greyboard", className: "left-[2%] top-[14%]" },
-  { label: "Gold foil", className: "right-[4%] top-[6%]" },
-  { label: "Ships flat", className: "bottom-[10%] right-[8%]" },
+  { label: "2 mm greyboard", className: "left-4 top-4" },
+  { label: "Gold foil", className: "right-4 top-4" },
+  { label: "Ships flat", className: "bottom-4 right-4" },
 ];
 
 const Mailer = illustrations["mailer-box"];
 
-/** Illustration composition: open magnetic box, a mailer and a small orange box. */
+/** Illustration fallback when no hero photo is set: everything stays inside the panel. */
 function Composition({ alt }: { alt: string }) {
   return (
-    <div role="img" aria-label={alt} className="relative aspect-[4/3] rounded-3xl bg-blue-50">
-      <span aria-hidden="true" className="absolute -right-[8%] -top-[10%] aspect-square h-[60%] rounded-full bg-white/70" />
-      <span aria-hidden="true" className="absolute -bottom-[12%] -left-[6%] aspect-square h-[45%] rounded-full bg-silver-100" />
-      <div data-hero-art className="absolute inset-[4%_10%_12%_4%]">
+    <div role="img" aria-label={alt} className="absolute inset-0">
+      <div data-hero-art className="absolute inset-[10%_22%_18%_8%]">
         <MagneticBoxOpen />
       </div>
-      <div data-hero-art className="absolute bottom-[2%] right-[2%] w-[42%]">
+      <div data-hero-art className="absolute bottom-[10%] right-[8%] w-[34%]">
         <Mailer className="illo--klein" />
       </div>
-      <div data-hero-art className="absolute left-[4%] bottom-[4%] w-[24%]">
-        <Mailer className="illo--orange" />
-      </div>
-      {chips.map((c) => (
-        <span key={c.label} data-hero-chip className={`absolute rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-ink-900 shadow-md sm:text-sm ${c.className}`}>
-          {c.label}
-        </span>
-      ))}
     </div>
   );
 }
@@ -58,7 +50,6 @@ export function HomeHero() {
         tl.from("[data-hero-line]", { y: 14, duration: 0.5, stagger: 0.06 })
           .from("[data-hero-art]", { scale: 0.97, duration: 0.6, stagger: 0.08 }, 0)
           .from("[data-hero-chip]", { y: 8, duration: 0.4, stagger: 0.06 }, 0.2);
-        gsap.to("[data-hero-art]", { y: -8, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.6, delay: 1.2 });
       });
       return () => mm.revert();
     },
@@ -66,15 +57,15 @@ export function HomeHero() {
   );
 
   return (
-    <section ref={root} className="relative overflow-hidden bg-white">
-      <span aria-hidden="true" className="absolute -left-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-blue-50" />
-      <div className="container-x relative grid items-center gap-12 pb-16 pt-12 md:pb-24 md:pt-16 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-6">
+    <section ref={root} className="bg-white">
+      {/* Desktop: content centred in the first screen (capped at 760px). Bottom padding leaves room for the proof bar overlap. */}
+      <div className="container-x grid items-center gap-12 pb-[120px] pt-14 lg:min-h-[min(760px,calc(100svh-var(--header-h)-var(--utility-h)-104px))] lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-7">
           <p data-hero-line className="text-eyebrow text-blue-600">
             Packaging design studio + own factory
           </p>
-          <h1 data-hero-line className="text-display mt-4">
-            Packaging design that <span className="whitespace-nowrap"><Highlight>sells</Highlight>.</span> Made in our own factory.
+          <h1 data-hero-line className="mt-4 font-heading text-[clamp(40px,3.9vw,56px)] font-bold leading-[1.04] tracking-[-0.02em] [text-wrap:balance]">
+            Packaging design that <Highlight>sells</Highlight>.<br className="hidden lg:block" /> Made in our own factory.
           </h1>
           <p data-hero-line className="text-lead mt-6 max-w-xl text-ink-500">
             Boxes, labels and pouches designed for your product, then printed and made in our own factory. One team from first sketch to delivered box.
@@ -97,7 +88,21 @@ export function HomeHero() {
             ))}
           </ul>
         </div>
-        <div className="lg:col-span-6">{slot.src ? <Media slot="home-hero" priority panel="blue" /> : <Composition alt={slot.alt} />}</div>
+        <div className="lg:col-span-5">
+          {/* One background shape: the blue-50 rounded panel. Photo, illustration and chips all stay inside it. */}
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-blue-50">
+            {slot.src ? (
+              <Media slot="home-hero" priority className="absolute inset-0 h-full w-full rounded-3xl" sizes="(min-width: 1024px) 50vw, 100vw" />
+            ) : (
+              <Composition alt={slot.alt} />
+            )}
+            {chips.map((c) => (
+              <span key={c.label} data-hero-chip className={`absolute z-10 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-ink-900 shadow-md sm:text-sm ${c.className}`}>
+                {c.label}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

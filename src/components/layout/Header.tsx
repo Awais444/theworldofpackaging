@@ -24,14 +24,16 @@ const menuPrefixes: Record<MenuId, string[]> = {
   boxes: ["/boxes", "/rigid-boxes", "/printed-boxes", "/collapsible-rigid-boxes", "/materials", "/finishes", "/inserts", "/samples"],
 };
 const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium text-ink-800 transition-colors hover:text-blue-600";
-const menuLink = "block rounded-lg px-2 py-1.5 text-[15px] text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
+// Links align with their heading: the pill padding is offset by a negative margin.
+const menuLink = "-mx-3 block rounded-full px-3 text-[15px] font-medium leading-9 text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600 focus-visible:bg-blue-50 focus-visible:text-blue-600";
+const menuHeading = "text-[12px] font-bold uppercase tracking-[0.12em] text-blue-600";
 
 function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div className="grid grid-cols-4 gap-8">
       {boxesMenu.map((group) => (
-        <div key={group.title}>
-          <p className="text-eyebrow text-blue-600">
+        <div key={group.title} data-col>
+          <p className={menuHeading}>
             {group.href ? (
               <Link href={group.href} onClick={onNavigate} className="hover:underline">
                 {group.title}
@@ -40,7 +42,7 @@ function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
               group.title
             )}
           </p>
-          <ul className="mt-3 space-y-0.5">
+          <ul className="mt-2">
             {group.links.map((l) => (
               <li key={l.label}>
                 <Link href={l.href} onClick={onNavigate} className={menuLink}>
@@ -51,7 +53,7 @@ function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
           </ul>
         </div>
       ))}
-      <Link href={boxesPromo.href} onClick={onNavigate} className="group flex flex-col rounded-2xl bg-blue-50 p-5">
+      <Link href={boxesPromo.href} onClick={onNavigate} data-col className="group flex flex-col rounded-2xl bg-blue-50 p-5">
         <div className="aspect-[4/3]">
           <MagneticBoxClosed collapsible />
         </div>
@@ -70,8 +72,8 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
     <div>
       <div className="grid grid-cols-4 gap-8">
         {designMenu.map((group) => (
-          <div key={group.title}>
-            <p className="text-eyebrow text-blue-600">
+          <div key={group.title} data-col>
+            <p className={menuHeading}>
               {group.href ? (
                 <Link href={group.href} onClick={onNavigate} className="hover:underline">
                   {group.title}
@@ -80,7 +82,7 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
                 group.title
               )}
             </p>
-            <ul className="mt-3 space-y-0.5">
+            <ul className="mt-2">
               {group.links.map((l) => (
                 <li key={l.label}>
                   <Link href={l.href} onClick={onNavigate} className={menuLink}>
@@ -92,7 +94,7 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
           </div>
         ))}
       </div>
-      <div className="mt-6 flex items-center justify-between gap-6 rounded-2xl bg-blue-50 px-5 py-4">
+      <div data-col className="mt-6 flex items-center justify-between gap-6 rounded-2xl bg-blue-50 px-5 py-4">
         <p className="text-sm text-ink-900">
           <span className="font-semibold">Designed here, made here.</span> We also make your boxes, from {site.facts.rigidMoq} units.
         </p>
@@ -111,23 +113,75 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
-const panels: Record<MenuId, (p: { onNavigate: () => void }) => React.ReactNode> = {
-  design: DesignPanel,
-  boxes: BoxesPanel,
-};
+const OPEN_DELAY = 120;
+const CLOSE_DELAY = 250;
+const FOCUSABLE = "a[href], button:not([disabled])";
+
+/** Arrow keys inside a panel: left/right move between columns, up/down within a column. */
+function onPanelKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+  if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
+  const cols = [...e.currentTarget.querySelectorAll<HTMLElement>("[data-col]")];
+  const ci = cols.findIndex((c) => c.contains(document.activeElement));
+  if (ci < 0) return;
+  e.preventDefault();
+  if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+    const next = cols[(ci + (e.key === "ArrowRight" ? 1 : cols.length - 1)) % cols.length];
+    (next?.matches(FOCUSABLE) ? next : next?.querySelector<HTMLElement>(FOCUSABLE))?.focus();
+    return;
+  }
+  const col = cols[ci]!;
+  const items = col.matches(FOCUSABLE) ? [col] : [...col.querySelectorAll<HTMLElement>(FOCUSABLE)];
+  const ii = items.indexOf(document.activeElement as HTMLElement);
+  items[(ii + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length]?.focus();
+}
 
 export function Header() {
   const pathname = usePathname();
   const reduce = useReducedMotion();
   // Menus remember the path they were opened on, so they close on navigation without an effect.
-  const [menu, setMenu] = useState<{ id: MenuId; at: string } | null>(null);
+  const [menu, setMenu] = useState<{ id: MenuId; at: string; swap: boolean } | null>(null);
   const [mobileAt, setMobileAt] = useState<string | null>(null);
   const openId = menu?.at === pathname ? menu.id : null;
   const mobileOpen = mobileAt === pathname;
   const navRef = useRef<HTMLElement>(null);
   const mobileToggle = useRef<HTMLButtonElement>(null);
-  const closeMenu = useCallback(() => setMenu(null), []);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearTimers = useCallback(() => {
+    if (openTimer.current) clearTimeout(openTimer.current);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    openTimer.current = null;
+    closeTimer.current = null;
+  }, []);
+  const closeMenu = useCallback(() => {
+    clearTimers();
+    setMenu(null);
+  }, [clearTimers]);
+  const openMenu = useCallback((id: MenuId, swap: boolean) => setMenu({ id, at: pathname, swap }), [pathname]);
   const closeMobile = useCallback(() => setMobileAt(null), []);
+
+  // Hover intent on the wrapper (trigger + panel): open after 120ms, close 250ms after leaving.
+  // Moving straight from one trigger to another swaps menus instantly. Touch uses taps only.
+  const onWrapperEnter = (e: React.PointerEvent, id: MenuId) => {
+    if (e.pointerType === "touch") return;
+    clearTimers();
+    if (openId === id) return;
+    if (openId) openMenu(id, true);
+    else openTimer.current = setTimeout(() => openMenu(id, false), OPEN_DELAY);
+  };
+  const onWrapperLeave = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") return;
+    if (openTimer.current) clearTimeout(openTimer.current);
+    openTimer.current = null;
+    closeTimer.current = setTimeout(() => setMenu(null), CLOSE_DELAY);
+  };
+  /** Pointer over Work, About, the logo or the buttons closes an open menu at once. */
+  const closeOnEnter = (e: React.PointerEvent) => {
+    if (e.pointerType !== "touch") closeMenu();
+  };
+
+  useEffect(() => clearTimers, [clearTimers]);
 
   useEffect(() => {
     if (!openId) return;
@@ -147,22 +201,35 @@ export function Header() {
     };
   }, [openId, closeMenu]);
 
-  const Panel = openId ? panels[openId] : null;
-
   return (
     <>
       <UtilityBar />
+      {/* Page overlay behind the open panel; clicking it closes the menu. */}
+      <AnimatePresence>
+        {openId && (
+          <motion.div
+            key="overlay"
+            aria-hidden="true"
+            className="fixed inset-0 z-[90] hidden bg-[rgba(20,19,23,0.25)] lg:block"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduce ? 0 : 0.2 }}
+            onClick={closeMenu}
+          />
+        )}
+      </AnimatePresence>
       <header className={cn("sticky top-0 z-[100] h-[var(--header-h)] border-b border-silver-100 bg-white")}>
         <div className="container-x grid h-full grid-cols-[1fr_auto] items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-12">
-          <div className="flex items-center justify-self-start">
+          <div className="flex items-center justify-self-start" onPointerEnter={closeOnEnter}>
             <Logo />
           </div>
 
-          <nav ref={navRef} aria-label="Main" className="hidden justify-self-center lg:block" onMouseLeave={closeMenu}>
-            <ul className="flex items-center gap-9">
+          <nav ref={navRef} aria-label="Main" className="hidden h-full justify-self-center lg:block">
+            <ul className="flex h-full items-center gap-9">
               {mainNav.map((item) =>
                 item.kind === "link" ? (
-                  <li key={item.href}>
+                  <li key={item.href} onPointerEnter={closeOnEnter}>
                     <Link
                       href={item.href}
                       className={cn(topLink, isActive(pathname, item.href) && "font-semibold text-blue-600!")}
@@ -172,41 +239,53 @@ export function Header() {
                     </Link>
                   </li>
                 ) : (
-                  <li key={item.id} onMouseEnter={() => setMenu({ id: item.id, at: pathname })}>
+                  // One wrapper per trigger and its panel, full header height, so the pointer never
+                  // crosses a gap. The panel is positioned against the header, flush at its bottom edge.
+                  <li key={item.id} className="flex h-full items-center" onPointerEnter={(e) => onWrapperEnter(e, item.id)} onPointerLeave={onWrapperLeave}>
                     <button
                       type="button"
                       aria-expanded={openId === item.id}
                       aria-controls={`menu-${item.id}`}
-                      onClick={() => (openId === item.id ? closeMenu() : setMenu({ id: item.id, at: pathname }))}
+                      onClick={() => (openId === item.id ? closeMenu() : openMenu(item.id, Boolean(openId)))}
+                      onKeyDown={(e) => {
+                        if (e.key !== "ArrowDown") return;
+                        e.preventDefault();
+                        openMenu(item.id, Boolean(openId));
+                        requestAnimationFrame(() => document.getElementById(`menu-${item.id}`)?.querySelector<HTMLElement>(FOCUSABLE)?.focus());
+                      }}
                       className={cn(topLink, (openId === item.id || menuPrefixes[item.id].some((p) => isActive(pathname, p))) && "text-blue-600!", menuPrefixes[item.id].some((p) => isActive(pathname, p)) && "font-semibold")}
                     >
                       {item.label}
-                      <ChevronDown aria-hidden="true" className={cn("h-3.5 w-3.5 transition-transform", openId === item.id && "rotate-180")} />
+                      <ChevronDown aria-hidden="true" className={cn("h-3.5 w-3.5 transition-transform duration-200 ease-in-out", openId === item.id && "rotate-180")} />
                     </button>
+                    {openId === item.id && (
+                      // Invisible hover bridge across the full width of the header's bottom band (below the
+                      // nav links and buttons), so a slow diagonal path to any column stays inside the wrapper.
+                      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[18px]" />
+                    )}
+                    {openId === item.id && (
+                      // Solid white from the first frame: only translateY animates on the panel,
+                      // plus a quick opacity on its inner content. Swapping between menus is instant.
+                      <motion.div
+                        id={`menu-${item.id}`}
+                        className="absolute inset-x-0 top-full border-b border-silver-300 bg-white shadow-md"
+                        initial={reduce || menu?.swap ? false : { y: -8 }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                        onKeyDown={onPanelKeyDown}
+                      >
+                        <motion.div className="container-x py-8" initial={reduce || menu?.swap ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.12 }}>
+                          {item.id === "design" ? <DesignPanel onNavigate={closeMenu} /> : <BoxesPanel onNavigate={closeMenu} />}
+                        </motion.div>
+                      </motion.div>
+                    )}
                   </li>
                 ),
               )}
             </ul>
-            <AnimatePresence>
-              {openId && Panel && (
-                <motion.div
-                  key={openId}
-                  id={`menu-${openId}`}
-                  initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-x-0 top-full border-t border-silver-300/60 bg-white shadow-md"
-                >
-                  <div className="container-x py-8">
-                    <Panel onNavigate={closeMenu} />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </nav>
 
-          <div className="flex items-center gap-2.5 justify-self-end">
+          <div className="flex items-center gap-2.5 justify-self-end" onPointerEnter={closeOnEnter}>
             <CartLink />
             <a
               href={whatsappUrl(whatsappMessage()) ?? "/contact"}

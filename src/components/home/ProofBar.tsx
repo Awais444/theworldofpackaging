@@ -32,10 +32,11 @@ function CountUp({ value }: { value: number }) {
 const cols: Record<number, string> = { 1: "md:grid-cols-1", 2: "md:grid-cols-2", 3: "md:grid-cols-3", 4: "md:grid-cols-4" };
 
 /** Homepage proof bar: a card of key facts in 4 equal columns (2×2 on mobile). */
-export function ProofBar({ items }: { items: ProofItem[] }) {
+/** `overlap` pulls the bar up over the bottom of the hero (48px). */
+export function ProofBar({ items, overlap = false }: { items: ProofItem[]; overlap?: boolean }) {
   if (items.length === 0) return null;
   return (
-    <section aria-label="Key facts" className="bg-white py-10 md:py-14">
+    <section aria-label="Key facts" className={overlap ? "relative z-10 -mt-12" : "bg-white py-10 md:py-14"}>
       <div className="container-x">
         <dl className={cn("grid grid-cols-2 gap-y-6 rounded-3xl border border-silver-300 bg-white p-6 shadow-md md:gap-y-0 md:p-8", cols[items.length])}>
           {items.map((item, i) => {

@@ -7,13 +7,13 @@ import {
   FeaturedWork,
   FinalCta,
   Finishes,
-  HowItWorks,
   Industries,
   Services,
   TestimonialsAndFaq,
   WhatWeMake,
   WhyUs,
 } from "@/components/home/HomeSections";
+import { HowItWorks } from "@/components/home/HowItWorks";
 
 export const metadata: Metadata = {
   title: { absolute: "Packaging Design Services, Made in Our Own Factory | The World of Packaging" },

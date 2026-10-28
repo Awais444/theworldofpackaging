@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useId, useState } from "react";
 
 export type FaqItem = { q: string; a: string };
@@ -16,13 +17,13 @@ export function Accordion({ items, defaultOpen = 0 }: { items: FaqItem[]; defaul
   const [open, setOpen] = useState<number | null>(defaultOpen);
 
   return (
-    <div className="divide-y divide-silver-300 border-y border-silver-300">
+    <div className="divide-y divide-silver-300">
       {items.map((item, i) => {
         const isOpen = open === i;
         const btn = `${base}-b${i}`;
         const panel = `${base}-p${i}`;
         return (
-          <div key={item.q}>
+          <div key={item.q} className={cn("rounded-xl px-4 transition-colors md:px-5", isOpen && "bg-blue-50")}>
             <h3>
               <button
                 id={btn}
@@ -30,11 +31,16 @@ export function Accordion({ items, defaultOpen = 0 }: { items: FaqItem[]; defaul
                 aria-expanded={isOpen}
                 aria-controls={panel}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="flex w-full items-center justify-between gap-6 py-5 text-left font-heading text-lg font-semibold tracking-tight"
+                className="flex w-full items-center justify-between gap-6 py-5 text-left text-[17px] font-semibold leading-snug text-ink-900"
               >
                 {item.q}
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
-                  {isOpen ? <Minus aria-hidden="true" className="h-4 w-4" /> : <Plus aria-hidden="true" className="h-4 w-4" />}
+                <span
+                  className={cn(
+                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-[1.5px] border-blue-600 text-blue-600 transition-transform duration-200",
+                    isOpen && "rotate-45",
+                  )}
+                >
+                  <Plus aria-hidden="true" className="h-4 w-4" />
                 </span>
               </button>
             </h3>
@@ -47,10 +53,10 @@ export function Accordion({ items, defaultOpen = 0 }: { items: FaqItem[]; defaul
                   initial={reduce ? false : { height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="max-w-2xl pb-6 text-ink-500">{item.a}</p>
+                  <p className="max-w-[65ch] pb-6 text-base text-ink-500">{item.a}</p>
                 </motion.div>
               )}
             </AnimatePresence>

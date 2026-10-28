@@ -12,6 +12,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { site } from "@/config/site";
+import { CopyButton } from "@/components/ui/CopyButton";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { publicCaseStudies } from "@/content/caseStudies";
 import { faqGroups } from "@/content/faqs";
 import { industries } from "@/content/industries";
@@ -35,7 +37,6 @@ import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { LogoMarquee } from "@/components/ui/LogoMarquee";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { StepList } from "@/components/ui/StepList";
 import { Tabs } from "@/components/ui/Tabs";
 import { illustrations } from "@/components/illustrations";
 import { industryIcon } from "@/components/industries/industryIcons";
@@ -340,48 +341,6 @@ export function FeaturedWork() {
   );
 }
 
-export function HowItWorks() {
-  return (
-    <Section>
-      <FadeIn>
-        <SectionHeader
-          eyebrow="How it works"
-          title="Four steps to your boxes"
-          highlight="boxes"
-          lead={`We reply to every brief ${site.facts.quoteReply}.`}
-        />
-      </FadeIn>
-      <FadeIn delay={0.1} className="mt-12">
-        <StepList
-          steps={[
-            {
-              title: "Share your brief",
-              body: "Tell us the product, size, quantity and where it ships.",
-            },
-            {
-              title: "Design & sample",
-              body: "We design or check your artwork, then make a physical sample.",
-            },
-            {
-              title: "Production",
-              body: "Your boxes are made, printed and checked in our factory.",
-            },
-            {
-              title: "Delivery",
-              body: "Packed and shipped by air or sea to your door.",
-            },
-          ]}
-        />
-      </FadeIn>
-      <div className="mt-10">
-        <Button href="/how-it-works" variant="secondary" arrow>
-          See full process
-        </Button>
-      </div>
-    </Section>
-  );
-}
-
 
 export function Industries() {
   return (
@@ -468,47 +427,44 @@ export function Finishes() {
 }
 
 export function TestimonialsAndFaq() {
-  const faqs = faqGroups.flatMap((g) => g.faqs).slice(0, 6);
+  const faqs = faqGroups.flatMap((g) => g.faqs).slice(0, 8);
   const quotes = publicTestimonials.slice(0, 3);
   return (
-    <Section bg="silver">
-      <div className={quotes.length ? "grid gap-16 lg:grid-cols-2" : "mx-auto max-w-3xl"}>
-        {quotes.length > 0 && (
-        <div>
+    <Section>
+      {quotes.length > 0 && (
+        <div className="mb-20">
           <FadeIn>
-            <SectionHeader
-              eyebrow="Testimonials"
-              title="What clients say"
-              highlight="say"
-            />
+            <SectionHeader eyebrow="Testimonials" title="What clients say" highlight="say" />
           </FadeIn>
-          <div className="mt-10 space-y-6">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {quotes.map((t, i) => (
-              <TestimonialCard
-                key={i}
-                quote={t.quote}
-                name={t.name}
-                role={t.role}
-                placeholder={t.placeholder}
-              />
+              <TestimonialCard key={i} quote={t.quote} name={t.name} role={t.role} placeholder={t.placeholder} />
             ))}
           </div>
         </div>
-        )}
-        <div>
-          <FadeIn>
-            <SectionHeader
-              eyebrow="FAQ"
-              title="Common questions"
-              highlight="questions"
-            />
-          </FadeIn>
-          <div className="mt-10 rounded-3xl bg-white p-2 md:p-4">
-            <Accordion items={faqs} />
+      )}
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-[120px]">
+            <SectionHeader eyebrow="FAQ" title="Common questions" highlight="questions" lead="Answers to what brands ask before ordering." />
+            <div className="mt-8 rounded-2xl border border-silver-300 bg-white p-6">
+              <p className="font-heading text-h4 font-bold">Still have questions?</p>
+              <p className="mt-2 text-ink-500">Ask us directly. A real person replies, usually the same day.</p>
+              <WhatsAppButton message="Hi, I have a question about packaging" size="sm" label="Ask on WhatsApp" className="mt-5" />
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <a href={`mailto:${site.email}`} className="select-all break-all font-semibold text-blue-600 hover:underline">
+                  {site.email}
+                </a>
+                <CopyButton value={site.email} label="email address" />
+              </div>
+            </div>
           </div>
+        </div>
+        <div className="lg:col-span-7">
+          <Accordion items={faqs} />
           <JsonLd data={faqPage(faqs)} />
-          <Button href="/faq" variant="ghost" arrow className="mt-6">
-            All questions
+          <Button href="/faq" variant="ghost" arrow className="mt-8">
+            View all FAQs
           </Button>
         </div>
       </div>

@@ -6,10 +6,11 @@ export function Container({ children, className }: { children: ReactNode; classN
   return <div className={cn("container-x", className)}>{children}</div>;
 }
 
-export type SectionBg = "white" | "silver" | "blue-50" | "klein" | "ink" | "blue";
+export type SectionBg = "white" | "silver-50" | "silver" | "blue-50" | "klein" | "ink" | "blue";
 
 const backgrounds: Record<SectionBg, string> = {
   white: "bg-white text-ink-900",
+  "silver-50": "bg-silver-50 text-ink-900",
   silver: "bg-silver-100 text-ink-900",
   "blue-50": "bg-blue-50 text-ink-900",
   klein: "bg-blue-900 text-white",

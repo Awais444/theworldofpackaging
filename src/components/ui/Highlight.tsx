@@ -4,14 +4,20 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 /**
- * The signature highlight: one key word in Hot Orange with a soft orange swoosh
- * underline that draws when scrolled into view. Max once per heading.
- * The swoosh is fully drawn without JS and with reduced motion.
+ * The signature highlight: one key word in orange-600 (#E66400) with a Hot Orange (#FF7001)
+ * swoosh underline that draws when scrolled into view. Max once per heading.
+ * The swoosh is fully drawn with reduced motion. The in-view trigger sits on the wrapping
+ * span: an observer on the SVG path itself does not fire reliably.
  */
 export function Highlight({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
   return (
-    <span className="relative inline-block whitespace-nowrap text-orange-text [.on-dark_&]:text-white">
+    <motion.span
+      className="relative inline-block whitespace-nowrap text-orange-600 [.on-dark_&]:text-white"
+      initial={reduce ? "drawn" : "hidden"}
+      whileInView="drawn"
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+    >
       {children}
       <svg viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true" className="absolute -bottom-[0.18em] left-0 h-[0.32em] w-full overflow-visible text-orange-500">
         <motion.path
@@ -20,14 +26,10 @@ export function Highlight({ children }: { children: ReactNode }) {
           stroke="currentColor"
           strokeWidth={5}
           strokeLinecap="round"
-          strokeOpacity={0.7}
-          initial={reduce ? false : { pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+          variants={{ hidden: { pathLength: 0 }, drawn: { pathLength: 1 } }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         />
       </svg>
-    </span>
+    </motion.span>
   );
 }
-

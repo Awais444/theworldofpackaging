@@ -68,7 +68,7 @@ export function HomeHero() {
   return (
     <section ref={root} className="relative overflow-hidden bg-white">
       <span aria-hidden="true" className="absolute -left-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-blue-50" />
-      <div className="container-x relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12 lg:gap-16">
+      <div className="container-x relative grid items-center gap-12 pb-16 pt-12 md:pb-24 md:pt-16 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-6">
           <p data-hero-line className="text-eyebrow text-blue-600">
             Packaging design studio + own factory

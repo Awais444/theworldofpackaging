@@ -83,10 +83,9 @@ export const mainNav: MainNavItem[] = [
   { kind: "menu", label: "Boxes & Printing", id: "boxes", href: "/boxes" },
   { kind: "link", label: "Industries", href: "/industries" },
   { kind: "link", label: "Work", href: "/work" },
-  { kind: "link", label: "Pricing", href: "/pricing" },
 ];
 
-export const primaryCta: NavLink = { label: "Get a Free Quote", href: quoteHref };
+export const primaryCta: NavLink = { label: "Get a Quote", href: quoteHref };
 
 export const footerNav: NavGroup[] = [
   {
@@ -114,6 +113,7 @@ export const footerNav: NavGroup[] = [
     links: [
       { label: "About", href: "/about" },
       { label: "Team", href: "/team" },
+      { label: "Pricing", href: "/pricing" },
       { label: "Factory", href: "/factory" },
       { label: "Industries", href: "/industries" },
       { label: "How It Works", href: "/how-it-works" },

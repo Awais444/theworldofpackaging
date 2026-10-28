@@ -39,7 +39,7 @@
   --shadow-blue: 0 12px 32px rgb(1 30 253 / 0.25);
   --ring: 0 0 0 3px rgb(1 30 253 / 0.3);
 
-  --header-h: 72px;
+  --header-h: 80px;
   --utility-h: 36px;
   --gutter: 1rem;
   color-scheme: light;

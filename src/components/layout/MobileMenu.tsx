@@ -19,7 +19,7 @@ type MobileMenuProps = {
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 const groups: Record<MenuId, Array<{ title?: string; links: NavLink[] }>> = {
-  design: [...designMenu, { links: [{ label: "View all packaging design services", href: "/packaging-design" }] }],
+  design: [...designMenu, { links: [{ label: "View all packaging design services", href: "/packaging-design" }, { label: "See pricing", href: "/pricing" }] }],
   branding: [{ links: brandingMenu }],
   boxes: [...boxesMenu.map((g) => ({ title: g.title, links: g.links })), { links: [{ label: "All boxes", href: "/boxes" }] }],
 };

@@ -18,7 +18,7 @@ import { UtilityBar } from "./UtilityBar";
 
 const MOBILE_ID = "mobile-menu";
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
-const topLink = "inline-flex items-center gap-1 whitespace-nowrap rounded-full px-3.5 py-2 text-[15px] font-medium text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
+const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium text-ink-900 underline-offset-[6px] decoration-2 transition-colors hover:text-blue-600 hover:underline";
 const menuLink = "block rounded-lg px-2 py-1.5 text-[15px] text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
 
 function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
@@ -83,9 +83,14 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
         <p className="text-sm text-ink-900">
           <span className="font-semibold">Designed here, made here.</span> We also make your boxes, from {site.facts.rigidMoq} units.
         </p>
-        <Button href="/packaging-design" variant="ghost" arrow onClick={onNavigate}>
-          View all services
-        </Button>
+        <div className="flex items-center gap-6">
+          <Button href="/pricing" variant="ghost" onClick={onNavigate}>
+            See pricing
+          </Button>
+          <Button href="/packaging-design" variant="ghost" arrow onClick={onNavigate}>
+            View all services
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -156,12 +161,12 @@ export function Header() {
   return (
     <>
       <UtilityBar />
-      <header className={cn("sticky top-0 z-50 h-[var(--header-h)] border-b bg-white transition-shadow", scrolled ? "border-transparent shadow-sm" : "border-silver-300/60")}>
-        <div className="container-x flex h-full items-center justify-between gap-6">
+      <header className={cn("sticky top-0 z-[100] h-[var(--header-h)] border-b bg-white", scrolled ? "border-silver-300" : "border-transparent")}>
+        <div className="container-x grid h-full grid-cols-[auto_1fr_auto] items-center gap-6 xl:gap-12">
           <Logo />
 
-          <nav ref={navRef} aria-label="Main" className="hidden xl:block" onMouseLeave={closeMenu}>
-            <ul className="flex items-center gap-1">
+          <nav ref={navRef} aria-label="Main" className="hidden justify-self-center xl:block" onMouseLeave={closeMenu}>
+            <ul className="flex items-center gap-9">
               {mainNav.map((item) =>
                 item.kind === "link" ? (
                   <li key={item.href}>
@@ -180,10 +185,10 @@ export function Header() {
                       aria-expanded={openId === item.id}
                       aria-controls={`menu-${item.id}`}
                       onClick={() => (openId === item.id ? closeMenu() : setMenu({ id: item.id, at: pathname }))}
-                      className={cn(topLink, openId === item.id && "bg-blue-50 text-blue-600")}
+                      className={cn(topLink, openId === item.id && "text-blue-600")}
                     >
                       {item.label}
-                      <ChevronDown aria-hidden="true" className={cn("h-4 w-4 transition-transform", openId === item.id && "rotate-180")} />
+                      <ChevronDown aria-hidden="true" className={cn("h-3.5 w-3.5 transition-transform", openId === item.id && "rotate-180")} />
                     </button>
                   </li>
                 ),
@@ -208,11 +213,11 @@ export function Header() {
             </AnimatePresence>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="col-start-3 flex items-center gap-2">
             <CartLink />
             {/* Wrapper controls visibility: the button's own inline-flex would override `hidden`. */}
             <div className="hidden sm:block">
-              <Button href={primaryCta.href} arrow>
+              <Button href={primaryCta.href} arrow className="h-11 px-5 text-[15px] font-semibold">
                 {primaryCta.label}
               </Button>
             </div>

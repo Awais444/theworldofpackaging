@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { boxesMenu, brandingMenu, designMenu, mainNav, primaryCta, type MenuId, type NavLink } from "@/content/navigation";
+import { mobileNav, primaryCta } from "@/content/navigation";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
@@ -17,12 +17,6 @@ type MobileMenuProps = {
 };
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-const groups: Record<MenuId, Array<{ title?: string; links: NavLink[] }>> = {
-  design: [...designMenu, { links: [{ label: "View all packaging design services", href: "/packaging-design" }, { label: "See pricing", href: "/pricing" }] }],
-  branding: [{ links: brandingMenu }],
-  boxes: [...boxesMenu.map((g) => ({ title: g.title, links: g.links })), { links: [{ label: "All boxes", href: "/boxes" }] }],
-};
 
 /** Full-screen drawer: accordion groups, large tap targets, sticky quote button. */
 export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
@@ -81,8 +75,8 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
           </div>
           <nav aria-label="Main" className="container-x flex-1 overflow-y-auto py-4">
             <ul className="divide-y divide-silver-300/60">
-              {mainNav.map((nav) => {
-                if (nav.kind === "link") {
+              {mobileNav.map((nav) => {
+                if (!nav.groups) {
                   return (
                     <li key={nav.label}>
                       <Link href={nav.href} onClick={onClose} className="flex min-h-14 items-center font-heading text-xl font-bold">
@@ -91,14 +85,15 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
                     </li>
                   );
                 }
-                const isOpen = expanded === nav.id;
+                const isOpen = expanded === nav.label;
+                const panelId = `m-${nav.href.slice(1)}`;
                 return (
                   <li key={nav.label}>
                     <button
                       type="button"
                       aria-expanded={isOpen}
-                      aria-controls={`m-${nav.id}`}
-                      onClick={() => setExpanded(isOpen ? null : nav.id)}
+                      aria-controls={panelId}
+                      onClick={() => setExpanded(isOpen ? null : nav.label)}
                       className="flex min-h-14 w-full items-center justify-between font-heading text-xl font-bold"
                     >
                       {nav.label}
@@ -106,8 +101,8 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
                         {isOpen ? <Minus aria-hidden="true" className="h-4 w-4" /> : <Plus aria-hidden="true" className="h-4 w-4" />}
                       </span>
                     </button>
-                    <div id={`m-${nav.id}`} hidden={!isOpen} className="pb-4">
-                      {groups[nav.id]!.map((g, i) => (
+                    <div id={panelId} hidden={!isOpen} className="pb-4">
+                      {nav.groups.map((g, i) => (
                         <div key={g.title ?? i} className={cn(i > 0 && "mt-4")}>
                           {g.title && <p className="text-eyebrow text-blue-600">{g.title}</p>}
                           <ul className="mt-1">

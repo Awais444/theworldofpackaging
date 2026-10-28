@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { site, whatsappMessage, whatsappUrl } from "@/config/site";
-import { boxesMenu, boxesPromo, brandingMenu, designMenu, mainNav, primaryCta, type MenuId } from "@/content/navigation";
+import { boxesMenu, boxesPromo, designMenu, designMenuFooter, mainNav, primaryCta, type MenuId } from "@/content/navigation";
 import { CartLink } from "@/components/cart/CartLink";
 import { MagneticBoxClosed } from "@/components/illustrations";
 import { Button } from "@/components/ui/Button";
@@ -20,8 +20,7 @@ const MOBILE_ID = "mobile-menu";
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
 // Section prefixes that light up each top-level menu.
 const menuPrefixes: Record<MenuId, string[]> = {
-  design: ["/packaging-design", "/pricing"],
-  branding: ["/services", "/packages"],
+  design: ["/packaging-design", "/pricing", "/services", "/packages", "/industries"],
   boxes: ["/boxes", "/rigid-boxes", "/printed-boxes", "/collapsible-rigid-boxes", "/materials", "/finishes", "/inserts", "/samples"],
 };
 const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium text-ink-800 transition-colors hover:text-blue-600";
@@ -69,13 +68,21 @@ function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
 function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
     <div>
-      <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-8">
+      <div className="grid grid-cols-4 gap-8">
         {designMenu.map((group) => (
           <div key={group.title}>
-            <p className="text-eyebrow text-blue-600">{group.title}</p>
-            <ul className={cn("mt-3 gap-x-6 gap-y-0.5", group.title === "By Product" ? "grid grid-cols-2" : "space-y-0.5")}>
+            <p className="text-eyebrow text-blue-600">
+              {group.href ? (
+                <Link href={group.href} onClick={onNavigate} className="hover:underline">
+                  {group.title}
+                </Link>
+              ) : (
+                group.title
+              )}
+            </p>
+            <ul className="mt-3 space-y-0.5">
               {group.links.map((l) => (
-                <li key={l.href}>
+                <li key={l.label}>
                   <Link href={l.href} onClick={onNavigate} className={menuLink}>
                     {l.label}
                   </Link>
@@ -85,41 +92,27 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
           </div>
         ))}
       </div>
-      <div className="mt-6 flex items-center justify-between rounded-2xl bg-blue-50 px-5 py-4">
+      <div className="mt-6 flex items-center justify-between gap-6 rounded-2xl bg-blue-50 px-5 py-4">
         <p className="text-sm text-ink-900">
           <span className="font-semibold">Designed here, made here.</span> We also make your boxes, from {site.facts.rigidMoq} units.
         </p>
-        <div className="flex items-center gap-6">
-          <Button href="/pricing" variant="ghost" onClick={onNavigate}>
-            See pricing
-          </Button>
-          <Button href="/packaging-design" variant="ghost" arrow onClick={onNavigate}>
-            View all services
-          </Button>
-        </div>
+        <ul className="flex items-center gap-6">
+          {designMenuFooter.map((l, i) => (
+            <li key={l.href}>
+              <Link href={l.href} onClick={onNavigate} className={cn("inline-flex items-center gap-1 text-sm font-semibold hover:underline", i === 2 ? "text-blue-600" : "text-ink-900")}>
+                {l.label}
+                {i === 2 && <ArrowRight aria-hidden="true" className="h-4 w-4" />}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 }
 
-function BrandingPanel({ onNavigate }: { onNavigate: () => void }) {
-  return (
-    <ul className="grid grid-cols-3 gap-2">
-      {brandingMenu.map((s) => (
-        <li key={s.href}>
-          <Link href={s.href} onClick={onNavigate} className="block rounded-xl p-3 transition-colors hover:bg-blue-50">
-            <span className="block font-semibold text-ink-900">{s.label}</span>
-            <span className="mt-0.5 block text-sm text-ink-500">{s.description}</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 const panels: Record<MenuId, (p: { onNavigate: () => void }) => React.ReactNode> = {
   design: DesignPanel,
-  branding: BrandingPanel,
   boxes: BoxesPanel,
 };
 
@@ -160,12 +153,12 @@ export function Header() {
     <>
       <UtilityBar />
       <header className={cn("sticky top-0 z-[100] h-[var(--header-h)] border-b border-silver-100 bg-white")}>
-        <div className="container-x grid h-full grid-cols-[1fr_auto] items-center gap-6 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:gap-8">
-          <div className="justify-self-start">
+        <div className="container-x grid h-full grid-cols-[1fr_auto] items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-12">
+          <div className="flex items-center justify-self-start">
             <Logo />
           </div>
 
-          <nav ref={navRef} aria-label="Main" className="hidden justify-self-center xl:block" onMouseLeave={closeMenu}>
+          <nav ref={navRef} aria-label="Main" className="hidden justify-self-center lg:block" onMouseLeave={closeMenu}>
             <ul className="flex items-center gap-9">
               {mainNav.map((item) =>
                 item.kind === "link" ? (
@@ -213,26 +206,26 @@ export function Header() {
             </AnimatePresence>
           </nav>
 
-          <div className="flex items-center gap-3 justify-self-end">
+          <div className="flex items-center gap-2.5 justify-self-end">
             <CartLink />
             <a
               href={whatsappUrl(whatsappMessage()) ?? "/contact"}
               {...(whatsappUrl() ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="hidden h-[42px] items-center gap-2 rounded-full border border-silver-300 px-[18px] text-sm font-semibold text-ink-900 transition-colors hover:border-blue-600 xl:inline-flex"
+              className="hidden h-10 items-center gap-2 rounded-full border border-silver-300 px-4 text-sm font-semibold text-ink-900 transition-colors hover:border-blue-600 xl:inline-flex"
             >
               <MessageCircle aria-hidden="true" className="h-4 w-4" />
               WhatsApp
             </a>
             {/* Wrapper controls visibility: the button's own inline-flex would override `hidden`. */}
             <div className="hidden sm:block">
-              <Button href={primaryCta.href} arrow className="h-[42px] px-[18px] text-sm font-semibold [&_svg]:h-4 [&_svg]:w-4">
+              <Button href={primaryCta.href} arrow className="h-10 px-[18px] text-sm font-semibold [&_svg]:h-4 [&_svg]:w-4">
                 {primaryCta.label}
               </Button>
             </div>
             <button
               ref={mobileToggle}
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 hover:bg-blue-50 xl:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink-900 hover:bg-blue-50 lg:hidden"
               aria-expanded={mobileOpen}
               aria-controls={MOBILE_ID}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}

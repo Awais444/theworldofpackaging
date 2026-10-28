@@ -13,7 +13,7 @@ import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export const metadata: Metadata = {
-  title: "Countries We Design and Ship Packaging To",
+  title: "Countries We Ship Packaging To",
   description: "Packaging design and custom boxes for brands worldwide: local labelling notes, currency and shipping by air or sea from our own factory. Get a free quote.",
   alternates: { canonical: "/countries" },
 };

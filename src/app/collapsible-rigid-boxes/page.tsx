@@ -20,7 +20,7 @@ import { rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Collapsible Rigid Boxes that ship flat",
+  title: "Collapsible Rigid Boxes",
   description: `Rigid boxes with hinged walls that pack flat for international shipping. Same board, wrap and finishes as fixed rigid boxes. MOQ ${site.facts.collapsibleMoq}.`,
   alternates: { canonical: "/collapsible-rigid-boxes" },
 };

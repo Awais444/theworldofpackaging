@@ -12,6 +12,7 @@ import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { Tag } from "@/components/ui/Tag";
 import { article, faqPage } from "@/lib/schema";
+import { boxRefCard, type BoxCard } from "@/lib/boxView";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -45,6 +46,7 @@ export default async function PostPage({ params }: Props) {
     .sort((a, b) => Number(b.kind === post.kind) - Number(a.kind === post.kind))
     .slice(0, 4);
   const services = (post.services ?? []).map(getDesignService).filter((s): s is DesignService => Boolean(s));
+  const boxes = (services[0]?.recommendedBoxes ?? []).map(boxRefCard).filter((b): b is BoxCard => Boolean(b)).slice(0, 3);
 
   return (
     <article>
@@ -111,6 +113,19 @@ export default async function PostPage({ params }: Props) {
                   </li>
                 ))}
               </ul>
+              {boxes.length > 0 && (
+                <p className="mt-4 text-sm text-ink-500">
+                  Popular box styles:{" "}
+                  {boxes.map((b, i) => (
+                    <span key={b.href}>
+                      {i > 0 && ", "}
+                      <Link href={b.href} className="font-semibold text-blue-600 hover:underline">
+                        {b.name}
+                      </Link>
+                    </span>
+                  ))}
+                </p>
+              )}
               <Button href={quoteHref} size="sm" arrow className="mt-5">
                 Get a Free Quote
               </Button>

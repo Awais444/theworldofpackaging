@@ -1,5 +1,6 @@
 import { designHref, designServices } from "./designServices";
 import { industries } from "./industries";
+import { featuredCountries } from "./linking";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
 
@@ -86,6 +87,7 @@ export const designMenu: NavGroup[] = [
 export const designMenuFooter: NavLink[] = [
   { label: "View all services", href: "/packaging-design" },
   { label: "See pricing", href: "/pricing" },
+  { label: "Countries we serve", href: "/countries" },
   { label: "Get a free quote", href: quoteHref },
 ];
 
@@ -119,6 +121,7 @@ export const mobileNav: MobileItem[] = [
   { label: "Work", href: "/work" },
   { label: "About", href: "/about" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Countries", href: "/countries" },
 ];
 
 export const primaryCta: NavLink = { label: "Get a Quote", href: quoteHref };
@@ -147,6 +150,11 @@ export const footerNav: NavGroup[] = [
       { label: "Magnetic boxes", href: "/rigid-boxes/magnetic-closure" },
       { label: "Samples", href: "/samples" },
     ],
+  },
+  {
+    title: "Countries we serve",
+    href: "/countries",
+    links: [...featuredCountries(10).map((c) => ({ label: c.name, href: `/countries/${c.slug}` })), { label: "View all countries", href: "/countries" }],
   },
   {
     title: "Company",

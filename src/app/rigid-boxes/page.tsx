@@ -4,7 +4,7 @@ import { hubFaqs, rigidTabs } from "@/content/hubs";
 import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxes/BoxHub";
 
 export const metadata: Metadata = {
-  title: "Custom Rigid Boxes, made in our own factory",
+  title: "Custom Rigid Boxes",
   description: `Magnetic, lid & base, drawer, book, collapsible, shoulder neck, tube and window rigid boxes. MOQ ${site.facts.rigidMoq}, made in-house, shipped worldwide.`,
   alternates: { canonical: "/rigid-boxes" },
 };

@@ -14,7 +14,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StepList } from "@/components/ui/StepList";
 
 export const metadata: Metadata = {
-  title: "Our factory: rigid box manufacturing in-house",
+  title: "Our Rigid Box Factory",
   description: `Cutting, printing, wrapping, corner pasting, inserts and quality control under one roof in ${site.country}.`,
   alternates: { canonical: "/factory" },
 };

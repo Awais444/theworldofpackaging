@@ -17,7 +17,7 @@ import { Tabs } from "@/components/ui/Tabs";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Branding and Packaging Design Services",
+  title: "Branding Services",
   description: "Brand identity, logo design, packaging design, label design, structural dielines and 3D mockups, from a studio with its own box factory.",
   alternates: { canonical: "/services" },
 };

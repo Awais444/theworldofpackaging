@@ -8,7 +8,7 @@ import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 
 export const metadata: Metadata = {
-  title: "Our Team: designers, pre-press and factory",
+  title: "Our Design and Factory Team",
   description: "The packaging designers, brand designers, pre-press and factory teams who take your packaging from sketch to delivered box.",
   alternates: { canonical: "/team" },
 };

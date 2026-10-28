@@ -20,6 +20,8 @@ import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
+import { guidesForIndustry } from "@/content/linking";
+import { GuideCards } from "@/components/sections/RelatedLinks";
 
 type Props = { params: Promise<{ industry: string }> };
 
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ind = getIndustry((await params).industry);
   if (!ind) return {};
   return {
-    title: `${ind.name} Boxes & Packaging Supplies`,
+    title: `${ind.name} Boxes and Packaging`,
     description: ind.intro,
     alternates: { canonical: `/industries/${ind.slug}` },
   };
@@ -183,6 +185,10 @@ export default async function IndustryPage({ params }: Props) {
             <Accordion items={faqs} />
           </div>
         </div>
+      </Section>
+
+      <Section>
+        <GuideCards guides={guidesForIndustry(ind.slug)} title={`Guides for ${ind.name.toLowerCase()} brands`} />
       </Section>
 
       <Section className="!pt-0">

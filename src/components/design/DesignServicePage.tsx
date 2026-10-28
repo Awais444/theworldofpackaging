@@ -2,7 +2,9 @@ import { CheckCircle2, Clock, Factory, Tag as TagIcon } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
 import { designHref, getDesignService, type DesignService } from "@/content/designServices";
-import { getPost } from "@/content/blog/posts";
+import { countriesForService, guidesForService, industryForService } from "@/content/linking";
+import { getIndustry } from "@/content/industries";
+import { GuideCards, RegionLinks } from "@/components/sections/RelatedLinks";
 import { quoteHref } from "@/content/navigation";
 import { designFeeNote, designTiers, priceLabel } from "@/content/pricing";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -36,7 +38,9 @@ export function DesignServicePage({ s }: { s: DesignService }) {
   const boxes = s.recommendedBoxes.map(boxRefCard).filter((b): b is BoxCard => Boolean(b));
   const related = s.relatedServices.map(getDesignService).filter((r): r is DesignService => Boolean(r));
   const turnaround = s.turnaround ?? `First concepts in ${site.facts.firstConceptHours} hours`;
-  const guides = (s.seo?.guides ?? []).map(getPost).filter((p): p is NonNullable<ReturnType<typeof getPost>> => Boolean(p));
+  const guides = guidesForService(s.slug, s.seo?.guides);
+  const regions = countriesForService(s.slug);
+  const industry = getIndustry(industryForService(s.slug) ?? "");
 
   return (
     <>
@@ -236,6 +240,23 @@ export function DesignServicePage({ s }: { s: DesignService }) {
           <div className="lg:col-span-8">
             <Accordion items={s.faqs} />
           </div>
+        </div>
+      </Section>
+
+      {/* Guides, industry and regions (internal linking rules) */}
+      <Section>
+        {!s.seo && <GuideCards guides={guides} />}
+        <div className={s.seo ? "space-y-8" : "mt-14 space-y-8"}>
+          {industry && (
+            <p className="text-ink-500">
+              Selling in this category? See our{" "}
+              <Link href={`/industries/${industry.slug}`} className="font-semibold text-blue-600 hover:underline">
+                {industry.name.toLowerCase()} packaging overview
+              </Link>{" "}
+              for box styles, finishes and common questions.
+            </p>
+          )}
+          <RegionLinks countries={regions} />
         </div>
       </Section>
 

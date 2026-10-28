@@ -14,7 +14,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "How it works: brief to delivered boxes",
+  title: "How It Works: Brief to Boxes",
   description: "Six steps from brief to delivery: brief, design, sample, approval, production and shipping by air or sea.",
   alternates: { canonical: "/how-it-works" },
 };

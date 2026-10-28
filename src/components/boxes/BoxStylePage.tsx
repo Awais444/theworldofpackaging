@@ -1,5 +1,8 @@
 import { CheckCircle2, Gift, ShieldCheck, Sparkles, Wrench, type LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { designHref } from "@/content/designServices";
+import { guidesForBox, servicesForBox } from "@/content/linking";
+import { GuideCards } from "@/components/sections/RelatedLinks";
 import { getMedia } from "@/content/media";
 import { orderSteps } from "@/content/boxDetails";
 import { getIndustry } from "@/content/industries";
@@ -29,6 +32,7 @@ export function BoxStylePage({ box }: { box: BoxView }) {
   const hub = box.kind === "rigid" ? { label: "Rigid Boxes", href: "/rigid-boxes" } : { label: "Printed Boxes", href: "/printed-boxes" };
   const gallerySlots = box.slots.slice(0, 5);
   const quote = `${quoteHref}?style=${box.slug}`;
+  const designFor = servicesForBox(`${box.kind}:${box.slug}`);
 
   return (
     <>
@@ -189,6 +193,25 @@ export function BoxStylePage({ box }: { box: BoxView }) {
             <Accordion items={box.faqs} />
           </div>
         </div>
+      </Section>
+
+      {/* Guides and design services (internal linking rules) */}
+      <Section>
+        <GuideCards guides={guidesForBox(box.kind, box.slug)} />
+        {designFor.length > 0 && (
+          <div className="mt-14">
+            <h2 className="text-h4 font-heading font-bold">Design services for this box</h2>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {designFor.map((d) => (
+                <li key={d.slug}>
+                  <Link href={designHref(d.slug)} className="inline-flex h-11 items-center rounded-full border border-silver-300 px-5 text-sm font-semibold transition-colors hover:border-blue-600 hover:text-blue-600">
+                    {d.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Section>
 
       {/* 10. Related */}

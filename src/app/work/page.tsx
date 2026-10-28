@@ -16,7 +16,7 @@ import { printedCard, rigidCard } from "@/lib/boxView";
 
 export const metadata: Metadata = {
   title: "Work: packaging we design and make",
-  description: "Packaging design projects and the boxes we make in our own factory: cosmetic, food, coffee, candle and jewellery packaging, labels, rigid and printed boxes.",
+  description: "Packaging design projects and the boxes we make in our own factory: cosmetic, food, coffee, candle and jewellery packaging, labels and rigid boxes.",
   alternates: { canonical: "/work" },
 };
 

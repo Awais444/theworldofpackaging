@@ -24,7 +24,7 @@ export const materialsPage: OptionPageContent = {
   title: "Board and paper for every box",
   highlight: "every",
   intro: "The material sets how a box feels, how it protects and what it costs to ship. Here is what we work with and when to use it.",
-  metaTitle: "Packaging materials: greyboard, SBS, kraft and corrugated",
+  metaTitle: "Packaging Materials for Boxes",
   metaDescription: "Rigid greyboard 1.5–3 mm, SBS paperboard, kraft, E- and B-flute corrugated, specialty papers, linen and leatherette wraps.",
   slot: "collapsible-flat",
   groups: [
@@ -79,7 +79,7 @@ export const finishesPage: OptionPageContent = {
   title: "Finishes people notice",
   highlight: "notice",
   intro: "Finishes turn a printed box into a premium one. Combine two or three for the best effect, like soft-touch with gold foil.",
-  metaTitle: "Box finishes: foil stamping, embossing, spot UV, soft-touch",
+  metaTitle: "Box Finishes and Print Effects",
   metaDescription: "Foil stamping, embossing and debossing, spot UV, matte and gloss lamination, soft-touch, window patches, ribbons and magnets.",
   slot: "rigid-magnetic-closure-gallery-4",
   groups: [
@@ -131,7 +131,7 @@ export const insertsPage: OptionPageContent = {
   title: "Inserts that hold everything in place",
   highlight: "place",
   intro: "An insert stops products moving in transit and makes the unboxing look deliberate. Each one is cut to your exact product.",
-  metaTitle: "Box inserts: EVA foam, velvet, card, satin and moulded pulp",
+  metaTitle: "Box Inserts: EVA, Card and More",
   metaDescription: "Custom-cut EVA foam, velvet and flocked inserts, cardboard dividers, satin cushions and moulded pulp trays.",
   slot: "mega-menu-feature",
   groups: [

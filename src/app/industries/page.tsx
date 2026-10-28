@@ -20,7 +20,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Industries: packaging by category",
-  description: "Packaging design and manufacturing for cosmetics, perfume, jewellery, watches, supplements, food, chocolate, CBD, candles, apparel, electronics and PR kits.",
+  description: "Packaging design and boxes for cosmetics, perfume, jewellery, watches, supplements, food, chocolate, CBD, candles, apparel, electronics and PR kits.",
   alternates: { canonical: "/industries" },
 };
 

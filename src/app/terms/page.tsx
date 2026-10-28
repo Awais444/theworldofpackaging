@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { LegalPage } from "@/components/sections/LegalPage";
 
-export const metadata: Metadata = { title: "Terms", alternates: { canonical: "/terms" } };
+export const metadata: Metadata = { title: "Terms", description: "The terms that apply to quotes, design work, samples, production and delivery from The World of Packaging.", alternates: { canonical: "/terms" } };
 
 // TODO: legal review. Template text only.
 export default function TermsPage() {

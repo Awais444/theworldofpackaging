@@ -425,7 +425,7 @@ export const guidePosts: Post[] = [
     kind: "guide",
     title: "Packaging for international markets: what changes and how to plan",
     seoTitle: "Packaging for International Markets",
-    description: "How to adapt packaging for export: regulations, languages, units, culture, retail practices, shipping and how to design one system that works across markets.",
+    description: "How to adapt packaging for export: regulations, languages, units, culture, retail and shipping, and how to design one system for many markets.",
     date: "2026-10-28",
     readingMinutes: 10,
     tags: ["International", "Strategy"],

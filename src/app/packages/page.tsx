@@ -15,7 +15,7 @@ import { faqPage } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Packages: design + manufacturing bundles",
+  title: "Design and Packaging Bundles",
   description: `Fixed-scope bundles that combine branding, packaging design and rigid box production. From ${site.facts.rigidMoq} boxes.`,
   alternates: { canonical: "/packages" },
 };

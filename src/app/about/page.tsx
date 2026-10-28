@@ -13,7 +13,7 @@ import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export const metadata: Metadata = {
-  title: "About us: a design studio with its own box factory",
+  title: "About Our Studio and Factory",
   description: `${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}, for brands worldwide.`,
   alternates: { canonical: "/about" },
 };

@@ -99,9 +99,9 @@ function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
         <ul className="flex items-center gap-6">
           {designMenuFooter.map((l, i) => (
             <li key={l.href}>
-              <Link href={l.href} onClick={onNavigate} className={cn("inline-flex items-center gap-1 text-sm font-semibold hover:underline", i === 2 ? "text-blue-600" : "text-ink-900")}>
+              <Link href={l.href} onClick={onNavigate} className={cn("inline-flex items-center gap-1 text-sm font-semibold hover:underline", i === designMenuFooter.length - 1 ? "text-blue-600" : "text-ink-900")}>
                 {l.label}
-                {i === 2 && <ArrowRight aria-hidden="true" className="h-4 w-4" />}
+                {i === designMenuFooter.length - 1 && <ArrowRight aria-hidden="true" className="h-4 w-4" />}
               </Link>
             </li>
           ))}

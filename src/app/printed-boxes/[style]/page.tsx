@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { site } from "@/config/site";
 import { getPrintedStyle, printedStyles } from "@/content/printedStyles";
 import { BoxStylePage } from "@/components/boxes/BoxStylePage";
 import { printedView } from "@/lib/boxView";
+
+/** Meta descriptions stay within 155 characters (SEO plan on-page rules). */
+const clamp = (d: string) => (d.length > 155 ? `${d.slice(0, 152).replace(/\s+\S*$/, "")}...` : d);
 
 type Props = { params: Promise<{ style: string }> };
 
@@ -18,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!style) return {};
   return {
     title: `Custom Printed ${style.name}`,
-    description: `${style.summary} Designed, printed and cut in-house by ${site.name}.`,
+    description: clamp(`${style.summary} Designed, printed and cut in our own factory.`),
     alternates: { canonical: `/printed-boxes/${style.slug}` },
   };
 }

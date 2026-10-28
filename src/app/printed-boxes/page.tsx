@@ -4,7 +4,7 @@ import { hubFaqs, printedTabs } from "@/content/hubs";
 import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxes/BoxHub";
 
 export const metadata: Metadata = {
-  title: "Custom Printed Boxes: mailers, cartons and displays",
+  title: "Custom Printed Boxes",
   description: `Mailer, tuck end, folding carton, shipping, display, pillow, sleeve and gable boxes, printed and cut by ${site.name}.`,
   alternates: { canonical: "/printed-boxes" },
 };

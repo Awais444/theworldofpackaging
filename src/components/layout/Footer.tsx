@@ -67,7 +67,7 @@ export function Footer() {
           </div>
         </div>
 
-        <nav aria-label="Footer" className="mt-12 grid grid-cols-2 gap-8 border-t border-white/15 pt-12 sm:grid-cols-3 lg:grid-cols-5">
+        <nav aria-label="Footer" className="mt-12 grid grid-cols-2 gap-8 border-t border-white/15 pt-12 sm:grid-cols-3 lg:grid-cols-6">
           {footerNav.map((group) => (
             <div key={group.title}>
               <h2 className="font-heading text-base font-bold">{group.title}</h2>

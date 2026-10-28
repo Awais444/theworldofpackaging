@@ -16,9 +16,9 @@ import {
 import { HowItWorks } from "@/components/home/HowItWorks";
 
 export const metadata: Metadata = {
-  title: { absolute: "Packaging Design Services, Made in Our Own Factory | The World of Packaging" },
+  title: { absolute: "Packaging Design and Custom Boxes | The World of Packaging" },
   description:
-    "Packaging design for cosmetics, food, coffee, supplements, candles, labels and more, printed and made in our own factory. Free quote, first concepts in 48 hours.",
+    "Packaging design for cosmetics, food, coffee, supplements and labels, printed and made in our own factory. First concepts in 48 hours. Get a free quote.",
   alternates: { canonical: "/" },
 };
 

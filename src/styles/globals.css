@@ -21,6 +21,7 @@
   --ink-400: #8c8a94; /* captions */
   --ink-500: #5e5c66; /* muted text */
   --ink-900: #141317; /* Business Black */
+  --ink-800: #2b2a30; /* Nav text */
   --white: #ffffff;
   --success: #12a150;
   --error: #e5251c;
@@ -39,7 +40,7 @@
   --shadow-blue: 0 12px 32px rgb(1 30 253 / 0.25);
   --ring: 0 0 0 3px rgb(1 30 253 / 0.3);
 
-  --header-h: 80px;
+  --header-h: 76px;
   --utility-h: 36px;
   --gutter: 1rem;
   color-scheme: light;
@@ -67,6 +68,7 @@
   --color-red-500: var(--red-500);
   --color-silver-50: var(--silver-50);
   --color-silver-100: var(--silver-100);
+  --color-ink-800: var(--ink-800);
   --color-silver-300: var(--silver-300);
   --color-ink-400: var(--ink-400);
   --color-ink-500: var(--ink-500);

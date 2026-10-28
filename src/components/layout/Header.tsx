@@ -1,11 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { site } from "@/config/site";
+import { site, whatsappMessage, whatsappUrl } from "@/config/site";
 import { boxesMenu, boxesPromo, brandingMenu, designMenu, mainNav, primaryCta, type MenuId } from "@/content/navigation";
 import { CartLink } from "@/components/cart/CartLink";
 import { MagneticBoxClosed } from "@/components/illustrations";
@@ -18,7 +18,13 @@ import { UtilityBar } from "./UtilityBar";
 
 const MOBILE_ID = "mobile-menu";
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
-const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium text-ink-900 underline-offset-[6px] decoration-2 transition-colors hover:text-blue-600 hover:underline";
+// Section prefixes that light up each top-level menu.
+const menuPrefixes: Record<MenuId, string[]> = {
+  design: ["/packaging-design", "/pricing"],
+  branding: ["/services", "/packages"],
+  boxes: ["/boxes", "/rigid-boxes", "/printed-boxes", "/collapsible-rigid-boxes", "/materials", "/finishes", "/inserts", "/samples"],
+};
+const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium text-ink-800 transition-colors hover:text-blue-600";
 const menuLink = "block rounded-lg px-2 py-1.5 text-[15px] text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600";
 
 function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
@@ -123,20 +129,12 @@ export function Header() {
   // Menus remember the path they were opened on, so they close on navigation without an effect.
   const [menu, setMenu] = useState<{ id: MenuId; at: string } | null>(null);
   const [mobileAt, setMobileAt] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
   const openId = menu?.at === pathname ? menu.id : null;
   const mobileOpen = mobileAt === pathname;
   const navRef = useRef<HTMLElement>(null);
   const mobileToggle = useRef<HTMLButtonElement>(null);
   const closeMenu = useCallback(() => setMenu(null), []);
   const closeMobile = useCallback(() => setMobileAt(null), []);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     if (!openId) return;
@@ -161,9 +159,11 @@ export function Header() {
   return (
     <>
       <UtilityBar />
-      <header className={cn("sticky top-0 z-[100] h-[var(--header-h)] border-b bg-white", scrolled ? "border-silver-300" : "border-transparent")}>
-        <div className="container-x grid h-full grid-cols-[auto_1fr_auto] items-center gap-6 xl:gap-12">
-          <Logo />
+      <header className={cn("sticky top-0 z-[100] h-[var(--header-h)] border-b border-silver-100 bg-white")}>
+        <div className="container-x grid h-full grid-cols-[1fr_auto] items-center gap-6 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:gap-8">
+          <div className="justify-self-start">
+            <Logo />
+          </div>
 
           <nav ref={navRef} aria-label="Main" className="hidden justify-self-center xl:block" onMouseLeave={closeMenu}>
             <ul className="flex items-center gap-9">
@@ -172,7 +172,7 @@ export function Header() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className={cn(topLink, isActive(pathname, item.href) && "text-blue-600")}
+                      className={cn(topLink, isActive(pathname, item.href) && "font-semibold text-blue-600!")}
                       aria-current={isActive(pathname, item.href) ? "page" : undefined}
                     >
                       {item.label}
@@ -185,7 +185,7 @@ export function Header() {
                       aria-expanded={openId === item.id}
                       aria-controls={`menu-${item.id}`}
                       onClick={() => (openId === item.id ? closeMenu() : setMenu({ id: item.id, at: pathname }))}
-                      className={cn(topLink, openId === item.id && "text-blue-600")}
+                      className={cn(topLink, (openId === item.id || menuPrefixes[item.id].some((p) => isActive(pathname, p))) && "text-blue-600!", menuPrefixes[item.id].some((p) => isActive(pathname, p)) && "font-semibold")}
                     >
                       {item.label}
                       <ChevronDown aria-hidden="true" className={cn("h-3.5 w-3.5 transition-transform", openId === item.id && "rotate-180")} />
@@ -213,11 +213,19 @@ export function Header() {
             </AnimatePresence>
           </nav>
 
-          <div className="col-start-3 flex items-center gap-2">
+          <div className="flex items-center gap-3 justify-self-end">
             <CartLink />
+            <a
+              href={whatsappUrl(whatsappMessage()) ?? "/contact"}
+              {...(whatsappUrl() ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="hidden h-[42px] items-center gap-2 rounded-full border border-silver-300 px-[18px] text-sm font-semibold text-ink-900 transition-colors hover:border-blue-600 xl:inline-flex"
+            >
+              <MessageCircle aria-hidden="true" className="h-4 w-4" />
+              WhatsApp
+            </a>
             {/* Wrapper controls visibility: the button's own inline-flex would override `hidden`. */}
             <div className="hidden sm:block">
-              <Button href={primaryCta.href} arrow className="h-11 px-5 text-[15px] font-semibold">
+              <Button href={primaryCta.href} arrow className="h-[42px] px-[18px] text-sm font-semibold [&_svg]:h-4 [&_svg]:w-4">
                 {primaryCta.label}
               </Button>
             </div>

@@ -19,7 +19,7 @@ type LogoProps = {
 export function Logo({ tone = "dark", className, asLink = true, markOnly = false }: LogoProps) {
   const content = (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <svg viewBox="0 0 40 40" className="h-9 w-9 shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 40 40" className="h-8 w-8 shrink-0" aria-hidden="true">
         <circle cx="19" cy="21" r="17" className="fill-orange-500" />
         <text
           x="19"
@@ -36,7 +36,7 @@ export function Logo({ tone = "dark", className, asLink = true, markOnly = false
       {!markOnly && (
         <span
           className={cn(
-            "whitespace-nowrap font-heading text-[1.0625rem] font-bold tracking-tight sm:text-lg",
+            "whitespace-nowrap font-heading text-[17px] font-bold tracking-tight",
             tone === "light" ? "text-white" : "text-ink-900",
           )}
         >

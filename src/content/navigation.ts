@@ -134,10 +134,13 @@ export const footerNav: NavGroup[] = [
       ...["cosmetic-packaging-design", "food-packaging-design", "coffee-tea-packaging-design", "supplement-label-design", "label-design", "rigid-luxury-box-design"].map(designLink),
     ],
   },
-  { title: "Branding", links: [...brandingMenu.map(({ label, href }) => ({ label, href })), { label: "All branding services", href: "/services" }] },
   {
-    title: "Industries",
-    links: [...menuIndustries.slice(0, 6).map((slug) => ({ label: industries.find((i) => i.slug === slug)!.name, href: `/industries/${slug}` })), { label: "All industries", href: "/industries" }],
+    title: "Branding",
+    links: [
+      ...brandingMenu.map(({ label, href }) => ({ label, href })),
+      { label: "Packaging redesign", href: designHref("packaging-redesign") },
+      { label: "All branding services", href: "/services" },
+    ].slice(0, 6),
   },
   {
     title: "Boxes",
@@ -152,26 +155,27 @@ export const footerNav: NavGroup[] = [
     ],
   },
   {
-    title: "Countries we serve",
-    href: "/countries",
-    links: [...featuredCountries(10).map((c) => ({ label: c.name, href: `/countries/${c.slug}`, iso2: c.iso2 })), { label: "View all countries", href: "/countries" }],
-  },
-  {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "Team", href: "/team" },
+      { label: "Work", href: "/work" },
       { label: "Factory", href: "/factory" },
       { label: "How It Works", href: "/how-it-works" },
-      { label: "Work", href: "/work" },
+      { label: "Pricing", href: "/pricing" },
       { label: "Shipping", href: "/shipping" },
       { label: "FAQ", href: "/faq" },
       { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/contact" },
     ],
   },
 ];
+
+/** Footer chip row: industries. */
+export const footerIndustries: NavLink[] = [
+  ...["cosmetics", "perfume", "jewelry", "supplements", "food-bakery", "chocolates", "candles"].map((slug) => ({ label: industries.find((i) => i.slug === slug)!.name, href: `/industries/${slug}` })),
+];
+
+/** Footer chip row: top countries with flags. */
+export const footerCountries: NavLink[] = featuredCountries(10).map((c) => ({ label: c.name, href: `/countries/${c.slug}`, iso2: c.iso2 }));
 
 export const legalNav: NavLink[] = [
   { label: "Privacy", href: "/privacy" },

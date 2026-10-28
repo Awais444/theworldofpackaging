@@ -58,8 +58,8 @@ export function HomeHero() {
 
   return (
     <section ref={root} className="bg-white">
-      {/* Desktop: content centred in the first screen (capped at 760px). Bottom padding leaves room for the proof bar overlap. */}
-      <div className="container-x grid items-center gap-12 pb-[120px] pt-14 lg:min-h-[min(760px,calc(100svh-var(--header-h)-var(--utility-h)-104px))] lg:grid-cols-12 lg:gap-12">
+      {/* Desktop: content centred in the first screen (capped at 760px). */}
+      <div className="container-x grid items-center gap-12 pb-16 pt-14 lg:min-h-[min(760px,calc(100svh-var(--header-h)-var(--utility-h)-104px))] lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-7">
           <p data-hero-line className="text-eyebrow text-blue-600">
             Packaging design studio + own factory

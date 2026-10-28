@@ -13,6 +13,8 @@
   --orange-50: #fff2e6;
   --orange-500: #ff7001; /* Hot Orange: highlights, icons, badges, accent buttons */
   --orange-600: #e66400;
+  --orange-700: #c25400;
+  --orange-800: #a84900;
   --orange-text: #b84f00; /* orange that passes AA as text on orange-50 / white */
   --red-500: #ff3600; /* Chilli Red: tiny accents only */
   --silver-50: #f4f6f7;
@@ -64,6 +66,8 @@
   --color-orange-50: var(--orange-50);
   --color-orange-500: var(--orange-500);
   --color-orange-600: var(--orange-600);
+  --color-orange-700: var(--orange-700);
+  --color-orange-800: var(--orange-800);
   --color-orange-text: var(--orange-text);
   --color-red-500: var(--red-500);
   --color-silver-50: var(--silver-50);

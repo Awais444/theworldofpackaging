@@ -29,10 +29,10 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <ProofBar items={proofItems()} overlap />
       <DesignForEveryProduct />
       <WhatWeMake />
       <ShelfProblems />
+      <ProofBar items={proofItems()} />
       <Services />
       <BoxTypes />
       <CollapsibleFeature />

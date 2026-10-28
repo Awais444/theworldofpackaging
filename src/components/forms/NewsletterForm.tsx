@@ -23,7 +23,7 @@ export function NewsletterForm() {
       <label htmlFor={id} className="text-sm font-semibold">
         Packaging tips, once a month
       </label>
-      <div className="mt-2 flex gap-2">
+      <div className="mt-2 flex max-w-[360px] gap-2">
         <input
           id={id}
           name="email"
@@ -31,10 +31,10 @@ export function NewsletterForm() {
           required
           autoComplete="email"
           placeholder="you@brand.com"
-          className="h-12 min-w-0 flex-1 rounded-lg bg-white/10 px-4 text-white placeholder:text-white/60 focus:bg-white/15 focus:outline-none focus-visible:shadow-[var(--ring)]"
+          className="h-11 min-w-0 flex-1 rounded-lg bg-white/10 px-4 text-white placeholder:text-white/60 focus:bg-white/15 focus:outline-none focus-visible:shadow-[var(--ring)]"
         />
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
-        <button type="submit" disabled={state === "sending"} className="h-12 shrink-0 rounded-full bg-orange-500 px-5 text-[15px] font-semibold text-ink-900 transition-colors hover:bg-orange-600 disabled:opacity-60">
+        <button type="submit" disabled={state === "sending"} className="h-11 shrink-0 rounded-full bg-orange-700 px-5 text-[15px] font-semibold text-white transition-colors hover:bg-orange-800 focus-visible:outline-none focus-visible:shadow-[var(--ring)] disabled:opacity-60">
           Subscribe
         </button>
       </div>

@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import { CheckCircle2 } from "lucide-react";
 import { site } from "@/config/site";
-import { exampleTimeline, processSteps, whatWeNeed } from "@/content/process";
+import { processSteps, whatWeNeed } from "@/content/process";
 import { quoteHref } from "@/content/navigation";
-import { FadeIn } from "@/components/motion/FadeIn";
-import { PageHero } from "@/components/sections/PageHero";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { ProcessTimeline } from "@/components/process/ProcessTimeline";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { SpecTable } from "@/components/ui/SpecTable";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
@@ -32,80 +31,46 @@ export default function HowItWorksPage() {
   return (
     <>
       <JsonLd data={faqPage(faqs)} />
-      <PageHero
-        crumbs={[{ label: "How It Works" }]}
-        eyebrow="How it works"
-        title="From brief to boxes in six steps"
-        highlight="six"
-        intro={<p>One team takes your project from the first message to delivered boxes. Here is what happens at each step, and who does what.</p>}
-        slotId="rigid-magnetic-closure-gallery-2"
-        actions={
-          <>
-            <Button href={quoteHref} size="lg" arrow>
-              Get a Quote
-            </Button>
-            <Button href="/start-a-project" size="lg" variant="secondary">
-              Start a Project
-            </Button>
-          </>
-        }
-      />
-
-      <Section bg="silver">
-        <FadeIn>
-          <SectionHeader eyebrow="The steps" title="What happens, and who does what" highlight="who" />
-        </FadeIn>
-        <ol className="mt-12 space-y-6">
-          {processSteps.map((s, i) => (
-            <li key={s.title} className="grid gap-6 rounded-3xl bg-white p-6 md:grid-cols-12 md:p-8">
-              <div className="md:col-span-4">
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 font-heading text-lg font-bold text-white">{i + 1}</span>
-                <h3 className="text-h3 mt-4">{s.title}</h3>
-                <p className="mt-2 text-ink-500">{s.body}</p>
+      <section className="bg-white pb-12 pt-8 md:pb-16">
+        <div className="container-x">
+          <Breadcrumbs items={[{ label: "How It Works" }]} />
+          <div className="mt-10 grid items-end gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <p className="text-eyebrow text-blue-600">How it works</p>
+              <h1 className="text-display mt-3">From brief to boxes</h1>
+            </div>
+            <div className="lg:col-span-5">
+              <p className="text-lead text-ink-500">Six steps, one team. Here is what happens at each stage and what you get from it, from the first message to boxes at your door.</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button href={quoteHref} size="lg" arrow>
+                  Get a Quote
+                </Button>
+                <Button href="/start-a-project" size="lg" variant="secondary">
+                  Start a Project
+                </Button>
               </div>
-              <div className="rounded-2xl bg-orange-50 p-5 md:col-span-4">
-                <p className="text-eyebrow text-orange-text">You</p>
-                <p className="mt-2">{s.you}</p>
-              </div>
-              <div className="rounded-2xl bg-blue-50 p-5 md:col-span-4">
-                <p className="text-eyebrow text-blue-600">Us</p>
-                <p className="mt-2">{s.us}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      <Section>
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div>
-            <SectionHeader eyebrow="Timeline" title="A typical timeline" highlight="typical" lead="Exact dates are set in your quote." />
-            <div className="mt-8">
-              <SpecTable caption="Example project timeline" rows={exampleTimeline.map((t) => ({ label: t.step, value: t.time }))} />
             </div>
           </div>
-          <div>
-            <SectionHeader eyebrow="Checklist" title="What we need from you" highlight="need" />
-            <ul className="mt-8 space-y-3">
-              {whatWeNeed.map((w) => (
-                <li key={w} className="flex gap-3 rounded-2xl bg-silver-50 p-4">
-                  <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
-                  <span>{w}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
+      </section>
+
+      <Section className="!pt-8">
+        <ProcessTimeline steps={processSteps} />
       </Section>
 
-      <Section bg="silver">
+      <Section bg="silver-50">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHeader eyebrow="FAQ" title="Process questions" highlight="questions" />
+          <div className="lg:col-span-5">
+            <SectionHeader eyebrow="Checklist" title="What we need from you" highlight="need" lead="Have these ready and we can quote and start faster." />
           </div>
-          <div className="lg:col-span-8">
-            <Accordion items={faqs} />
-          </div>
+          <ul className="grid gap-3 sm:grid-cols-2 lg:col-span-7">
+            {whatWeNeed.map((w) => (
+              <li key={w} className="flex gap-3 rounded-2xl border border-silver-300 bg-white p-4">
+                <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+                <span>{w}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 
@@ -126,6 +91,17 @@ export default function HowItWorksPage() {
           }
         />
       </Section>
+      <Section bg="silver">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="FAQ" title="Process questions" highlight="questions" />
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} />
+          </div>
+        </div>
+      </Section>
+
     </>
   );
 }

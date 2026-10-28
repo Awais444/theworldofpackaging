@@ -4,6 +4,7 @@ import type { PriceFrom } from "./pricing";
 import type { Faq } from "./rigidStyles";
 import { formatServices } from "./designServices.format";
 import { productServices } from "./designServices.product";
+import { longform, type LongForm } from "./designServices.longform";
 import { serviceServices } from "./designServices.service";
 
 export type DesignGroup = "product" | "format" | "service";
@@ -33,6 +34,8 @@ export type DesignService = {
   illustration: IllustrationKey;
   /** Short line for cards and menus. */
   short: string;
+  /** SEO long-form copy (SEO_CONTENT_PLAN.md Priority 1). Pages without it use the base template only. */
+  seo?: Omit<LongForm, "faqs" | "h1" | "intro">;
 };
 
 /** Raw entry in the data files; slots and shared FAQs are added here. */
@@ -59,12 +62,21 @@ function sharedFaqs(name: string, group: DesignGroup): Faq[] {
   ];
 }
 
-const build = (group: DesignGroup) => (s: DesignServiceInput): DesignService => ({
-  ...s,
-  group,
-  portfolioSlots: portfolio(s.slug),
-  faqs: [...s.faqs.slice(0, 3), ...sharedFaqs(s.name, group)],
-});
+const build = (group: DesignGroup) => (s: DesignServiceInput): DesignService => {
+  const lf = longform[s.slug];
+  if (!lf) return { ...s, group, portfolioSlots: portfolio(s.slug), faqs: [...s.faqs.slice(0, 3), ...sharedFaqs(s.name, group)] };
+  const { faqs, h1, intro, ...seo } = lf;
+  return {
+    ...s,
+    h1: h1 ?? s.h1,
+    intro: intro ?? s.intro,
+    group,
+    portfolioSlots: portfolio(s.slug),
+    // Keyword-focused questions first, then the shared ones.
+    faqs: [...faqs, ...sharedFaqs(s.name, group)],
+    seo,
+  };
+};
 
 export const designServices: DesignService[] = [
   ...productServices.map(build("product")),
@@ -86,11 +98,11 @@ export const designByGroup = (g: DesignGroup) => designServices.filter((s) => s.
 export const featuredDesignSlugs = [
   "cosmetic-packaging-design",
   "skincare-packaging-design",
-  "perfume-packaging-design",
+  "perfume-fragrance-packaging-design",
   "food-packaging-design",
   "coffee-tea-packaging-design",
   "chocolate-packaging-design",
-  "supplement-packaging-design",
+  "supplement-label-design",
   "cbd-packaging-design",
   "candle-packaging-design",
   "jewelry-packaging-design",
@@ -101,10 +113,10 @@ export const featuredDesignSlugs = [
 /** Industry slug → matching design service (industry page = overview + boxes; service page = design). */
 export const industryDesignService: Record<string, string> = {
   cosmetics: "cosmetic-packaging-design",
-  perfume: "perfume-packaging-design",
+  perfume: "perfume-fragrance-packaging-design",
   jewelry: "jewelry-packaging-design",
   watches: "watch-packaging-design",
-  supplements: "supplement-packaging-design",
+  supplements: "supplement-label-design",
   "food-bakery": "bakery-confectionery-packaging-design",
   chocolates: "chocolate-packaging-design",
   cbd: "cbd-packaging-design",

@@ -19,8 +19,8 @@ import { Tabs } from "@/components/ui/Tabs";
 import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Pricing: packaging design, boxes and printing",
-  description: `How pricing works for packaging design (fee credited when we manufacture), rigid boxes from MOQ ${site.facts.rigidMoq}, printed boxes and packages.`,
+  title: "Packaging Design Cost and Pricing",
+  description: "Packaging design cost explained: what affects the price, design fees credited when we manufacture in our own factory. Get a free quote.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -185,9 +185,9 @@ export default function PricingPage() {
       <PageHero
         crumbs={[{ label: "Pricing" }]}
         eyebrow="Pricing"
-        title="Clear pricing for design and boxes"
-        highlight="Clear"
-        intro={<p>Packaging design is priced per project, and the design fee is credited when we manufacture your order. Box prices depend on size, materials and quantity, so we quote each job {site.facts.quoteReply}.</p>}
+        title="Packaging design cost and box pricing"
+        highlight="cost"
+        intro={<p>Packaging design cost depends on the scope: design is priced per project, and the design fee is credited when we manufacture your order. Box prices depend on size, materials and quantity, so we quote each job {site.facts.quoteReply}.</p>}
         actions={
           <Button href={quoteHref} size="lg" arrow>
             Get a Free Quote

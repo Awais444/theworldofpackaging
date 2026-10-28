@@ -54,7 +54,6 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] CBD: "Child-resistant options on request" in `src/content/industryDetails.ts`. Remove if not offered.
 - [ ] Shipping and customs: delivered-duty-paid availability (`/shipping`, FAQs), import notes per country in `src/content/shipTo.ts`, the Australia packing-material note and the Germany LUCID note in `src/content/shipToDetails.ts`. Have a customs broker review.
 - [ ] Transit times per country (ship-to pages say "Confirmed with your quote")
-- [ ] Typical project timeline: `exampleTimeline` in `src/content/process.ts` (labelled "Example only")
 - [ ] Sample lead time and shipping cost: FAQs on `/samples`
 - [ ] Production lead time FAQs in `src/content/boxDetails.ts`
 - [ ] Privacy policy and terms (`/privacy`, `/terms`): template text, needs legal review; set the "Last updated" date

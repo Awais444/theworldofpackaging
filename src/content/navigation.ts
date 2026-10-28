@@ -50,17 +50,17 @@ export const designMenu: NavGroup[] = [
     links: [
       "cosmetic-packaging-design",
       "skincare-packaging-design",
-      "perfume-packaging-design",
+      "perfume-fragrance-packaging-design",
       "food-packaging-design",
       "coffee-tea-packaging-design",
-      "supplement-packaging-design",
+      "supplement-label-design",
       "candle-packaging-design",
       "jewelry-packaging-design",
     ].map(designLink),
   },
   {
     title: "By Format",
-    links: ["box-packaging-design", "label-design", "rigid-luxury-box-design", "pouch-sachet-design", "bottle-label-design", "shopping-bag-design"].map(designLink),
+    links: ["box-packaging-design", "label-design", "rigid-luxury-box-design", "pouch-packaging-design", "bottle-label-design", "shopping-bag-design"].map(designLink),
   },
   {
     title: "Branding",
@@ -93,8 +93,6 @@ export const brandingMenu: NavLink[] = [
   { label: "Brand Identity", href: "/services/brand-identity", description: "Logo, colour and type as one system" },
   { label: "Logo Design", href: "/services/logo-design", description: "A mark that works from box to favicon" },
   { label: "Packaging Brand Strategy", href: designHref("packaging-brand-strategy"), description: "Positioning and on-pack messaging" },
-  { label: "Amazon Packaging & Listing Images", href: "/services/amazon-packaging-and-listing-images", description: "Packaging plus the images that sell it" },
-  { label: "Product Mockups for E-commerce", href: "/services/product-mockups-for-ecommerce", description: "Photo-real images before stock arrives" },
   { label: "Packages", href: "/packages", description: "Brand and packaging bundles" },
 ];
 
@@ -130,7 +128,7 @@ export const footerNav: NavGroup[] = [
     title: "Packaging Design",
     links: [
       { label: "All design services", href: "/packaging-design" },
-      ...["cosmetic-packaging-design", "food-packaging-design", "coffee-tea-packaging-design", "supplement-packaging-design", "label-design", "rigid-luxury-box-design"].map(designLink),
+      ...["cosmetic-packaging-design", "food-packaging-design", "coffee-tea-packaging-design", "supplement-label-design", "label-design", "rigid-luxury-box-design"].map(designLink),
     ],
   },
   { title: "Branding", links: [...brandingMenu.map(({ label, href }) => ({ label, href })), { label: "All branding services", href: "/services" }] },

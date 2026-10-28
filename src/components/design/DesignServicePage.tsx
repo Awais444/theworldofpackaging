@@ -2,6 +2,7 @@ import { CheckCircle2, Clock, Factory, Tag as TagIcon } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
 import { designHref, getDesignService, type BoxRef, type DesignService } from "@/content/designServices";
+import { getPost } from "@/content/blog/posts";
 import { quoteHref } from "@/content/navigation";
 import { designFeeNote, designTiers, priceLabel } from "@/content/pricing";
 import { printedStyles } from "@/content/printedStyles";
@@ -44,6 +45,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
   const boxes = s.recommendedBoxes.map(boxCard).filter((b): b is BoxCard => Boolean(b));
   const related = s.relatedServices.map(getDesignService).filter((r): r is DesignService => Boolean(r));
   const turnaround = s.turnaround ?? `First concepts in ${site.facts.firstConceptHours} hours`;
+  const guides = (s.seo?.guides ?? []).map(getPost).filter((p): p is NonNullable<ReturnType<typeof getPost>> => Boolean(p));
 
   return (
     <>
@@ -80,6 +82,51 @@ export function DesignServicePage({ s }: { s: DesignService }) {
           </div>
         </div>
       </section>
+
+      {/* Long-form copy (SEO plan) with related guides */}
+      {s.seo && (
+        <Section>
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <article className="max-w-[70ch] lg:col-span-8">
+              {s.seo.sections.map((sec, i) => (
+                <div key={sec.h2} className={i > 0 ? "mt-12" : undefined}>
+                  <h2 className="text-h3">{sec.h2}</h2>
+                  {sec.paragraphs.map((p) => (
+                    <p key={p.slice(0, 40)} className="mt-4 text-ink-500">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </article>
+            <aside className="lg:col-span-4">
+              <div className="space-y-6 lg:sticky lg:top-[120px]">
+                {guides.length > 0 && (
+                  <div className="rounded-2xl border border-silver-300 p-6">
+                    <p className="text-eyebrow text-blue-600">Related guides</p>
+                    <ul className="mt-4 space-y-3">
+                      {guides.map((g) => (
+                        <li key={g.slug}>
+                          <Link href={`/blog/${g.slug}`} className="font-semibold text-ink-900 hover:text-blue-600 hover:underline">
+                            {g.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <div className="rounded-2xl bg-blue-50 p-6">
+                  <p className="font-heading text-h4 font-bold">Get a fixed quote</p>
+                  <p className="mt-2 text-sm text-ink-500">Send your product and quantity. We reply {site.facts.quoteReply} with a design route and price.</p>
+                  <Button href={`${quoteHref}?service=${s.slug}`} size="sm" arrow className="mt-4">
+                    Get a Free Quote
+                  </Button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </Section>
+      )}
 
       {/* What we design */}
       <Section bg="silver">

@@ -18,6 +18,16 @@ export const legacyServiceRedirects: Record<string, string> = {
   "/services/label-design": "/packaging-design/label-design",
   "/services/structural-dieline-design": "/packaging-design/structural-dieline-design",
   "/services/3d-mockups": "/packaging-design/3d-packaging-mockups",
+  // SEO plan slugs (2026-10-28): old URLs move to the keyword-matched ones.
+  "/packaging-design/perfume-packaging-design": "/packaging-design/perfume-fragrance-packaging-design",
+  "/packaging-design/supplement-packaging-design": "/packaging-design/supplement-label-design",
+  "/packaging-design/beverage-juice-packaging-design": "/packaging-design/beverage-packaging-design",
+  "/packaging-design/wine-spirits-beer-label-design": "/packaging-design/wine-spirits-label-design",
+  "/packaging-design/pet-product-packaging-design": "/packaging-design/pet-food-packaging-design",
+  "/packaging-design/pouch-sachet-design": "/packaging-design/pouch-packaging-design",
+  "/packaging-design/amazon-ecommerce-packaging-design": "/packaging-design/amazon-packaging-design",
+  "/services/amazon-packaging-and-listing-images": "/packaging-design/amazon-packaging-design",
+  "/services/product-mockups-for-ecommerce": "/packaging-design/3d-packaging-mockups",
 };
 
 /** Phase 5 renamed this industry slug to match CLAUDE.md §9. */

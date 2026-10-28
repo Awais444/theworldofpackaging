@@ -50,7 +50,7 @@ export const productServices: DesignServiceInput[] = [
     ],
   },
   {
-    slug: "perfume-packaging-design",
+    slug: "perfume-fragrance-packaging-design",
     name: "Perfume & Fragrance Packaging Design",
     short: "Rigid boxes and cartons that match the scent's story.",
     h1: "Perfume packaging design for fragrances people keep the box for",
@@ -133,7 +133,7 @@ export const productServices: DesignServiceInput[] = [
       "Nutrition, allergen and best-before areas follow your market's rules; we lay out the text you supply.",
     ],
     recommendedBoxes: ["printed:folding-carton", "printed:window", "printed:gable", "printed:shipping"],
-    relatedServices: ["snack-packaging-design", "pouch-sachet-design", "label-design"],
+    relatedServices: ["snack-packaging-design", "pouch-packaging-design", "label-design"],
     illustration: "gable-box",
     faqs: [
       { q: "Can you make sure packaging is food safe?", a: "We specify food-contact boards and inks where the pack touches food, and confirm the spec with your quote." },
@@ -156,7 +156,7 @@ export const productServices: DesignServiceInput[] = [
       "Nutrition and allergen information follows your market's format, from your approved data.",
     ],
     recommendedBoxes: ["printed:display", "printed:folding-carton", "printed:shipping"],
-    relatedServices: ["food-packaging-design", "pouch-sachet-design", "retail-display-design"],
+    relatedServices: ["food-packaging-design", "pouch-packaging-design", "retail-display-design"],
     illustration: "display-box",
     faqs: [
       { q: "Do you design flow-wrap bar wrappers?", a: "Yes. We design the artwork to the printer's film template, with seal and cut areas marked." },
@@ -225,7 +225,7 @@ export const productServices: DesignServiceInput[] = [
       "Origin claims and food-contact materials follow your market's rules.",
     ],
     recommendedBoxes: ["printed:mailer", "rigid:tube", "printed:folding-carton"],
-    relatedServices: ["can-tin-design", "pouch-sachet-design", "subscription-box-design"],
+    relatedServices: ["can-tin-design", "pouch-packaging-design", "subscription-box-design"],
     illustration: "tube",
     faqs: [
       { q: "Can you design a label system for many coffee blends?", a: "Yes. A shared base design with a label per blend lets you launch new coffees without new bags." },
@@ -234,7 +234,7 @@ export const productServices: DesignServiceInput[] = [
     ],
   },
   {
-    slug: "beverage-juice-packaging-design",
+    slug: "beverage-packaging-design",
     name: "Beverage & Juice Packaging Design",
     short: "Labels, cans and carry packs for drinks brands.",
     h1: "Beverage packaging design that stands out in the fridge",
@@ -248,7 +248,7 @@ export const productServices: DesignServiceInput[] = [
       "Nutrition panels, deposit marks and recycling symbols follow your market's requirements.",
     ],
     recommendedBoxes: ["printed:gable", "printed:shipping", "printed:display"],
-    relatedServices: ["bottle-label-design", "can-tin-design", "wine-spirits-beer-label-design"],
+    relatedServices: ["bottle-label-design", "can-tin-design", "wine-spirits-label-design"],
     illustration: "label-bottle",
     faqs: [
       { q: "Do you design shrink sleeves?", a: "Yes. We design to the sleeve supplier's distortion template so graphics look right on the bottle." },
@@ -257,7 +257,7 @@ export const productServices: DesignServiceInput[] = [
     ],
   },
   {
-    slug: "wine-spirits-beer-label-design",
+    slug: "wine-spirits-label-design",
     name: "Wine, Spirits & Beer Label Design",
     short: "Labels and gift boxes for wineries, distilleries and breweries.",
     h1: "Wine, spirits and beer label design with character",
@@ -280,7 +280,7 @@ export const productServices: DesignServiceInput[] = [
     ],
   },
   {
-    slug: "supplement-packaging-design",
+    slug: "supplement-label-design",
     name: "Supplement & Nutrition Packaging Design",
     short: "Bottles, tubs and cartons for vitamins and sports nutrition.",
     h1: "Supplement packaging design that builds trust at first glance",
@@ -294,7 +294,7 @@ export const productServices: DesignServiceInput[] = [
       "Supplement facts panels and permitted claims depend on your market; wording comes from your adviser.",
     ],
     recommendedBoxes: ["printed:tuck-end", "printed:mailer", "printed:display"],
-    relatedServices: ["pharmaceutical-packaging-design", "bottle-label-design", "pouch-sachet-design"],
+    relatedServices: ["pharmaceutical-packaging-design", "bottle-label-design", "pouch-packaging-design"],
     illustration: "label-bottle",
     faqs: [
       { q: "Do you lay out supplement facts panels?", a: "Yes, from the data and claims your regulatory adviser has approved." },
@@ -317,7 +317,7 @@ export const productServices: DesignServiceInput[] = [
       "All regulated text, symbols and layouts are provided and approved by your regulatory team.",
     ],
     recommendedBoxes: ["printed:tuck-end", "printed:folding-carton", "printed:display"],
-    relatedServices: ["supplement-packaging-design", "structural-dieline-design", "packaging-redesign"],
+    relatedServices: ["supplement-label-design", "structural-dieline-design", "packaging-redesign"],
     illustration: "tuck-end",
     faqs: [
       { q: "Can you design packaging for regulated medicines?", a: "We design the layout and artwork; all regulated content and approvals come from your regulatory team." },
@@ -340,7 +340,7 @@ export const productServices: DesignServiceInput[] = [
       "CBD rules vary widely by market and state; all claims and required text come from your adviser.",
     ],
     recommendedBoxes: ["printed:tuck-end", "printed:mailer", "rigid:magnetic-closure"],
-    relatedServices: ["supplement-packaging-design", "luxury-packaging-design", "label-design"],
+    relatedServices: ["supplement-label-design", "luxury-packaging-design", "label-design"],
     illustration: "tuck-end",
     faqs: [
       { q: "Can you add QR codes for lab results?", a: "Yes. We design a clear area for a QR code and test that it scans at print size." },
@@ -349,7 +349,7 @@ export const productServices: DesignServiceInput[] = [
     ],
   },
   {
-    slug: "pet-product-packaging-design",
+    slug: "pet-food-packaging-design",
     name: "Pet Product Packaging Design",
     short: "Treat pouches, food bags and toy boxes for pet brands.",
     h1: "Pet product packaging design owners trust and pets love",
@@ -363,7 +363,7 @@ export const productServices: DesignServiceInput[] = [
       "Pet food labelling has its own rules; analysis and ingredient text come from your adviser.",
     ],
     recommendedBoxes: ["printed:mailer", "printed:tuck-end", "printed:display"],
-    relatedServices: ["pouch-sachet-design", "subscription-box-design", "food-packaging-design"],
+    relatedServices: ["pouch-packaging-design", "subscription-box-design", "food-packaging-design"],
     illustration: "mailer-box",
     faqs: [
       { q: "Can you create a mascot or illustration style?", a: "Yes. Illustration often gives pet brands warmth and a consistent look across the range." },
@@ -547,7 +547,7 @@ export const productServices: DesignServiceInput[] = [
       "Compliance marks (such as CE, FCC, UKCA, WEEE) depend on the product; your adviser confirms them.",
     ],
     recommendedBoxes: ["rigid:lid-and-base", "rigid:magnetic-closure", "printed:sleeve", "printed:shipping"],
-    relatedServices: ["structural-dieline-design", "3d-packaging-mockups", "amazon-ecommerce-packaging-design"],
+    relatedServices: ["structural-dieline-design", "3d-packaging-mockups", "amazon-packaging-design"],
     illustration: "lid-and-base",
     faqs: [
       { q: "Can you design a multi-layer insert?", a: "Yes. Lift-out trays and stacked layers are common for devices with accessories." },
@@ -637,7 +637,7 @@ export const productServices: DesignServiceInput[] = [
       "Seasonal sleeves or stickers refresh the box without reprinting the mailer.",
     ],
     recommendedBoxes: ["printed:mailer", "printed:shipping", "printed:sleeve"],
-    relatedServices: ["gift-box-pr-kit-design", "amazon-ecommerce-packaging-design", "box-packaging-design"],
+    relatedServices: ["gift-box-pr-kit-design", "amazon-packaging-design", "box-packaging-design"],
     illustration: "mailer-box",
     faqs: [
       { q: "Can one box work as contents change each month?", a: "Yes. We design flexible inserts and a card template that changes monthly." },

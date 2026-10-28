@@ -61,7 +61,7 @@ export const formatServices: DesignServiceInput[] = [
       "Required information depends on your product and market; the regulated text comes from you.",
     ],
     recommendedBoxes: ["printed:tuck-end", "printed:mailer", "rigid:tube"],
-    relatedServices: ["bottle-label-design", "jar-label-design", "wine-spirits-beer-label-design"],
+    relatedServices: ["bottle-label-design", "jar-label-design", "wine-spirits-label-design"],
     illustration: "label-bottle",
     faqs: [
       { q: "Do you print labels as well as design them?", a: "We design labels and supply print-ready files for roll-label printers; ask us about printing for your quantity." },
@@ -83,7 +83,7 @@ export const formatServices: DesignServiceInput[] = [
       "Shrink sleeves need artwork designed on the supplier's distortion template.",
     ],
     recommendedBoxes: ["rigid:tube", "rigid:shoulder-neck", "printed:tuck-end"],
-    relatedServices: ["label-design", "beverage-juice-packaging-design", "wine-spirits-beer-label-design"],
+    relatedServices: ["label-design", "beverage-packaging-design", "wine-spirits-label-design"],
     illustration: "label-bottle",
     faqs: [
       { q: "Can you design a label for a tapered bottle?", a: "Yes. We create a curved label shape so the design sits level on the taper." },
@@ -115,7 +115,7 @@ export const formatServices: DesignServiceInput[] = [
     ],
   },
   {
-    slug: "pouch-sachet-design",
+    slug: "pouch-packaging-design",
     name: "Pouch & Sachet Design",
     short: "Stand-up pouches, flat pouches, sachets and stick packs.",
     h1: "Pouch and sachet design that stands up and stands out",
@@ -129,7 +129,7 @@ export const formatServices: DesignServiceInput[] = [
       "Food pouches carry nutrition and allergen information from your approved data.",
     ],
     recommendedBoxes: ["printed:display", "printed:shipping", "printed:mailer"],
-    relatedServices: ["food-packaging-design", "coffee-tea-packaging-design", "supplement-packaging-design"],
+    relatedServices: ["food-packaging-design", "coffee-tea-packaging-design", "supplement-label-design"],
     illustration: "pillow-box",
     faqs: [
       { q: "Do you print pouches?", a: "We design pouch artwork for flexible packaging converters. We make the boxes and displays that carry them." },
@@ -174,7 +174,7 @@ export const formatServices: DesignServiceInput[] = [
       "Deposit marks and recycling symbols depend on your market.",
     ],
     recommendedBoxes: ["printed:gable", "printed:shipping", "rigid:tube"],
-    relatedServices: ["beverage-juice-packaging-design", "coffee-tea-packaging-design", "tube-packaging-design"],
+    relatedServices: ["beverage-packaging-design", "coffee-tea-packaging-design", "tube-packaging-design"],
     illustration: "tube",
     faqs: [
       { q: "Can you design for small batches of cans?", a: "Yes. Labels or sleeves on blank cans work well for small runs." },

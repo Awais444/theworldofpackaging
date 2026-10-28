@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = getDesignService((await params).slug);
   if (!s) return {};
   return {
-    title: s.name,
-    description: `${s.short} ${s.intro.split(". ")[0]}.`.slice(0, 160),
+    title: s.seo?.title ?? s.name,
+    description: s.seo?.description ?? `${s.short} ${s.intro.split(". ")[0]}.`.slice(0, 160),
     alternates: { canonical: designHref(s.slug) },
   };
 }

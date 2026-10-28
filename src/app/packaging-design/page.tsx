@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { getPost } from "@/content/blog/posts";
+import { hubFaqs, hubGuides, hubSections } from "@/content/designHubCopy";
 import { CheckCircle2 } from "lucide-react";
 import { site } from "@/config/site";
 import { designServices } from "@/content/designServices";
@@ -16,7 +19,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Packaging Design Services",
-  description: `Packaging design for ${designServices.length}+ product types and formats: cosmetics, food, coffee, supplements, candles, labels, rigid boxes and more. Made in our own factory.`,
+  description: "Packaging design services for boxes, labels and pouches, made in our own factory from 500 units. Concepts in 48 hours. Get a free quote.",
   alternates: { canonical: "/packaging-design" },
 };
 
@@ -27,13 +30,8 @@ const reasons = [
   { title: "Fast first concepts", text: `First directions usually within ${site.facts.firstConceptHours} hours.` },
 ];
 
-const faqs = [
-  { q: "What does packaging design include?", a: "Concepts on 3D mockups, refinement, artwork on the real dieline for every panel, finish layers and print-ready files. Structure and inserts can be added." },
-  { q: "Can you design only and let me print elsewhere?", a: "Yes. You receive print-ready files and the dieline. Most clients produce with us because the design is made for our presses." },
-  { q: "Is the design fee refundable if I manufacture with you?", a: `${designFeeNote} Details are in your quote.` },
-  { q: "Do you design labels as well as boxes?", a: "Yes. We design product labels for bottles, jars, tubes, cans and boxes, plus the boxes and displays they go in." },
-  { q: "How fast is the first concept?", a: `Usually within ${site.facts.firstConceptHours} hours of an agreed brief.` },
-];
+const faqs = hubFaqs;
+const guides = hubGuides.map(getPost).filter((p): p is NonNullable<ReturnType<typeof getPost>> => Boolean(p));
 
 export default function PackagingDesignHub() {
   return (
@@ -43,9 +41,9 @@ export default function PackagingDesignHub() {
         crumbs={[{ label: "Packaging Design" }]}
         whatsapp="packaging design"
         eyebrow="Packaging design services"
-        title="Packaging design for every product"
+        title="Packaging design services for every product"
         highlight="every"
-        intro={<p>Boxes, labels, pouches and displays designed by our studio and made in our own factory. Choose your product or format below.</p>}
+        intro={<p>Our packaging design services cover boxes, labels, pouches and displays, designed by our studio and made in our own factory. Choose your product or format below.</p>}
         slotId="design-cosmetic-packaging-design-1"
         actions={
           <>
@@ -74,6 +72,37 @@ export default function PackagingDesignHub() {
         <SectionHeader eyebrow="Services" title="Find your packaging design service" highlight="your" />
         <div className="mt-10">
           <DesignHubBrowser items={designServices.map(({ slug, name, short, illustration, group, formats }) => ({ slug, name, short, illustration, group, formats }))} />
+        </div>
+      </Section>
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <article className="max-w-[70ch] lg:col-span-8">
+            {hubSections.map((sec, i) => (
+              <div key={sec.h2} className={i > 0 ? "mt-12" : undefined}>
+                <h2 className="text-h3">{sec.h2}</h2>
+                {sec.paragraphs.map((p) => (
+                  <p key={p.slice(0, 40)} className="mt-4 text-ink-500">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </article>
+          <aside className="lg:col-span-4">
+            <div className="rounded-2xl border border-silver-300 p-6 lg:sticky lg:top-[120px]">
+              <p className="text-eyebrow text-blue-600">Related guides</p>
+              <ul className="mt-4 space-y-3">
+                {guides.map((g) => (
+                  <li key={g.slug}>
+                    <Link href={`/blog/${g.slug}`} className="font-semibold text-ink-900 hover:text-blue-600 hover:underline">
+                      {g.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </div>
       </Section>
 

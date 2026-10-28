@@ -1,5 +1,6 @@
 import { Mail, MapPin, MessageCircle, Clock } from "lucide-react";
 import Link from "next/link";
+import { FlagBadge } from "@/components/countries/FlagBadge";
 import { site, whatsappUrl } from "@/config/site";
 import { footerNav, legalNav } from "@/content/navigation";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
@@ -74,7 +75,8 @@ export function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {group.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="text-sm text-white/80 hover:text-white hover:underline">
+                    <Link href={l.href} className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white hover:underline">
+                      {l.iso2 && <FlagBadge iso2={l.iso2} size="sm" className="h-3.5 w-[21px]" />}
                       {l.label}
                     </Link>
                   </li>

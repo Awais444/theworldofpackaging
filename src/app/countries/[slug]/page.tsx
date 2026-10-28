@@ -72,7 +72,7 @@ export default async function CountryPage({ params }: Props) {
     <>
       <JsonLd
         data={[
-          serviceSchema({ name: `Packaging design and custom boxes for ${c.name}`, description: c.lead, path: countryHref(c.slug), category: "Packaging design and manufacturing", areaServed: c.name }),
+          serviceSchema({ name: `Packaging design and custom boxes for ${c.name}`, description: c.lead, path: countryHref(c.slug), category: "Packaging design and manufacturing", areaServed: { "@type": "Country", name: c.name } }),
           faqPage(faqs),
         ]}
       />

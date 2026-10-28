@@ -56,7 +56,7 @@ export function faqPage(faqs: { q: string; a: string }[]): Thing {
   };
 }
 
-export function service(s: { name: string; description: string; path: string; category: string; areaServed?: string | string[] }): Thing {
+export function service(s: { name: string; description: string; path: string; category: string; areaServed?: string | string[] | Record<string, string> }): Thing {
   return {
     "@context": "https://schema.org",
     "@type": "Service",

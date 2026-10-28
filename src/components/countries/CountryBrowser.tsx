@@ -2,12 +2,12 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { useId, useMemo, useState } from "react";
+import { useId, useMemo, useState, type ReactNode } from "react";
 import type { Region } from "@/content/countries";
 import { cn } from "@/lib/utils";
-import { FlagBadge } from "./FlagBadge";
 
-type Item = { slug: string; name: string; iso2: string; region: Region };
+/** `flag` is rendered on the server (FlagBadge), so the flag set never ships to the browser. */
+type Item = { slug: string; name: string; region: Region; flag: ReactNode };
 
 /** Search and region tabs over every country page. Without JS every country shows, grouped by region. */
 export function CountryBrowser({ items, regions }: { items: Item[]; regions: Region[] }) {
@@ -69,7 +69,7 @@ export function CountryBrowser({ items, regions }: { items: Item[]; regions: Reg
               {g.list.map((c) => (
                 <li key={c.slug}>
                   <Link href={`/countries/${c.slug}`} className="flex items-center gap-3 rounded-2xl border border-silver-300 p-3 font-semibold transition hover:border-blue-600 hover:text-blue-600">
-                    <FlagBadge iso2={c.iso2} size="sm" />
+                    {c.flag}
                     {c.name}
                   </Link>
                 </li>

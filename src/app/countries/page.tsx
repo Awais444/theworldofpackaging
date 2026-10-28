@@ -61,7 +61,7 @@ export default function CountriesHub() {
       <Section bg="silver-50">
         <SectionHeader eyebrow="All countries" title="Find your country" highlight="your" />
         <div className="mt-10">
-          <CountryBrowser items={countries.map(({ slug, name, iso2, region }) => ({ slug, name, iso2, region }))} regions={REGIONS} />
+          <CountryBrowser items={countries.map(({ slug, name, iso2, region }) => ({ slug, name, region, flag: <FlagBadge iso2={iso2} size="sm" /> }))} regions={REGIONS} />
         </div>
       </Section>
 

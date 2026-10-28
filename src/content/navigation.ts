@@ -4,7 +4,7 @@ import { featuredCountries } from "./linking";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
 
-export type NavLink = { label: string; href: string; description?: string };
+export type NavLink = { label: string; href: string; description?: string; /** ISO code: shows a flag (footer countries). */ iso2?: string };
 export type NavGroup = { title: string; href?: string; links: NavLink[] };
 
 /** Every quote CTA points here, so the route moves in one place . */
@@ -154,7 +154,7 @@ export const footerNav: NavGroup[] = [
   {
     title: "Countries we serve",
     href: "/countries",
-    links: [...featuredCountries(10).map((c) => ({ label: c.name, href: `/countries/${c.slug}` })), { label: "View all countries", href: "/countries" }],
+    links: [...featuredCountries(10).map((c) => ({ label: c.name, href: `/countries/${c.slug}`, iso2: c.iso2 })), { label: "View all countries", href: "/countries" }],
   },
   {
     title: "Company",

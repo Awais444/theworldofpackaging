@@ -1,18 +1,29 @@
+import * as Flags from "country-flag-icons/react/3x2";
+import type { ComponentType, SVGProps } from "react";
 import { cn } from "@/lib/utils";
 
+const sizes = {
+  sm: "h-5 w-[30px]",
+  md: "h-8 w-12",
+  lg: "h-10 w-[60px]",
+};
+
 /**
- * Country code badge. Stands in for a flag until a local SVG flag set is added
- * (COUNTRY_PAGES_PLAN.md asks for local flags, not a CDN). Decorative: the country name is always shown beside it.
+ * Country flag from country-flag-icons (MIT, bundled locally, no CDN). Server component: keep it out
+ * of client components so the whole flag set is not shipped to the browser. Falls back to an ISO
+ * code badge when no flag exists. Decorative: the country name is always shown beside it.
  */
 export function FlagBadge({ iso2, size = "md", className }: { iso2: string; size?: "sm" | "md" | "lg"; className?: string }) {
+  const Flag = (Flags as Record<string, ComponentType<SVGProps<SVGSVGElement>> | undefined>)[iso2.toUpperCase()];
+  if (Flag) {
+    return <Flag aria-hidden="true" focusable="false" className={cn("shrink-0 overflow-hidden rounded-[4px] shadow-[0_0_0_1px_rgba(20,19,23,0.08)]", sizes[size], className)} />;
+  }
   return (
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-lg bg-blue-50 font-heading font-bold tracking-wide text-blue-600",
-        size === "sm" && "h-7 w-9 text-xs",
-        size === "md" && "h-9 w-12 text-sm",
-        size === "lg" && "h-12 w-16 text-lg",
+        "inline-flex shrink-0 items-center justify-center rounded-[4px] bg-blue-50 font-heading text-xs font-bold tracking-wide text-blue-600",
+        sizes[size],
         className,
       )}
     >

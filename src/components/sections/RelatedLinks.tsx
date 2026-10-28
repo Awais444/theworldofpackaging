@@ -34,7 +34,7 @@ export function RegionLinks({ countries, title = "Popular regions" }: { countrie
         {countries.map((c) => (
           <li key={c.slug}>
             <Link href={countryHref(c.slug)} className="inline-flex h-11 items-center gap-2 rounded-full border border-silver-300 bg-white pl-1.5 pr-4 text-sm font-semibold transition-colors hover:border-blue-600 hover:text-blue-600">
-              <FlagBadge iso2={c.iso2} size="sm" className="rounded-full" />
+              <FlagBadge iso2={c.iso2} size="sm" />
               {c.name}
             </Link>
           </li>

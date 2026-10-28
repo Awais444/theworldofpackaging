@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
-import { BlogTeaser, DesignForEveryProduct, FactsRow, ShelfProblems } from "@/components/home/HomeDesign";
+import { BlogTeaser, DesignForEveryProduct, ShelfProblems } from "@/components/home/HomeDesign";
+import { ProofBar } from "@/components/home/ProofBar";
+import { proofItems } from "@/config/site";
 import {
   BoxTypes,
   CollapsibleFeature,
@@ -29,7 +31,7 @@ export default function HomePage() {
       <DesignForEveryProduct />
       <WhatWeMake />
       <ShelfProblems />
-      <FactsRow />
+      <ProofBar items={proofItems()} />
       <Services />
       <BoxTypes />
       <CollapsibleFeature />

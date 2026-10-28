@@ -1,3 +1,5 @@
+import type { ProofItem } from "@/components/home/ProofBar";
+
 /**
  * Single place for name, contact details and confirmed business facts (CLAUDE.md §3).
  * Metadata, footer, JSON-LD, OG images and copy all read from here.
@@ -88,6 +90,18 @@ export function factStats(): Array<{ value: string; label: string }> {
     f.sampleDays ? { value: `${f.sampleDays} days`, label: "To a physical sample" } : null,
     f.printedMoq ? { value: String(f.printedMoq), label: "Minimum order, printed boxes" } : null,
   ].filter((x): x is { value: string; label: string } => Boolean(x));
+}
+
+/** Homepage proof bar items from confirmed facts; null facts are skipped so the grid re-balances. */
+export function proofItems(): ProofItem[] {
+  const f = site.facts as { rigidMoq: number | null; quoteReplyHours: number | null; firstConceptHours: number | null };
+  const items: Array<ProofItem | null> = [
+    f.rigidMoq ? { icon: "package", number: f.rigidMoq, label: "Minimum order, rigid boxes" } : null,
+    f.quoteReplyHours ? { icon: "clock", number: f.quoteReplyHours, unit: "h", label: "Quote reply time" } : null,
+    f.firstConceptHours ? { icon: "pen", number: f.firstConceptHours, unit: "h", label: "First design concepts" } : null,
+    { icon: "factory", text: "Own factory", label: "Designed and made in-house" },
+  ];
+  return items.filter((x): x is ProofItem => Boolean(x));
 }
 
 /** Customer-facing promises in display order; null facts are skipped. */

@@ -1,6 +1,5 @@
 import { ArrowRight, EyeOff, Package, PackageX, ShieldAlert, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { factStats } from "@/config/site";
 import { posts } from "@/content/blog/posts";
 import { featuredDesignSlugs, getDesignService, type DesignService } from "@/content/designServices";
 import { DesignCard } from "@/components/design/DesignCard";
@@ -95,22 +94,6 @@ export function ShelfProblems() {
 }
 
 /** Stats from confirmed facts only (null facts are hidden). */
-export function FactsRow() {
-  const stats = factStats();
-  if (stats.length === 0) return null;
-  return (
-    <section aria-label="Key facts" className="border-y border-silver-300/60 bg-white py-10">
-      <dl className="container-x grid grid-cols-2 gap-6 md:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.label} className="flex flex-col-reverse text-center">
-            <dt className="mt-1 text-sm text-ink-500">{s.label}</dt>
-            <dd className="font-heading text-4xl font-bold text-blue-600 md:text-5xl">{s.value}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
-}
 
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
 

@@ -3,8 +3,7 @@ import { ArrowRight, CheckCircle2, Plane, Ship } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
 import { quoteHref } from "@/content/navigation";
-import { shipTo } from "@/content/shipTo";
-import { shipToSharedFaqs } from "@/content/shipToDetails";
+import { countries, countryHref } from "@/content/countries";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { FreightSlider } from "@/components/sections/FreightSlider";
 import { PageHero } from "@/components/sections/PageHero";
@@ -36,7 +35,12 @@ const packing = [
   "Palletised for sea freight on request",
 ];
 
-const faqs = [{ q: "Do you ship samples by courier?", a: "Yes, by express courier with tracking." }, ...shipToSharedFaqs];
+const faqs = [{ q: "Do you ship samples by courier?", a: "Yes, by express courier with tracking." }, 
+  { q: "Air or sea?", a: "Air for samples and urgent stock; sea for production volumes. We quote both on request." },
+  { q: "Who pays import duties?", a: "Usually the importer. Ask us whether delivered-duty-paid shipping is possible for your country." }, // TODO confirm DDP availability
+  { q: "How long does shipping take?", a: "Transit time depends on the route and service. We confirm it with your quote." }, // TODO real transit times
+  { q: "Can collapsible boxes cut my freight cost?", a: "Yes. They ship flat, so more boxes fit per carton. We compare both options in your quote." },
+];
 
 export default function ShippingPage() {
   return (
@@ -129,12 +133,12 @@ export default function ShippingPage() {
       </Section>
 
       <Section>
-        <SectionHeader eyebrow="Countries" title="Country guides" highlight="Country" lead="We ship worldwide. These are our most common destinations." />
+        <SectionHeader eyebrow="Countries" title="Country guides" highlight="Country" lead="We ship worldwide. Each country page covers labelling notes, currency and shipping." />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {shipTo.map((c) => (
+          {countries.filter((c) => c.tier === 1).map((c) => (
             <li key={c.slug}>
-              <Link href={`/ship-to/${c.slug}`} className="group flex items-center justify-between rounded-2xl border border-silver-300 p-6 transition hover:-translate-y-1 hover:border-blue-600 hover:shadow-md">
-                <span className="font-heading text-xl font-bold">{c.country}</span>
+              <Link href={countryHref(c.slug)} className="group flex items-center justify-between rounded-2xl border border-silver-300 p-6 transition hover:-translate-y-1 hover:border-blue-600 hover:shadow-md">
+                <span className="font-heading text-xl font-bold">{c.name}</span>
                 <ArrowRight aria-hidden="true" className="h-5 w-5 text-blue-600 transition-transform group-hover:translate-x-1" />
               </Link>
             </li>

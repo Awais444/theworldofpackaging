@@ -1,12 +1,10 @@
 import { CheckCircle2, Clock, Factory, Tag as TagIcon } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
-import { designHref, getDesignService, type BoxRef, type DesignService } from "@/content/designServices";
+import { designHref, getDesignService, type DesignService } from "@/content/designServices";
 import { getPost } from "@/content/blog/posts";
 import { quoteHref } from "@/content/navigation";
 import { designFeeNote, designTiers, priceLabel } from "@/content/pricing";
-import { printedStyles } from "@/content/printedStyles";
-import { rigidStyles } from "@/content/rigidStyles";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Media } from "@/components/media/Media";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -19,7 +17,7 @@ import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StepList } from "@/components/ui/StepList";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { printedCard, rigidCard, type BoxCard } from "@/lib/boxView";
+import { boxRefCard, type BoxCard } from "@/lib/boxView";
 import { faqPage, service as serviceSchema } from "@/lib/schema";
 import { DesignCard } from "./DesignCard";
 
@@ -31,18 +29,11 @@ const steps = [
   { title: "Sample & production", body: "A physical sample, then production in our factory if you want it." },
 ];
 
-function boxCard(ref: BoxRef): BoxCard | null {
-  const [kind, slug] = ref.split(":") as ["rigid" | "printed", string];
-  const style = kind === "rigid" ? rigidStyles.find((s) => s.slug === slug) : printedStyles.find((s) => s.slug === slug);
-  if (!style) return null;
-  return kind === "rigid" ? rigidCard(style as (typeof rigidStyles)[number]) : printedCard(style as (typeof printedStyles)[number]);
-}
-
 /** Packaging design service page. */
 export function DesignServicePage({ s }: { s: DesignService }) {
   const href = designHref(s.slug);
   const topic = s.name.replace(/ Design$/, " design");
-  const boxes = s.recommendedBoxes.map(boxCard).filter((b): b is BoxCard => Boolean(b));
+  const boxes = s.recommendedBoxes.map(boxRefCard).filter((b): b is BoxCard => Boolean(b));
   const related = s.relatedServices.map(getDesignService).filter((r): r is DesignService => Boolean(r));
   const turnaround = s.turnaround ?? `First concepts in ${site.facts.firstConceptHours} hours`;
   const guides = (s.seo?.guides ?? []).map(getPost).filter((p): p is NonNullable<ReturnType<typeof getPost>> => Boolean(p));

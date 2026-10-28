@@ -10,7 +10,7 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { finishes as finishOptions, inserts, printedMaterials, wraps } from "@/content/materials";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
-import { shipTo } from "@/content/shipTo";
+import { countries, getCountry } from "@/content/countries";
 import { illustrations, type IllustrationKey } from "@/components/illustrations";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
@@ -44,7 +44,7 @@ const materialsFor = (c?: Category) => (c === "printed" ? printedMaterials.map((
 const finishList = [...finishOptions.map((f) => f.name), ...inserts.map((i) => i.name), "Window patch", "Ribbon"];
 
 // Main markets first, then common others. "Other" is clarified in notes.
-const COUNTRIES = [...shipTo.map((s) => s.country), "France", "Netherlands", "Italy", "Spain", "Ireland", "Sweden", "Saudi Arabia", "Qatar", "New Zealand", "Singapore", "Pakistan", "Other (add in notes)"];
+const COUNTRIES = [...countries.map((c) => c.name).sort((a, b) => a.localeCompare(b)), "Other (add in notes)"];
 
 const ARTWORK = [
   { id: "have", title: "I have artwork", text: "Print-ready files or a design you want us to use." },
@@ -216,7 +216,7 @@ export function QuoteBuilder() {
         const category: Category | undefined = collapsibleOptions.some((s) => s.slug === style) ? "collapsible" : rigidOptions.some((s) => s.slug === style) ? "rigid" : printedOptions.some((s) => s.slug === style) ? "printed" : undefined;
         if (category) patch({ category, style });
       }
-      const country = shipTo.find((s) => s.slug === q.get("country"))?.country;
+      const country = getCountry(q.get("country") ?? "")?.name;
       if (country && !draft.country) patch({ country });
       const service = q.get("service");
       if (service && !draft.notes) patch({ notes: `Design service: ${service.replace(/-/g, " ")}${q.get("tier") ? ` (${q.get("tier")} tier)` : ""}. ` });

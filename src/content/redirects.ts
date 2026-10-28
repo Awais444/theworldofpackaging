@@ -30,6 +30,19 @@ export const legacyServiceRedirects: Record<string, string> = {
   "/services/product-mockups-for-ecommerce": "/packaging-design/3d-packaging-mockups",
 };
 
+/** Old /ship-to pages and short aliases move to /countries (COUNTRY_PAGES_PLAN.md §1). */
+export const legacyCountryRedirects: Record<string, string> = {
+  "/ship-to/usa": "/countries/united-states",
+  "/ship-to/uk": "/countries/united-kingdom",
+  "/ship-to/canada": "/countries/canada",
+  "/ship-to/australia": "/countries/australia",
+  "/ship-to/uae": "/countries/uae",
+  "/ship-to/germany": "/countries/germany",
+  "/usa": "/countries/united-states",
+  "/uk": "/countries/united-kingdom",
+  "/uae": "/countries/uae",
+};
+
 /** Phase 5 renamed this industry slug to match CLAUDE.md §9. */
 export const legacyIndustryRedirects: Record<string, string> = {
   "/industries/pr-kits-corporate-gifts": "/industries/gifts-pr-kits",

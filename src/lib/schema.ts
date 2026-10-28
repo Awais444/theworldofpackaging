@@ -56,7 +56,7 @@ export function faqPage(faqs: { q: string; a: string }[]): Thing {
   };
 }
 
-export function service(s: { name: string; description: string; path: string; category: string }): Thing {
+export function service(s: { name: string; description: string; path: string; category: string; areaServed?: string | string[] }): Thing {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -65,7 +65,7 @@ export function service(s: { name: string; description: string; path: string; ca
     serviceType: s.category,
     url: abs(s.path),
     provider: { "@id": ORG_ID() },
-    areaServed: site.markets,
+    areaServed: s.areaServed ?? site.markets,
   };
 }
 

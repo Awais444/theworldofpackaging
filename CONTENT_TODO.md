@@ -52,8 +52,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Sustainability: `sustainability` in `src/content/company.ts` (`/factory`), recycled/FSC card and FAQ in `src/content/optionPages.ts` (`/materials`), FAQ in `src/content/faqs.ts`
 - [ ] Industry compliance notes: `COMPLIANCE_NOTE` in `src/content/industries.ts` (dashed "To verify" card on every industry page)
 - [ ] CBD: "Child-resistant options on request" in `src/content/industryDetails.ts`. Remove if not offered.
-- [ ] Shipping and customs: delivered-duty-paid availability (`/shipping`, FAQs), import notes per country in `src/content/shipTo.ts`, the Australia packing-material note and the Germany LUCID note in `src/content/shipToDetails.ts`. Have a customs broker review.
-- [ ] Transit times per country (ship-to pages say "Confirmed with your quote")
+- [ ] Shipping and customs: delivered-duty-paid availability (`/shipping` FAQs). Have a customs broker review.
 - [ ] Sample lead time and shipping cost: FAQs on `/samples`
 - [ ] Production lead time FAQs in `src/content/boxDetails.ts`
 - [ ] Privacy policy and terms (`/privacy`, `/terms`): template text, needs legal review; set the "Last updated" date
@@ -64,6 +63,16 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] Have a qualified regulatory adviser review all 13 compliance guides in `src/content/blog/` (listed in `src/content/blog/compliancePosts.ts`). Each shows "Last reviewed: 28 October 2026"; update `REVIEWED` after the check.
 - [ ] Re-check fast-moving topics every 6 months: CBD (US/UK/EU), MoCRA fragrance allergens, EU fragrance allergen list, sunscreen rules, EU green claims and packaging regulation, UK EPR.
 - [ ] Confirm source links still work.
+
+## 4c. Country pages (verify before launch)
+
+- [ ] `src/content/countries.tier1.ts`: have a local adviser check the labelling summary, key points and authority for each of the 20 Tier 1 countries (all marked "Last reviewed: 28 October 2026"). Gulf pages (Kuwait, Qatar, Oman, Bahrain) cite only the GSO site; add each country's own authority link once confirmed.
+- [ ] Confirm every official source link opens.
+- [ ] `shipping.air` / `shipping.sea` per country: real transit times from the logistics partner (pages say "Confirmed with your quote" until set).
+- [ ] `shipping.incoterms` per country (e.g. EXW, FOB, DDP): confirm which terms we offer.
+- [ ] City notes: confirm the port and hub notes.
+- [ ] Flags: pages show an ISO code badge. Add a local SVG flag set (needs a small dependency or hand-made SVGs) if you want real flags.
+- [ ] Tier 2 (~40) and Tier 3 (~130) countries are not built yet (COUNTRY_PAGES_PLAN.md §2).
 
 ## 5. Media
 

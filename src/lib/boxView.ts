@@ -148,3 +148,14 @@ export function printedView(s: PrintedStyle): BoxView {
     related: printedStyles.filter((p) => p.slug !== s.slug).slice(0, 4).map(printedCard),
   };
 }
+
+/** Card for a box reference such as "rigid:magnetic-closure" or "printed:mailer". */
+export function boxRefCard(ref: `rigid:${string}` | `printed:${string}`): BoxCard | null {
+  const [kind, slug] = ref.split(":") as [BoxKind, string];
+  if (kind === "rigid") {
+    const s = rigidStyles.find((r) => r.slug === slug);
+    return s ? rigidCard(s) : null;
+  }
+  const s = printedStyles.find((p) => p.slug === slug);
+  return s ? printedCard(s) : null;
+}

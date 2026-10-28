@@ -1,6 +1,6 @@
 import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
-import { legacyCompanyRedirects, legacyQuoteRedirects, legacyIndustryRedirects, legacyServiceRedirects } from "./src/content/redirects";
+import { legacyCompanyRedirects, legacyCountryRedirects, legacyQuoteRedirects, legacyIndustryRedirects, legacyServiceRedirects } from "./src/content/redirects";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...["materials", "finishes", "inserts"].map((p) => ({ source: `/rigid-boxes/${p}`, destination: `/${p}`, permanent: true })),
-      ...Object.entries({ ...legacyServiceRedirects, ...legacyIndustryRedirects, ...legacyCompanyRedirects, ...legacyQuoteRedirects }).map(([source, destination]) => ({ source, destination, permanent: true })),
+      ...Object.entries({ ...legacyServiceRedirects, ...legacyIndustryRedirects, ...legacyCompanyRedirects, ...legacyCountryRedirects, ...legacyQuoteRedirects }).map(([source, destination]) => ({ source, destination, permanent: true })),
     ];
   },
   images: {

@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       <h2>How we use it</h2>
       <p>To reply to enquiries, prepare quotes, make and ship orders, and improve the website. We do not sell personal data.</p>
       <h2>Cookies and storage</h2>
-      <p>Essential browser storage keeps your cart and theme choice. Analytics cookies load only after you consent.</p>
+      <p>Essential browser storage keeps your quote form progress and consent choice. Analytics cookies load only after you consent.</p>
       <h2>Your rights</h2>
       <p>You can ask for a copy of your data, ask us to correct or delete it, or withdraw consent at any time by emailing {site.email}.</p>
       <h2>Contact</h2>

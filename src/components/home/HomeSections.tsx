@@ -220,79 +220,39 @@ export function CollapsibleFeature() {
   );
 }
 
+/** Six cards, one-line titles, descriptions kept to three lines at 15px. */
 const reasons: Array<{ icon: LucideIcon; title: string; text: string }> = [
-  {
-    icon: Award,
-    title: `${site.facts.yearsExperience}+ years in packaging`,
-    text: "Fifteen years of designing, printing and manufacturing boxes for brands at home and abroad.",
-  },
-  {
-    icon: Factory,
-    title: "Own factory",
-    text: "Rigid boxes are made and printed in-house, not outsourced.",
-  },
-  {
-    icon: Layers,
-    title: `MOQ ${site.facts.rigidMoq}`,
-    text: `Rigid and collapsible rigid boxes from ${site.facts.rigidMoq} units.`,
-  },
-  {
-    icon: Palette,
-    title: "Free design support",
-    text: "Every order includes artwork checks and dieline setup.",
-  },
-  {
-    icon: Package,
-    title: "Digital proof before print",
-    text: "Approve a PDF proof with dieline, colours and copy, plus a 3D mockup. Nothing is printed until you approve.",
-  },
-  {
-    icon: Sparkles,
-    title: "Premium finishes",
-    text: "Foil, embossing, spot UV, soft-touch and custom inserts.",
-  },
-  {
-    icon: Globe,
-    title: "Worldwide shipping",
-    text: "By air or sea to the USA, UK, Canada, Australia, UAE and EU.",
-  },
+  { icon: Award, title: `${site.facts.yearsExperience}+ years`, text: "Designing, printing and making boxes for brands at home and abroad." },
+  { icon: Factory, title: "Own factory", text: "Rigid boxes are made and printed in-house, not outsourced." },
+  { icon: Layers, title: `MOQ ${site.facts.rigidMoq}`, text: `Rigid and collapsible rigid boxes from ${site.facts.rigidMoq} units.` },
+  { icon: Package, title: "Digital proof", text: "A PDF proof and 3D mockup. Nothing is printed until you approve." },
+  { icon: Sparkles, title: "Premium finishes", text: "Foil, embossing, spot UV, soft-touch and custom inserts." },
+  { icon: Globe, title: "Ships worldwide", text: "By air or sea to the USA, UK, Canada, Australia, UAE and EU." },
 ];
 
 export function WhyUs() {
   return (
     <Section>
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-8">
-          <FadeIn>
-            <SectionHeader
-              eyebrow="Why choose us"
-              title="One team from sketch to delivered box"
-              highlight="delivered"
-            />
-          </FadeIn>
-          <FadeIn delay={0.08}>
-            <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {reasons.map((r) => (
-                <li
-                  key={r.title}
-                  className="h-full rounded-2xl border border-silver-300 p-6"
-                >
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-orange-50 text-orange-500">
-                    <r.icon aria-hidden="true" className="h-6 w-6" />
-                  </span>
-                  <h3 className="text-h4 mt-4">{r.title}</h3>
-                  <p className="mt-2 text-ink-500">{r.text}</p>
-                </li>
-              ))}
-            </ul>
-          </FadeIn>
-        </div>
-        <FadeIn delay={0.1} className="lg:col-span-4">
-          <Media
-            slot="home-factory"
-            panel="blue"
-            sizes="(min-width: 1024px) 33vw, 100vw"
-          />
+      <FadeIn>
+        <SectionHeader eyebrow="Why choose us" title="One team from sketch to delivered box" highlight="delivered" />
+      </FadeIn>
+      {/* Image spans exactly the height of the 3×2 card grid on desktop; above the cards on smaller screens. */}
+      <div className="mt-10 grid items-stretch gap-8 lg:grid-cols-12">
+        <FadeIn delay={0.1} className="relative aspect-video overflow-hidden rounded-3xl lg:order-2 lg:col-span-4 lg:aspect-auto">
+          <Media slot="home-factory" panel="blue" className="!absolute inset-0 h-full w-full rounded-3xl" sizes="(min-width: 1024px) 33vw, 100vw" />
+        </FadeIn>
+        <FadeIn delay={0.08} className="lg:order-1 lg:col-span-8">
+          <ul className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {reasons.map((r) => (
+              <li key={r.title} className="flex flex-col rounded-2xl border border-silver-300 p-6">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-orange-50 text-orange-500">
+                  <r.icon aria-hidden="true" className="h-5 w-5" />
+                </span>
+                <h3 className="text-h4 mt-4 truncate">{r.title}</h3>
+                <p className="mt-2 line-clamp-3 text-[15px] text-ink-500">{r.text}</p>
+              </li>
+            ))}
+          </ul>
         </FadeIn>
       </div>
     </Section>

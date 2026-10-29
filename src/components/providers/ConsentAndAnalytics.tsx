@@ -75,7 +75,7 @@ export function ConsentAndAnalytics() {
           >
             <p className="font-heading font-bold">Cookies</p>
             <p className="mt-2 text-sm text-ink-500">
-              We use essential storage to keep your quote and cart. With your permission we also use analytics and chat tools. See our{" "}
+              We use essential storage to remember your quote. With your permission we also use analytics and chat tools. See our{" "}
               <Link href="/privacy" className="text-blue-600 underline">
                 privacy policy
               </Link>

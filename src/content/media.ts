@@ -2,7 +2,7 @@ import type { IllustrationKey } from "@/components/illustrations";
 import { designServices } from "./designServices";
 import { servicePages } from "./servicePages";
 import { caseStudies } from "./caseStudies";
-import { PHOTOS, type Photo, type PhotoKey } from "./photos";
+import { PHOTOS, STOCK, type Photo, type PhotoKey } from "./photos";
 import { industries } from "./industries";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
@@ -250,7 +250,7 @@ function generatedSlots(): MediaSlot[] {
  * Fixed slots above take `src` directly.
  */
 /**
- * Real photos of our own projects, by slot id. Never used on /blog (posts keep their illustrations).
+ * Photos by slot id: first-batch project photos (ownership unconfirmed) and STOCK category visuals. Never used on /blog (posts keep their illustrations).
  * Each file exists at 2400px (`.webp`) and 1200px (`-1200.webp`, used for cards).
  */
 const photos: Record<string, Photo> = {
@@ -275,7 +275,41 @@ const photos: Record<string, Photo> = {
   "design-subscription-box-design-1": PHOTOS.mailer,
   "design-pouch-packaging-design-1": PHOTOS.pouch,
   "design-coffee-tea-packaging-design-2": PHOTOS.coffeeRange,
-  "service-brand-identity-hero": PHOTOS.coffeeRange,
+  "service-brand-identity-hero": STOCK.brochure,
+  // Stock category visuals (generic, never presented as our work).
+  "rigid-tube-gallery-1": STOCK.matchaTubes,
+  "design-coffee-tea-packaging-design-3": STOCK.matchaTubes,
+  "design-coffee-tea-packaging-design-4": STOCK.coffeePouchKraft,
+  "design-coffee-tea-packaging-design-5": STOCK.coffeeCup,
+  "design-snack-packaging-design-1": STOCK.chipsBag,
+  "design-snack-packaging-design-2": STOCK.proteinBars,
+  "design-bakery-confectionery-packaging-design-1": STOCK.cookiePouches,
+  "printed-display-hero": STOCK.chocDisplay,
+  "design-chocolate-packaging-design-1": STOCK.chocDisplay,
+  "design-retail-display-design-1": STOCK.chocDisplay,
+  "printed-folding-carton-gallery-1": STOCK.waveCartons,
+  "design-box-packaging-design-1": STOCK.waveCartons,
+  "printed-mailer-gallery-1": STOCK.kraftMailer,
+  "design-shopping-bag-design-1": STOCK.shoppingBags,
+  "design-apparel-packaging-design-1": STOCK.bowTieBoxes,
+  "design-gift-box-pr-kit-design-2": STOCK.bowTieBoxes,
+  "printed-tuck-end-hero": STOCK.tuckBoxes,
+  "design-bottle-label-design-1": STOCK.faceMist,
+  "design-bottle-label-design-2": STOCK.serumBottle,
+  "design-skincare-packaging-design-1": STOCK.faceMist,
+  "design-skincare-packaging-design-2": STOCK.maskBox,
+  "design-skincare-packaging-design-3": STOCK.serumPump,
+  "design-skincare-packaging-design-4": STOCK.dropperCarton,
+  "design-3d-packaging-mockups-1": STOCK.dropperCarton,
+  "design-cbd-packaging-design-1": STOCK.hempBottles,
+  "design-jar-label-design-1": STOCK.hempBottles,
+  "design-makeup-packaging-design-1": STOCK.cosmeticTubes,
+  "design-tube-packaging-design-1": STOCK.gelTube,
+  "design-tube-packaging-design-2": STOCK.cosmeticTubes,
+  "design-hair-care-packaging-design-1": STOCK.pumpBottle,
+  "design-hair-care-packaging-design-2": STOCK.shampooBottles,
+  "design-pouch-packaging-design-2": STOCK.maskSachet,
+  "design-pouch-packaging-design-3": STOCK.coffeeYellow,
 };
 
 const withPhoto = (s: MediaSlot): MediaSlot => {

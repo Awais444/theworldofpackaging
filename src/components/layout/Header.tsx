@@ -220,7 +220,7 @@ export function Header() {
         )}
       </AnimatePresence>
       <header className={cn("sticky top-0 z-[100] h-[var(--header-h)] border-b border-silver-100 bg-white")}>
-        <div className="container-x grid h-full grid-cols-[1fr_auto] items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-12">
+        <div className="container-x grid h-full grid-cols-[minmax(0,1fr)_auto] items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-12">
           <div className="flex items-center justify-self-start" onPointerEnter={closeOnEnter}>
             <Logo />
           </div>

@@ -46,11 +46,12 @@ const real = (c: Input): CaseStudy => ({
   results: [],
   coverSlot: caseCover(c.slug),
   gallery: c.photos.gallery.map((_, i) => `case-${c.slug}-gallery-${i + 1}`),
-  placeholder: false,
+  // Ownership not yet confirmed in writing: shown with a "Sample project" badge, noindex, out of the sitemap.
+  placeholder: true,
 });
 
 /**
- * Our own packaging projects, written from what is visible in the photos. Business claims stay
+ * Packaging projects (ownership to confirm), written from what is visible in the photos. Business claims stay
  * neutral. TODO per project (see CONTENT_TODO.md "Case studies – confirm with team"): year,
  * services, client quote and approved results.
  */
@@ -257,7 +258,8 @@ export const caseStudies: CaseStudy[] = [
   }),
 ];
 
-export const publicCaseStudies = caseStudies.filter((c) => !c.placeholder);
+/** Shown on the site (placeholders carry a "Sample project" badge and are noindex). */
+export const publicCaseStudies = caseStudies;
 
 export const getCaseStudy = (slug: string) => publicCaseStudies.find((c) => c.slug === slug);
 

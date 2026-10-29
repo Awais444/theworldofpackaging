@@ -1,5 +1,5 @@
 /**
- * Real photos of our own packaging projects (public/images/...). Each exists at 2400px (`.webp`)
+ * Project photos from the first batch (public/images/...). Ownership is not yet confirmed: see CONTENT_TODO.md. Each exists at 2400px (`.webp`)
  * and 1200px (`-1200.webp`, used for cards). Never used on /blog: posts keep their illustrations.
  */
 export type Photo = {
@@ -27,3 +27,35 @@ export const PHOTOS = {
 } satisfies Record<string, Photo>;
 
 export type PhotoKey = keyof typeof PHOTOS;
+
+/**
+ * STOCK category visuals: generic examples, never our work. Do not use in /work case studies,
+ * testimonials, anything that says "our project" or "client", or on /blog. Licence: see CONTENT_TODO.md.
+ */
+export const STOCK = {
+  matchaTubes: { file: "/images/rigid/paper-tube-matcha", alt: "Two green paper tubes for matcha latte powder with a printed gradient wrap" },
+  coffeePouchKraft: { file: "/images/design/coffee-pouch-kraft-label", alt: "Black stand-up coffee pouch with a printed front label on a wooden table" },
+  chipsBag: { file: "/images/design/snack-bag-chips", alt: "Printed foil snack bag for potato sticks on a grey-green background" },
+  cookiePouches: { file: "/images/design/cookie-pouches-chocolate", alt: "Two brown printed stand-up pouches for chocolate cookies" },
+  proteinBars: { file: "/images/design/protein-bar-wrappers", alt: "Colourful illustrated protein bar wrappers fanned out", position: "50% 40%" },
+  chocDisplay: { file: "/images/printed/chocolate-bar-display-box", alt: "Yellow printed counter display box filled with wrapped chocolate bars", position: "50% 60%" },
+  waveCartons: { file: "/images/printed/wave-print-folding-cartons", alt: "Two stacked folding cartons printed with a wave illustration" },
+  kraftMailer: { file: "/images/printed/kraft-mailer-label", alt: "Kraft mailer box with an illustrated front label on dark stone", position: "50% 60%" },
+  shoppingBags: { file: "/images/design/kraft-shopping-bags", alt: "Kraft paper shopping bags with a green print hanging on a rail" },
+  bowTieBoxes: { file: "/images/rigid/bow-tie-gift-boxes", alt: "Black gift boxes and sleeves for bow ties and ties with gold foil logos" },
+  tuckBoxes: { file: "/images/printed/white-tuck-end-boxes", alt: "Stack of white printed tuck end boxes with black graphics" },
+  faceMist: { file: "/images/design/face-mist-bottle-label", alt: "Clear spray bottle of face mist with a white printed label beside flowers" },
+  hempBottles: { file: "/images/design/hemp-dropper-bottles-jar", alt: "Navy dropper bottles and a jar with white labels for hemp skincare" },
+  serumBottle: { file: "/images/design/serum-bottle-label", alt: "Glass serum bottle with a gold and white label lying on wood" },
+  cosmeticTubes: { file: "/images/design/cosmetic-tubes", alt: "Four printed cosmetic squeeze tubes on a cork background" },
+  pumpBottle: { file: "/images/design/pump-bottle-body-care", alt: "Amber pump bottle with a cream label held up at sunset" },
+  maskSachet: { file: "/images/design/face-mask-sachet", alt: "Yellow face mask sachet with a printed front panel" },
+  maskBox: { file: "/images/design/face-mask-box", alt: "Printed carton for a set of face mask sheets in soft shadow light" },
+  shampooBottles: { file: "/images/design/shampoo-conditioner-bottles", alt: "Matching shampoo and conditioner pump bottles with cream labels on stone" },
+  coffeeCup: { file: "/images/design/coffee-pouches-cup", alt: "Orange and navy printed coffee pouches with a matching takeaway cup" },
+  coffeeYellow: { file: "/images/design/coffee-pouch-yellow", alt: "Red printed coffee pouch and a striped paper cup on yellow" },
+  brochure: { file: "/images/design/brochure-stickers", alt: "Illustrated folded brochure and brand stickers on a pink background" },
+  serumPump: { file: "/images/design/serum-pump-bottle-dark", alt: "Black airless serum pump bottle with white print on an orange gradient" },
+  dropperCarton: { file: "/images/design/dropper-bottle-carton-mockup", alt: "Amber dropper bottle with a white label beside its tall carton" },
+  gelTube: { file: "/images/design/gel-cleanser-tube", alt: "Cream squeeze tube for a facial cleanser held in a lab stand" },
+} satisfies Record<string, Photo>;

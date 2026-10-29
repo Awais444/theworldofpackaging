@@ -51,12 +51,12 @@ export function Footer() {
     <footer className="mt-auto bg-blue-900 text-white">
       <div className="container-x">
         {/* CTA strip */}
-        <div className="flex flex-col gap-6 border-b border-white/15 py-10 md:flex-row md:items-center md:justify-between">
-          <div>
+        <div className="flex min-w-0 flex-col gap-6 border-b border-white/15 py-10 md:flex-row md:items-center md:justify-between">
+          <div className="min-w-0">
             <h2 className="font-heading text-[24px] font-bold tracking-[-0.02em] md:text-[28px]">Ready to start your packaging?</h2>
             <p className="mt-2 text-white/[.72]">Free design check and a physical sample before production.</p>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex w-full min-w-0 flex-col gap-3 sm:w-auto sm:flex-row">
             <Link href={quoteHref} className={`${btn} bg-orange-700 text-white hover:bg-orange-800`}>
               Get a Free Quote <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </Link>
@@ -71,7 +71,7 @@ export function Footer() {
         </div>
 
         {/* Main grid */}
-        <div className="grid gap-8 py-12 lg:grid-cols-12">
+        <div className="grid min-w-0 gap-8 py-12 [&>*]:min-w-0 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Logo tone="light" />
             <p className="mt-4 max-w-xs text-[15px] text-white/[.72]">{site.tagline}</p>
@@ -95,7 +95,7 @@ export function Footer() {
             )}
           </div>
 
-          <nav aria-label="Footer" className="grid content-start gap-x-8 md:grid-cols-3 md:gap-y-8 lg:col-span-8 lg:grid-cols-5">
+          <nav aria-label="Footer" className="grid min-w-0 content-start [&>*]:min-w-0 gap-x-8 md:grid-cols-3 md:gap-y-8 lg:col-span-8 lg:grid-cols-5">
             {footerNav.map((group) => (
               <FooterGroup key={group.title} title={group.title}>
                 <ul>
@@ -138,7 +138,7 @@ export function Footer() {
         </div>
 
         {/* Chip rows */}
-        <div className="space-y-4 border-t border-white/15 py-8">
+        <div className="min-w-0 space-y-4 border-t border-white/15 py-8">
           <div className="flex flex-wrap items-center gap-2">
             <span className="mr-1 text-[14px] font-bold">Industries:</span>
             {footerIndustries.map((l) => (

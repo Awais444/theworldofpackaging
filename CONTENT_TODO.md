@@ -43,6 +43,21 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
   - [ ] `story`: founding story on `/about`
   - [ ] `capacityNote`: real capacity on `/factory`
 
+## Confirm ownership before publishing
+
+All 10 case studies are `placeholder: true`: they show a "Sample project" badge, are noindex and stay out of the sitemap. Confirm in writing that each is our project (and the client agrees to be named), then set `placeholder: false` in `src/content/caseStudies.ts`.
+
+- [ ] United Gift Club
+- [ ] Springwater Soaps
+- [ ] Hip Hip! Coffee
+- [ ] Barker's Secret
+- [ ] Olivia Boutique
+- [ ] Fruits & Berries
+- [ ] Crampless Tea
+- [ ] Mr. Negative
+- [ ] Submersible
+- [ ] Wild Flowers
+
 ## Case studies – confirm with team
 
 All 10 are live in `src/content/caseStudies.ts` (placeholder: false). For each, confirm: year, services delivered (we design/print/manufacture?), client permission to show the work, a client quote, approved results figures, and 2–4 more gallery photos (most have only one).
@@ -95,6 +110,8 @@ All 10 are live in `src/content/caseStudies.ts` (placeholder: false). For each, 
 - [ ] Excluded countries: North Korea, Iran, Syria, Cuba, Russia and Belarus have no page, pending an export and sanctions check. Add them only if you can legally ship there.
 
 ## 5. Media
+
+- [ ] Confirm licence (e.g. Unsplash free licence) for all stock photos in public/images. Stock files are listed as `STOCK` in `src/content/photos.ts`: generic category visuals, never shown as our work, never on /work, testimonials or /blog.
 
 - [ ] Real photos for the 189 image slots listed in `MEDIA_SLOTS.md`. Until then every slot shows a brand illustration.
 - [ ] Optional: a 5–8 s muted video loop for the homepage hero (`home-hero` supports `video`)

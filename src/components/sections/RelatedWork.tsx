@@ -21,7 +21,7 @@ export function RelatedWork({ studies, bg = "white" }: { studies: CaseStudy[]; b
       />
       <div className="mt-10 grid gap-8 md:grid-cols-3">
         {studies.map((c) => (
-          <CaseCard key={c.slug} href={`/work/${c.slug}`} title={`${c.client}: ${c.project}`} text={c.summary} slot={c.coverSlot} industry={c.industry} />
+          <CaseCard key={c.slug} href={`/work/${c.slug}`} title={`${c.client}: ${c.project}`} text={c.summary} slot={c.coverSlot} industry={c.industry} placeholder={c.placeholder} />
         ))}
       </div>
     </Section>

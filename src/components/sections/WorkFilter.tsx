@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { PortfolioGallery, type GalleryItem } from "@/components/work/PortfolioGallery";
 
 /** A filter category: one of our design services. */
 export type WorkService = { id: string; label: string; href: string };
@@ -29,19 +30,21 @@ const pillState = (on: boolean) => (on ? "border-blue-600 bg-blue-600 text-white
 /**
  * /work filters: design service pills + industry (dropdown on desktop, scroll chips on mobile).
  * Client-side over a statically rendered list; state mirrors ?service=&industry= so views can be shared.
- * A service pill shows when at least one project has it; an industry needs 2 projects. No counts anywhere.
+ * Filters apply to both Featured projects and the Portfolio gallery. A service pill shows when at least one
+ * project or portfolio item has it; an industry needs 2 items. No counts anywhere.
  */
-export function WorkFilter({ items, services, quoteHref }: { items: WorkItem[]; services: WorkService[]; quoteHref: string }) {
+export function WorkFilter({ items, services, quoteHref, gallery = [] }: { items: WorkItem[]; services: WorkService[]; quoteHref: string; gallery?: GalleryItem[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const reduce = useReducedMotion();
   const [stuck, setStuck] = useState(false);
   const sentinel = useRef<HTMLDivElement>(null);
-  const typeOptions = useMemo(() => services.filter((t) => items.some((i) => i.services.includes(t.id))), [items, services]);
+  const typeOptions = useMemo(() => services.filter((t) => items.some((i) => i.services.includes(t.id)) || gallery.some((g) => g.services.includes(t.id))), [items, services, gallery]);
   const industryOptions = useMemo(() => {
-    const names = [...new Set(items.map((i) => i.industry))];
-    return names.filter((n) => items.filter((i) => i.industry === n).length >= MIN).sort().map((n) => ({ id: slugify(n), label: n }));
-  }, [items]);
+    const all = [...items.map((i) => i.industry), ...gallery.map((g) => g.industryLabel).filter((n): n is string => Boolean(n))];
+    const names = [...new Set(all)];
+    return names.filter((n) => all.filter((x) => x === n).length >= MIN).sort().map((n) => ({ id: slugify(n), label: n }));
+  }, [items, gallery]);
 
   // Filters live in the URL (?service=&industry=). The server snapshot is empty, so the static HTML shows all projects.
   const search = useSyncExternalStore(subscribe, () => window.location.search, () => "");
@@ -80,6 +83,7 @@ export function WorkFilter({ items, services, quoteHref }: { items: WorkItem[]; 
   const industryLabel = industryOptions.find((o) => o.id === industry)?.label;
   const service = typeOptions.find((o) => o.id === type);
   const visible = items.filter((i) => (type === "all" || i.services.includes(type)) && (industry === "all" || slugify(i.industry) === industry));
+  const galleryVisible = gallery.filter((g) => (type === "all" || g.services.includes(type)) && (industry === "all" || (g.industryLabel !== null && slugify(g.industryLabel) === industry)));
   const active = type !== "all" || industry !== "all";
 
   return (
@@ -144,7 +148,8 @@ export function WorkFilter({ items, services, quoteHref }: { items: WorkItem[]; 
         )}
       </div>
 
-      <motion.ul layout={!reduce} className="mt-3 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+      {visible.length > 0 && <h2 className="text-h3 mt-6">Featured projects</h2>}
+      <motion.ul layout={!reduce} className="mt-6 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence initial={false} mode="popLayout">
           {visible.map((item) => (
             <motion.li
@@ -161,7 +166,17 @@ export function WorkFilter({ items, services, quoteHref }: { items: WorkItem[]; 
         </AnimatePresence>
       </motion.ul>
 
-      {visible.length === 0 && (
+      {galleryVisible.length > 0 && (
+        <section aria-labelledby="portfolio-heading" className="mt-20">
+          <h2 id="portfolio-heading" className="text-h3">Portfolio</h2>
+          <p className="mt-2 text-ink-500">Packaging formats and finishes we design and make. Click any image to see it large.</p>
+          <div className="mt-8">
+            <PortfolioGallery key={`${type}|${industry}`} items={galleryVisible} quoteHref={quoteHref} />
+          </div>
+        </section>
+      )}
+
+      {visible.length === 0 && galleryVisible.length === 0 && (
         <div className="rounded-3xl bg-silver-50 p-10 text-center">
           <p className="font-heading text-h4">No projects match these filters yet.</p>
           <p className="mt-2 text-ink-500">Tell us what you are making and we will send examples in your category.</p>

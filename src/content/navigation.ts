@@ -41,7 +41,7 @@ const designLink = (slug: string): NavLink => {
   return { label: d.name.replace(/ Design$/, "").replace(/ Packaging$/, ""), href: designHref(slug) };
 };
 
-const menuIndustries = ["cosmetics", "perfume", "jewelry", "supplements", "food-bakery", "chocolates", "candles", "apparel"];
+const menuIndustries = ["pharmaceutical", "cosmetics", "perfume", "jewelry", "supplements", "food-bakery", "chocolates", "candles", "apparel"];
 
 export const designMenu: NavGroup[] = [
   {
@@ -54,6 +54,7 @@ export const designMenu: NavGroup[] = [
       "food-packaging-design",
       "coffee-tea-packaging-design",
       "supplement-label-design",
+      "pharmaceutical-packaging-design",
       "candle-packaging-design",
       "jewelry-packaging-design",
     ].map(designLink),

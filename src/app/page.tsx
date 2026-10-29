@@ -12,10 +12,10 @@ import {
   Industries,
   Services,
   TestimonialsAndFaq,
-  WhatWeMake,
   WhyUs,
 } from "@/components/home/HomeSections";
 import { HowItWorks } from "@/components/home/HowItWorks";
+import { TrustedBy } from "@/components/home/TrustedBy";
 import { Media } from "@/components/media/Media";
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function HomePage() {
     <>
       <HomeHero />
       <DesignForEveryProduct />
-      <WhatWeMake />
+      <TrustedBy />
       <ShelfProblems />
       <ProofBar items={proofItems()} />
       <Services />

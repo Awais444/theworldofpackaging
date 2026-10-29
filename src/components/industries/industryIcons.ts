@@ -1,6 +1,7 @@
-import { Candy, Cookie, Cpu, Flame, Gem, Gift, Leaf, Package, Pill, Shirt, Sparkles, SprayCan, Watch, type LucideIcon } from "lucide-react";
+import { BriefcaseMedical, Candy, Cookie, Cpu, Flame, Gem, Gift, Leaf, Package, Pill, Shirt, Sparkles, SprayCan, Watch, type LucideIcon } from "lucide-react";
 
 const icons: Record<string, LucideIcon> = {
+  pharmaceutical: BriefcaseMedical,
   cosmetics: SprayCan,
   perfume: Sparkles,
   jewelry: Gem,

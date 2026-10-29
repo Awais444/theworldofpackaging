@@ -19,6 +19,7 @@ export function organization(): Thing {
     email: site.email,
     description: site.description,
     foundingDate: String(site.facts.foundedYear),
+    alternateName: site.history.originalName,
     address: { "@type": "PostalAddress", ...(site.address ? { streetAddress: site.address } : {}), addressCountry: site.country },
     contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: site.email, ...(site.phone ? { telephone: site.phone } : {}) }],
     ...(sameAs.length ? { sameAs } : {}),

@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 // Studio & factory content. Everything flagged placeholder or TODO needs real details.
 
 export type TeamMember = { name: string; role: string; bio: string; placeholder: boolean };
@@ -109,9 +110,9 @@ export const teamGroups = [
  * Do not add dates or events that are not confirmed.
  */
 export const milestones: import("@/components/ui/Timeline").Milestone[] = [
-  { year: null, title: "Started printing", text: "TODO: when and how the business began.", placeholder: true },
+  { year: String(site.facts.foundedYear), title: `Started as ${site.history.originalName}`, text: "A printing press, printing packaging for local businesses." },
   { year: null, title: "Opened the factory", text: "TODO: first factory and what it made.", placeholder: true },
   { year: null, title: "Began rigid box production", text: "TODO: when rigid boxes were added.", placeholder: true },
-  { year: null, title: "First international clients", text: "TODO: first markets served abroad.", placeholder: true },
+  { year: null, title: "First international clients", text: "TODO: when, and which markets.", placeholder: true },
   { year: null, title: "Launched the design studio", text: "TODO: when branding and packaging design started.", placeholder: true },
 ];

@@ -112,6 +112,7 @@ export const featuredDesignSlugs = [
 
 /** Industry slug → matching design service (industry page = overview + boxes; service page = design). */
 export const industryDesignService: Record<string, string> = {
+  pharmaceutical: "pharmaceutical-packaging-design",
   cosmetics: "cosmetic-packaging-design",
   perfume: "perfume-fragrance-packaging-design",
   jewelry: "jewelry-packaging-design",

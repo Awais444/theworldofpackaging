@@ -8,7 +8,7 @@ import { CTABand } from "@/components/ui/CTABand";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
 import { Section } from "@/components/ui/Layout";
 import { Logo } from "@/components/ui/Logo";
-import { LogoMarquee } from "@/components/ui/LogoMarquee";
+import { TrustedBy } from "@/components/home/TrustedBy";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SpecTable } from "@/components/ui/SpecTable";
 import { StepList } from "@/components/ui/StepList";
@@ -244,7 +244,7 @@ export default function DesignSystemPage() {
         </div>
       </Section>
 
-      <LogoMarquee title="Example marquee" logos={["Halden", "Ostra", "Kiri", "Marrow", "Nove"].map((name) => ({ name, placeholder: true }))} />
+      <TrustedBy />
 
       <Section bg="klein">
         <SectionHeader dark eyebrow="Dark section" title="Klein blue background" highlight="Klein" lead="White text, orange accents." />

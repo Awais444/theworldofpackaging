@@ -143,3 +143,10 @@ Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, l
 - [ ] GA4: set `NEXT_PUBLIC_GA4_ID` in `.env` (loads only after the visitor clicks Accept).
 - [ ] Optional chat widget: set `NEXT_PUBLIC_CHAT_WIDGET_SRC` (also loads only after Accept).
 - [ ] OG images use a system sans-serif. Optionally load the Space Grotesk TTF in `src/lib/og.tsx`.
+
+## Company history and clients
+
+- [ ] Get logo permission from Hansol Pharmaceutical and Royal Laboratories (then add the logo file and set `logoApproved: true` in `site.clients`)
+- [ ] Add more client names to `site.clients` in `src/config/site.ts`
+- [ ] Confirm founding year 2010 (the site currently uses `facts.foundedYear: 2011`)
+- [ ] About timeline: confirm years and wording for the four milestones after "Started as Anmol Printers"

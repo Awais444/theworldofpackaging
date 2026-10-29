@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CheckCircle2 } from "lucide-react";
-import { factStats, site } from "@/config/site";
+import { factStats, heritageLine, site } from "@/config/site";
 import { differences, milestones, story, teamGroups, values } from "@/content/company";
 import { quoteHref } from "@/content/navigation";
 import { Media } from "@/components/media/Media";
@@ -86,7 +86,17 @@ export default function AboutPage() {
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <SectionHeader eyebrow={`Since ${site.facts.foundedYear}`} title={`${site.facts.yearsExperience}+ years in packaging`} highlight="packaging" />
-            <p className="text-lead mt-5 text-ink-500">Fifteen years of designing, printing and manufacturing boxes for brands at home and abroad.</p>
+            <div className="mt-5 space-y-4 text-ink-500">
+              <p>
+                We started about {site.facts.yearsExperience} years ago as {site.history.originalName}, a printing press. Over the years we grew into box manufacturing, then rigid boxes made in our own factory.
+              </p>
+              <p>
+                Along the way we printed packaging for international clients
+                {site.clients.length > 0 && <> including {site.clients.map((c) => c.name).join(" and ")}</>}.
+              </p>
+              <p>Today we are {site.name}: a packaging design studio with its own factory, from first sketch to delivered box.</p>
+            </div>
+            <p className="mt-6 font-heading font-semibold text-ink-900">{heritageLine()}</p>
           </div>
           <div className="lg:col-span-7">
             <Timeline items={milestones} />

@@ -35,34 +35,12 @@ import {
 } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
-import { LogoMarquee } from "@/components/ui/LogoMarquee";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Tabs } from "@/components/ui/Tabs";
 import { illustrations } from "@/components/illustrations";
 import { industryIcon } from "@/components/industries/industryIcons";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
-
-/** "What we make" strip. Replace with real client logos (with permission) once available. */
-export function WhatWeMake() {
-  const items = [
-    "Cosmetic packaging",
-    "Rigid gift boxes",
-    "Collapsible boxes",
-    "Mailer boxes",
-    "Labels",
-    "Folding cartons",
-    "Coffee & tea packaging",
-    "Candle boxes",
-    "Jewellery boxes",
-    "PR kits",
-  ].map((name) => ({ name, placeholder: false }));
-  return (
-    <div className="border-y border-silver-300/60 bg-white py-10">
-      <LogoMarquee title="What we design and make" logos={items} />
-    </div>
-  );
-}
 
 export function BoxTypes() {
   const rigid = rigidStyles.slice(0, 8);
@@ -366,7 +344,7 @@ export function Industries() {
         />
       </FadeIn>
       <div className="mt-12 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
-        {industries.map((ind) => (
+        {industries.slice(0, 12).map((ind) => (
           <IndustryCard
             key={ind.slug}
             href={`/industries/${ind.slug}`}

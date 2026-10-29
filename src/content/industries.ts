@@ -23,6 +23,27 @@ const COMPLIANCE_NOTE =
 
 export const industries: Industry[] = [
   {
+    slug: "pharmaceutical",
+    name: "Pharmaceutical",
+    styles: ["Tuck end carton", "Labels", "Leaflets"],
+    intro: "Medicine and health packaging where clarity comes first: cartons, labels and leaflets with accurate text, colour and batch and expiry areas.",
+    challenges: [
+      { title: "Accuracy", body: "Every word, strength and dosage must match your approved copy exactly, across every variant." },
+      { title: "Variant clarity", body: "Strengths and variants need colour and type that make them impossible to confuse." },
+      { title: "Batch and expiry", body: "Areas for batch numbers, expiry dates and barcodes are planned into the dieline from the start." },
+    ],
+    rigid: [],
+    printed: ["tuck-end", "folding-carton", "display"],
+    services: ["packaging-design", "label-design"],
+    // TODO verify: medicine packaging rules (e.g. DRAP, MHRA, FDA, EU) with the client's regulatory team.
+    compliance: "Regulated text, symbols and layouts come from your regulatory team. We lay them out exactly as approved and keep space for batch, expiry and Braille where needed.",
+    illustration: "tuck-end",
+    faqs: [
+      { q: "Have you made pharmaceutical packaging before?", a: "Yes. We have printed packaging for pharmaceutical clients since we started as a printing press." },
+      { q: "Do you design patient information leaflets?", a: "Yes. We lay out leaflets from your approved text with clear type and structure." },
+    ],
+  },
+  {
     slug: "cosmetics",
     name: "Cosmetics",
     styles: ["Magnetic", "Drawer", "Folding carton"],

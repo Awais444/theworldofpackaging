@@ -23,6 +23,7 @@ import { StepList } from "@/components/ui/StepList";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { boxRefCard, type BoxCard } from "@/lib/boxView";
 import { faqPage, service as serviceSchema } from "@/lib/schema";
+import { PharmaExperience } from "./ClientExperience";
 import { DesignCard } from "./DesignCard";
 
 const steps = [
@@ -176,6 +177,8 @@ export function DesignServicePage({ s }: { s: DesignService }) {
           </div>
         </div>
       </Section>
+
+      {s.slug === "pharmaceutical-packaging-design" && <PharmaExperience />}
 
       {/* Process */}
       <Section>

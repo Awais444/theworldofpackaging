@@ -3,6 +3,7 @@ import type { Faq } from "./rigidStyles";
 
 /** Finishes that suit each industry (CLAUDE.md §7.4 "Finishes that work"). */
 export const industryFinishes: Record<string, string[]> = {
+  pharmaceutical: ["Matte or gloss varnish", "Pantone variant colours", "Braille embossing", "Tamper-evident seals", "Batch and expiry areas"],
   cosmetics: ["Soft-touch lamination", "Gold foil", "Spot UV", "Embossing", "Window patch"],
   perfume: ["Hot foil blocking", "Embossing", "Linen wrap", "Velvet-lined EVA", "Debossing"],
   jewelry: ["Linen wrap", "Foil logo", "Velvet insert", "Satin cushion", "Leatherette"],

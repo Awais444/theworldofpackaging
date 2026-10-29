@@ -4,7 +4,7 @@
 import { chromium } from "playwright-core";
 
 const base = process.argv[2] ?? "http://localhost:3000";
-const pages = ["/", "/packaging-design", "/countries", "/countries/united-states"];
+const pages = ["/", "/packaging-design", "/countries", "/countries/united-states", "/work"];
 // Pass extra widths as args, e.g. 288 320 (approximates 125% Android text size on 360/400px phones).
 const extra = process.argv.slice(3).map(Number);
 const widths = [360, 375, 390, 414, ...extra];

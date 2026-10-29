@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { publicCaseStudies } from "@/content/caseStudies";
+import { publicCaseStudies, type CaseStudy } from "@/content/caseStudies";
 import { featuredDesignSlugs, getDesignService, type DesignService } from "@/content/designServices";
 import { quoteHref } from "@/content/navigation";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
 import { DesignCard } from "@/components/design/DesignCard";
-import { PageHero } from "@/components/sections/PageHero";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { withHighlight } from "@/components/ui/withHighlight";
 import { WorkFilter } from "@/components/sections/WorkFilter";
 import { Button } from "@/components/ui/Button";
 import { CaseCard, ProductCard } from "@/components/ui/Cards";
@@ -67,36 +68,48 @@ function WhatWeDesignAndMake() {
   );
 }
 
+/** Type filter options, derived from each project's tags (a project can match several). */
+const WORK_TYPES = [
+  { id: "rigid", label: "Rigid boxes" },
+  { id: "printed", label: "Printed boxes" },
+  { id: "pouches-labels", label: "Pouches & labels" },
+  { id: "branding", label: "Branding" },
+];
+const typesOf = (c: CaseStudy) =>
+  [
+    c.categories.includes("Rigid") && "rigid",
+    c.categories.includes("Printed") && "printed",
+    (c.services.includes("Label design") || c.made.some((m) => /pouch|label/i.test(m))) && "pouches-labels",
+    c.categories.includes("Branding") && "branding",
+  ].filter((t): t is string => Boolean(t));
+
 export default function WorkPage() {
   const hasWork = publicCaseStudies.length > 0;
   return (
     <>
-      <PageHero
-        crumbs={[{ label: "Work" }]}
-        eyebrow="Our work"
-        title="Packaging we design and make"
-        highlight="design"
-        intro={
-          <p>
-            {hasWork
-              ? "Brand identities, packaging systems and boxes made in our own factory. Filter by what you need."
-              : "From cosmetic cartons to coffee bags and rigid gift boxes: the packaging our studio designs and our factory makes. Ask us for examples in your category."}
+      {/* Compact hero: the filter bar and first row of cards fit in a 1440×900 screen. No CTA here (the header has one). */}
+      <section className="bg-white pb-4 pt-5">
+        <div className="container-x">
+          <Breadcrumbs items={[{ label: "Work" }]} />
+          <p className="text-eyebrow mt-5 text-blue-600">Our work</p>
+          <h1 className="text-h1 mt-2">{withHighlight("Packaging we design and make", "design")}</h1>
+          <p className="text-lead mt-2 text-ink-500">
+            {hasWork ? "Packaging systems, labels and boxes from our studio and factory." : "Ask us for examples in your category."}
           </p>
-        }
-        actions={
-          <Button href={quoteHref} size="lg" arrow>
-            Get a Free Quote
-          </Button>
-        }
-        whatsapp="examples of your packaging work"
-      />
+        </div>
+      </section>
       {hasWork ? (
         <Section className="!pt-0">
           <WorkFilter
+            quoteHref={quoteHref}
+            types={WORK_TYPES}
             items={publicCaseStudies.map((c) => ({
               slug: c.slug,
-              categories: c.categories,
-              card: <CaseCard href={`/work/${c.slug}`} title={`${c.client}: ${c.project}`} text={c.summary} slot={c.coverSlot} industry={c.industry} placeholder={c.placeholder} />,
+              types: typesOf(c),
+              industry: c.industry,
+              card: (
+                <CaseCard href={`/work/${c.slug}`} title={`${c.client}: ${c.project}`} text={c.summary} slot={c.coverSlot} industry={c.industry} placeholder={c.placeholder} chips={c.services} />
+              ),
             }))}
           />
         </Section>

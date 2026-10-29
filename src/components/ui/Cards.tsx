@@ -73,6 +73,7 @@ export function CaseCard({
   slot,
   industry,
   placeholder = false,
+  chips,
 }: {
   href: string;
   title: string;
@@ -80,6 +81,8 @@ export function CaseCard({
   slot: string;
   industry: string;
   placeholder?: boolean;
+  /** Optional service chips under the summary. */
+  chips?: string[];
 }) {
   return (
     <Link href={href} className="group block">
@@ -95,7 +98,16 @@ export function CaseCard({
         <Tag tone="orange">{industry}</Tag>
       </div>
       <h3 className="text-h4 mt-3 group-hover:text-blue-600">{title}</h3>
-      <p className="mt-1 text-ink-500">{text}</p>
+      <p className={cn("mt-1 text-ink-500", chips && "line-clamp-1")}>{text}</p>
+      {chips && chips.length > 0 && (
+        <ul className="mt-3 flex flex-wrap gap-1.5">
+          {chips.map((c) => (
+            <li key={c} className="rounded-full bg-silver-100 px-2.5 py-1 text-xs font-medium text-ink-500">
+              {c}
+            </li>
+          ))}
+        </ul>
+      )}
     </Link>
   );
 }

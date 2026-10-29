@@ -17,6 +17,7 @@ import { Tag } from "@/components/ui/Tag";
 import { priceLabel } from "@/content/pricing";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage, service as serviceSchema } from "@/lib/schema";
+import { getWorkService } from "@/content/workServices";
 
 /** Service page (CLAUDE.md §7.3). */
 export function ServiceDetail({ s }: { s: ServicePage }) {
@@ -25,6 +26,8 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
     p.kind === "rigid" ? rigidCard(rigidStyles.find((r) => r.slug === p.slug)!) : printedCard(printedStyles.find((r) => r.slug === p.slug)!),
   );
   const href = `/services/${s.path}`;
+  // Only services that are /work filter categories (e.g. Brand Identity) get a filtered link.
+  const workFilter = getWorkService(s.path);
 
   return (
     <>
@@ -82,8 +85,8 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
           title="Projects like this"
           highlight="this"
           action={
-            <Button href="/work" variant="ghost" arrow>
-              All work
+            <Button href={workFilter ? `/work?service=${workFilter.id}` : "/work"} variant="ghost" arrow>
+              {workFilter ? `View all ${workFilter.label} work` : "All work"}
             </Button>
           }
         />

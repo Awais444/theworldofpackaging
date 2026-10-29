@@ -344,6 +344,8 @@ const photos: Record<string, Photo> = {
   "design-toy-game-packaging-design-6": SECONDARY.gameBoxes,
   "design-electronics-packaging-design-6": SECONDARY.techBox,
   "design-hair-care-packaging-design-6": SECONDARY.hairLifestyle,
+  "design-perfume-fragrance-packaging-design-6": SECONDARY.perfumeBw,
+  "design-gift-box-pr-kit-design-6": SECONDARY.giftTag,
 };
 
 const withPhoto = (s: MediaSlot): MediaSlot => {

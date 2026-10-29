@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { publicCaseStudies, type CaseStudy } from "@/content/caseStudies";
+import { publicCaseStudies } from "@/content/caseStudies";
+import { WORK_SERVICES } from "@/content/workServices";
 import { featuredDesignSlugs, getDesignService, type DesignService } from "@/content/designServices";
 import { quoteHref } from "@/content/navigation";
 import { printedStyles } from "@/content/printedStyles";
@@ -68,21 +69,6 @@ function WhatWeDesignAndMake() {
   );
 }
 
-/** Type filter options, derived from each project's tags (a project can match several). */
-const WORK_TYPES = [
-  { id: "rigid", label: "Rigid boxes" },
-  { id: "printed", label: "Printed boxes" },
-  { id: "pouches-labels", label: "Pouches & labels" },
-  { id: "branding", label: "Branding" },
-];
-const typesOf = (c: CaseStudy) =>
-  [
-    c.categories.includes("Rigid") && "rigid",
-    c.categories.includes("Printed") && "printed",
-    (c.services.includes("Label design") || c.made.some((m) => /pouch|label/i.test(m))) && "pouches-labels",
-    c.categories.includes("Branding") && "branding",
-  ].filter((t): t is string => Boolean(t));
-
 export default function WorkPage() {
   const hasWork = publicCaseStudies.length > 0;
   return (
@@ -102,10 +88,10 @@ export default function WorkPage() {
         <Section className="!pt-0">
           <WorkFilter
             quoteHref={quoteHref}
-            types={WORK_TYPES}
+            services={[...WORK_SERVICES]}
             items={publicCaseStudies.map((c) => ({
               slug: c.slug,
-              types: typesOf(c),
+              services: c.workServices,
               industry: c.industry,
               card: (
                 <CaseCard href={`/work/${c.slug}`} title={`${c.client}: ${c.project}`} text={c.summary} slot={c.coverSlot} industry={c.industry} placeholder={c.placeholder} chips={c.services} />

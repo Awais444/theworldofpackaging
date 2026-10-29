@@ -126,7 +126,9 @@ Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, l
 - [ ] a22a7b83 board game boxes → `rigid-lid-and-base-gallery-6`, `design-toy-game-packaging-design-6`
 - [ ] e034a499 tech product box → `design-electronics-packaging-design-6`
 - [ ] 3a1564f5 models holding hair products → `design-hair-care-packaging-design-6`
-- Not used: cfbee137 (Chloé perfume, famous brand) and 46c18189 (gift tag advertising another packaging company, customerbox.ir).
+- [ ] cfbee137 perfume bottle (Chloé, famous brand) → `design-perfume-fragrance-packaging-design-6`
+- [ ] 46c18189 printed gift tag (advertises another packaging company, customerbox.ir) → `design-gift-box-pr-kit-design-6`
+- [ ] 9b03e0d8 cream tubes + carton (Huxley): original file needed again; planned for tube packaging and cosmetic packaging galleries
 
 - [ ] Real photos for the 189 image slots listed in `MEDIA_SLOTS.md`. Until then every slot shows a brand illustration.
 - [ ] Optional: a 5–8 s muted video loop for the homepage hero (`home-hero` supports `video`)

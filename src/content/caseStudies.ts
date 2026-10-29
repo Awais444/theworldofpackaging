@@ -1,6 +1,7 @@
 import type { IllustrationKey } from "@/components/illustrations";
 import type { BoxRef } from "./designServices";
 import type { PhotoKey } from "./photos";
+import type { WorkServiceId } from "./workServices";
 
 export type WorkCategory = "Branding" | "Packaging" | "Rigid" | "Printed";
 
@@ -16,6 +17,8 @@ export type CaseStudy = {
   industry: string;
   services: CaseService[];
   categories: WorkCategory[];
+  /** /work filter tags: our design services this project shows (see workServices.ts). */
+  workServices: WorkServiceId[];
   /** TODO: confirm year with the team. Hidden while null. */
   year: string | null;
   summary: string;
@@ -36,7 +39,21 @@ export type CaseStudy = {
   placeholder: boolean;
 };
 
-type Input = Omit<CaseStudy, "coverSlot" | "gallery" | "results" | "placeholder" | "year">;
+type Input = Omit<CaseStudy, "coverSlot" | "gallery" | "results" | "placeholder" | "year" | "workServices">;
+
+/** /work filter tagging per project (a project can be in several). */
+const WORK_TAGS: Record<string, WorkServiceId[]> = {
+  "united-gift-club-magnetic-gift-box": ["rigid-luxury-box-design", "box-packaging-design", "product-packaging-design"],
+  "springwater-soaps-window-cartons": ["box-packaging-design", "product-packaging-design", "retail-display-design"],
+  "hip-hip-coffee-pouches": ["pouch-packaging-design", "product-packaging-design", "brand-identity"],
+  "barkers-secret-handmade-soap-packaging": ["box-packaging-design", "product-packaging-design"],
+  "olivia-boutique-kraft-box-sleeve": ["box-packaging-design", "unboxing-packaging-design"],
+  "fruits-and-berries-candle-tube": ["rigid-luxury-box-design", "label-design", "product-packaging-design"],
+  "crampless-tea-kraft-packaging": ["pouch-packaging-design", "label-design", "box-packaging-design", "product-packaging-design"],
+  "mr-negative-film-box-cartons": ["box-packaging-design", "product-packaging-design", "retail-display-design"],
+  "submersible-mailer-unboxing": ["unboxing-packaging-design", "box-packaging-design"],
+  "wild-flowers-floral-gift-box": ["box-packaging-design", "product-packaging-design"],
+};
 
 export const caseCover = (slug: string) => `case-${slug}-cover`;
 
@@ -44,6 +61,7 @@ const real = (c: Input): CaseStudy => ({
   ...c,
   year: null,
   results: [],
+  workServices: WORK_TAGS[c.slug] ?? [],
   coverSlot: caseCover(c.slug),
   gallery: c.photos.gallery.map((_, i) => `case-${c.slug}-gallery-${i + 1}`),
   // Ownership not yet confirmed in writing: shown with a "Sample project" badge, noindex, out of the sitemap.

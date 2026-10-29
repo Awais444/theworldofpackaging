@@ -62,7 +62,7 @@ export default async function CaseStudyPage({ params }: Props) {
             </h1>
             <p className="text-lead mt-4 text-ink-500">{study.summary}</p>
           </div>
-          <Media slot={study.coverSlot} panel="blue" className="mt-10" sizes="(min-width: 1280px) 1240px, 100vw" />
+          <Media slot={study.coverSlot} panel="blue" priority className="mt-10" sizes="(min-width: 1280px) 1240px, 100vw" />
           <dl className={`mt-8 grid grid-cols-2 gap-4 ${meta.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
             {meta.map((m) => (
               <div key={m.label} className="rounded-2xl bg-silver-50 px-5 py-4">

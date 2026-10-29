@@ -74,7 +74,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
               </div>
             </div>
             <div className="lg:col-span-6">
-              <Media slot={s.portfolioSlots[0]!} panel="blue" sizes="(min-width: 1024px) 45vw, 90vw" />
+              <Media slot={s.portfolioSlots[0]!} panel="blue" priority sizes="(min-width: 1024px) 45vw, 90vw" />
             </div>
           </div>
         </div>
@@ -262,7 +262,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
         </div>
       </Section>
 
-      <RelatedWork studies={relatedWork({ designService: s.slug })} bg="silver-50" />
+      <RelatedWork studies={relatedWork({ designService: s.slug })} bg="silver-50" service={s.slug} />
 
       {/* Related */}
       {related.length > 0 && (

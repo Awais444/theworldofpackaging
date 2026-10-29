@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { illustrations } from "@/components/illustrations";
+import blurData from "@/content/blurData.json";
 import { getMedia, type MediaSlotId } from "@/content/media";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ type MediaProps = {
   className?: string;
   /** next/image sizes hint. */
   sizes?: string;
+  /** First visible image on the page: eager load with high fetch priority. */
   priority?: boolean;
   /** Panel colour behind an illustration (ignored once a photo is set). */
   panel?: MediaPanel;
@@ -32,16 +34,22 @@ type MediaProps = {
 export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority = false, panel = "silver", card = false }: MediaProps) {
   const slot = getMedia(slotId);
   const Illustration = illustrations[slot.illustration];
+  const file = slot.src ? (card && slot.srcCard ? slot.srcCard : slot.src) : undefined;
+  // Blurred preview generated at build time (scripts/gen-blur.mjs); silver-100 shows if one is missing.
+  const blur = file ? (blurData as Record<string, string>)[file] : undefined;
 
   return (
-    <figure className={cn("relative overflow-hidden rounded-3xl", (!slot.src || slot.fit === "contain") && (slot.src ? "bg-silver-50" : panels[panel]), className)} style={{ aspectRatio: slot.aspect }}>
+    <figure className={cn("relative overflow-hidden rounded-3xl", slot.src ? (slot.fit === "contain" ? "bg-silver-50" : "bg-silver-100") : panels[panel], className)} style={{ aspectRatio: slot.aspect }}>
       {slot.src ? (
         <Image
-          src={card && slot.srcCard ? slot.srcCard : slot.src}
+          src={file!}
           alt={slot.alt}
           fill
           sizes={sizes}
           priority={priority}
+          fetchPriority={priority ? "high" : undefined}
+          placeholder={blur ? "blur" : "empty"}
+          blurDataURL={blur}
           className={slot.fit === "contain" ? "object-contain p-[4%]" : "object-cover"}
           style={slot.position ? { objectPosition: slot.position } : undefined}
         />

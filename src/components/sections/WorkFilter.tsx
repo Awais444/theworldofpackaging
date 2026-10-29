@@ -7,8 +7,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type WorkType = { id: string; label: string };
-export type WorkItem = { slug: string; types: string[]; industry: string; card: ReactNode };
+/** A filter category: one of our design services. */
+export type WorkService = { id: string; label: string; href: string };
+export type WorkItem = { slug: string; services: string[]; industry: string; card: ReactNode };
 
 const slugify = (s: string) => s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const MIN = 2;
@@ -26,31 +27,31 @@ const pill = "inline-flex h-10 shrink-0 items-center rounded-full border px-4 te
 const pillState = (on: boolean) => (on ? "border-blue-600 bg-blue-600 text-white" : "border-silver-300 bg-white text-ink-900 hover:bg-blue-50");
 
 /**
- * /work filters: type pills + industry (dropdown on desktop, scroll chips on mobile).
- * Client-side over a statically rendered list; state mirrors ?type=&industry= so views can be shared.
- * Options with fewer than 2 projects are hidden. No counts are shown.
+ * /work filters: design service pills + industry (dropdown on desktop, scroll chips on mobile).
+ * Client-side over a statically rendered list; state mirrors ?service=&industry= so views can be shared.
+ * A service pill shows when at least one project has it; an industry needs 2 projects. No counts anywhere.
  */
-export function WorkFilter({ items, types, quoteHref }: { items: WorkItem[]; types: WorkType[]; quoteHref: string }) {
+export function WorkFilter({ items, services, quoteHref }: { items: WorkItem[]; services: WorkService[]; quoteHref: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const reduce = useReducedMotion();
   const [stuck, setStuck] = useState(false);
   const sentinel = useRef<HTMLDivElement>(null);
-  const typeOptions = useMemo(() => types.filter((t) => items.filter((i) => i.types.includes(t.id)).length >= MIN), [items, types]);
+  const typeOptions = useMemo(() => services.filter((t) => items.some((i) => i.services.includes(t.id))), [items, services]);
   const industryOptions = useMemo(() => {
     const names = [...new Set(items.map((i) => i.industry))];
     return names.filter((n) => items.filter((i) => i.industry === n).length >= MIN).sort().map((n) => ({ id: slugify(n), label: n }));
   }, [items]);
 
-  // Filters live in the URL (?type=&industry=). The server snapshot is empty, so the static HTML shows all projects.
+  // Filters live in the URL (?service=&industry=). The server snapshot is empty, so the static HTML shows all projects.
   const search = useSyncExternalStore(subscribe, () => window.location.search, () => "");
   const q = new URLSearchParams(search);
-  const type = typeOptions.some((o) => o.id === q.get("type")) ? q.get("type")! : "all";
+  const type = typeOptions.some((o) => o.id === q.get("service")) ? q.get("service")! : "all";
   const industry = industryOptions.some((o) => o.id === q.get("industry")) ? q.get("industry")! : "all";
 
   const update = (nextType: string, nextIndustry: string) => {
     const next = new URLSearchParams();
-    if (nextType !== "all") next.set("type", nextType);
+    if (nextType !== "all") next.set("service", nextType);
     if (nextIndustry !== "all") next.set("industry", nextIndustry);
     const qs = next.toString();
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
@@ -58,6 +59,14 @@ export function WorkFilter({ items, types, quoteHref }: { items: WorkItem[]; typ
     window.history.replaceState(window.history.state, "", qs ? `${pathname}?${qs}` : pathname);
     window.dispatchEvent(new Event(URL_EVENT));
   };
+
+  // Mobile: keep the active pill in view inside the scrolling row (e.g. when opened from a shared link).
+  const pillRow = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const row = pillRow.current;
+    const el = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (row && el && row.scrollWidth > row.clientWidth) row.scrollTo({ left: el.offsetLeft - 16, behavior: reduce ? "auto" : "smooth" });
+  }, [type, reduce]);
 
   // White background + border only while the bar is stuck under the header.
   useEffect(() => {
@@ -69,15 +78,17 @@ export function WorkFilter({ items, types, quoteHref }: { items: WorkItem[]; typ
   }, []);
 
   const industryLabel = industryOptions.find((o) => o.id === industry)?.label;
-  const visible = items.filter((i) => (type === "all" || i.types.includes(type)) && (industry === "all" || slugify(i.industry) === industry));
+  const service = typeOptions.find((o) => o.id === type);
+  const visible = items.filter((i) => (type === "all" || i.services.includes(type)) && (industry === "all" || slugify(i.industry) === industry));
   const active = type !== "all" || industry !== "all";
 
   return (
     <>
       <div ref={sentinel} aria-hidden="true" />
       <div className={cn("sticky top-[var(--header-h)] z-30 -mx-4 border-b px-4 py-3 transition-colors md:-mx-6 md:px-6", stuck ? "border-silver-300 bg-white" : "border-transparent bg-white")}>
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div role="group" aria-label="Filter by type" className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] lg:mx-0 lg:flex-wrap lg:px-0">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+          {/* Mobile: one scrollable row with fade edges. Desktop: wraps (2 rows at most with the current services). */}
+          <div ref={pillRow} role="group" aria-label="Filter by service" className="-mx-4 flex gap-2 overflow-x-auto px-4 [mask-image:linear-gradient(to_right,transparent,#000_16px,#000_calc(100%-24px),transparent)] [scrollbar-width:none] lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0 lg:[mask-image:none]">
             {[{ id: "all", label: "All" }, ...typeOptions].map((t) => (
               <button key={t.id} type="button" aria-pressed={type === t.id} onClick={() => update(t.id, industry)} className={cn(pill, pillState(type === t.id))}>
                 {t.label}
@@ -88,7 +99,7 @@ export function WorkFilter({ items, types, quoteHref }: { items: WorkItem[]; typ
           {industryOptions.length > 0 && (
             <>
               {/* Desktop: dropdown */}
-              <label className="relative hidden lg:block">
+              <label className="relative hidden shrink-0 lg:block">
                 <span className="sr-only">Filter by industry</span>
                 <select
                   value={industry}
@@ -121,6 +132,11 @@ export function WorkFilter({ items, types, quoteHref }: { items: WorkItem[]; typ
         <p className="sr-only" aria-live="polite">
           {visible.length} projects shown{industryLabel ? ` in ${industryLabel}` : ""}
         </p>
+        {service && (
+          <Link href={service.href} className="mr-5 font-semibold text-blue-600 underline-offset-4 hover:underline">
+            {service.label}: see the service →
+          </Link>
+        )}
         {active && (
           <button type="button" onClick={() => update("all", "all")} className="font-semibold text-blue-600 underline-offset-4 hover:underline">
             Clear filters

@@ -48,8 +48,8 @@ export function BoxStylePage({ box }: { box: BoxView }) {
             <div className="lg:col-span-7">
               <ProductGallery
                 labels={gallerySlots.map((s) => getMedia(s).alt)}
-                main={gallerySlots.map((s) => (
-                  <Media key={s} slot={s} sizes="(min-width: 1024px) 55vw, 100vw" />
+                main={gallerySlots.map((s, i) => (
+                  <Media key={s} slot={s} priority={i === 0} sizes="(min-width: 1024px) 55vw, 100vw" />
                 ))}
                 thumbs={gallerySlots.map((s) => (
                   <Media key={s} slot={s} className="rounded-xl" sizes="120px" />

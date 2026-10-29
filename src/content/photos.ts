@@ -90,4 +90,6 @@ export const SECONDARY = {
   gameBoxes: secondaryPhoto("rigid/game-box-set", "Illustrated board game boxes with a rulebook and cards"),
   techBox: secondaryPhoto("printed/tech-product-box", "White electronics box with a black printed sleeve and product inside"),
   hairLifestyle: secondaryPhoto("design/hair-products-lifestyle", "Two people holding colourful printed hair care cans and tubes"),
+  perfumeBw: secondaryPhoto("design/perfume-bottle-bw", "Black and white photo of a glass perfume bottle with a printed label on a shelf"),
+  giftTag: secondaryPhoto("design/printed-gift-tag-kraft", "Printed swing tag tied with string to a kraft gift box"),
 } satisfies Record<string, Photo>;

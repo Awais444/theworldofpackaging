@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Flag } from "@/components/countries/Flag";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { CookieSettingsLink } from "@/components/providers/ConsentAndAnalytics";
 import { Logo } from "@/components/ui/Logo";
 import { heritageLine, site, whatsappUrl } from "@/config/site";
@@ -115,8 +116,9 @@ export function Footer() {
                 {site.whatsapp && wa && (
                   <ContactItem icon={<MessageCircle aria-hidden="true" className={icon} />}>
                     <a href={wa} target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline">
-                      WhatsApp {site.whatsapp}
+                      WhatsApp <span className="select-all">{site.whatsapp}</span>
                     </a>
+                    <CopyButton value={site.whatsapp} label="WhatsApp number" className="ml-2 h-7 border-white/30 text-white/80 hover:border-white hover:text-white" />
                   </ContactItem>
                 )}
                 <ContactItem icon={<Mail aria-hidden="true" className={icon} />}>

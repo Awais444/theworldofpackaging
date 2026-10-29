@@ -21,7 +21,16 @@ export function organization(): Thing {
     foundingDate: String(site.facts.foundedYear),
     alternateName: site.history.originalName,
     address: { "@type": "PostalAddress", ...(site.address ? { streetAddress: site.address } : {}), addressCountry: site.country },
-    contactPoint: [{ "@type": "ContactPoint", contactType: "sales", email: site.email, ...(site.phone ? { telephone: site.phone } : {}) }],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: `+${site.whatsappLink}`,
+        email: site.email,
+        areaServed: "Worldwide",
+        availableLanguage: ["English", "Urdu"],
+      },
+    ],
     ...(sameAs.length ? { sameAs } : {}),
   };
 }

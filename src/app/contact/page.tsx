@@ -55,7 +55,7 @@ export default function ContactPage() {
             <dl className="space-y-4 rounded-3xl bg-silver-100 p-4 md:p-6">
               {site.whatsapp && wa && (
                 <Row icon={MessageCircle} label="WhatsApp">
-                  <a href={wa} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
+                  <a href={wa} target="_blank" rel="noopener noreferrer" className="select-all hover:text-blue-600">
                     {site.whatsapp}
                   </a>
                   <CopyButton value={site.whatsapp} label="WhatsApp number" />

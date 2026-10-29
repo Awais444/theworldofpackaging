@@ -17,7 +17,7 @@ export function UtilityBar() {
           {site.whatsapp && (
             <li>
               <a href={whatsappUrl() ?? undefined} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:underline">
-                <MessageCircle aria-hidden="true" className="h-3.5 w-3.5" /> WhatsApp {site.whatsapp}
+                <MessageCircle aria-hidden="true" className="h-3.5 w-3.5" /> WhatsApp <span className="select-all">{site.whatsapp}</span>
               </a>
             </li>
           )}

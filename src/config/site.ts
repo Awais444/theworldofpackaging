@@ -37,7 +37,10 @@ export const site = {
   url: "https://theworldofpackaging.com", // TODO confirm
   email: "hello@theworldofpackaging.com", // TODO confirm
   // Contact details stay hidden on the site while null. TODO: real values.
-  whatsapp: null as string | null, // e.g. "+92 300 1234567"
+  /** Display format. */
+  whatsapp: "+92 327 4675886" as string | null,
+  /** wa.me format: digits only, no + or spaces. */
+  whatsappLink: "923274675886",
   phone: null as string | null,
   address: null as string | null, // e.g. "Plot 12, Industrial Area, Lahore, Pakistan"
   hours: null as string | null, // e.g. "Mon–Sat, 9:00–18:00 PKT"
@@ -94,8 +97,7 @@ export function leadTimeLabel(value: string = site.facts.rigidLeadTime) {
 /** WhatsApp click-to-chat URL, or null while no real number is configured. */
 export function whatsappUrl(message?: string): string | null {
   if (!site.whatsapp) return null;
-  const digits = site.whatsapp.replace(/[^\d]/g, "");
-  return `https://wa.me/${digits}${message ? `?text=${encodeURIComponent(message)}` : ""}`;
+  return `https://wa.me/${site.whatsappLink}${message ? `?text=${encodeURIComponent(message)}` : ""}`;
 }
 
 /** Pre-filled WhatsApp message naming the page, e.g. "Hi, I'd like a quote for Magnetic Closure Boxes." */

@@ -11,7 +11,7 @@ import { Award,
   Truck,
   type LucideIcon,
 } from "lucide-react";
-import { site } from "@/config/site";
+import { site, whatsappUrl } from "@/config/site";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { featuredCaseSlugs, publicCaseStudies } from "@/content/caseStudies";
@@ -448,7 +448,15 @@ export function TestimonialsAndFaq() {
               <p className="font-heading text-h4 font-bold">Still have questions?</p>
               <p className="mt-2 text-ink-500">Ask us directly. A real person replies, usually the same day.</p>
               <WhatsAppButton message="Hi, I have a question about packaging" size="sm" label="Ask on WhatsApp" className="mt-5" />
-              <div className="mt-5 flex flex-wrap items-center gap-3">
+              {site.whatsapp && (
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <a href={whatsappUrl("Hi, I have a question about packaging") ?? undefined} target="_blank" rel="noopener noreferrer" className="select-all font-semibold text-blue-600 hover:underline">
+                    {site.whatsapp}
+                  </a>
+                  <CopyButton value={site.whatsapp} label="WhatsApp number" />
+                </div>
+              )}
+              <div className="mt-3 flex flex-wrap items-center gap-3">
                 <a href={`mailto:${site.email}`} className="select-all break-all font-semibold text-blue-600 hover:underline">
                   {site.email}
                 </a>

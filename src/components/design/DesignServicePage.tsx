@@ -200,6 +200,12 @@ export function DesignServicePage({ s }: { s: DesignService }) {
               <p className="text-lead mt-4 text-white/80">
                 Your design goes straight to our own factory, with {site.facts.yearsExperience}+ years in packaging behind it: rigid and printed boxes from {site.facts.rigidMoq} units, with a digital proof before print.
               </p>
+              <p className="mt-4 text-white/80">
+                See <Link href="/how-it-works" className="font-semibold text-white underline underline-offset-4">how a project runs</Link>, our{" "}
+                <Link href="/factory" className="font-semibold text-white underline underline-offset-4">factory</Link>,{" "}
+                <Link href="/pricing" className="font-semibold text-white underline underline-offset-4">design pricing</Link> and the{" "}
+                <Link href="/faq" className="font-semibold text-white underline underline-offset-4">FAQ</Link>.
+              </p>
             </div>
             <Factory aria-hidden="true" className="h-16 w-16 text-orange-500" />
           </div>

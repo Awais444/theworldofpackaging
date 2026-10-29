@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ArrowRight, Gift, Info, ShieldCheck, Store, type LucideIcon } from "lucide-react";
 import Link from "next/link";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!ind) return {};
   return {
     title: `${ind.name} Boxes and Packaging`,
-    description: ind.intro,
+    description: metaDescription(ind.intro),
     alternates: { canonical: `/industries/${ind.slug}` },
   };
 }

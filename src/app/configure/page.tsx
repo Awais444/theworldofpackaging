@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Configurator } from "@/components/configurator/Configurator";
 import { SpecLabel } from "@/components/ui/SpecLabel";
 
 export const metadata: Metadata = {
   title: "Configure a Box: live estimate",
-  description: "Build a rigid, collapsible or printed box step by step and see a live estimate in six currencies.",
+  description: metaDescription("Build a rigid, collapsible or printed box step by step and see a live estimate in six currencies."),
   alternates: { canonical: "/configure" },
 };
 

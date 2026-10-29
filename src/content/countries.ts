@@ -93,11 +93,12 @@ export function isIndexable(c: Country): boolean {
 export const REGIONS: Region[] = ["North America", "Europe", "Middle East", "Asia", "Oceania", "Africa", "Latin America"];
 
 /** Same-region countries for "Nearby countries", Tier 1 first. */
+/** Same-region indexable countries, starting after this one alphabetically (wrapping), so links spread evenly. */
 export function nearbyCountries(c: Country, n = 6): Country[] {
-  return countries
-    .filter((o) => o.slug !== c.slug && o.region === c.region)
-    .sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name))
-    .slice(0, n);
+  const region = countries.filter((o) => o.region === c.region && isIndexable(o)).sort((a, b) => a.name.localeCompare(b.name));
+  const i = region.findIndex((o) => o.slug === c.slug);
+  const ordered = i < 0 ? region : [...region.slice(i + 1), ...region.slice(0, i)];
+  return ordered.filter((o) => o.slug !== c.slug).slice(0, n);
 }
 
 export const countryShippingFaqs: Faq[] = [

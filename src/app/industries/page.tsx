@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { collectionPage } from "@/lib/schema";
+import { metaDescription } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { orderSteps } from "@/content/boxDetails";
 import { industries, type Industry } from "@/content/industries";
@@ -20,7 +22,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Industries: packaging by category",
-  description: "Packaging design and boxes for cosmetics, perfume, jewellery, watches, supplements, food, chocolate, CBD, candles, apparel, electronics and PR kits.",
+  description: metaDescription("Packaging design and boxes for cosmetics, perfume, jewellery, watches, supplements, food, chocolate, CBD, candles, apparel, electronics and PR kits."),
   alternates: { canonical: "/industries" },
 };
 
@@ -47,6 +49,7 @@ const grid = (list: Industry[]) => (
 export default function IndustriesPage() {
   return (
     <>
+      <JsonLd data={collectionPage({ name: "Packaging by industry", description: "Packaging by industry from The World of Packaging.", path: "/industries", items: industries.map((i) => ({ name: i.name, path: `/industries/${i.slug}` })) })} />
       <JsonLd data={faqPage(faqs)} />
       <PageHero
         crumbs={[{ label: "Industries" }]}

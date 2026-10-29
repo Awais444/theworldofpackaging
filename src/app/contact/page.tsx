@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { Clock, Mail, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { promises, site, whatsappUrl } from "@/config/site";
@@ -11,7 +12,7 @@ import { Section } from "@/components/ui/Layout";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Email us or use the contact form. ${site.name} replies ${site.facts.quoteReply}.`,
+  description: metaDescription(`Email us or use the contact form. ${site.name} replies ${site.facts.quoteReply}.`),
   alternates: { canonical: "/contact" },
 };
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import Link from "next/link";
 import { site } from "@/config/site";
 import { rigidExtraFaqs } from "@/content/boxDetails";
@@ -21,7 +22,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Collapsible Rigid Boxes",
-  description: `Rigid boxes with hinged walls that pack flat for international shipping. Same board, wrap and finishes as fixed rigid boxes. MOQ ${site.facts.collapsibleMoq}.`,
+  description: metaDescription(`Rigid boxes with hinged walls that pack flat for international shipping. Same board, wrap and finishes as fixed rigid boxes. MOQ ${site.facts.collapsibleMoq}.`),
   alternates: { canonical: "/collapsible-rigid-boxes" },
 };
 

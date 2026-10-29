@@ -39,7 +39,7 @@ export function BoxStylePage({ box }: { box: BoxView }) {
 
   return (
     <>
-      <JsonLd data={[product({ name: box.name, description: box.summary, path: box.href, category: hub.label }), faqPage(box.faqs)]} />
+      <JsonLd data={[product({ name: box.name, description: box.summary, path: box.href, category: hub.label, image: getMedia(box.slots[0]!).src, caption: getMedia(box.slots[0]!).alt, properties: box.specs }), faqPage(box.faqs)]} />
 
       {/* 1–2. Breadcrumbs and product hero */}
       <section className="bg-white pb-16 pt-8 md:pb-24">
@@ -83,7 +83,12 @@ export function BoxStylePage({ box }: { box: BoxView }) {
                 </Button>
                 <WhatsAppButton topic={box.name.endsWith("Box") ? `${box.name}es` : `${box.name}s`} variant="ghost" />
               </div>
-              <p className="mt-4 text-sm text-ink-500">Free design support included · {site.facts.yearsExperience}+ years in packaging.</p>
+              <p className="mt-4 text-sm text-ink-500">
+                Free design support included · {site.facts.yearsExperience}+ years in packaging. Read about our{" "}
+                <Link href="/materials" className="font-semibold text-blue-600 hover:underline">materials</Link>, the{" "}
+                <Link href="/factory" className="font-semibold text-blue-600 hover:underline">factory</Link> and{" "}
+                <Link href="/how-it-works" className="font-semibold text-blue-600 hover:underline">how it works</Link>.
+              </p>
             </div>
           </div>
           <p className="mt-10 max-w-3xl text-ink-500">{box.description}</p>

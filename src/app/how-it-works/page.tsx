@@ -1,4 +1,6 @@
+import Link from "next/link";
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { site } from "@/config/site";
 import { processSteps, whatWeNeed } from "@/content/process";
@@ -12,11 +14,11 @@ import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { faqPage } from "@/lib/schema";
+import { faqPage, howTo } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "How It Works: Brief to Boxes",
-  description: "Six steps from brief to delivery: brief, design, digital proof, approval, production and shipping by air or sea.",
+  description: metaDescription("Six steps from brief to delivery: brief, design, digital proof, approval, production and shipping by air or sea."),
   alternates: { canonical: "/how-it-works" },
 };
 
@@ -31,7 +33,7 @@ const faqs = [
 export default function HowItWorksPage() {
   return (
     <>
-      <JsonLd data={faqPage(faqs)} />
+      <JsonLd data={[faqPage(faqs), howTo({ name: "How a packaging project works", description: "Six steps from brief to delivery.", path: "/how-it-works", steps: processSteps.map((s) => ({ name: s.title, text: s.body })) })]} />
       <section className="bg-white pb-12 pt-8 md:pb-16">
         <div className="container-x">
           <Breadcrumbs items={[{ label: "How It Works" }]} />
@@ -41,7 +43,7 @@ export default function HowItWorksPage() {
               <h1 className="text-display mt-3">From brief to boxes</h1>
             </div>
             <div className="lg:col-span-5">
-              <p className="text-lead text-ink-500">Six steps, one team. Here is what happens at each stage and what you get from it, from the first message to boxes at your door.</p>
+              <p className="text-lead text-ink-500">Six steps, one <Link href="/team" className="font-semibold text-blue-600 hover:underline">team</Link>. Here is what happens at each stage and what you get from it, from the first message to boxes at your door.</p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button href={quoteHref} size="lg" arrow>
                   Get a Quote

@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "prebuild": "node scripts/gen-blur.mjs",
+    "prebuild": "node scripts/gen-blur.mjs && node scripts/gen-content-dates.mjs",
     "blur": "node scripts/gen-blur.mjs"
   },
   "dependencies": {
@@ -38,6 +38,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.3",
     "playwright-core": "^1.49.1",
+    "schema-dts": "^1.1.5",
     "tailwindcss": "4.3.3",
     "typescript": "~5.9.3"
   }

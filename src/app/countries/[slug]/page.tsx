@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { CheckCircle2, ExternalLink, Factory, Plane, Ship, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = `Packaging design and custom boxes for ${titleName(c)} brands: ${c.languages.join(" and ")} labels, ${c.currency.code} quotes, made in our own factory. Get a free quote.`;
   return {
     title: pageTitle(c),
-    description: description.length > 155 ? `${description.slice(0, 152)}...` : description,
+    description: metaDescription(description),
     alternates: { canonical: countryHref(c.slug) },
     robots: isIndexable(c) ? undefined : { index: false, follow: true },
   };

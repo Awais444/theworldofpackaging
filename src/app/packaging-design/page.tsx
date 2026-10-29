@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { collectionPage } from "@/lib/schema";
+import { metaDescription } from "@/lib/seo";
 import Link from "next/link";
 import { getPost } from "@/content/blog/posts";
 import { hubFaqs, hubGuides, hubSections } from "@/content/designHubCopy";
@@ -19,7 +21,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Packaging Design Services",
-  description: `${site.facts.yearsExperience}+ years in packaging. Design for boxes, labels and pouches, made in our own factory from ${site.facts.rigidMoq} units. Concepts in 48 hours. Free quote.`,
+  description: metaDescription(`${site.facts.yearsExperience}+ years in packaging. Design for boxes, labels and pouches, made in our own factory from ${site.facts.rigidMoq} units. Concepts in 48 hours. Free quote.`),
   alternates: { canonical: "/packaging-design" },
 };
 
@@ -36,6 +38,7 @@ const guides = hubGuides.map(getPost).filter((p): p is NonNullable<ReturnType<ty
 export default function PackagingDesignHub() {
   return (
     <>
+      <JsonLd data={collectionPage({ name: "Packaging design services", description: "Packaging design services from The World of Packaging.", path: "/packaging-design", items: designServices.map((d) => ({ name: d.name, path: `/packaging-design/${d.slug}` })) })} />
       <JsonLd data={faqPage(faqs)} />
       <PageHero
         crumbs={[{ label: "Packaging Design" }]}

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { metaDescription } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { site, siteUrl } from "@/config/site";
 import { Footer } from "@/components/layout/Footer";
@@ -15,9 +16,10 @@ import "@/styles/globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
   title: { default: `${site.name}: ${site.tagline}`, template: `%s | ${site.name}` },
-  description: site.description,
+  description: metaDescription(site.description),
   applicationName: site.name,
-  openGraph: { type: "website", siteName: site.name, locale: "en" },
+  openGraph: { type: "website", siteName: site.name, locale: "en_US" },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

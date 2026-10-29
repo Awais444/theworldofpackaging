@@ -58,6 +58,9 @@ export function BoxHub(p: BoxHubProps) {
             <Button href={quoteHref} size="lg" arrow>
               Get a Quote
             </Button>
+            <Button href="/configure" size="lg" variant="secondary">
+              Build your box
+            </Button>
           </>
         }
       />

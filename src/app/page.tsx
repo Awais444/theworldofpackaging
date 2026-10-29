@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { HomeHero } from "@/components/home/HomeHero";
 import { BlogTeaser, DesignForEveryProduct, ShelfProblems } from "@/components/home/HomeDesign";
 import { ProofBar } from "@/components/home/ProofBar";
@@ -20,8 +21,7 @@ import { Media } from "@/components/media/Media";
 
 export const metadata: Metadata = {
   title: { absolute: "Packaging Design and Custom Boxes | The World of Packaging" },
-  description:
-    `${site.facts.yearsExperience}+ years of packaging design and manufacturing: boxes, labels and pouches for cosmetics, food and coffee, made in our own factory. Free quote.`,
+  description: metaDescription(`${site.facts.yearsExperience}+ years of packaging design and manufacturing: boxes, labels and pouches for cosmetics, food and coffee, made in our own factory. Free quote.`),
   alternates: { canonical: "/" },
 };
 

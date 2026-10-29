@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { site } from "@/config/site";
 import { LegalPage } from "@/components/sections/LegalPage";
 
-export const metadata: Metadata = { title: "Privacy Policy", description: "How The World of Packaging collects, uses and protects personal data from quote requests, forms and this website.", alternates: { canonical: "/privacy" } };
+export const metadata: Metadata = { title: "Privacy Policy", description: metaDescription("How The World of Packaging collects, uses and protects personal data from quote requests, forms and this website."), alternates: { canonical: "/privacy" } };
 
 // TODO: legal review. Template text only.
 export default function PrivacyPage() {

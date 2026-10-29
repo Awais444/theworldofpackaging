@@ -1,4 +1,6 @@
+import Link from "next/link";
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { factStats, heritageLine, site } from "@/config/site";
 import { differences, milestones, story, teamGroups, values } from "@/content/company";
@@ -15,7 +17,7 @@ import { Timeline } from "@/components/ui/Timeline";
 
 export const metadata: Metadata = {
   title: "About Our Studio and Factory",
-  description: `${site.facts.yearsExperience}+ years in packaging: ${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}.`,
+  description: metaDescription(`${site.facts.yearsExperience}+ years in packaging: ${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}.`),
   alternates: { canonical: "/about" },
 };
 
@@ -97,6 +99,12 @@ export default function AboutPage() {
               <p>Today we are {site.name}: a packaging design studio with its own factory, from first sketch to delivered box.</p>
             </div>
             <p className="mt-6 font-heading font-semibold text-ink-900">{heritageLine()}</p>
+            <p className="mt-4 text-ink-500">
+              Meet <Link href="/team" className="font-semibold text-blue-600 hover:underline">the team</Link>, see{" "}
+              <Link href="/services/logo-design" className="font-semibold text-blue-600 hover:underline">logo design</Link> and{" "}
+              <Link href="/pricing" className="font-semibold text-blue-600 hover:underline">design pricing</Link>, or build a box in the{" "}
+              <Link href="/configure" className="font-semibold text-blue-600 hover:underline">configurator</Link>.
+            </p>
           </div>
           <div className="lg:col-span-7">
             <Timeline items={milestones} />

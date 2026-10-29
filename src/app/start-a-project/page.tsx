@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { site } from "@/config/site";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ProjectForm } from "@/components/forms/ProjectForm";
@@ -6,7 +7,7 @@ import { withHighlight } from "@/components/ui/withHighlight";
 
 export const metadata: Metadata = {
   title: "Start a Project",
-  description: `Brief us on branding, packaging design or production. We reply ${site.facts.quoteReply}.`,
+  description: metaDescription(`Brief us on branding, packaging design or production. We reply ${site.facts.quoteReply}.`),
   alternates: { canonical: "/start-a-project" },
 };
 

@@ -240,7 +240,7 @@ export const formatServices: DesignServiceInput[] = [
       "Shelf-ready packaging must match retailer size rules; send us their spec.",
     ],
     recommendedBoxes: ["printed:display", "printed:shipping", "printed:folding-carton"],
-    relatedServices: ["snack-packaging-design", "structural-dieline-design", "makeup-packaging-design"],
+    relatedServices: ["snack-packaging-design", "structural-dieline-design", "makeup-packaging-design", "toy-game-packaging-design"],
     illustration: "display-box",
     faqs: [
       { q: "Can the shipping carton become the display?", a: "Yes. Tear-away and fold-out shippers arrive packed and open into a display." },

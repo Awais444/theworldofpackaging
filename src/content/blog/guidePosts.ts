@@ -130,7 +130,7 @@ export const guidePosts: Post[] = [
     readingMinutes: 9,
     tags: ["Artwork", "Colour"],
     illustration: "press-machine",
-    services: ["box-packaging-design", "luxury-packaging-design"],
+    services: ["box-packaging-design", "luxury-packaging-design", "label-design", "bottle-label-design", "packaging-range-design"],
     faqs: [
       { q: "What is the difference between Pantone and CMYK?", a: "CMYK builds colours from four process inks printed as dots. Pantone spot colours are premixed inks printed as a solid colour, giving more consistent and sometimes brighter results." },
       { q: "Is Pantone more expensive than CMYK?", a: "Often, because each spot colour needs its own ink and plate. The difference matters less on large runs or when a brand colour must be exact." },
@@ -250,7 +250,7 @@ export const guidePosts: Post[] = [
     readingMinutes: 9,
     tags: ["Labels", "Materials"],
     illustration: "label-bottle",
-    services: ["label-design", "beverage-packaging-design"],
+    services: ["label-design", "beverage-packaging-design", "bottle-label-design", "sleeve-wrap-design", "wine-spirits-label-design"],
     faqs: [
       { q: "What is a shrink sleeve label?", a: "A printed film tube that is placed over a container and shrunk with heat to fit its shape, giving full 360° coverage." },
       { q: "What is a pressure-sensitive label?", a: "A label with adhesive on the back, supplied on a backing liner, that sticks to the container when pressed on." },
@@ -330,7 +330,7 @@ export const guidePosts: Post[] = [
     readingMinutes: 10,
     tags: ["Design", "Strategy"],
     illustration: "tuck-end",
-    services: ["packaging-redesign", "box-packaging-design"],
+    services: ["packaging-redesign", "box-packaging-design", "label-design", "cosmetic-packaging-design", "food-packaging-design"],
     faqs: [
       { q: "What is the most common packaging design mistake?", a: "Unclear hierarchy: trying to say everything on the front, so shoppers cannot quickly see what the product is or why to buy it." },
       { q: "How do I know if my packaging is too busy?", a: "View it at shelf distance or as a small thumbnail. If the product name and key message do not stand out within a few seconds, simplify." },
@@ -410,7 +410,7 @@ export const guidePosts: Post[] = [
     readingMinutes: 10,
     tags: ["Private label", "Strategy"],
     illustration: "label-bottle",
-    services: ["private-label-packaging-design", "label-design"],
+    services: ["private-label-packaging-design", "label-design", "supplement-label-design", "cosmetic-packaging-design"],
     faqs: [
       { q: "What is private label packaging?", a: "Packaging that carries your brand on a product made by a third-party manufacturer, often from their existing formulas or products." },
       { q: "Who is responsible for compliance on private label products?", a: "Usually the business whose name is on the label is treated as responsible for the product in the market. Agree responsibilities with your manufacturer and check with your adviser." },
@@ -470,7 +470,7 @@ export const guidePosts: Post[] = [
     readingMinutes: 10,
     tags: ["Ordering", "Strategy"],
     illustration: "press-machine",
-    services: ["box-packaging-design", "packaging-brand-strategy"],
+    services: ["box-packaging-design", "packaging-brand-strategy", "private-label-packaging-design", "retail-packaging-design", "packaging-range-design"],
     faqs: [
       { q: "Should I hire a packaging designer or a general graphic designer?", a: "Packaging needs specialist knowledge of dielines, materials, print processes and regulations. A designer with packaging experience reduces risk." },
       { q: "Should I use the same company for design and printing?", a: "It can reduce handovers and errors, especially if the printer has an in-house design team. Separate suppliers can work well with good coordination." },

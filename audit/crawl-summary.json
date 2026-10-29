@@ -1,0 +1,354 @@
+{
+  "summary": {
+    "crawled": 360,
+    "status200": 357,
+    "indexable": 216,
+    "sitemapUrls": 216,
+    "nonOk": [
+      "/services/packaging-design 301 /packaging-design",
+      "/ship-to/usa 301 /countries/united-states",
+      "/ship-to/uk 301 /countries/united-kingdom"
+    ],
+    "titleOver60": [],
+    "titleMissingBrand": 0,
+    "descMissing": [],
+    "descOutside140to155": 162,
+    "descOver155": [],
+    "h1Not1": [],
+    "canonicalMissing": [],
+    "canonicalRelative": 0,
+    "canonicalMismatch": [],
+    "ogImageMissing": [],
+    "twitterMissing": 0,
+    "breadcrumbMissing": [],
+    "invalidJsonLd": [],
+    "duplicateTitles": [],
+    "duplicateDescriptions": [],
+    "indexableNotInSitemap": [],
+    "sitemapButNoindex": [],
+    "orphansAnyLink": [
+      "/configure"
+    ],
+    "fewerThan3ContextualLinksIn": 27,
+    "thinUnder300Words": [
+      "/configure (127)",
+      "/team (187)",
+      "/faq (222)",
+      "/contact (92)",
+      "/start-a-project (90)",
+      "/get-a-quote (187)",
+      "/privacy (137)",
+      "/terms (123)",
+      "/inserts (264)"
+    ],
+    "noFaq": 20,
+    "noLeadAnswer40to80": 187,
+    "noUpdatedDate": 203,
+    "noAuthor": 170,
+    "redirectsChecked": 50,
+    "redirectChains": [],
+    "redirectBroken": []
+  },
+  "redirects": [
+    {
+      "src": "/branding",
+      "hops": 1,
+      "final": 200,
+      "chain": "/branding 301→/services"
+    },
+    {
+      "src": "/branding/strategy-naming",
+      "hops": 1,
+      "final": 200,
+      "chain": "/branding/strategy-naming 301→/packaging-design/packaging-brand-strategy"
+    },
+    {
+      "src": "/branding/logo-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/branding/logo-design 301→/services/logo-design"
+    },
+    {
+      "src": "/branding/brand-identity",
+      "hops": 1,
+      "final": 200,
+      "chain": "/branding/brand-identity 301→/services/brand-identity"
+    },
+    {
+      "src": "/branding/brand-guidelines",
+      "hops": 1,
+      "final": 200,
+      "chain": "/branding/brand-guidelines 301→/services/brand-identity"
+    },
+    {
+      "src": "/branding/rebranding",
+      "hops": 1,
+      "final": 200,
+      "chain": "/branding/rebranding 301→/packaging-design/packaging-redesign"
+    },
+    {
+      "src": "/packaging-design/packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/packaging-design 301→/packaging-design/box-packaging-design"
+    },
+    {
+      "src": "/packaging-design/rigid-box-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/rigid-box-design 301→/packaging-design/rigid-luxury-box-design"
+    },
+    {
+      "src": "/packaging-design/structural-dieline",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/structural-dieline 301→/packaging-design/structural-dieline-design"
+    },
+    {
+      "src": "/packaging-design/3d-mockups",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/3d-mockups 301→/packaging-design/3d-packaging-mockups"
+    },
+    {
+      "src": "/services/packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/packaging-design 301→/packaging-design"
+    },
+    {
+      "src": "/services/label-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/label-design 301→/packaging-design/label-design"
+    },
+    {
+      "src": "/services/structural-dieline-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/structural-dieline-design 301→/packaging-design/structural-dieline-design"
+    },
+    {
+      "src": "/services/3d-mockups",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/3d-mockups 301→/packaging-design/3d-packaging-mockups"
+    },
+    {
+      "src": "/services/brand-guidelines",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/brand-guidelines 301→/services/brand-identity"
+    },
+    {
+      "src": "/services/rebranding",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/rebranding 301→/packaging-design/packaging-redesign"
+    },
+    {
+      "src": "/services/strategy-naming",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/strategy-naming 301→/packaging-design/packaging-brand-strategy"
+    },
+    {
+      "src": "/services/rigid-box-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/rigid-box-design 301→/packaging-design/rigid-luxury-box-design"
+    },
+    {
+      "src": "/services/structural-dieline",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/structural-dieline 301→/packaging-design/structural-dieline-design"
+    },
+    {
+      "src": "/packaging-design/perfume-packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/perfume-packaging-design 301→/packaging-design/perfume-fragrance-packaging-design"
+    },
+    {
+      "src": "/packaging-design/supplement-packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/supplement-packaging-design 301→/packaging-design/supplement-label-design"
+    },
+    {
+      "src": "/packaging-design/beverage-juice-packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/beverage-juice-packaging-design 301→/packaging-design/beverage-packaging-design"
+    },
+    {
+      "src": "/packaging-design/wine-spirits-beer-label-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/wine-spirits-beer-label-design 301→/packaging-design/wine-spirits-label-design"
+    },
+    {
+      "src": "/packaging-design/pet-product-packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/pet-product-packaging-design 301→/packaging-design/pet-food-packaging-design"
+    },
+    {
+      "src": "/packaging-design/pouch-sachet-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/pouch-sachet-design 301→/packaging-design/pouch-packaging-design"
+    },
+    {
+      "src": "/packaging-design/amazon-ecommerce-packaging-design",
+      "hops": 1,
+      "final": 200,
+      "chain": "/packaging-design/amazon-ecommerce-packaging-design 301→/packaging-design/amazon-packaging-design"
+    },
+    {
+      "src": "/services/amazon-packaging-and-listing-images",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/amazon-packaging-and-listing-images 301→/packaging-design/amazon-packaging-design"
+    },
+    {
+      "src": "/services/product-mockups-for-ecommerce",
+      "hops": 1,
+      "final": 200,
+      "chain": "/services/product-mockups-for-ecommerce 301→/packaging-design/3d-packaging-mockups"
+    },
+    {
+      "src": "/ship-to/usa",
+      "hops": 1,
+      "final": 200,
+      "chain": "/ship-to/usa 301→/countries/united-states"
+    },
+    {
+      "src": "/ship-to/uk",
+      "hops": 1,
+      "final": 200,
+      "chain": "/ship-to/uk 301→/countries/united-kingdom"
+    },
+    {
+      "src": "/ship-to/canada",
+      "hops": 1,
+      "final": 200,
+      "chain": "/ship-to/canada 301→/countries/canada"
+    },
+    {
+      "src": "/ship-to/australia",
+      "hops": 1,
+      "final": 200,
+      "chain": "/ship-to/australia 301→/countries/australia"
+    },
+    {
+      "src": "/ship-to/uae",
+      "hops": 1,
+      "final": 200,
+      "chain": "/ship-to/uae 301→/countries/uae"
+    },
+    {
+      "src": "/ship-to/germany",
+      "hops": 1,
+      "final": 200,
+      "chain": "/ship-to/germany 301→/countries/germany"
+    },
+    {
+      "src": "/usa",
+      "hops": 1,
+      "final": 200,
+      "chain": "/usa 301→/countries/united-states"
+    },
+    {
+      "src": "/uk",
+      "hops": 1,
+      "final": 200,
+      "chain": "/uk 301→/countries/united-kingdom"
+    },
+    {
+      "src": "/uae",
+      "hops": 1,
+      "final": 200,
+      "chain": "/uae 301→/countries/uae"
+    },
+    {
+      "src": "/industries/pr-kits-corporate-gifts",
+      "hops": 1,
+      "final": 200,
+      "chain": "/industries/pr-kits-corporate-gifts 301→/industries/gifts-pr-kits"
+    },
+    {
+      "src": "/studio-and-factory",
+      "hops": 1,
+      "final": 200,
+      "chain": "/studio-and-factory 301→/about"
+    },
+    {
+      "src": "/process",
+      "hops": 1,
+      "final": 200,
+      "chain": "/process 301→/how-it-works"
+    },
+    {
+      "src": "/blog/rigid-vs-printed-boxes",
+      "hops": 1,
+      "final": 200,
+      "chain": "/blog/rigid-vs-printed-boxes 301→/blog/rigid-vs-folding-carton-boxes"
+    },
+    {
+      "src": "/blog/collapsible-rigid-boxes-freight",
+      "hops": 1,
+      "final": 200,
+      "chain": "/blog/collapsible-rigid-boxes-freight 301→/blog/collapsible-rigid-boxes-explained"
+    },
+    {
+      "src": "/blog/print-ready-packaging-checklist",
+      "hops": 1,
+      "final": 200,
+      "chain": "/blog/print-ready-packaging-checklist 301→/blog"
+    },
+    {
+      "src": "/quote",
+      "hops": 1,
+      "final": 200,
+      "chain": "/quote 301→/get-a-quote"
+    },
+    {
+      "src": "/samples",
+      "hops": 1,
+      "final": 200,
+      "chain": "/samples 301→/get-a-quote"
+    },
+    {
+      "src": "/cart",
+      "hops": 1,
+      "final": 200,
+      "chain": "/cart 301→/get-a-quote"
+    },
+    {
+      "src": "/checkout",
+      "hops": 1,
+      "final": 200,
+      "chain": "/checkout 301→/get-a-quote"
+    },
+    {
+      "src": "/favicon.ico",
+      "hops": 1,
+      "final": 200,
+      "chain": "/favicon.ico 301→/icon.svg"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "hops": 1,
+      "final": 200,
+      "chain": "/apple-touch-icon.png 301→/apple-icon"
+    },
+    {
+      "src": "/apple-touch-icon-precomposed.png",
+      "hops": 1,
+      "final": 200,
+      "chain": "/apple-touch-icon-precomposed.png 301→/apple-icon"
+    }
+  ]
+}

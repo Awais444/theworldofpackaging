@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { faqGroups } from "@/content/faqs";
 import { quoteHref } from "@/content/navigation";
 import { PageHero } from "@/components/sections/PageHero";
@@ -12,7 +13,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers on ordering, design, production, shipping and payment for rigid and printed boxes.",
+  description: metaDescription("Answers on ordering, design, production, shipping and payment for rigid and printed boxes."),
   alternates: { canonical: "/faq" },
 };
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { designHref, designServices, getDesignService } from "@/content/designServices";
 import { DesignServicePage } from "@/components/design/DesignServicePage";
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!s) return {};
   return {
     title: s.seo?.title ?? shortTitles[s.slug] ?? s.name,
-    description: s.seo?.description ?? `${s.short} ${s.intro.split(". ")[0]}.`.slice(0, 160),
+    description: metaDescription(s.seo?.description ?? `${s.short} ${s.intro.split(". ")[0]}.`),
     alternates: { canonical: designHref(s.slug) },
   };
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, posts } from "@/content/blog/posts";
@@ -11,7 +12,8 @@ import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { Tag } from "@/components/ui/Tag";
-import { article, faqPage } from "@/lib/schema";
+import { article, faqPage, howTo } from "@/lib/schema";
+import { howToSteps } from "@/content/blog/howToSteps";
 import { boxRefCard, type BoxCard } from "@/lib/boxView";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {};
   return {
     title: post.seoTitle ?? post.title,
-    description: post.description,
+    description: metaDescription(post.description),
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: { type: "article", publishedTime: post.date },
   };
@@ -50,7 +52,8 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <article>
-      <JsonLd data={article({ title: post.title, description: post.description, path: `/blog/${post.slug}`, date: post.date, modified: post.reviewed })} />
+      <JsonLd data={article({ title: post.title, description: post.description, path: `/blog/${post.slug}`, date: post.date, modified: post.reviewed, image: `/blog/${post.slug}/opengraph-image` })} />
+      {howToSteps[post.slug] && <JsonLd data={howTo({ name: howToSteps[post.slug]!.name, description: post.description, path: `/blog/${post.slug}`, steps: howToSteps[post.slug]!.steps })} />}
       {post.faqs && post.faqs.length > 0 && <JsonLd data={faqPage(post.faqs)} />}
       <header className="bg-white pt-8">
         <div className="container-x">

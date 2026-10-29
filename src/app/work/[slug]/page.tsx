@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!study) return {};
   return {
     title: `${study.client} Packaging`,
-    description: study.summary,
+    description: metaDescription(study.summary),
     alternates: { canonical: `/work/${study.slug}` },
     // Sample projects stay out of search until replaced with real work.
     robots: study.placeholder ? { index: false } : undefined,

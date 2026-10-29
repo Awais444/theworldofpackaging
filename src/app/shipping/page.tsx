@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { metaDescription } from "@/lib/seo";
 import { ArrowRight, CheckCircle2, Plane, Ship } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
@@ -19,7 +20,7 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Worldwide Shipping: air and sea",
-  description: `Packaging shipped from ${site.country} to ${site.markets.join(", ")} by air and sea, with export documents prepared.`,
+  description: metaDescription(`Packaging shipped from ${site.country} to ${site.markets.join(", ")} by air and sea, with export documents prepared.`),
   alternates: { canonical: "/shipping" },
 };
 

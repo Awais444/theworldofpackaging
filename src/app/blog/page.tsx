@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { collectionPage } from "@/lib/schema";
+import { metaDescription } from "@/lib/seo";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { posts } from "@/content/blog/posts";
@@ -12,7 +15,7 @@ import { Tag } from "@/components/ui/Tag";
 
 export const metadata: Metadata = {
   title: "Blog: packaging guides",
-  description: "Practical guides on rigid and folding carton boxes, measuring box sizes and collapsible rigid boxes.",
+  description: metaDescription("Practical guides on rigid and folding carton boxes, measuring box sizes and collapsible rigid boxes."),
   alternates: { canonical: "/blog" },
 };
 
@@ -21,6 +24,7 @@ const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short
 export default function BlogPage() {
   return (
     <>
+      <JsonLd data={collectionPage({ name: "Packaging guides", description: "Packaging guides from The World of Packaging.", path: "/blog", items: posts.map((p) => ({ name: p.title, path: `/blog/${p.slug}` })) })} />
       <PageHero
         crumbs={[{ label: "Blog" }]}
         eyebrow="Blog"

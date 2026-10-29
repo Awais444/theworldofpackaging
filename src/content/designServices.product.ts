@@ -18,7 +18,7 @@ export const productServices: DesignServiceInput[] = [
       "Labelling rules differ by market. We lay out the text you supply; the wording comes from you or your regulatory adviser.",
     ],
     recommendedBoxes: ["printed:tuck-end", "rigid:magnetic-closure", "printed:mailer", "rigid:drawer"],
-    relatedServices: ["skincare-packaging-design", "makeup-packaging-design", "label-design"],
+    relatedServices: ["skincare-packaging-design", "makeup-packaging-design", "label-design", "tube-packaging-design"],
     illustration: "tuck-end",
     faqs: [
       { q: "Can you design packaging for a whole cosmetics range?", a: "Yes. We build one system with shared structure and layout, then vary colour or graphics per product so the range reads together on a shelf." },
@@ -41,7 +41,7 @@ export const productServices: DesignServiceInput[] = [
       "Claims such as SPF or clinical results need wording approved by your adviser before print.",
     ],
     recommendedBoxes: ["printed:tuck-end", "rigid:shoulder-neck", "rigid:magnetic-closure"],
-    relatedServices: ["cosmetic-packaging-design", "jar-label-design", "sustainable-packaging-design"],
+    relatedServices: ["cosmetic-packaging-design", "jar-label-design", "sustainable-packaging-design", "tube-packaging-design"],
     illustration: "shoulder-neck",
     faqs: [
       { q: "How do you make skincare packaging look premium without looking expensive to make?", a: "Restraint: one finish used well, such as a soft-touch carton with a single foil detail, usually beats several competing effects." },
@@ -87,7 +87,7 @@ export const productServices: DesignServiceInput[] = [
       "Ingredient and colour additive lists need space; we lay them out from your approved text.",
     ],
     recommendedBoxes: ["printed:sleeve", "printed:tuck-end", "rigid:magnetic-closure", "printed:display"],
-    relatedServices: ["cosmetic-packaging-design", "gift-box-pr-kit-design", "retail-display-design"],
+    relatedServices: ["cosmetic-packaging-design", "gift-box-pr-kit-design", "retail-display-design", "tube-packaging-design"],
     illustration: "sleeve-box",
     faqs: [
       { q: "Can you design influencer PR boxes for a launch?", a: "Yes. We design the box, insert and printed inside message so the unboxing works on camera." },
@@ -133,7 +133,7 @@ export const productServices: DesignServiceInput[] = [
       "Nutrition, allergen and best-before areas follow your market's rules; we lay out the text you supply.",
     ],
     recommendedBoxes: ["printed:folding-carton", "printed:window", "printed:gable", "printed:shipping"],
-    relatedServices: ["snack-packaging-design", "pouch-packaging-design", "label-design"],
+    relatedServices: ["snack-packaging-design", "pouch-packaging-design", "label-design", "pet-food-packaging-design"],
     illustration: "gable-box",
     faqs: [
       { q: "Can you make sure packaging is food safe?", a: "We specify food-contact boards and inks where the pack touches food, and confirm the spec with your quote." },
@@ -156,7 +156,7 @@ export const productServices: DesignServiceInput[] = [
       "Nutrition and allergen information follows your market's format, from your approved data.",
     ],
     recommendedBoxes: ["printed:display", "printed:folding-carton", "printed:shipping"],
-    relatedServices: ["food-packaging-design", "pouch-packaging-design", "retail-display-design"],
+    relatedServices: ["food-packaging-design", "pouch-packaging-design", "retail-display-design", "pet-food-packaging-design"],
     illustration: "display-box",
     faqs: [
       { q: "Do you design flow-wrap bar wrappers?", a: "Yes. We design the artwork to the printer's film template, with seal and cut areas marked." },
@@ -294,7 +294,7 @@ export const productServices: DesignServiceInput[] = [
       "Supplement facts panels and permitted claims depend on your market; wording comes from your adviser.",
     ],
     recommendedBoxes: ["printed:tuck-end", "printed:mailer", "printed:display"],
-    relatedServices: ["pharmaceutical-packaging-design", "bottle-label-design", "pouch-packaging-design"],
+    relatedServices: ["pharmaceutical-packaging-design", "bottle-label-design", "pouch-packaging-design", "private-label-packaging-design"],
     illustration: "label-bottle",
     faqs: [
       { q: "Do you lay out supplement facts panels?", a: "Yes, from the data and claims your regulatory adviser has approved." },
@@ -432,7 +432,7 @@ export const productServices: DesignServiceInput[] = [
       "Many bath products count as cosmetics and need INCI lists; we lay out your approved text.",
     ],
     recommendedBoxes: ["printed:pillow", "printed:sleeve", "printed:window"],
-    relatedServices: ["candle-packaging-design", "sleeve-wrap-design", "sustainable-packaging-design"],
+    relatedServices: ["candle-packaging-design", "sleeve-wrap-design", "sustainable-packaging-design", "household-cleaning-packaging-design"],
     illustration: "pillow-box",
     faqs: [
       { q: "Can soap packaging be plastic-free?", a: "Yes. Paper wraps, sleeves and card boxes avoid plastic completely." },
@@ -547,7 +547,7 @@ export const productServices: DesignServiceInput[] = [
       "Compliance marks (such as CE, FCC, UKCA, WEEE) depend on the product; your adviser confirms them.",
     ],
     recommendedBoxes: ["rigid:lid-and-base", "rigid:magnetic-closure", "printed:sleeve", "printed:shipping"],
-    relatedServices: ["structural-dieline-design", "3d-packaging-mockups", "amazon-packaging-design"],
+    relatedServices: ["structural-dieline-design", "3d-packaging-mockups", "amazon-packaging-design", "toy-game-packaging-design"],
     illustration: "lid-and-base",
     faqs: [
       { q: "Can you design a multi-layer insert?", a: "Yes. Lift-out trays and stacked layers are common for devices with accessories." },
@@ -615,7 +615,7 @@ export const productServices: DesignServiceInput[] = [
       "Fixed launch dates mean we plan design, proofing and production backwards from the send date.",
     ],
     recommendedBoxes: ["rigid:magnetic-closure", "rigid:book-style", "rigid:collapsible", "printed:mailer"],
-    relatedServices: ["subscription-box-design", "luxury-packaging-design", "structural-dieline-design"],
+    relatedServices: ["subscription-box-design", "luxury-packaging-design", "structural-dieline-design", "toy-game-packaging-design"],
     illustration: "magnetic-open",
     faqs: [
       { q: "Can you design PR kits for a fixed launch date?", a: "Yes. We plan design, proof and production backwards from your send date." },

@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
+import { rigidHref } from "@/lib/boxView";
+import { rigidStyles } from "@/content/rigidStyles";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { collectionPage } from "@/lib/schema";
+import { metaDescription } from "@/lib/seo";
 import { site } from "@/config/site";
 import { hubFaqs, rigidTabs } from "@/content/hubs";
 import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxes/BoxHub";
 
 export const metadata: Metadata = {
   title: "Custom Rigid Boxes",
-  description: `Magnetic, lid & base, drawer, book, collapsible, shoulder neck, tube and window rigid boxes. ${site.facts.yearsExperience}+ years, MOQ ${site.facts.rigidMoq}, made in-house, worldwide.`,
+  description: metaDescription(`Magnetic, lid & base, drawer, book, collapsible, shoulder neck, tube and window rigid boxes. ${site.facts.yearsExperience}+ years, MOQ ${site.facts.rigidMoq}, made in-house, worldwide.`),
   alternates: { canonical: "/rigid-boxes" },
 };
 
 export default function RigidHubPage() {
   return (
-    <BoxHub
+    <>
+      <JsonLd data={collectionPage({ name: "Custom rigid boxes", description: "Custom rigid boxes made by The World of Packaging.", path: "/rigid-boxes", items: rigidStyles.map((s) => ({ name: s.name, path: rigidHref(s.slug) })) })} />
+      <BoxHub
       crumb="Rigid Boxes"
       eyebrow="Made in our factory"
       title="Rigid boxes built to be kept"
@@ -31,5 +38,6 @@ export default function RigidHubPage() {
       faqs={hubFaqs}
       cta={{ title: "Not sure which style fits?", highlight: "style", text: "Tell us about your product and we will recommend a box." }}
     />
+    </>
   );
 }

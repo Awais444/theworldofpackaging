@@ -11,3 +11,4 @@ next-env.d.ts
 _incoming/
 _incoming3/
 _incoming4/
+.cache/

@@ -110,7 +110,7 @@ const services = [
     icon: PenTool,
     title: "Packaging Design",
     text: "Structure and artwork designed together, ready for print.",
-    href: "/services/packaging-design",
+    href: "/packaging-design",
     bullets: ["Dielines", "Label design", "3D mockups"],
     slot: "home-service-design",
   },

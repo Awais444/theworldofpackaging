@@ -95,6 +95,22 @@ export const getDesignService = (slug: string) => designServices.find((s) => s.s
 export const designByGroup = (g: DesignGroup) => designServices.filter((s) => s.group === g);
 
 /** Homepage "Packaging design for every product" order. */
+/** The 12 design services on the homepage "Packaging design for every product" grid. */
+export const homeDesignSlugs = [
+  "cosmetic-packaging-design",
+  "skincare-packaging-design",
+  "makeup-packaging-design",
+  "food-packaging-design",
+  "coffee-tea-packaging-design",
+  "chocolate-packaging-design",
+  "supplement-label-design",
+  "cbd-packaging-design",
+  "candle-packaging-design",
+  "bottle-label-design",
+  "pouch-packaging-design",
+  "rigid-luxury-box-design",
+];
+
 export const featuredDesignSlugs = [
   "cosmetic-packaging-design",
   "skincare-packaging-design",

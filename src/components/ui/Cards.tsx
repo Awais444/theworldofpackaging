@@ -11,21 +11,30 @@ export function ServiceCard({
   text,
   href,
   bullets,
+  slot,
 }: {
   icon: LucideIcon;
   title: string;
   text: string;
   href: string;
   bullets?: string[];
+  /** Optional photo slot shown above the text (icon is hidden then). */
+  slot?: string;
 }) {
   return (
     <Link
       href={href}
       className="group flex h-full flex-col rounded-2xl border border-silver-300 bg-white p-7 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-blue-600 hover:shadow-md"
     >
-      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-        <Icon aria-hidden="true" className="h-6 w-6" />
-      </span>
+      {slot ? (
+        <div className="-mx-3 -mt-3 overflow-hidden rounded-xl">
+          <Media slot={slot} card panel="blue" className="rounded-xl transition-transform duration-500 group-hover:scale-[1.04]" sizes="(min-width: 768px) 33vw, 100vw" />
+        </div>
+      ) : (
+        <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+          <Icon aria-hidden="true" className="h-6 w-6" />
+        </span>
+      )}
       <h3 className="text-h4 mt-6">{title}</h3>
       <p className="mt-2 text-ink-500">{text}</p>
       {bullets && (
@@ -113,13 +122,20 @@ export function CaseCard({
 }
 
 /** Industry card: icon, name, three recommended box tags. */
-export function IndustryCard({ href, name, icon: Icon, boxes }: { href: string; name: string; icon: LucideIcon; boxes: string[] }) {
+/** `slot`: optional photo above the name (the icon is hidden then). */
+export function IndustryCard({ href, name, icon: Icon, boxes, slot }: { href: string; name: string; icon: LucideIcon; boxes: string[]; slot?: string }) {
   return (
     <Link
       href={href}
       className="group flex h-full flex-col rounded-2xl border border-silver-300 bg-white p-6 transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-blue-600 hover:shadow-md"
     >
-      <Icon aria-hidden="true" className="h-7 w-7 text-orange-500" />
+      {slot ? (
+        <div className="-mx-2 -mt-2 overflow-hidden rounded-xl">
+          <Media slot={slot} card panel="blue" className="rounded-xl transition-transform duration-500 group-hover:scale-[1.04]" sizes="(min-width: 1024px) 25vw, 50vw" />
+        </div>
+      ) : (
+        <Icon aria-hidden="true" className="h-7 w-7 text-orange-500" />
+      )}
       <h3 className="text-h4 mt-4 group-hover:text-blue-600">{name}</h3>
       <div className="mt-4 flex flex-wrap gap-1.5">
         {boxes.slice(0, 3).map((b) => (

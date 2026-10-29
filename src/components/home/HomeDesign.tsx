@@ -1,7 +1,7 @@
 import { ArrowRight, EyeOff, Package, PackageX, ShieldAlert, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { posts } from "@/content/blog/posts";
-import { featuredDesignSlugs, getDesignService, type DesignService } from "@/content/designServices";
+import { homeDesignSlugs, getDesignService, type DesignService } from "@/content/designServices";
 import { DesignCard } from "@/components/design/DesignCard";
 import { illustrations } from "@/components/illustrations";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -12,7 +12,7 @@ import { Tag } from "@/components/ui/Tag";
 
 /** "Packaging design for every product": 12 service cards directly under the hero. */
 export function DesignForEveryProduct() {
-  const items = featuredDesignSlugs.map(getDesignService).filter((s): s is DesignService => Boolean(s));
+  const items = homeDesignSlugs.map(getDesignService).filter((s): s is DesignService => Boolean(s));
   return (
     <Section>
       <FadeIn>
@@ -30,7 +30,7 @@ export function DesignForEveryProduct() {
       </FadeIn>
       <div className="mt-10 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
         {items.map((s) => (
-          <DesignCard key={s.slug} s={s} />
+          <DesignCard key={s.slug} s={s} slot={`home-design-${s.slug}`} />
         ))}
       </div>
     </Section>

@@ -42,6 +42,13 @@ import { industryIcon } from "@/components/industries/industryIcons";
 import { printedCard, rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
 
+/** Box cards whose main photo already appears higher on the homepage use a gallery photo instead. */
+const HOME_BOX_SLOT: Record<string, string> = {
+  "rigid-magnetic-closure-hero": "rigid-magnetic-closure-gallery-1", // hero shows the main magnetic photo
+  "printed-folding-carton-hero": "printed-folding-carton-gallery-2", // Springwater cover in Featured work
+};
+const homeBox = <T extends { slot: string }>(card: T): T => ({ ...card, slot: HOME_BOX_SLOT[card.slot] ?? card.slot });
+
 export function BoxTypes() {
   const rigid = rigidStyles.slice(0, 8);
   const printed = printedStyles.filter((s) => s.slug !== "window").slice(0, 8);
@@ -73,14 +80,14 @@ export function BoxTypes() {
               id: "rigid",
               label: "Rigid boxes",
               content: grid(
-                rigid.map((s) => <ProductCard key={s.slug} {...rigidCard(s)} />),
+                rigid.map((s) => <ProductCard key={s.slug} {...homeBox(rigidCard(s))} />),
               ),
             },
             {
               id: "printed",
               label: "Printed boxes",
               content: grid(
-                printed.map((s) => <ProductCard key={s.slug} {...printedCard(s)} />),
+                printed.map((s) => <ProductCard key={s.slug} {...homeBox(printedCard(s))} />),
               ),
             },
           ]}
@@ -97,6 +104,7 @@ const services = [
     text: "Logo, colour and type built to work on packaging first.",
     href: "/services/brand-identity",
     bullets: ["Logo design", "Brand guidelines", "Naming"],
+    slot: "home-service-brand",
   },
   {
     icon: PenTool,
@@ -104,6 +112,7 @@ const services = [
     text: "Structure and artwork designed together, ready for print.",
     href: "/services/packaging-design",
     bullets: ["Dielines", "Label design", "3D mockups"],
+    slot: "home-service-design",
   },
   {
     icon: Factory,
@@ -111,6 +120,7 @@ const services = [
     text: "Rigid, collapsible and printed boxes made in our own factory.",
     href: "/rigid-boxes",
     bullets: ["Rigid boxes", "Collapsible rigid", "Printed boxes"],
+    slot: "home-service-boxes",
   },
 ];
 
@@ -351,6 +361,7 @@ export function Industries() {
             name={ind.name}
             icon={industryIcon(ind.slug)}
             boxes={ind.styles.slice(0, 3)}
+            slot={`home-industry-${ind.slug}`}
           />
         ))}
       </div>

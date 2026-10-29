@@ -114,6 +114,7 @@ All 10 are live in `src/content/caseStudies.ts` (placeholder: false). For each, 
 - [ ] Confirm licence (e.g. Unsplash free licence) for all stock photos in public/images. Stock files are listed as `STOCK` in `src/content/photos.ts`: generic category visuals, never shown as our work, never on /work, testimonials or /blog.
   - Batch 1 (images.rar): 22 photos plus 3 extras (serum pump bottle, dropper bottle + carton, gel cleanser tube).
   - Batch 2 (Images 2.rar): 15 main photos (`STOCK`, "Batch 2") and 7 secondary photos (`SECONDARY`).
+  - Batch 3 (portfolio images.rar): 33 main photos (`STOCK`, "Batch 3") and 3 secondary photos. Not used: 25c36eaa and its duplicate 6cf25526 (MISSHA, a well-known retail brand).
 
 ### Third-party brands visible — review before launch
 
@@ -129,6 +130,10 @@ Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, l
 - [ ] cfbee137 perfume bottle (Chloé, famous brand) → `design-perfume-fragrance-packaging-design-6`
 - [ ] 46c18189 printed gift tag (advertises another packaging company, customerbox.ir) → `design-gift-box-pr-kit-design-6`
 - [ ] 9b03e0d8 cream tubes + carton (Huxley): original file needed again; planned for tube packaging and cosmetic packaging galleries
+- [ ] 5c978555 pink cookie box (retail bakery brand) → `design-bakery-confectionery-packaging-design-6`
+- [ ] f1b3bdff row of coconut water cartons (beverage brand) → `design-beverage-packaging-design-6`
+- [ ] 8fa2bed0 pile of sweet wrappers (confectionery brand) → `design-bakery-confectionery-packaging-design-5`
+- [ ] df2d0b72 CBD tinctures and cartons (a real CBD brand is legible) → `design-cbd-packaging-design-4` (main batch, but please review)
 
 - [ ] Real photos for the 189 image slots listed in `MEDIA_SLOTS.md`. Until then every slot shows a brand illustration.
 - [ ] Optional: a 5–8 s muted video loop for the homepage hero (`home-hero` supports `video`)

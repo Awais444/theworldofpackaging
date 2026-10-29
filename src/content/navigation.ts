@@ -24,7 +24,6 @@ export const boxesMenu: NavGroup[] = [
       { label: "Materials", href: "/materials" },
       { label: "Finishes", href: "/finishes" },
       { label: "Inserts", href: "/inserts" },
-      { label: "Samples", href: "/samples" },
       { label: "All Boxes", href: "/boxes" },
     ],
   },
@@ -151,7 +150,6 @@ export const footerNav: NavGroup[] = [
       { label: "Printed boxes", href: "/printed-boxes" },
       { label: "Mailer boxes", href: "/printed-boxes/mailer" },
       { label: "Magnetic boxes", href: "/rigid-boxes/magnetic-closure" },
-      { label: "Samples", href: "/samples" },
     ],
   },
   {

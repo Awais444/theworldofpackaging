@@ -16,15 +16,15 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "How It Works: Brief to Boxes",
-  description: "Six steps from brief to delivery: brief, design, sample, approval, production and shipping by air or sea.",
+  description: "Six steps from brief to delivery: brief, design, digital proof, approval, production and shipping by air or sea.",
   alternates: { canonical: "/how-it-works" },
 };
 
 const faqs = [
   { q: "How long does the whole process take?", a: "It depends on design rounds, finishes and shipping method. We give you a timeline with dates in your quote." }, // TODO typical timelines
   { q: "Can I skip the design step?", a: "Yes. Send print-ready files and we check them and set them up on the dieline for free." },
-  { q: "Is the sample required?", a: "We strongly recommend it for a first order. For reorders of an approved box you can skip it." },
-  { q: "Can I change things after the sample?", a: "Yes. Small changes are normal. We confirm changes in writing before production." },
+  { q: "Do you make physical samples?", a: "No. You approve a digital proof (PDF with dieline, colours and copy) and a 3D mockup. Nothing is printed until you approve, and we share production photos on WhatsApp before dispatch." },
+  { q: "Can I change things after the proof?", a: "Yes. Small changes are normal. We confirm changes in writing before production." },
   { q: "How do I track my order?", a: "We send progress photos during production and tracking details once it ships." },
 ];
 

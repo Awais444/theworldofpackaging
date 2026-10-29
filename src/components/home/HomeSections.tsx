@@ -1,4 +1,4 @@
-import {
+import { Award,
   Factory,
   Gem,
   Globe,
@@ -234,6 +234,11 @@ export function CollapsibleFeature() {
 
 const reasons: Array<{ icon: LucideIcon; title: string; text: string }> = [
   {
+    icon: Award,
+    title: `${site.facts.yearsExperience}+ years in packaging`,
+    text: "Fifteen years of designing, printing and manufacturing boxes for brands at home and abroad.",
+  },
+  {
     icon: Factory,
     title: "Own factory",
     text: "Rigid boxes are made and printed in-house, not outsourced.",
@@ -250,8 +255,8 @@ const reasons: Array<{ icon: LucideIcon; title: string; text: string }> = [
   },
   {
     icon: Package,
-    title: "Sample before production",
-    text: "Approve a physical sample before the full run starts.",
+    title: "Digital proof before print",
+    text: "Approve a PDF proof with dieline, colours and copy, plus a 3D mockup. Nothing is printed until you approve.",
   },
   {
     icon: Sparkles,
@@ -481,7 +486,7 @@ export function FinalCta() {
       <CTABand
         title="Ready to create your packaging?"
         highlight="packaging"
-        text="Packaging design and manufacturing from one team. Sample before production."
+        text="Packaging design and manufacturing from one team. Digital proof before print."
         whatsapp="packaging design and boxes"
         actions={
           <>

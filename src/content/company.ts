@@ -24,11 +24,11 @@ export const machines: { type: string; use: string; placeholder: boolean }[] = [
 export const qcChecklist = [
   "Board thickness and flatness checked on arrival",
   "First sheet colour checked against the approved proof",
-  "Die-cut sample checked against the dieline",
+  "First die-cut sheet checked against the dieline",
   "Wrap register and corner finish inspected",
   "Foil, emboss and spot UV checked for fill and alignment",
   "Insert fit tested with the product or a dummy",
-  "Random samples measured and opened from every batch",
+  "Random boxes measured and opened from every batch",
   "Export cartons checked for count, labels and packing",
 ];
 
@@ -50,7 +50,7 @@ export const story = {
 export const differences = [
   { title: "Design and factory together", text: "Designers check every idea against the board, press and finishes we will use." },
   { title: "Low minimums", text: `Rigid and collapsible rigid boxes from 500 units per design.` },
-  { title: "Sample first", text: "A physical sample before production, so nothing is a surprise." },
+  { title: "Proof first", text: "A digital proof and 3D mockup before print, so nothing is a surprise." },
   { title: "Built for export", text: "Collapsible boxes and export packing cut freight for international brands." },
 ];
 
@@ -70,7 +70,7 @@ export const productionSteps = [
   { title: "Wrap", body: "Trays and lids wrapped by hand in paper, cloth or leatherette." },
   { title: "Corner", body: "Corners taped square for strength." },
   { title: "Insert", body: "EVA, card or pulp inserts cut and fitted." },
-  { title: "QC", body: "Every batch checked against the approved sample." },
+  { title: "QC", body: "Every batch checked against the approved proof." },
   { title: "Pack", body: "Packed in export cartons, assembled or flat." },
 ];
 
@@ -94,12 +94,24 @@ export const teamGroups = [
   },
   {
     name: "Structure and pre-press",
-    summary: "Dielines, white samples and file checks before anything is printed.",
+    summary: "Dielines, 3D mockups and file checks before anything is printed.",
     does: ["Dielines and structural design", "Insert and cavity design", "Pre-press file checks", "Colour proofing"],
   },
   {
     name: "Factory and quality control",
     summary: "Cutting, printing, wrapping, inserts and checks on every batch.",
-    does: ["Rigid box production", "Printing and finishing", "Quality checks against the approved sample", "Export packing and shipping"],
+    does: ["Rigid box production", "Printing and finishing", "Quality checks against the approved proof", "Export packing and shipping"],
   },
+];
+
+/**
+ * About page timeline. TODO: every milestone is a placeholder until you confirm the year and wording.
+ * Do not add dates or events that are not confirmed.
+ */
+export const milestones: import("@/components/ui/Timeline").Milestone[] = [
+  { year: null, title: "Started printing", text: "TODO: when and how the business began.", placeholder: true },
+  { year: null, title: "Opened the factory", text: "TODO: first factory and what it made.", placeholder: true },
+  { year: null, title: "Began rigid box production", text: "TODO: when rigid boxes were added.", placeholder: true },
+  { year: null, title: "First international clients", text: "TODO: first markets served abroad.", placeholder: true },
+  { year: null, title: "Launched the design studio", text: "TODO: when branding and packaging design started.", placeholder: true },
 ];

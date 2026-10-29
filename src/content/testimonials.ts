@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
     placeholder: true,
   },
   {
-    quote: "Placeholder: a client quote about the sample matching the bulk order.",
+    quote: "Placeholder: a client quote about the boxes matching the approved proof.",
     name: "Client name",
     role: "Operations lead, brand name",
     placeholder: true,

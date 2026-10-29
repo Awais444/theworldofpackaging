@@ -66,7 +66,7 @@ export const materialsPage: OptionPageContent = {
   faqs: [
     { q: "What is greyboard?", a: "Dense board made from recycled paper fibre. It does not flex like folding carton, which is what makes a box rigid." },
     { q: "Which greyboard thickness do I need?", a: "2.0 mm suits most gift boxes. Use 1.5 mm for slim, light boxes and 2.5–3.0 mm for heavy products or large formats." },
-    { q: "Can I get material swatches?", a: "Yes. We can send board and wrap swatches with your sample so you choose with the materials in hand." },
+    { q: "How do I choose materials without swatches?", a: "We show boards and wrap papers on 3D mockups and the digital proof, and describe each option in your quote." },
     { q: "Do you offer recycled or FSC-certified materials?", a: "We can source recycled boards and certified papers for many specs. Ask with your quote and we confirm what is available." }, // TODO confirm certifications
     { q: "Is corrugated strong enough to post without an outer box?", a: "E- and B-flute mailers are designed to ship on their own. We size the flute to your product weight." },
   ],
@@ -119,7 +119,7 @@ export const finishesPage: OptionPageContent = {
     { q: "How many finishes can I combine?", a: "Most boxes use two or three. More is possible, but each finish adds a step and some cost." },
     { q: "Which foil colours are available?", a: "Gold, silver, copper, rose gold, holographic and pigment foils in many colours." },
     { q: "Does foil work on kraft paper?", a: "Yes, though fine detail is softer on rough stocks. We advise on minimum line weights during artwork checks." },
-    { q: "Will I see finishes on my sample?", a: "Yes. Samples are made on the production line with your real finishes." },
+    { q: "Will I see finishes before printing?", a: "Yes. Finishes are marked on the digital proof and shown on the 3D mockup." },
     { q: "Does spot UV need a separate file?", a: "Yes, a spot layer in your artwork. Our free design support sets it up if needed." },
   ],
 };
@@ -162,6 +162,6 @@ export const insertsPage: OptionPageContent = {
     { q: "Can inserts be printed?", a: "Cardboard inserts can be printed. Foam and pulp can carry a foil or printed sticker." },
     { q: "Is moulded pulp more expensive?", a: "It needs its own tooling, so it suits larger runs. We compare costs in your quote." },
     { q: "Can one insert hold several products?", a: "Yes. We design multi-cavity inserts for sets and PR kits." },
-    { q: "Will my sample include the insert?", a: "Yes. Samples include the insert so you can check the fit." },
+    { q: "Will the 3D mockup show the insert?", a: "Yes. The mockup and proof include the insert so you can check the layout." },
   ],
 };

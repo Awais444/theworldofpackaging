@@ -156,7 +156,7 @@ export default function DesignSystemPage() {
               steps={[
                 { title: "Brief", body: "Tell us about the product." },
                 { title: "Design", body: "Concepts and a dieline." },
-                { title: "Sample", body: "A physical sample to approve." },
+                { title: "Proof", body: "A digital proof and 3D mockup to approve." },
                 { title: "Produce", body: "Made in our factory." },
               ]}
             />

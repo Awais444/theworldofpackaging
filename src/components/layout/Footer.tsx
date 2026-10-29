@@ -54,7 +54,7 @@ export function Footer() {
         <div className="flex min-w-0 flex-col gap-6 border-b border-white/15 py-10 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
             <h2 className="font-heading text-[24px] font-bold tracking-[-0.02em] md:text-[28px]">Ready to start your packaging?</h2>
-            <p className="mt-2 text-white/[.72]">Free design check and a physical sample before production.</p>
+            <p className="mt-2 text-white/[.72]">Free design check and a digital proof before print.</p>
           </div>
           <div className="flex w-full min-w-0 flex-col gap-3 sm:w-auto sm:flex-row">
             <Link href={quoteHref} className={`${btn} bg-orange-700 text-white hover:bg-orange-800`}>
@@ -162,7 +162,7 @@ export function Footer() {
               All 190+ countries <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
             </Link>
           </div>
-          <p className="pt-2 text-[13px] text-white/60">MOQ {site.facts.rigidMoq} · Own factory · Free design support · Ships to 190+ countries</p>
+          <p className="pt-2 text-[13px] text-white/60">{site.facts.yearsExperience}+ years in packaging · MOQ {site.facts.rigidMoq} · Own factory · Free design support · Ships to 190+ countries</p>
         </div>
 
         {/* Bottom bar */}

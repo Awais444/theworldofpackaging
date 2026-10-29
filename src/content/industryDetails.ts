@@ -20,7 +20,7 @@ export const industryFinishes: Record<string, string[]> = {
 /** Shared questions so every industry page has five FAQs. */
 export const industrySharedFaqs: Faq[] = [
   { q: "What is the minimum order?", a: `${site.facts.rigidMoq} boxes per design for rigid and collapsible rigid boxes. Printed box minimums are confirmed with your quote.` },
-  { q: "Can I get a sample first?", a: "Yes. We make a physical sample with your materials and finishes. The fee is credited to your bulk order." },
+  { q: "How do I approve the design before printing?", a: "You get a digital proof and a 3D mockup with your materials and finishes. Nothing is printed until you approve." },
   { q: "Do you add the regulatory text for my market?", a: "We lay out the text you supply on the box. The wording itself must come from you or your compliance adviser." },
   { q: "Do you ship to my country?", a: "Yes, by air or sea to the USA, UK, Canada, Australia, the UAE, the EU and more." },
 ];

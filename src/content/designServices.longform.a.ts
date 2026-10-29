@@ -35,7 +35,7 @@ export const longformA: Record<string, LongForm> = {
         h2: "Working with a cosmetic packaging design agency, step by step",
         paragraphs: [
           "You send the product, its sizes, the market and a few references. We reply with questions and a fixed quote, then present first concepts on realistic 3D mockups, usually within 48 hours of an agreed brief. One direction is developed across every panel and variant, and final artwork is built on the real dieline with all finish layers separated.",
-          "Ingredient lists, claims and warnings take space, so we plan the back and side panels early rather than squeezing them in at the end. The wording itself comes from you or your regulatory adviser; we lay it out clearly and check legibility at actual size. When the artwork is approved we make a physical sample, and production can follow in our factory from 500 units.",
+          "Ingredient lists, claims and warnings take space, so we plan the back and side panels early rather than squeezing them in at the end. The wording itself comes from you or your regulatory adviser; we lay it out clearly and check legibility at actual size. When the digital proof is approved, production can follow in our factory from 500 units.",
         ],
       },
     ],
@@ -122,22 +122,22 @@ export const longformA: Record<string, LongForm> = {
         h2: "Palettes, kits and PR boxes",
         paragraphs: [
           "Palettes and kits need structure as well as graphics. We plan the insert, the opening sequence and the way the lid sits when open, then design the artwork around that. A magnetic rigid box with a fitted insert makes a PR kit feel like an event; a printed mailer with a simple card insert keeps a subscription box affordable.",
-          "Because we make these boxes in our own factory, we can sample the structure early, check that products sit snugly and adjust the insert before artwork is final. That avoids the common problem of a beautiful kit box where the products rattle or the lid will not close.",
+          "Because we make these boxes in our own factory, we size the structure and insert from your product dimensions and check them on a 3D mockup before artwork is final. That avoids the common problem of a beautiful kit box where the products rattle or the lid will not close.",
         ],
       },
       {
         h2: "From concept to finished makeup boxes",
         paragraphs: [
           "The process is simple. You send products, quantities and references; we send questions and a fixed quote. First concepts arrive on 3D mockups, usually within 48 hours of the brief, and one direction is developed across every SKU. Artwork is built on the real dieline with foil, glitter varnish or spot UV on separate layers.",
-          "Ingredient and warning text is supplied by you or your regulatory adviser, and we keep the space it needs on the back or base. After approval we make a physical sample, then produce rigid and printed boxes from 500 units, or hand over print-ready files if you already have a printer.",
+          "Ingredient and warning text is supplied by you or your regulatory adviser, and we keep the space it needs on the back or base. After you approve the digital proof, we produce rigid and printed boxes from 500 units, or hand over print-ready files if you already have a printer.",
         ],
       },
     ],
     faqs: [
       { q: "What makes good makeup packaging?", a: "One memorable element used consistently, a clear shade system, and a structure that looks good open, closed and on camera." },
       { q: "Can you design makeup packaging for a full shade range?", a: "Yes. We fix layout and structure, then vary the shade colour, with names and numbers in the same position on every pack." },
-      { q: "Do you design PR kits and influencer boxes?", a: "Yes. We design the box, the insert and the opening sequence together, and sample the structure before artwork is final." },
-      { q: "Can makeup packaging use glitter or holographic effects?", a: "Yes, with care. We set up special effects on separate layers and check them on a physical sample before production." },
+      { q: "Do you design PR kits and influencer boxes?", a: "Yes. We design the box, the insert and the opening sequence together, and check the structure on a 3D mockup before artwork is final." },
+      { q: "Can makeup packaging use glitter or holographic effects?", a: "Yes, with care. We set up special effects on separate layers and show them on the digital proof before print." },
       { q: "Do you design lipstick and compact components?", a: "We supply artwork for components to your supplier's templates and design the matching cartons and gift boxes." },
     ],
     guides: ["box-finishes-explained", "eva-vs-card-inserts", "packaging-cost-guide"],
@@ -208,7 +208,7 @@ export const longformA: Record<string, LongForm> = {
       {
         h2: "Rigid perfume boxes and luxury finishes",
         paragraphs: [
-          "Most fine fragrances sit in rigid boxes: lid and base, magnetic closure, drawer or shoulder-neck. These structures feel solid and protect the glass. We make them in our own factory with greyboard from 1.5 to 3 mm and wrap papers chosen for the scent's character, so you can see and feel samples before you decide.",
+          "Most fine fragrances sit in rigid boxes: lid and base, magnetic closure, drawer or shoulder-neck. These structures feel solid and protect the glass. We make them in our own factory with greyboard from 1.5 to 3 mm and wrap papers chosen for the scent's character, and shown on a 3D mockup before you decide.",
           "Finishes do a lot of the work in fragrance. Foil stamping, embossing, debossing, soft-touch laminate and textured papers all change how a box is perceived. We recommend one or two finishes rather than everything at once, and we set them up on the artwork exactly as our machines need them.",
         ],
       },
@@ -216,14 +216,14 @@ export const longformA: Record<string, LongForm> = {
         h2: "Inserts that protect the bottle",
         paragraphs: [
           "Glass needs protection, and a loose bottle cheapens the experience. We design inserts in EVA foam, card or velvet-flocked board, cut to the bottle's exact profile, so it sits upright and does not move. For discovery sets with several vials, the insert becomes part of the presentation.",
-          "Because the insert and the box are made in the same factory, we sample them together and test the fit with your real bottles. That avoids the common problem of an insert that looks perfect in a render but holds the bottle at an angle in real life.",
+          "Because the insert and the box are made in the same factory, we size them together from your bottle dimensions and check the fit on a 3D mockup. That avoids the common problem of an insert that looks perfect in a render but holds the bottle at an angle in real life.",
         ],
       },
       {
         h2: "From perfume packaging brief to production",
         paragraphs: [
           "You share the scent story, bottle dimensions or samples, quantities and target markets. We send questions and a fixed quote, then present concepts on 3D mockups, usually within 48 hours of an agreed brief. The chosen route is developed into artwork for the box, the insert and any gift set or travel size.",
-          "Mandatory text such as ingredient lists, volume and warnings is supplied by you or your regulatory adviser, and we place it so it is clear without spoiling the front. A physical sample follows, and production in our factory starts from 500 units.",
+          "Mandatory text such as ingredient lists, volume and warnings is supplied by you or your regulatory adviser, and we place it so it is clear without spoiling the front. A digital proof follows, and production in our factory starts from 500 units.",
         ],
       },
     ],
@@ -309,7 +309,7 @@ export const longformA: Record<string, LongForm> = {
       {
         h2: "Luxury food packaging and gift boxes",
         paragraphs: [
-          "Luxury food packaging is where structure matters most. Chocolates, teas, biscuits and hampers often sell as gifts, and a rigid box with a fitted insert, a ribbon pull or a magnetic closure makes the product feel worth the price. We design and make these boxes ourselves, so you can test samples with real products.",
+          "Luxury food packaging is where structure matters most. Chocolates, teas, biscuits and hampers often sell as gifts, and a rigid box with a fitted insert, a ribbon pull or a magnetic closure makes the product feel worth the price. We design and make these boxes ourselves, so structure and insert are sized to your real products.",
           "For seasonal ranges we can design sleeves and limited-edition graphics that sit over your standard packaging. This keeps costs down while giving retailers and customers something new each season.",
         ],
       },
@@ -410,7 +410,7 @@ export const longformA: Record<string, LongForm> = {
       {
         h2: "Gift boxes and presentation for spirits and wine",
         paragraphs: [
-          "Premium spirits and wine often sell in a gift box or tube. We design and make rigid presentation boxes, lid-and-base boxes, magnetic boxes and tubes in our own factory, with inserts cut to hold your bottle securely. Samples are tested with your real bottles before production.",
+          "Premium spirits and wine often sell in a gift box or tube. We design and make rigid presentation boxes, lid-and-base boxes, magnetic boxes and tubes in our own factory, with inserts cut to hold your bottle securely. Inserts are cut to your bottle dimensions and shown on a 3D mockup before production.",
           "The process starts with your bottle, range and markets. We reply with questions and a fixed quote, present concepts on 3D mockups, usually within 48 hours of an agreed brief, and deliver label files for your printer plus gift boxes from 500 units.",
         ],
       },

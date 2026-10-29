@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
 import { BlogTeaser, DesignForEveryProduct, ShelfProblems } from "@/components/home/HomeDesign";
 import { ProofBar } from "@/components/home/ProofBar";
-import { proofItems } from "@/config/site";
+import { proofItems, site } from "@/config/site";
 import {
   BoxTypes,
   CollapsibleFeature,
@@ -21,7 +21,7 @@ import { Media } from "@/components/media/Media";
 export const metadata: Metadata = {
   title: { absolute: "Packaging Design and Custom Boxes | The World of Packaging" },
   description:
-    "Packaging design for cosmetics, food, coffee, supplements and labels, printed and made in our own factory. First concepts in 48 hours. Get a free quote.",
+    `${site.facts.yearsExperience}+ years of packaging design and manufacturing: boxes, labels and pouches for cosmetics, food and coffee, made in our own factory. Free quote.`,
   alternates: { canonical: "/" },
 };
 

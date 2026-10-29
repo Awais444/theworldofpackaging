@@ -53,7 +53,7 @@ export const industries: Industry[] = [
     services: ["rigid-box-design", "brand-identity", "3d-mockups"],
     compliance: COMPLIANCE_NOTE,
     illustration: "shoulder-neck",
-    faqs: [{ q: "Can you match an insert to my bottle?", a: "Yes, from a physical sample or a technical drawing of the bottle." }],
+    faqs: [{ q: "Can you match an insert to my bottle?", a: "Yes, from your bottle or a technical drawing of it." }],
   },
   {
     slug: "jewelry",
@@ -165,7 +165,7 @@ export const industries: Industry[] = [
     services: ["packaging-design", "rigid-box-design"],
     compliance: COMPLIANCE_NOTE,
     illustration: "tube",
-    faqs: [{ q: "Are tubes suitable for heavy jars?", a: "With the right board and an insert, yes. We test the fit on a sample." }],
+    faqs: [{ q: "Are tubes suitable for heavy jars?", a: "With the right board and an insert, yes. We check the fit on a 3D mockup." }],
   },
   {
     slug: "apparel",

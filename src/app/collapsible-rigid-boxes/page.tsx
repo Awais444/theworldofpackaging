@@ -60,9 +60,6 @@ export default function CollapsiblePage() {
             <Button href={`${quoteHref}?style=collapsible`} size="lg" arrow>
               Get a Quote
             </Button>
-            <Button href="/samples?style=collapsible" size="lg" variant="secondary">
-              Request a Sample
-            </Button>
           </>
         }
       />

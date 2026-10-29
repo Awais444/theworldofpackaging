@@ -32,8 +32,8 @@ export const designTiers: DesignTier[] = [
   {
     id: "premium",
     name: "Premium",
-    summary: "Structure and graphics designed together, with a sample.",
-    includes: ["3 concepts", "Custom structure and dieline", "Unlimited small revisions", "3D mockups", "Physical sample"],
+    summary: "Structure and graphics designed together, with a digital proof.",
+    includes: ["3 concepts", "Custom structure and dieline", "Unlimited small revisions", "3D mockups", "Digital proof"],
     priceFrom: null, // TODO
   },
 ];

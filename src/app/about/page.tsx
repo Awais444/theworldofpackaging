@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CheckCircle2 } from "lucide-react";
 import { factStats, site } from "@/config/site";
-import { differences, story, teamGroups, values } from "@/content/company";
+import { differences, milestones, story, teamGroups, values } from "@/content/company";
 import { quoteHref } from "@/content/navigation";
 import { Media } from "@/components/media/Media";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -11,10 +11,11 @@ import { StatCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Timeline } from "@/components/ui/Timeline";
 
 export const metadata: Metadata = {
   title: "About Our Studio and Factory",
-  description: `${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}, for brands worldwide.`,
+  description: `${site.facts.yearsExperience}+ years in packaging: ${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}.`,
   alternates: { canonical: "/about" },
 };
 
@@ -78,6 +79,18 @@ export default function AboutPage() {
           {factStats().map((n) => (
             <StatCard key={n.label} value={n.value} label={n.label} />
           ))}
+        </div>
+      </Section>
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeader eyebrow={`Since ${site.facts.foundedYear}`} title={`${site.facts.yearsExperience}+ years in packaging`} highlight="packaging" />
+            <p className="text-lead mt-5 text-ink-500">Fifteen years of designing, printing and manufacturing boxes for brands at home and abroad.</p>
+          </div>
+          <div className="lg:col-span-7">
+            <Timeline items={milestones} />
+          </div>
         </div>
       </Section>
 

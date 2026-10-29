@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 import { CheckCircle2, Gift, ShieldCheck, Sparkles, Wrench, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { designHref } from "@/content/designServices";
@@ -80,12 +81,9 @@ export function BoxStylePage({ box }: { box: BoxView }) {
                 <Button href={quote} size="lg" arrow>
                   Get a Quote
                 </Button>
-                <Button href={`/samples?style=${box.slug}`} size="lg" variant="secondary">
-                  Request Sample
-                </Button>
                 <WhatsAppButton topic={box.name.endsWith("Box") ? `${box.name}es` : `${box.name}s`} variant="ghost" />
               </div>
-              <p className="mt-4 text-sm text-ink-500">Free design support included.</p>
+              <p className="mt-4 text-sm text-ink-500">Free design support included · {site.facts.yearsExperience}+ years in packaging.</p>
             </div>
           </div>
           <p className="mt-10 max-w-3xl text-ink-500">{box.description}</p>
@@ -248,9 +246,6 @@ export function BoxStylePage({ box }: { box: BoxView }) {
             <>
               <Button href={quote} variant="accent" size="lg" arrow>
                 Get a Quote
-              </Button>
-              <Button href={`/samples?style=${box.slug}`} variant="white" size="lg">
-                Request Sample
               </Button>
             </>
           }

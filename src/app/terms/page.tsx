@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { LegalPage } from "@/components/sections/LegalPage";
 
-export const metadata: Metadata = { title: "Terms", description: "The terms that apply to quotes, design work, samples, production and delivery from The World of Packaging.", alternates: { canonical: "/terms" } };
+export const metadata: Metadata = { title: "Terms", description: "The terms that apply to quotes, design work, proofs, production and delivery from The World of Packaging.", alternates: { canonical: "/terms" } };
 
 // TODO: legal review. Template text only.
 export default function TermsPage() {
@@ -11,8 +11,8 @@ export default function TermsPage() {
       <p>These terms cover use of this website and orders placed with {site.name}. Each project is also governed by its written quote.</p>
       <h2>Quotes and estimates</h2>
       <p>Configurator figures are estimates. Prices are confirmed only in a written quote.</p>
-      <h2>Samples</h2>
-      <p>Sample fees are credited to a bulk order placed on the same specification, as stated in your quote.</p>
+      <h2>Proofs and approval</h2>
+      <p>We do not make physical samples. Production starts only after you approve the digital proof and 3D mockup in writing.</p>
       <h2>Artwork and approval</h2>
       <p>You are responsible for approving proofs, text and regulatory content. Production starts after written approval.</p>
       <h2>Intellectual property</h2>

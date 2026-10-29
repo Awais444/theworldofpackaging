@@ -33,7 +33,7 @@ export const boxesTabs = [
 export const hubFaqs: Faq[] = [
   { q: "What is the difference between rigid and printed boxes?", a: "Rigid boxes are made from thick greyboard wrapped in paper and do not fold. Printed boxes are folded from paperboard or corrugated and ship flat." },
   { q: "What is the minimum order?", a: `${site.facts.rigidMoq} boxes per design for rigid and collapsible rigid boxes. Printed box minimums depend on the style and are confirmed with your quote.` },
-  { q: "Can I get a sample first?", a: "Yes. We make a physical sample before production, and the sample fee is credited to your bulk order." },
+  { q: "How do I approve the design before printing?", a: "You get a digital proof and a 3D mockup. Nothing is printed until you approve, and we share production photos before dispatch." },
   { q: "Do you design the artwork?", a: "Free design support comes with every order. We also offer full packaging design if you need it." },
   { q: "Do you ship worldwide?", a: "Yes, by air or sea to the USA, UK, Canada, Australia, UAE, the EU and more." },
 ];

@@ -335,7 +335,7 @@ export const tier1Countries: Country[] = [
       { q: "Is Arabic required on packaging in Saudi Arabia?", a: "Yes for most products. Arabic can appear alone or with another language. We lay out Arabic-first, bilingual packaging." },
       { q: "Do I need SFDA registration?", a: "Many food, cosmetic and health products need SFDA registration or notification. Your adviser or local agent confirms what applies." },
       { q: "Do you design coffee and dates packaging?", a: "Yes. We design coffee bags, date boxes and gift sets, and make rigid boxes with dividers and inserts." },
-      { q: "Can packaging be ready for Ramadan?", a: "Plan several months ahead. We confirm dates for samples, production and shipping in your quote." },
+      { q: "Can packaging be ready for Ramadan?", a: "Plan several months ahead. We confirm dates for proofs, production and shipping in your quote." },
       { q: "Who handles customs clearance?", a: "Your local importer or clearing agent handles customs and any conformity documents." },
     ],
     guideSlugs: ["luxury-packaging-what-makes-premium-work", "packaging-for-international-markets", "colour-psychology-in-packaging"],
@@ -1085,7 +1085,7 @@ export const tier1Countries: Country[] = [
       { slug: "islamabad", name: "Islamabad", note: "The capital, with corporate gifting and premium retail brands." },
     ],
     faqs: [
-      { q: "Can I see samples before ordering?", a: "Yes. We make a physical sample of your box before production, and can send material swatches." },
+      { q: "How do I approve the design before printing?", a: "You get a digital proof and a 3D mockup of your box. Nothing is printed until you approve, and we share production photos before dispatch." },
       { q: "Do you deliver across Pakistan?", a: "Yes. We deliver to cities across Pakistan; delivery details are confirmed in your quote." },
       { q: "Do you make Eid and wedding gift boxes?", a: "Yes. We design and make rigid gift boxes, mithai boxes and printed boxes for festive seasons." },
       { q: "Can you add Urdu to packaging?", a: "Yes. We lay out Urdu, English and Arabic as needed." },

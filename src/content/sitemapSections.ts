@@ -23,7 +23,7 @@ const entry = (path: string, priority = 0.6, changeFrequency: "weekly" | "monthl
 const sections: Record<Id, () => MetadataRoute.Sitemap> = {
   core: () => [
     entry("/", 1, "weekly"),
-    ...["/packages", "/pricing", "/configure", "/samples", "/about", "/team", "/factory", "/how-it-works", "/shipping", "/faq", "/contact", "/start-a-project", "/get-a-quote"].map((p) => entry(p, 0.8)),
+    ...["/packages", "/pricing", "/configure", "/about", "/team", "/factory", "/how-it-works", "/shipping", "/faq", "/contact", "/start-a-project", "/get-a-quote"].map((p) => entry(p, 0.8)),
     ...["/privacy", "/terms"].map((p) => entry(p, 0.2, "yearly")),
   ],
   manufacturing: () => [

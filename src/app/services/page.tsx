@@ -105,7 +105,7 @@ export default function ServicesHubPage() {
               { title: "Brief", body: "A call or form about your product, audience and goals." },
               { title: "Concepts", body: "Two or three directions shown on real packaging mockups." },
               { title: "Refine", body: "We develop one direction and prepare print-ready files." },
-              { title: "Produce", body: "Sample and production in our own factory, if you want it." },
+              { title: "Produce", body: "Digital proof, then production in our own factory, if you want it." },
             ]}
           />
         </div>

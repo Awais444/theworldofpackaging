@@ -167,7 +167,7 @@ export const longformC: Record<string, LongForm> = {
       {
         h2: "Displays and point of sale",
         paragraphs: [
-          "Counter displays and floor units can lift sales for new or impulse products. We design displays that match your packaging, hold the right number of units and assemble easily in store. Because we make printed boxes and displays in our own factory, we can sample them with your products.",
+          "Counter displays and floor units can lift sales for new or impulse products. We design displays that match your packaging, hold the right number of units and assemble easily in store. Because we make printed boxes and displays in our own factory, we can size them to your products.",
           "For launches we can design a complete retail kit: retail cartons, shelf-ready cases, a counter display and a shipping carton, all using one design system.",
         ],
       },
@@ -175,7 +175,7 @@ export const longformC: Record<string, LongForm> = {
         h2: "From retail brief to production",
         paragraphs: [
           "You share your products, target retailers, competitors and any retailer guidelines. We reply with questions and a fixed quote, then present concepts in shelf mockups, usually within 48 hours of an agreed brief.",
-          "After approval we make a physical sample and produce cartons, cases and displays in our factory from 500 units, with worldwide shipping.",
+          "After you approve the digital proof, we produce cartons, cases and displays in our factory from 500 units, with worldwide shipping.",
         ],
       },
     ],
@@ -208,7 +208,7 @@ export const longformC: Record<string, LongForm> = {
         h2: "Mailer box design for e-commerce",
         paragraphs: [
           "Mailer box design balances protection, cost and impact. Corrugated mailers are strong and affordable, and printing on the inside often gives more impact than complex finishes outside. We design mailers sized for your product to reduce void fill and shipping cost.",
-          "Because we make mailers in our own factory, we can test the fit with your real products and adjust the insert before production. You approve a physical sample of the full sequence.",
+          "Because we make mailers in our own factory, we can test the fit with your real products and adjust the insert before production. You approve the full sequence on a 3D mockup and digital proof.",
         ],
       },
       {
@@ -222,7 +222,7 @@ export const longformC: Record<string, LongForm> = {
         h2: "From brief to finished unboxing packaging",
         paragraphs: [
           "You share your products, order profile, brand and references. We reply with questions and a fixed quote, then present concepts on 3D mockups, usually within 48 hours of an agreed brief.",
-          "After approval we sample the full unboxing sequence and produce mailers and gift boxes from 500 units, with shipping worldwide by air or sea.",
+          "After approval we produce mailers and gift boxes from 500 units, with shipping worldwide by air or sea.",
         ],
       },
     ],
@@ -231,7 +231,7 @@ export const longformC: Record<string, LongForm> = {
       { q: "What makes a good mailer box design?", a: "A strong, correctly sized box that protects the product, with impact usually coming from inside printing and a fitted insert." },
       { q: "Can you print inside mailer boxes?", a: "Yes. Inside printing is one of the most effective ways to improve an unboxing." },
       { q: "Do you make rigid gift boxes for unboxing?", a: "Yes. We make rigid gift boxes, including collapsible rigid boxes, from 500 units." },
-      { q: "Can I test the unboxing before production?", a: "Yes. We make a physical sample of the full sequence with your products." },
+      { q: "Can I see the unboxing before production?", a: "Yes. We show the full sequence on a 3D mockup and digital proof before print, and share production photos before dispatch." },
     ],
     guides: ["eva-vs-card-inserts", "collapsible-rigid-boxes-explained", "how-to-measure-box-size"],
   },

@@ -3,7 +3,7 @@ import { abs } from "@/lib/schema";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/cart", "/checkout", "/design-system", "/api/"] }],
+    rules: [{ userAgent: "*", allow: "/", disallow: ["/design-system", "/api/"] }],
     sitemap: abs("/sitemap.xml"),
   };
 }

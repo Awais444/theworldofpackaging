@@ -42,8 +42,8 @@ export const rigidCommonFaqs: Faq[] = [
     a: `${site.facts.rigidMoq} boxes per design. Several sizes in one order can be discussed, but each size needs its own tooling.`,
   },
   {
-    q: "Can I get a sample before the full run?",
-    a: "Yes. We make a sample on the production line with your board, wrap and finishes. The sample fee is credited to your bulk order.",
+    q: "How do I approve the design before printing?",
+    a: "You get a digital proof (PDF with dieline, colours and copy) and a 3D mockup with your board, wrap and finishes. Nothing is printed until you approve.",
   },
   {
     q: "Do you design the artwork too?",

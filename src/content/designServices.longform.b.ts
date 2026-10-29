@@ -209,28 +209,28 @@ export const longformB: Record<string, LongForm> = {
         h2: "Premium packaging design with structure in mind",
         paragraphs: [
           "Premium packaging design depends on structure. Magnetic closure boxes, lid and base, drawer boxes, book-style boxes and shoulder-neck boxes all create a different opening experience. We recommend the structure that suits your product and how it will be presented, then design the wrap and insert to match.",
-          "Because we make rigid boxes in our own factory, we can sample structures quickly and adjust them. You can hold a white sample before artwork is final, which removes most of the guesswork from luxury projects.",
+          "Because we make rigid boxes in our own factory, we can adjust structures quickly. You see the structure on a 3D mockup before artwork is final, which removes most of the guesswork from luxury projects.",
         ],
       },
       {
         h2: "A luxury packaging design agency that controls production",
         paragraphs: [
-          "Many luxury packaging design agencies hand files to a separate manufacturer and hope the finish matches the render. We design and produce in the same place. Foil colours, emboss depths, paper choices and colour targets are checked on our own machines, and you approve a physical sample before production.",
-          "This matters most for small details: a thin foil line that fills in, a deboss that cracks a coated paper, or a colour that shifts on a textured stock. We catch these at sample stage, not after delivery.",
+          "Many luxury packaging design agencies hand files to a separate manufacturer and hope the finish matches the render. We design and produce in the same place. Foil colours, emboss depths, paper choices and colour targets are checked on our own machines, and you approve a digital proof before print.",
+          "This matters most for small details: a thin foil line that fills in, a deboss that cracks a coated paper, or a colour that shifts on a textured stock. We catch these at proof stage, not after delivery.",
         ],
       },
       {
         h2: "Luxury product packaging, from brief to delivery",
         paragraphs: [
           "Luxury product packaging starts with the product and the moment it is opened. You share the product, references, quantities and markets. We reply with questions and a fixed quote, then present concepts on 3D mockups, usually within 48 hours of an agreed brief.",
-          "After approval we make a physical sample with your papers, finishes and insert. Production follows in our factory from 500 units, with collapsible rigid options if you want to cut shipping and storage costs.",
+          "After approval we send a digital proof and 3D mockup with your papers, finishes and insert. Production follows in our factory from 500 units, with collapsible rigid options if you want to cut shipping and storage costs.",
         ],
       },
     ],
     faqs: [
       { q: "What is luxury packaging design?", a: "Packaging where the structure, materials, finish and opening experience add to the product's value, usually rigid boxes with premium papers, foil and fitted inserts." },
       { q: "Is high-end packaging always expensive?", a: "Not always. A well-chosen structure and one precise finish can look more premium than many finishes at once." },
-      { q: "Why choose a luxury packaging design agency with a factory?", a: "Finishes and materials are checked on the machines that will make your boxes, and you approve a physical sample before production." },
+      { q: "Why choose a luxury packaging design agency with a factory?", a: "Finishes and materials are checked on the machines that will make your boxes, and you approve a digital proof before print." },
       { q: "What is the minimum order for luxury boxes?", a: "We make rigid luxury boxes from 500 units per design, including collapsible rigid boxes." },
       { q: "Can luxury packaging be sustainable?", a: "Yes. Rigid boxes are mostly paper and board and can use recycled greyboard and FSC papers. We avoid unnecessary plastic." },
     ],
@@ -248,7 +248,7 @@ export const longformB: Record<string, LongForm> = {
       {
         h2: "Professional label design starts with the container",
         paragraphs: [
-          "Professional label design begins with measurements. The shape of the container, the visible face, the curve and the seam all decide what a label can hold. We work from your container supplier's specifications or a physical sample and test the design on a realistic mockup.",
+          "Professional label design begins with measurements. The shape of the container, the visible face, the curve and the seam all decide what a label can hold. We work from your container supplier's specifications or the container itself and test the design on a realistic mockup.",
           "Material matters too. Paper, clear film, metallic and textured stocks each change how colours and finishes look. We recommend materials for your product and its environment: a shower needs a different label from a pantry shelf.",
         ],
       },
@@ -390,7 +390,7 @@ export const longformB: Record<string, LongForm> = {
         h2: "Choosing the right box structure",
         paragraphs: [
           "Every box packaging design starts with structure. A tuck end carton suits retail shelves, a mailer suits e-commerce, a rigid magnetic box suits gifts and premium products, and a display box suits counters. We recommend the structure that fits your product, channel and budget.",
-          "We then build or adapt the dieline to your product's exact size, with inserts where needed. You can see a white sample of the structure before artwork is final.",
+          "We then build or adapt the dieline to your product's exact size, with inserts where needed. You can see the structure on a 3D mockup before artwork is final.",
         ],
       },
       {
@@ -411,16 +411,16 @@ export const longformB: Record<string, LongForm> = {
         h2: "Our box packaging design process",
         paragraphs: [
           "You send the product, dimensions, quantities and references. We reply with questions and a fixed quote, then present concepts on 3D mockups, usually within 48 hours of an agreed brief.",
-          "After approval we make a physical sample, then produce rigid and printed boxes in our factory from 500 units, with worldwide shipping by air or sea.",
+          "After you approve the digital proof, we produce rigid and printed boxes in our factory from 500 units, with worldwide shipping by air or sea.",
         ],
       },
     ],
     faqs: [
       { q: "What types of boxes do you design?", a: "Rigid gift boxes, folding cartons, mailers, displays, sleeves, pillow boxes, gable boxes and shipping boxes." },
       { q: "What makes luxury and premium box packaging designs work?", a: "The right rigid structure, fine papers, one or two precise finishes and a fitted insert." },
-      { q: "Do you design the dieline?", a: "Yes. We build or adapt dielines to your product's exact size and sample the structure." },
+      { q: "Do you design the dieline?", a: "Yes. We build or adapt dielines to your product's exact size and show the structure on a 3D mockup." },
       { q: "Can you make the boxes as well?", a: "Yes. We make rigid and printed boxes in our own factory from 500 units." },
-      { q: "Can I see a sample before production?", a: "Yes. We make a physical sample for approval before every production run." },
+      { q: "How do I approve the design before printing?", a: "With a digital proof and a 3D mockup. Nothing is printed until you approve, and we share production photos before dispatch." },
     ],
     guides: ["rigid-vs-folding-carton-boxes", "how-to-measure-box-size", "box-finishes-explained"],
   },

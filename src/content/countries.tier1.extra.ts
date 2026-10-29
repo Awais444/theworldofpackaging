@@ -12,7 +12,7 @@ export const tier1Extra: Record<string, { note: string; faqs: Faq[]; seasons: st
   },
   "united-kingdom": {
     seasons: ["Christmas gifting from October onwards","Black Friday","Valentine's Day and Mother's Day, which falls in March in the UK"],
-    note: "Many UK brands sell into the EU as well, and since Brexit a single label rarely covers both without planning. We design shared front panels with back panels that carry the right address, responsible person and language for each market. For gifting brands, Christmas is the biggest peak, so we plan samples and production well ahead of the autumn rush.",
+    note: "Many UK brands sell into the EU as well, and since Brexit a single label rarely covers both without planning. We design shared front panels with back panels that carry the right address, responsible person and language for each market. For gifting brands, Christmas is the biggest peak, so we plan approvals and production well ahead of the autumn rush.",
     faqs: [
       { q: "Can one label work for the UK and the EU?", a: "Sometimes, with careful planning for addresses and responsible persons. Often a shared front with market-specific back panels is simpler." },
       { q: "Which currency will my quote be in?", a: "Tell us your preferred currency when you ask for a quote. We confirm the currency and payment terms in the quote itself." },
@@ -36,7 +36,7 @@ export const tier1Extra: Record<string, { note: string; faqs: Faq[]; seasons: st
   },
   uae: {
     seasons: ["Ramadan and Eid","UAE National Day in December","Corporate gifting around year end"],
-    note: "Corporate gifting is a large part of UAE packaging demand, from company anniversaries to hospitality and events. These projects often need fast turnarounds, custom inserts for several items and branding for both the client and the gift. We plan timelines backwards from the event date and can make sample boxes for approval before full production.",
+    note: "Corporate gifting is a large part of UAE packaging demand, from company anniversaries to hospitality and events. These projects often need fast turnarounds, custom inserts for several items and branding for both the client and the gift. We plan timelines backwards from the event date and send a 3D mockup and digital proof for approval before production.",
     faqs: [
       { q: "Do you make corporate gift boxes for UAE companies?", a: "Yes. We make rigid gift boxes with custom inserts for several items, branded for your company or your client." },
       { q: "Which currency will my quote be in?", a: "Tell us your preferred currency when you ask for a quote. We confirm the currency and payment terms in the quote itself." },
@@ -84,9 +84,9 @@ export const tier1Extra: Record<string, { note: string; faqs: Faq[]; seasons: st
   },
   singapore: {
     seasons: ["Lunar New Year","Mid-Autumn Festival for mooncake gift boxes","Corporate gifting at year end", "Deepavali and Hari Raya gifting"],
-    note: "Singapore buyers often compare packaging suppliers across the region and expect clear specifications, reliable timelines and consistent quality across repeat orders. We supply specification sheets, keep approved samples on record and plan repeat production well ahead of festive peaks.",
+    note: "Singapore buyers often compare packaging suppliers across the region and expect clear specifications, reliable timelines and consistent quality across repeat orders. We supply specification sheets, keep approved proofs on record and plan repeat production well ahead of festive peaks.",
     faqs: [
-      { q: "Can you keep packaging consistent across repeat orders?", a: "Yes. We keep approved samples and specifications on record and check each run against them." },
+      { q: "Can you keep packaging consistent across repeat orders?", a: "Yes. We keep approved proofs and specifications on record and check each run against them." },
       { q: "Which currency will my quote be in?", a: "Tell us your preferred currency when you ask for a quote. We confirm the currency and payment terms in the quote itself." },
     ],
   },
@@ -108,7 +108,7 @@ export const tier1Extra: Record<string, { note: string; faqs: Faq[]; seasons: st
   },
   qatar: {
     seasons: ["Ramadan and Eid","Qatar National Day in December","Corporate events and hospitality gifting", "Major sporting and cultural events"],
-    note: "Hospitality and events in Qatar often need packaging produced in a single, well-timed run, with every box personalised for the client or occasion. We plan artwork approval, sampling and production around your event date and can include several designs in one order.",
+    note: "Hospitality and events in Qatar often need packaging produced in a single, well-timed run, with every box personalised for the client or occasion. We plan artwork approval, proofing and production around your event date and can include several designs in one order.",
     faqs: [
       { q: "Can one order include several gift box designs?", a: "Yes. Each design has its own minimum, and we can produce them together to share shipping." },
       { q: "Which currency will my quote be in?", a: "Tell us your preferred currency when you ask for a quote. We confirm the currency and payment terms in the quote itself." },

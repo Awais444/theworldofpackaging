@@ -6,7 +6,7 @@ export const hubSections: Array<{ h2: string; paragraphs: string[] }> = [
     h2: "A packaging design agency with its own factory",
     paragraphs: [
       "Most brands work with a packaging design agency on one side and a printer on the other. The designer hands over files, the printer finds problems, and the brand sits in the middle passing messages back and forth. We remove that gap. Our studio designs the packaging and our factory makes it, so the people choosing your foil, board and colours work beside the machines that will produce them.",
-      "That makes a practical difference. Designs are drawn for real dielines and real finishes from the first concept, colour targets are checked on our own press, and you approve a physical sample before production. You get packaging that looks the way it did on screen, without a round of compromises at proof stage.",
+      "That makes a practical difference. Designs are drawn for real dielines and real finishes from the first concept, colour targets are checked on our own press, and you approve a digital proof and 3D mockup before print. You get packaging that looks the way it did on screen, without a round of compromises at proof stage.",
     ],
   },
   {
@@ -20,7 +20,7 @@ export const hubSections: Array<{ h2: string; paragraphs: string[] }> = [
     h2: "What our package design services include",
     paragraphs: [
       "Every project starts with a brief and a fixed quote. First concepts arrive on realistic 3D mockups, usually within 48 hours of an agreed brief, so you can compare directions as they would look on a shelf or in a customer's hands. One direction is then developed across every panel, size and variant.",
-      "Our package design services also include structure. We build or adapt the dieline to your product's exact size, design inserts that hold it securely and sample the structure before artwork is final. If you already have a structure and only need graphics, we work from your dieline.",
+      "Our package design services also include structure. We build or adapt the dieline to your product's exact size, design inserts that hold it securely and check the structure on a 3D mockup before artwork is final. If you already have a structure and only need graphics, we work from your dieline.",
     ],
   },
   {
@@ -40,7 +40,7 @@ export const hubSections: Array<{ h2: string; paragraphs: string[] }> = [
 ];
 
 export const hubFaqs: Faq[] = [
-  { q: "What do your packaging design services include?", a: "A brief and fixed quote, concepts on 3D mockups, one refined direction across every SKU, structure and dieline, print-ready artwork and a physical sample before production." },
+  { q: "What do your packaging design services include?", a: "A brief and fixed quote, concepts on 3D mockups, one refined direction across every SKU, structure and dieline, print-ready artwork and a digital proof before print." },
   { q: "Are you a packaging design agency or a manufacturer?", a: "Both. Our studio designs packaging and our own factory makes rigid and printed boxes from 500 units." },
   { q: "Can you design only and let me print elsewhere?", a: "Yes. You receive print-ready files and the dieline. Most clients produce with us because the design is made for our presses." },
   { q: "Do you offer packaging artwork services for existing designs?", a: "Yes. We prepare your existing design on the dieline with finish layers and checks, ready for production." },

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 const modes = [
-  { icon: Plane, name: "Air freight", best: "Samples, launches and urgent stock", points: ["Fastest door-to-door", "Charged on actual or volumetric weight, whichever is higher", "Delivered to your door or 3PL"] },
+  { icon: Plane, name: "Air freight", best: "Launches and urgent stock", points: ["Fastest door-to-door", "Charged on actual or volumetric weight, whichever is higher", "Delivered to your door or 3PL"] },
   { icon: Ship, name: "Sea freight", best: "Production runs and repeat stock", points: ["Lowest cost per box at volume", "Charged on volume, with a minimum", "Port delivery, then road to your warehouse"] },
 ];
 
@@ -36,8 +36,8 @@ const packing = [
   "Palletised for sea freight on request",
 ];
 
-const faqs = [{ q: "Do you ship samples by courier?", a: "Yes, by express courier with tracking." }, 
-  { q: "Air or sea?", a: "Air for samples and urgent stock; sea for production volumes. We quote both on request." },
+const faqs = [
+  { q: "Air or sea?", a: "Air for launches and urgent stock; sea for production volumes. We quote both on request." },
   { q: "Who pays import duties?", a: "Usually the importer. Ask us whether delivered-duty-paid shipping is possible for your country." }, // TODO confirm DDP availability
   { q: "How long does shipping take?", a: "Transit time depends on the route and service. We confirm it with your quote." }, // TODO real transit times
   { q: "Can collapsible boxes cut my freight cost?", a: "Yes. They ship flat, so more boxes fit per carton. We compare both options in your quote." },

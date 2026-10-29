@@ -19,13 +19,13 @@ import { faqPage } from "@/lib/schema";
 
 export const metadata: Metadata = {
   title: "Packaging Design Services",
-  description: "Packaging design services for boxes, labels and pouches, made in our own factory from 500 units. Concepts in 48 hours. Get a free quote.",
+  description: `${site.facts.yearsExperience}+ years in packaging. Design for boxes, labels and pouches, made in our own factory from ${site.facts.rigidMoq} units. Concepts in 48 hours. Free quote.`,
   alternates: { canonical: "/packaging-design" },
 };
 
 const reasons = [
   { title: "Designed for print", text: "Every design is drawn for the board, press and finishes it will be made with." },
-  { title: "Made in our factory", text: `Rigid and printed boxes from ${site.facts.rigidMoq} units, with a sample first.` },
+  { title: "Made in our factory", text: `Rigid and printed boxes from ${site.facts.rigidMoq} units, with a digital proof before print.` },
   { title: "Fee credited", text: designFeeNote },
   { title: "Fast first concepts", text: `First directions usually within ${site.facts.firstConceptHours} hours.` },
 ];

@@ -78,9 +78,6 @@ export default async function IndustryPage({ params }: Props) {
             <Button href={`${quoteHref}?industry=${ind.slug}`} size="lg" arrow>
               Get a Quote
             </Button>
-            <Button href="/samples" size="lg" variant="secondary">
-              Request a Sample
-            </Button>
           </>
         }
       />
@@ -154,7 +151,7 @@ export default async function IndustryPage({ params }: Props) {
       <Section bg="blue-50">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-6">
-            <SectionHeader eyebrow="Finishes" title="Finishes that work" highlight="work" lead="Popular combinations for this category. Every finish is shown on your sample." />
+            <SectionHeader eyebrow="Finishes" title="Finishes that work" highlight="work" lead="Popular combinations for this category. Every finish is shown on your 3D mockup and digital proof." />
             <ul className="mt-8 flex flex-wrap gap-3">
               {finishes.map((f) => (
                 <li key={f} className="inline-flex h-11 items-center rounded-full bg-white px-5 font-medium">

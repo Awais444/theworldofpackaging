@@ -121,12 +121,12 @@ export const rigidExtraFaqs: Faq[] = [
 export const printedExtraFaqs: Faq[] = [
   { q: "How long does production take?", a: "Lead time depends on print method, finishes and quantity. We confirm it in your quote." }, // TODO real lead time
   { q: "Can you make a custom size?", a: "Yes. Every printed box is cut to your size with a custom dieline." },
-  { q: "Can I get a sample first?", a: "Yes. We make a printed sample before production. The sample fee is credited to your bulk order." },
+  { q: "How do I approve the design before printing?", a: "You get a digital proof (PDF with dieline, colours and copy) and a 3D mockup. Nothing is printed until you approve, and we share production photos before dispatch." },
 ];
 
 export const orderSteps = [
   { title: "Send your brief", body: "Size, quantity and how you want it to look." },
   { title: "Get a quote", body: `A clear price ${site.facts.quoteReply}.` },
-  { title: "Approve a sample", body: "We make a physical sample before production." },
+  { title: "Approve the proof", body: "A digital proof and 3D mockup; nothing is printed until you approve." },
   { title: "Production & delivery", body: "Made in our factory, shipped by air or sea." },
 ];

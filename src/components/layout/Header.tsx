@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { site, whatsappMessage, whatsappUrl } from "@/config/site";
 import { boxesMenu, boxesPromo, designMenu, designMenuFooter, mainNav, primaryCta, type MenuId } from "@/content/navigation";
-import { CartLink } from "@/components/cart/CartLink";
 import { MagneticBoxClosed } from "@/components/illustrations";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
@@ -21,7 +20,7 @@ const isActive = (pathname: string, href: string) => pathname === href || pathna
 // Section prefixes that light up each top-level menu.
 const menuPrefixes: Record<MenuId, string[]> = {
   design: ["/packaging-design", "/pricing", "/services", "/packages", "/industries"],
-  boxes: ["/boxes", "/rigid-boxes", "/printed-boxes", "/collapsible-rigid-boxes", "/materials", "/finishes", "/inserts", "/samples"],
+  boxes: ["/boxes", "/rigid-boxes", "/printed-boxes", "/collapsible-rigid-boxes", "/materials", "/finishes", "/inserts"],
 };
 const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium text-ink-800 transition-colors hover:text-blue-600";
 // Links align with their heading: the pill padding is offset by a negative margin.
@@ -286,7 +285,6 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2.5 justify-self-end" onPointerEnter={closeOnEnter}>
-            <CartLink />
             <a
               href={whatsappUrl(whatsappMessage()) ?? "/contact"}
               {...(whatsappUrl() ? { target: "_blank", rel: "noopener noreferrer" } : {})}

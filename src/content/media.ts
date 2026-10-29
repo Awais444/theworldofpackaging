@@ -60,7 +60,7 @@ const fixedSlots = {
   },
   "home-how-step-2": {
     id: "home-how-step-2",
-    alt: "Design and sample: a flat printed film box carton laid out on its dieline",
+    alt: "Design and proof: a flat printed film box carton laid out on its dieline",
     illustration: "dieline-flat",
     aspect: "4/3",
     page: "/ (How it works, step 2)",

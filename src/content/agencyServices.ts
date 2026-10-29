@@ -51,9 +51,9 @@ const brandingProcess = [
 
 const packagingProcess = [
   { title: "Brief + product", body: "Dimensions, weight, retail or e-commerce, and what the customer should feel when it opens." },
-  { title: "Structure", body: "Box style, board and insert chosen; a white sample checks the fit before artwork." },
+  { title: "Structure", body: "Box style, board and insert chosen; the dieline and a 3D mockup check the fit before artwork." },
   { title: "Artwork", body: "Graphics placed on the real dieline, with bleed, safe areas and finishes marked." },
-  { title: "Pre-press + sample", body: "Files checked against our press, then a printed sample made on the production line." },
+  { title: "Pre-press + proof", body: "Files checked against our press, then a digital proof for your approval." },
 ];
 
 export const agencyServices: AgencyService[] = [
@@ -183,12 +183,12 @@ export const agencyServices: AgencyService[] = [
     name: "Rigid Box Design",
     summary: "Luxury box design: wrap artwork, foil and emboss plates, insert layout and opening sequence.",
     intro:
-      "Rigid boxes need more than flat artwork. We design the wrap for each panel, the inside print, the foil and emboss plates and the insert, then make a sample on our line.",
+      "Rigid boxes need more than flat artwork. We design the wrap for each panel, the inside print, the foil and emboss plates and the insert, then send a 3D mockup and digital proof.",
     deliverables: [
       { name: "Wrap artwork", detail: "Outer and inner wraps on the rigid dieline." },
       { name: "Finish plates", detail: "Separate foil, emboss and spot UV artwork." },
       { name: "Insert design", detail: "Cavity layout from your products." },
-      { name: "Production sample", detail: "Made on our own line." },
+      { name: "3D mockup + digital proof", detail: "Approved before anything is printed." },
     ],
     process: packagingProcess,
     priceFrom: null, // TODO
@@ -220,12 +220,12 @@ export const agencyServices: AgencyService[] = [
     slug: "structural-dieline",
     hub: "packaging-design",
     name: "Structural Design & Dielines",
-    summary: "Custom box structures and dielines, drawn for the board, tested as white samples.",
+    summary: "Custom box structures and dielines, drawn for the board, checked on 3D mockups.",
     intro:
       "When a stock template will not do, we engineer the structure: fold sequence, locks, inserts and board calliper. You get a tested dieline any manufacturer can use.",
     deliverables: [
       { name: "Dieline", detail: "Vector file with cut, crease, bleed and glue areas." },
-      { name: "White sample", detail: "Unprinted sample to check fit and assembly." },
+      { name: "3D mockup", detail: "Shows fit, opening and assembly before print." },
       { name: "Assembly notes", detail: "Fold sequence for your packing team." },
     ],
     process: packagingProcess,

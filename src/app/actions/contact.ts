@@ -5,7 +5,7 @@ import { handleSubmission, type ActionResult } from "@/lib/submission";
 
 export type { ActionResult };
 
-/** Short enquiry used on the contact page, samples page and elsewhere. */
+/** Short enquiry used on the contact page and elsewhere. */
 export async function submitInlineContact(input: unknown): Promise<ActionResult> {
   return handleSubmission("inline-contact", inlineContactSchema, input, "Please check the form and try again.");
 }

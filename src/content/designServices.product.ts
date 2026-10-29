@@ -67,7 +67,7 @@ export const productServices: DesignServiceInput[] = [
     relatedServices: ["luxury-packaging-design", "bottle-label-design", "rigid-luxury-box-design"],
     illustration: "shoulder-neck",
     faqs: [
-      { q: "Can you design a box for an unusual bottle shape?", a: "Yes. Send a sample or drawing and we design a custom insert and box size around it." },
+      { q: "Can you design a box for an unusual bottle shape?", a: "Yes. Send the bottle or a drawing and we design a custom insert and box size around it." },
       { q: "What finishes work best for perfume boxes?", a: "Soft-touch lamination with hot foil is the classic choice; textured papers with blind debossing suit niche brands." },
       { q: "Can you design discovery sets for several scents?", a: "Yes, with a multi-cavity insert holding each vial and a layout that names each scent clearly." },
     ],
@@ -113,7 +113,7 @@ export const productServices: DesignServiceInput[] = [
     relatedServices: ["bottle-label-design", "tube-packaging-design", "packaging-range-design"],
     illustration: "label-bottle",
     faqs: [
-      { q: "Will the labels survive the shower?", a: "We specify waterproof label stocks and laminates, and test samples where needed." },
+      { q: "Will the labels survive the shower?", a: "We specify waterproof label stocks and laminates." },
       { q: "Can you design both salon and retail versions?", a: "Yes. Backbar sizes can share the retail design with simplified, professional-use labelling." },
       { q: "Can you design a travel or gift kit?", a: "Yes, with an insert sized to your minis and a box that works as a gift." },
     ],
@@ -612,13 +612,13 @@ export const productServices: DesignServiceInput[] = [
     categoryNotes: [
       "Plan the reveal: what is seen first, what is lifted, what is read.",
       "Mixed products need a multi-cavity insert designed from each item's size.",
-      "Fixed launch dates mean we plan design, sampling and production backwards from the send date.",
+      "Fixed launch dates mean we plan design, proofing and production backwards from the send date.",
     ],
     recommendedBoxes: ["rigid:magnetic-closure", "rigid:book-style", "rigid:collapsible", "printed:mailer"],
     relatedServices: ["subscription-box-design", "luxury-packaging-design", "structural-dieline-design"],
     illustration: "magnetic-open",
     faqs: [
-      { q: "Can you design PR kits for a fixed launch date?", a: "Yes. We plan design, sample and production backwards from your send date." },
+      { q: "Can you design PR kits for a fixed launch date?", a: "Yes. We plan design, proof and production backwards from your send date." },
       { q: "Can kits hold products of different sizes?", a: "Yes, with a custom insert that has a cavity for each item." },
       { q: "Can you design corporate gift boxes with our logo?", a: "Yes, from simple branded boxes to full gift sets with inserts and cards." },
     ],

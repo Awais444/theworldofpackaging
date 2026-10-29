@@ -65,6 +65,10 @@ export const legacyCompanyRedirects: Record<string, string> = {
 /** Phase 7 moved the quote form (CLAUDE.md §9). */
 export const legacyQuoteRedirects: Record<string, string> = {
   "/quote": "/get-a-quote",
+  // We do not offer physical samples; the sample shop (samples, cart, checkout) was removed.
+  "/samples": "/get-a-quote",
+  "/cart": "/get-a-quote",
+  "/checkout": "/get-a-quote",
   // Browsers ask for these by convention; the real icons are app/icon.svg and app/apple-icon.
   "/favicon.ico": "/icon.svg",
   "/apple-touch-icon.png": "/apple-icon",

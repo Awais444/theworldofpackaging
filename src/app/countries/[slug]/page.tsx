@@ -61,6 +61,7 @@ export default async function CountryPage({ params }: Props) {
   const ship = shippingTimes(c);
 
   const glance = [
+    { label: "Our experience", value: `${site.facts.yearsExperience}+ years in packaging` },
     { label: "Currency", value: `${c.currency.name} (${c.currency.code})` },
     { label: "Label language", value: c.languages.join(", ") },
     { label: "Units", value: c.measurement === "both" ? "Metric and US customary" : c.measurement === "metric" ? "Metric" : "Imperial" },
@@ -138,7 +139,7 @@ export default async function CountryPage({ params }: Props) {
           <ul className="space-y-4 lg:col-span-5">
             {[
               { icon: Sparkles, title: `Designed for ${name}`, text: `Layouts planned for ${c.languages.join(" and ")} text and local labelling, with first concepts usually within ${site.facts.firstConceptHours} hours.` },
-              { icon: Factory, title: "Made in our own factory", text: `Rigid and printed boxes from ${site.facts.rigidMoq} units, with a physical sample before production.` },
+              { icon: Factory, title: "Made in our own factory", text: `Rigid and printed boxes from ${site.facts.rigidMoq} units, with a digital proof and 3D mockup before print.` },
               { icon: Plane, title: `Shipped to ${name}`, text: "By air for speed or by sea for volume, assembled or flat-packed." },
             ].map((card) => (
               <li key={card.title} className="flex gap-4 rounded-2xl border border-silver-300 p-5">
@@ -218,7 +219,7 @@ export default async function CountryPage({ params }: Props) {
         />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {[
-            { icon: Plane, title: "Air freight", time: ship.air ? `${formatTime(ship.air, ship.airApprox)} by air` : PENDING, text: "For samples, launches and urgent stock. Delivered to your address, warehouse or 3PL." },
+            { icon: Plane, title: "Air freight", time: ship.air ? `${formatTime(ship.air, ship.airApprox)} by air` : PENDING, text: "For launches and urgent stock. Delivered to your address, warehouse or 3PL." },
             { icon: Ship, title: "Sea freight", time: ship.sea ? `${formatTime(ship.sea, ship.seaApprox)} by sea` : PENDING, text: "For production volumes. Usually to a port, then onward by road." },
           ].map((m) => (
             <div key={m.title} className="rounded-2xl border border-silver-300 p-6">
@@ -249,7 +250,7 @@ export default async function CountryPage({ params }: Props) {
           {[
             { title: "Brief and quote", text: `Send your product, quantity and where it will be sold in ${name}. We reply ${site.facts.quoteReply} with questions, a recommended box and a fixed quote.` },
             { title: "Design for the market", text: `Concepts on 3D mockups, with space planned for ${c.languages.join(" and ")} text and the information required in ${name}.` },
-            { title: "Sample and approval", text: "A physical sample in your materials and finishes, checked with your real product before production." },
+            { title: "Proof and approval", text: "A digital proof with dieline, colours and copy, plus a 3D mockup. Nothing is printed until you approve." },
             { title: "Production and delivery", text: `Made in our own factory, packed in export cartons and shipped to ${name} by air or sea, assembled or flat.` },
           ].map((s, i) => (
             <li key={s.title} className="rounded-2xl bg-white p-6">
@@ -267,7 +268,7 @@ export default async function CountryPage({ params }: Props) {
           {c.seasons && c.seasons.length > 0 && (
             <div>
               <SectionHeader eyebrow="Plan ahead" title="Busy seasons to plan for" highlight="seasons" />
-              <p className="mt-5 text-ink-500">Packaging for these peaks should be designed, sampled and shipped well in advance. Tell us your launch date and we plan backwards from it.</p>
+              <p className="mt-5 text-ink-500">Packaging for these peaks should be designed, approved and shipped well in advance. Tell us your launch date and we plan backwards from it.</p>
               <ul className="mt-6 space-y-3">
                 {c.seasons.map((s) => (
                   <li key={s} className="flex gap-3 rounded-2xl border border-silver-300 p-4">
@@ -286,8 +287,8 @@ export default async function CountryPage({ params }: Props) {
                 `Show net quantity in ${c.measurement === "both" ? "metric and US customary units" : "metric units"}.`,
                 `Check product-specific rules with ${c.labelling.authority || "your importer or adviser"}.`,
                 boxes.length >= 2 ? `Consider ${boxes[0]!.name.toLowerCase()} or ${boxes[1]!.name.toLowerCase()}, popular with ${c.name} brands.` : "Choose a box style that suits your product and channel.",
-                "Choose air for launches and samples, sea for production volumes.",
-                guides[0] ? `Read our guide: ${guides[0].title}.` : "Approve a physical sample before production.",
+                "Choose air for launches and urgent stock, sea for production volumes.",
+                guides[0] ? `Read our guide: ${guides[0].title}.` : "Approve a digital proof and 3D mockup before print.",
               ].map((t) => (
                 <li key={t} className="flex gap-3">
                   <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />

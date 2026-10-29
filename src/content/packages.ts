@@ -13,14 +13,14 @@ export const packages: PackageBundle[] = [
     slug: "box-ready",
     name: "Box Ready",
     forWho: "You have a brand. You need the box designed and made.",
-    includes: ["Packaging design for one box", "Dieline + print-ready artwork", "Sample box", "500 rigid boxes"],
+    includes: ["Packaging design for one box", "Dieline + print-ready artwork", "3D mockup + digital proof", "500 rigid boxes"],
     priceFrom: null, // TODO
   },
   {
     slug: "launch",
     name: "Launch",
     forWho: "A new product that needs a brand and its first run of packaging.",
-    includes: ["Logo + core identity", "Packaging design for one box", "Insert design", "Sample box", "500 rigid boxes"],
+    includes: ["Logo + core identity", "Packaging design for one box", "Insert design", "3D mockup + digital proof", "500 rigid boxes"],
     priceFrom: null, // TODO
     featured: true,
   },
@@ -28,7 +28,7 @@ export const packages: PackageBundle[] = [
     slug: "full-system",
     name: "Full System",
     forWho: "A range: several SKUs, outer shippers and brand guidelines.",
-    includes: ["Full identity + guidelines", "Packaging system, up to 3 SKUs", "Mailer or shipper", "Samples", "Production"],
+    includes: ["Full identity + guidelines", "Packaging system, up to 3 SKUs", "Mailer or shipper", "3D mockup + digital proof", "Production"],
     priceFrom: null, // TODO
   },
 ];
@@ -41,6 +41,6 @@ export const packageComparison: Array<{ label: string; values: Record<string, bo
   { label: "Dieline + print-ready artwork", values: { "box-ready": true, launch: true, "full-system": true } },
   { label: "Insert design", values: { "box-ready": false, launch: true, "full-system": true } },
   { label: "Mailer or shipper design", values: { "box-ready": false, launch: false, "full-system": true } },
-  { label: "Physical sample", values: { "box-ready": true, launch: true, "full-system": true } },
+  { label: "3D mockup + digital proof", values: { "box-ready": true, launch: true, "full-system": true } },
   { label: "Production", values: { "box-ready": "500 rigid boxes", launch: "500 rigid boxes", "full-system": "Quoted per range" } },
 ];

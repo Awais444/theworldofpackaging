@@ -50,7 +50,7 @@ const problems: Array<{ icon: LucideIcon; problem: string; why: string; fix: str
     icon: PackageX,
     problem: "It arrives damaged or crushed",
     why: "Boxes designed without the right board, insert or shipping test fail in the post.",
-    fix: "Structure, board and insert chosen for your product, checked with a physical sample.",
+    fix: "Structure, board and insert chosen for your product, checked on a 3D mockup and digital proof.",
     href: "/packaging-design/structural-dieline-design",
     cta: "Structural design",
   },

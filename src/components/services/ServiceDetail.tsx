@@ -1,3 +1,4 @@
+import { site } from "@/config/site";
 import { CheckCircle2 } from "lucide-react";
 import { publicCaseStudies as caseStudies } from "@/content/caseStudies";
 import { printedStyles } from "@/content/printedStyles";
@@ -99,7 +100,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
       )}
 
       <Section>
-        <SectionHeader eyebrow="Production" title="Pair it with production" highlight="production" lead="We make the boxes too. Designs go straight to our factory, with no hand-off to another printer." />
+        <SectionHeader eyebrow="Production" title="Pair it with production" highlight="production" lead={`We make the boxes too, with ${site.facts.yearsExperience}+ years in packaging. Designs go straight to our factory, with no hand-off to another printer.`} />
         <div className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:gap-6 lg:grid-cols-4">
           {pair.map((c) => (
             <ProductCard key={c.href} {...c} />

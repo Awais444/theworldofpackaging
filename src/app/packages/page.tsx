@@ -31,7 +31,7 @@ const faqs = [
 const included = [
   "Design by our in-house studio",
   "Artwork on the real dieline",
-  "A physical sample before production",
+  "3D mockup + digital proof before print",
   "Production in our own factory",
   "Free design support on reorders",
   "One team from brief to delivery",

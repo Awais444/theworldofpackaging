@@ -101,6 +101,6 @@ export function nearbyCountries(c: Country, n = 6): Country[] {
 }
 
 export const countryShippingFaqs: Faq[] = [
-  { q: "Air or sea: which should I choose?", a: "Air for samples, launches and urgent stock; sea for production volumes where the timeline allows. We quote both so you can compare." },
+  { q: "Air or sea: which should I choose?", a: "Air for launches and urgent stock; sea for production volumes where the timeline allows. We quote both so you can compare." },
   { q: "Can collapsible rigid boxes reduce my shipping cost?", a: "Yes. They ship flat, so many more fit in each carton, which cuts freight volume and storage. We compare assembled and flat options in your quote." },
 ];

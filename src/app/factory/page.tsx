@@ -34,9 +34,6 @@ export default function FactoryPage() {
             <Button href={quoteHref} size="lg" arrow>
               Get a Quote
             </Button>
-            <Button href="/samples" size="lg" variant="secondary">
-              Request a Sample
-            </Button>
           </>
         }
       />
@@ -117,11 +114,11 @@ export default function FactoryPage() {
         <CTABand
           title="See it in your hands"
           highlight="hands"
-          text="Order a sample made on our production line. The fee is credited to your bulk order."
+          text="Approve a digital proof and 3D mockup, then we share production photos on WhatsApp before dispatch."
           actions={
             <>
-              <Button href="/samples" variant="accent" size="lg" arrow>
-                Request a Sample
+              <Button href={quoteHref} variant="accent" size="lg" arrow>
+                Get a Quote
               </Button>
               <Button href={quoteHref} variant="white" size="lg">
                 Get a Quote

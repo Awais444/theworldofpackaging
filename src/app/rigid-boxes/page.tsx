@@ -5,7 +5,7 @@ import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxe
 
 export const metadata: Metadata = {
   title: "Custom Rigid Boxes",
-  description: `Magnetic, lid & base, drawer, book, collapsible, shoulder neck, tube and window rigid boxes. MOQ ${site.facts.rigidMoq}, made in-house, shipped worldwide.`,
+  description: `Magnetic, lid & base, drawer, book, collapsible, shoulder neck, tube and window rigid boxes. ${site.facts.yearsExperience}+ years, MOQ ${site.facts.rigidMoq}, made in-house, worldwide.`,
   alternates: { canonical: "/rigid-boxes" },
 };
 
@@ -22,7 +22,7 @@ export default function RigidHubPage() {
         { title: "Own factory", text: "Cut, wrapped and finished in-house, not outsourced." },
         { title: `MOQ ${site.facts.rigidMoq}`, text: "Small enough for launches, ready to scale." },
         { title: "Ships flat option", text: "Collapsible rigid boxes cut freight volume." },
-        { title: "Sample first", text: "Approve a physical sample before production." },
+        { title: "Digital proof first", text: "Approve a digital proof and 3D mockup before print." },
       ]}
       gridTitle="Choose your rigid box"
       gridHighlight="rigid"

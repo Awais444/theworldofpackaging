@@ -30,7 +30,7 @@ const steps = [
   { title: "Concepts", body: `First design directions on 3D mockups, usually within ${site.facts.firstConceptHours} hours.` },
   { title: "Refine", body: "One direction developed across every panel and variant." },
   { title: "Artwork & proof", body: "Print-ready files on the real dieline, checked against our press." },
-  { title: "Sample & production", body: "A physical sample, then production in our factory if you want it." },
+  { title: "Production", body: "Made in our factory if you want it, with production photos on WhatsApp before dispatch." },
 ];
 
 /** Packaging design service page. */
@@ -195,7 +195,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
               <p className="text-eyebrow text-white/80">Designed here, made here</p>
               <h2 className="text-h2 mt-3">We also make the box</h2>
               <p className="text-lead mt-4 text-white/80">
-                Your design goes straight to our own factory: rigid and printed boxes from {site.facts.rigidMoq} units, with a sample before production.
+                Your design goes straight to our own factory, with {site.facts.yearsExperience}+ years in packaging behind it: rigid and printed boxes from {site.facts.rigidMoq} units, with a digital proof before print.
               </p>
             </div>
             <Factory aria-hidden="true" className="h-16 w-16 text-orange-500" />

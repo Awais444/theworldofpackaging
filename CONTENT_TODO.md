@@ -10,7 +10,8 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 
 - [ ] `url` (or `NEXT_PUBLIC_SITE_URL` in `.env`): confirm the domain and TLD
 - [ ] `email`; and `whatsapp`, `phone`, `address`, `hours` (all null now, so they are **hidden** site-wide; every WhatsApp button appears once `whatsapp` is set)
-- [ ] `facts.sampleDays`: working days to a physical sample (hidden while null; shows in the promises row)
+- [ ] `facts.foundedYear` (2011): confirm. `facts.yearsExperience` (15) drives every "15+ years" on the site.
+- [ ] About page timeline (`milestones` in `src/content/company.ts`): five placeholder milestones with no years. Add the real years and wording, then remove `placeholder: true`.
 - [ ] `socials`: Instagram, LinkedIn, Facebook, Pinterest, Behance (empty links stay hidden)
 - [ ] `facts.printedMoq`: printed box minimum (pages say "On quote" until set; also update `MOQ.printed` in `src/lib/pricing.ts`)
 - [ ] `facts.rigidLeadTime`, `facts.printedLeadTime`: e.g. "3–4 weeks" (pages say "Confirmed with your quote" until set)
@@ -24,7 +25,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] `src/content/designServices.*.ts`: optional `priceFrom` and `turnaround` per design service
 - [ ] Confirm the wording "Design fee credited when we manufacture your order" (`designFeeNote` in `src/content/pricing.ts`)
 
-- [ ] `src/lib/pricing.ts` → `RATES`: every unit, finish, insert, tooling, freight and sample rate. Set `ratesConfirmed: true` to remove the "Example prices" labels (configurator, samples, pricing).
+- [ ] `src/lib/pricing.ts` → `RATES`: every unit, finish, insert, tooling and freight rate. Set `ratesConfirmed: true` to remove the "Example prices" labels (configurator, pricing).
 - [ ] `src/content/rigidStyles.ts` / `printedStyles.ts` → `priceTiers[].unitUsd`
 - [ ] `src/content/agencyServices.ts` → `priceFrom` for the 6 service pages (shows "Quoted per project")
 - [ ] `src/content/packages.ts` → `priceFrom` for Box Ready, Launch and Full System
@@ -84,7 +85,6 @@ All 10 are live in `src/content/caseStudies.ts` (placeholder: false). For each, 
 - [ ] Industry compliance notes: `COMPLIANCE_NOTE` in `src/content/industries.ts` (dashed "To verify" card on every industry page)
 - [ ] CBD: "Child-resistant options on request" in `src/content/industryDetails.ts`. Remove if not offered.
 - [ ] Shipping and customs: delivered-duty-paid availability (`/shipping` FAQs). Have a customs broker review.
-- [ ] Sample lead time and shipping cost: FAQs on `/samples`
 - [ ] Production lead time FAQs in `src/content/boxDetails.ts`
 - [ ] Privacy policy and terms (`/privacy`, `/terms`): template text, needs legal review; set the "Last updated" date
 - [ ] Blog publish dates for all 9 articles in `src/content/blog/posts.ts`

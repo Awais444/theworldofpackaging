@@ -73,7 +73,7 @@ export default function CountriesHub() {
           <div className="rounded-2xl border border-silver-300 p-6">
             <Plane aria-hidden="true" className="h-6 w-6 text-blue-600" />
             <p className="mt-3 font-heading text-h4 font-bold">Air freight</p>
-            <p className="mt-2 text-ink-500">Fast, for samples, launches and urgent stock.</p>
+            <p className="mt-2 text-ink-500">Fast, for launches and urgent stock.</p>
           </div>
           <div className="rounded-2xl border border-silver-300 p-6">
             <Ship aria-hidden="true" className="h-6 w-6 text-blue-600" />

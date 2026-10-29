@@ -31,7 +31,7 @@ export const formatServices: DesignServiceInput[] = [
     h1: "Rigid box design for products that deserve a keepsake",
     intro: "Rigid boxes are wrapped greyboard that customers keep for years. We design the wrap artwork, the insert and the finish together, and make the box in our own factory from 500 units.",
     formats: ["Magnetic closure boxes", "Lid-and-base boxes", "Drawer boxes", "Book-style boxes", "Shoulder-neck boxes", "Collapsible rigid boxes"],
-    deliverables: ["Rigid style and board recommendation", "Wrap artwork on the rigid dieline", "Insert design", "Foil, emboss and spot UV layers", "Production sample"],
+    deliverables: ["Rigid style and board recommendation", "Wrap artwork on the rigid dieline", "Insert design", "Foil, emboss and spot UV layers", "3D mockup + digital proof"],
     categoryNotes: [
       "Wrap paper choice (printed art paper, linen, leatherette) sets the feel as much as the graphics.",
       "Foil and emboss areas need minimum line weights; we check them against our tooling.",
@@ -42,7 +42,7 @@ export const formatServices: DesignServiceInput[] = [
     illustration: "magnetic-closed",
     faqs: [
       { q: "What is the minimum order for rigid boxes?", a: "500 boxes per design, made in our own factory." },
-      { q: "Can I get a physical sample?", a: "Yes. We make a sample on the production line before your full run." },
+      { q: "How do I approve the design before printing?", a: "With a digital proof and a 3D mockup. Nothing is printed until you approve, and we share production photos before dispatch." },
       { q: "Which wrap paper should I use?", a: "Printed art paper suits full-colour designs; linen and leatherette suit minimal, tactile designs." },
     ],
   },

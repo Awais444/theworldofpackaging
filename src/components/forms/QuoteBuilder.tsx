@@ -53,7 +53,7 @@ const ARTWORK = [
 ] as const;
 
 const SHIP = [
-  { id: "air", title: "Air", text: "Fastest. Best for samples and urgent stock." },
+  { id: "air", title: "Air", text: "Fastest. Best for launches and urgent stock." },
   { id: "sea", title: "Sea", text: "Lowest cost per box at volume." },
   { id: "unsure", title: "Not sure", text: "Quote both and we will compare." },
 ] as const;

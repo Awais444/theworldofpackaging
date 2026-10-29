@@ -1,13 +1,13 @@
 "use client";
 
 import { animate, useInView, useReducedMotion } from "framer-motion";
-import { Clock, Factory, Package, PenTool, type LucideIcon } from "lucide-react";
+import { Award, Clock, Factory, Package, PenTool, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-export type ProofItem = { icon: "package" | "clock" | "pen" | "factory"; label: string } & ({ number: number; unit?: string } | { text: string });
+export type ProofItem = { icon: "award" | "package" | "clock" | "pen" | "factory"; label: string } & ({ number: number; unit?: string } | { text: string });
 
-const icons: Record<ProofItem["icon"], LucideIcon> = { package: Package, clock: Clock, pen: PenTool, factory: Factory };
+const icons: Record<ProofItem["icon"], LucideIcon> = { award: Award, package: Package, clock: Clock, pen: PenTool, factory: Factory };
 
 /** Counts up to `value` once in view. The real value is in the HTML from the start (no "0" state). */
 function CountUp({ value }: { value: number }) {

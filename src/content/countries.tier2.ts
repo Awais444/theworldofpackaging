@@ -186,7 +186,7 @@ const list: T2[] = [
     summary: "Switzerland is not in the EU and has its own food and consumer product law, largely aligned with EU rules. Mandatory information must be in at least one official language (German, French or Italian), and many products use all three.",
     keyPoints: ["At least one official language; many brands use German, French and Italian.", "Swiss food law is close to EU rules but not identical.", "Customs declarations and VAT on imports."],
     sources: [{ label: "Federal Food Safety and Veterinary Office", url: "https://www.blv.admin.ch" }],
-    note: "Swiss brands in chocolate, watches, skincare and luxury goods set high standards for precision. Packaging is expected to be perfectly made, with consistent finishes and exact inserts. We design and make rigid boxes for watches, chocolate and premium skincare, checked against approved samples.",
+    note: "Swiss brands in chocolate, watches, skincare and luxury goods set high standards for precision. Packaging is expected to be perfectly made, with consistent finishes and exact inserts. We design and make rigid boxes for watches, chocolate and premium skincare, checked against approved proofs.",
     industries: ["watches", "chocolates", "cosmetics", "jewelry", "food-bakery", "gifts-pr-kits"],
     services: ["watch-packaging-design", "chocolate-packaging-design", "luxury-packaging-design", "skincare-packaging-design"],
     boxes: ["rigid:magnetic-closure", "rigid:lid-and-base", "rigid:drawer", "rigid:book-style", "rigid:collapsible", "printed:folding-carton"],
@@ -323,7 +323,7 @@ const list: T2[] = [
     summary: "Food labelling in Japan is governed by the Food Labeling Act, administered by the Consumer Affairs Agency, with mandatory information in Japanese. Packaging also carries recycling identification marks for materials such as paper and plastic.",
     keyPoints: ["Mandatory information in Japanese.", "Food Labeling Act requirements for ingredients, allergens and nutrition.", "Recycling identification marks on many packaging materials."],
     sources: [{ label: "Consumer Affairs Agency", url: "https://www.caa.go.jp" }],
-    note: "Japanese consumers have exceptionally high expectations for packaging precision and gifting presentation. Clean corners, perfect registration and thoughtful opening sequences matter. We design and make rigid boxes checked against approved samples, and plan space for Japanese text and recycling marks.",
+    note: "Japanese consumers have exceptionally high expectations for packaging precision and gifting presentation. Clean corners, perfect registration and thoughtful opening sequences matter. We design and make rigid boxes checked against approved proofs, and plan space for Japanese text and recycling marks.",
     industries: ["cosmetics", "food-bakery", "chocolates", "jewelry", "gifts-pr-kits", "electronics"],
     services: ["luxury-packaging-design", "cosmetic-packaging-design", "gift-box-pr-kit-design", "box-packaging-design"],
     faqs: [

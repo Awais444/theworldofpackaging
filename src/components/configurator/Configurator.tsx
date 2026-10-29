@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { site, type CurrencyCode } from "@/config/site";
 import { finishes as allFinishes } from "@/content/materials";
 import { printedStyles } from "@/content/printedStyles";
@@ -10,7 +10,6 @@ import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
 import { CURRENCIES, formatMoney, fromUsd } from "@/lib/currency";
 import { estimate, MOQ, RATES, type Artwork, type BoxConfig, type BoxType, type PrintSides } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/store/cart";
 import { useConfigurator } from "@/store/configurator";
 import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 import { Button } from "@/components/ui/Button";
@@ -54,8 +53,6 @@ export function Configurator() {
   const router = useRouter();
   const reduce = useReducedMotion();
   const { config: c, unit, currency, step, set, reset, setUnit, setCurrency, setStep } = useConfigurator();
-  const addToCart = useCart((s) => s.add);
-  const [added, setAdded] = useState(false);
   const opts = useOptions(c);
   const est = useMemo(() => estimate(c), [c]);
 
@@ -290,19 +287,6 @@ export function Configurator() {
   const canAdvance = active.id === "dims" ? dimOk : active.id === "qty" ? qtyOk : true;
 
   const sendAsQuote = () => router.push("/get-a-quote?from=configurator");
-  const addSample = () => {
-    const priceUsd = RATES.samplePrice[c.type];
-    addToCart({
-      id: `sample-${c.type}-${c.style}`,
-      kind: "sample",
-      title: `${opts.styleName} sample`,
-      spec: [`${c.dims.l}×${c.dims.w}×${c.dims.h} mm`, c.type === "printed" ? c.board : `${c.board} mm`, ...c.finishes.slice(0, 2)],
-      priceUsd,
-    });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2200);
-  };
-
   // Example rates are never shown publicly: prices appear only once RATES.ratesConfirmed is true.
   const showPrices = RATES.ratesConfirmed;
 
@@ -353,19 +337,7 @@ export function Configurator() {
         <Button onClick={sendAsQuote} arrow disabled={!dimOk || !qtyOk}>
           Send as quote
         </Button>
-        {showPrices ? (
-          <Button variant="secondary" onClick={addSample}>
-            {added ? "Added to cart" : `Add sample · ${money(RATES.samplePrice[c.type])}`}
-          </Button>
-        ) : (
-          <Button variant="secondary" href="/samples">
-            Ask about a sample
-          </Button>
-        )}
       </div>
-      <p aria-live="polite" className="sr-only">
-        {added ? "Sample added to cart" : ""}
-      </p>
     </div>
   );
 

@@ -8,7 +8,7 @@ export function UtilityBar() {
     <div className="h-[var(--utility-h)] bg-blue-900 text-[13px] text-white">
       <div className="container-x flex h-full items-center justify-between gap-6">
         <p className="truncate">
-          MOQ {site.facts.rigidMoq} · Free design support ·{" "}
+          {site.facts.yearsExperience}+ years in packaging · MOQ {site.facts.rigidMoq} ·{" "}
           <Link href="/countries" className="underline-offset-2 hover:underline">
             Ships to 190+ countries
           </Link>

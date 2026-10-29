@@ -16,7 +16,7 @@ const leadTime = site.facts.rigidLeadTime === "TODO" ? null : site.facts.rigidLe
 
 const steps = [
   { title: "Share your brief", body: "Tell us the product, size, quantity and where it ships.", time: "Day 1" },
-  { title: "Design & sample", body: "We design or check your artwork, then make a physical sample.", time: `Concepts in ${site.facts.firstConceptHours} hrs` },
+  { title: "Design & proof", body: "Concepts, dieline, 3D mockup and a digital proof for your approval.", time: `Concepts in ${site.facts.firstConceptHours} hrs` },
   { title: "Production", body: "Your boxes are made, printed and checked in our own factory.", time: leadTime },
   { title: "Delivery", body: "Packed for export and shipped by air or sea to your door.", time: "Air or sea, tracked" },
 ];

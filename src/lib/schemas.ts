@@ -45,20 +45,6 @@ export const projectSchema = z.object({
 });
 export type ProjectInput = z.infer<typeof projectSchema>;
 
-
-export const checkoutSchema = z.object({
-  name: contact.name,
-  email: contact.email,
-  company: optionalText,
-  address: z.string().trim().min(5, "Enter a street address."),
-  city: z.string().trim().min(2, "Enter a city."),
-  postcode: z.string().trim().min(2, "Enter a postcode or ZIP."),
-  country: contact.country,
-  phone: optionalText,
-});
-export type CheckoutInput = z.infer<typeof checkoutSchema>;
-
-
 /** Homepage "Start your project" form: three fields. */
 
 export const newsletterSchema = z.object({

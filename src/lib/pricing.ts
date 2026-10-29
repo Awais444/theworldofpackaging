@@ -97,8 +97,6 @@ export const RATES = {
     /** Approximate weight per unit: kg per m² of surface by type. */
     kgPerM2: { rigid: 1.6, collapsible: 1.7, printed: 0.45 },
   },
-  /** Sample box price (USD), credited to the bulk order. */
-  samplePrice: { rigid: 95, collapsible: 110, printed: 45, swatches: 25 },
 };
 
 export const MOQ: Record<BoxType, number> = { rigid: 500, collapsible: 500, printed: 500 }; // printed TODO: site.facts.printedMoq

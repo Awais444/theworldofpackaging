@@ -28,9 +28,6 @@ export function OptionPage({ page }: { page: OptionPageContent }) {
             <Button href={quoteHref} size="lg" arrow>
               Get a Quote
             </Button>
-            <Button href="/samples" size="lg" variant="secondary">
-              Request a Sample
-            </Button>
           </>
         }
       />
@@ -85,11 +82,11 @@ export function OptionPage({ page }: { page: OptionPageContent }) {
         <CTABand
           title="Feel it before you choose"
           highlight="Feel"
-          text="We send swatches with your sample, so you pick materials and finishes in hand."
+          text="See your materials and finishes on a 3D mockup and digital proof before anything is printed."
           actions={
             <>
-              <Button href="/samples" variant="accent" size="lg" arrow>
-                Request a Sample
+              <Button href={quoteHref} variant="accent" size="lg" arrow>
+                Get a Quote
               </Button>
               <Button href={quoteHref} variant="white" size="lg">
                 Get a Quote

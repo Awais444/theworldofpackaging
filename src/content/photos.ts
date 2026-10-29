@@ -9,6 +9,8 @@ export type Photo = {
   position?: string;
   /** "contain" for portrait shots (e.g. flat dielines) that must not be cropped. */
   fit?: "cover" | "contain";
+  /** Secondary stock: only a 1200px file exists (`file` already ends in -1200). */
+  secondary?: boolean;
 };
 
 export const PHOTOS = {
@@ -58,4 +60,34 @@ export const STOCK = {
   serumPump: { file: "/images/design/serum-pump-bottle-dark", alt: "Black airless serum pump bottle with white print on an orange gradient" },
   dropperCarton: { file: "/images/design/dropper-bottle-carton-mockup", alt: "Amber dropper bottle with a white label beside its tall carton" },
   gelTube: { file: "/images/design/gel-cleanser-tube", alt: "Cream squeeze tube for a facial cleanser held in a lab stand" },
+  // Batch 2 (Images 2.rar)
+  navyMagnetic: { file: "/images/rigid/magnetic-closure-navy-gold", alt: "Navy magnetic closure rigid box with a gold foil logo, shown open and closed" },
+  candleLidBox: { file: "/images/rigid/candle-rigid-lid-box", alt: "White candle in a glass beside its white rigid lid and base box with gold foil script" },
+  homeFragrance: { file: "/images/design/home-fragrance-range", alt: "Home fragrance range with floral print: reed diffusers, candles, hand wash and paper tubes" },
+  amberCartons: { file: "/images/design/amber-bottles-illustrated-cartons", alt: "Amber glass bottles with illustrated labels beside matching watercolour-print cartons" },
+  pinkCartons: { file: "/images/design/pink-cosmetic-cartons", alt: "Rows of pink cosmetic cartons with gold foil script lettering" },
+  pinkSet: { file: "/images/design/pink-skincare-set", alt: "Pink and amber skincare bottles, tube and jar mock-up set on weathered wood" },
+  serumJar: { file: "/images/design/serum-bottles-jar", alt: "Two amber dropper bottles and a jar with orange labels in front of a red curtain" },
+  whiteCarton: { file: "/images/printed/white-minimal-carton", alt: "Minimal white tuck end carton with fine grey print beside coconuts" },
+  gummyPouches: { file: "/images/design/gummy-stand-up-pouches", alt: "Orange, green and pink printed stand-up pouches for a gummy kit" },
+  flatBottomPouches: { file: "/images/design/flat-bottom-pouches", alt: "Three flat-bottom pouches for a nutrition shake with bold product illustrations" },
+  coffeeWhite: { file: "/images/design/coffee-pouch-white", alt: "White flat-bottom coffee pouch with a printed blend label" },
+  coffeeOutdoor: { file: "/images/design/coffee-bag-outdoor", alt: "White coffee bag with a black logo held up on a country road" },
+  mailerBag: { file: "/images/design/mailer-bag-custom-tape", alt: "Printed poly mailer bag with custom printed packing tapes and a sleeved box" },
+  tealMailer: { file: "/images/printed/teal-printed-mailer", alt: "Teal printed mailer box with a wave pattern and a white address label" },
+  retailShelf: { file: "/images/printed/retail-shelf-coffee", alt: "Café shelf with printed coffee bags, bottles and cups", position: "50% 70%" },
+} satisfies Record<string, Photo>;
+
+/**
+ * Secondary stock: third-party brands visible (review before launch, see CONTENT_TODO.md). 1200px file only;
+ * use only late in galleries, never as a hero, main card image, on /work or near "our client/project" wording.
+ */
+const secondaryPhoto = (name: string, alt: string): Photo => ({ file: `/images/${name}-1200`, alt, secondary: true });
+export const SECONDARY = {
+  retailWall: secondaryPhoto("printed/retail-wall-display", "Red-lit retail wall display stacked with printed coffee bags and cups"),
+  foodJars: secondaryPhoto("design/food-jars-shelf", "Glass food jars with printed wrap labels on a store shelf"),
+  coffeeCafe: secondaryPhoto("design/coffee-bags-cafe", "Black and white photo of printed coffee bags beside a café grinder"),
+  gameBoxes: secondaryPhoto("rigid/game-box-set", "Illustrated board game boxes with a rulebook and cards"),
+  techBox: secondaryPhoto("printed/tech-product-box", "White electronics box with a black printed sleeve and product inside"),
+  hairLifestyle: secondaryPhoto("design/hair-products-lifestyle", "Two people holding colourful printed hair care cans and tubes"),
 } satisfies Record<string, Photo>;

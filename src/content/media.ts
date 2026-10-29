@@ -2,7 +2,7 @@ import type { IllustrationKey } from "@/components/illustrations";
 import { designServices } from "./designServices";
 import { servicePages } from "./servicePages";
 import { caseStudies } from "./caseStudies";
-import { PHOTOS, STOCK, type Photo, type PhotoKey } from "./photos";
+import { PHOTOS, SECONDARY, STOCK, type Photo, type PhotoKey } from "./photos";
 import { industries } from "./industries";
 import { printedStyles } from "./printedStyles";
 import { rigidStyles } from "./rigidStyles";
@@ -310,11 +310,45 @@ const photos: Record<string, Photo> = {
   "design-hair-care-packaging-design-2": STOCK.shampooBottles,
   "design-pouch-packaging-design-2": STOCK.maskSachet,
   "design-pouch-packaging-design-3": STOCK.coffeeYellow,
+  // Stock batch 2.
+  "rigid-magnetic-closure-gallery-1": STOCK.navyMagnetic,
+  "design-luxury-packaging-design-2": STOCK.navyMagnetic,
+  "design-candle-packaging-design-1": STOCK.candleLidBox,
+  "rigid-lid-and-base-gallery-1": STOCK.candleLidBox,
+  "design-candle-packaging-design-2": STOCK.homeFragrance,
+  "rigid-tube-gallery-2": STOCK.homeFragrance,
+  "design-bottle-label-design-3": STOCK.amberCartons,
+  "printed-folding-carton-gallery-2": STOCK.amberCartons,
+  "design-makeup-packaging-design-2": STOCK.pinkCartons,
+  "design-cosmetic-packaging-design-1": STOCK.pinkCartons,
+  "design-skincare-packaging-design-5": STOCK.serumJar,
+  "design-skincare-packaging-design-6": STOCK.pinkSet,
+  "design-jar-label-design-2": STOCK.serumJar,
+  "printed-tuck-end-gallery-1": STOCK.whiteCarton,
+  "design-pouch-packaging-design-4": STOCK.gummyPouches,
+  "design-bakery-confectionery-packaging-design-2": STOCK.gummyPouches,
+  "design-supplement-label-design-1": STOCK.flatBottomPouches,
+  "design-coffee-tea-packaging-design-6": STOCK.coffeeWhite,
+  "design-pouch-packaging-design-5": STOCK.coffeeOutdoor,
+  "design-unboxing-packaging-design-2": STOCK.mailerBag,
+  "design-amazon-packaging-design-1": STOCK.mailerBag,
+  "printed-mailer-gallery-2": STOCK.tealMailer,
+  "design-retail-packaging-design-2": STOCK.retailShelf,
+  // Secondary (third-party brands visible): late gallery positions only.
+  "design-retail-packaging-design-4": SECONDARY.coffeeCafe,
+  "design-retail-packaging-design-6": SECONDARY.retailWall,
+  "printed-display-gallery-6": SECONDARY.retailWall,
+  "design-food-packaging-design-6": SECONDARY.foodJars,
+  "design-jar-label-design-6": SECONDARY.foodJars,
+  "rigid-lid-and-base-gallery-6": SECONDARY.gameBoxes,
+  "design-toy-game-packaging-design-6": SECONDARY.gameBoxes,
+  "design-electronics-packaging-design-6": SECONDARY.techBox,
+  "design-hair-care-packaging-design-6": SECONDARY.hairLifestyle,
 };
 
 const withPhoto = (s: MediaSlot): MediaSlot => {
   const p = photos[s.id];
-  return p ? { ...s, src: `${p.file}.webp`, srcCard: `${p.file}-1200.webp`, alt: p.alt, position: p.position, fit: p.fit } : s;
+  return p ? { ...s, src: `${p.file}.webp`, srcCard: p.secondary ? `${p.file}.webp` : `${p.file}-1200.webp`, alt: p.alt, position: p.position, fit: p.fit } : s;
 };
 
 /** Central image registry: every slot on the site. See MEDIA_SLOTS.md for the shot list. */

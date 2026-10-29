@@ -142,7 +142,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
 
       {/* Portfolio */}
       <Section>
-        <SectionHeader eyebrow="Portfolio" title="Design directions for this category" highlight="directions" />
+        <SectionHeader eyebrow="Category examples" title="Design directions for this category" highlight="directions" lead="Example visuals of this packaging format, not client projects." />
         <div className="mt-10 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3">
           {s.portfolioSlots.map((slot) => (
             <Media key={slot} slot={slot} sizes="(min-width: 1024px) 33vw, 50vw" />

@@ -112,6 +112,21 @@ All 10 are live in `src/content/caseStudies.ts` (placeholder: false). For each, 
 ## 5. Media
 
 - [ ] Confirm licence (e.g. Unsplash free licence) for all stock photos in public/images. Stock files are listed as `STOCK` in `src/content/photos.ts`: generic category visuals, never shown as our work, never on /work, testimonials or /blog.
+  - Batch 1 (images.rar): 22 photos plus 3 extras (serum pump bottle, dropper bottle + carton, gel cleanser tube).
+  - Batch 2 (Images 2.rar): 15 main photos (`STOCK`, "Batch 2") and 7 secondary photos (`SECONDARY`).
+
+### Third-party brands visible — review before launch
+
+Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, late gallery positions). Replace or remove before launch if the brands are a concern:
+
+- Not used: 3840d29d (near-duplicate of 33c82016; looked like a repeat in the same gallery).
+- [ ] 860ab0b4 red retail wall of coffee bags → `design-retail-packaging-design-6`, `printed-display-gallery-6`
+- [ ] 2c7f42b7 pickle jars on a shelf → `design-food-packaging-design-6`, `design-jar-label-design-6`
+- [ ] 94fc47a0 coffee bags at a café → `design-retail-packaging-design-4`
+- [ ] a22a7b83 board game boxes → `rigid-lid-and-base-gallery-6`, `design-toy-game-packaging-design-6`
+- [ ] e034a499 tech product box → `design-electronics-packaging-design-6`
+- [ ] 3a1564f5 models holding hair products → `design-hair-care-packaging-design-6`
+- Not used: cfbee137 (Chloé perfume, famous brand) and 46c18189 (gift tag advertising another packaging company, customerbox.ir).
 
 - [ ] Real photos for the 189 image slots listed in `MEDIA_SLOTS.md`. Until then every slot shows a brand illustration.
 - [ ] Optional: a 5–8 s muted video loop for the homepage hero (`home-hero` supports `video`)

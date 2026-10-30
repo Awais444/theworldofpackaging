@@ -155,3 +155,18 @@ Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, l
 - [ ] Add more client names to `site.clients` in `src/config/site.ts`
 - [ ] Confirm founding year 2010 (the site currently uses `facts.foundedYear: 2011`)
 - [ ] About timeline: confirm years and wording for the four milestones after "Started as Anmol Printers"
+
+## SEO, GEO and AEO work (2026-10-30): facts to confirm
+
+These appear on the site, in schema and in `/llms.txt`. Each comes from `src/config/site.ts` or a content file, so one edit updates everywhere.
+
+- [ ] **Founding year:** `facts.foundedYear` is 2011. It shows in Organization schema (`foundingDate`), the About company facts, the timeline and `/llms.txt`. (The earlier note says to confirm 2010.)
+- [ ] **"Ships to 190+ countries":** used in the company facts, `/llms.txt`, the footer and the utility bar. Confirm you're happy to state it.
+- [ ] **"First concepts usually within 48 hours":** `facts.firstConceptHours`. Used in answer paragraphs, key facts and `/llms-full.txt`.
+- [ ] **Factory address:** `site.address` is empty, so Organization schema has country only. Add it for Google Business Profile and NAP consistency (see `GEO_CHECKLIST.md`).
+- [ ] **Social profile URLs:** `site.socials` are empty, so there's no `sameAs` in schema. Fill them in once the profiles exist.
+- [ ] **Search engine verification codes:** set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION` and `INDEXNOW_KEY` on Vercel.
+- [ ] **Named author for guides (optional):** guides credit "the packaging team at The World of Packaging". Give a name and role if you want a named expert in Article schema and on the page.
+- [ ] **Glossary wording** (`src/content/glossary.ts`, 48 terms): general industry definitions. Review the shipping terms (DDP, FOB, EXW) and the "MOQ 500" line.
+- [ ] **Answer paragraphs** (`src/content/answers.ts`): built from each page's own copy plus `site.ts` facts. Spot-check a few box, industry and country pages.
+- [ ] **Shared FAQs:** box, industry and design pages share some FAQs from common lists. Making every page's FAQs unique is a later content task (see `audit/PHASE2_REPORT.md`).

@@ -1,10 +1,14 @@
-import Image from "next/image";
+import { preload } from "react-dom";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Highlight } from "@/components/ui/Highlight";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { quoteHref } from "@/content/links";
 import { site, yearsLabel } from "@/config/site";
+import hero from "@/content/heroImage.json";
+
+// Static variants from scripts/gen-hero.mjs (prebuild): no runtime optimisation for the LCP-area image.
+const HERO_SIZES = "(min-width: 1024px) 46vw, 92vw";
 
 // Same facts as the utility bar and companyFacts.
 const trust = [yearsLabel(), `MOQ ${site.facts.rigidMoq}`, "190+ countries"];
@@ -17,6 +21,8 @@ const captions = [`${yearsLabel("Years")} in Packaging`, `MOQ ${site.facts.rigid
  * reduced motion. The image is a concept mockup: never used in /work or the portfolio.
  */
 export function HomeHero() {
+  // React hoists this into <head>, ahead of the stylesheets. AVIF only: browsers without it skip the hint.
+  preload(hero.fallback, { as: "image", type: "image/avif", imageSrcSet: hero.avif, imageSizes: HERO_SIZES, fetchPriority: "high" });
   return (
     <section className="hero-in overflow-hidden bg-white">
       <div className="container-x grid gap-10 pb-16 pt-14 lg:min-h-[min(760px,calc(100svh-var(--header-h)-var(--utility-h)-104px))] lg:grid-cols-12 lg:gap-12">
@@ -59,16 +65,21 @@ export function HomeHero() {
           <div className="flex w-full flex-1 items-end justify-center lg:justify-start">
             {/* ~110% of the column on desktop, overflowing slightly to the right (clipped by the section). */}
             <div className="hero-pouch w-full shrink-0 lg:w-[110%] lg:max-w-none">
-              <Image
-                src="/images/hero/hero-fuelo-pouch.webp"
-                alt="Stand-up pouch packaging design with orange splash, granola and orange slices"
-                width={1448}
-                height={1086}
-                priority
-                fetchPriority="high"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="mx-auto h-auto max-h-[380px] w-auto max-w-full object-contain lg:max-h-[560px] lg:w-full"
-              />
+              <picture className="hero-pouch-float block">
+                <source type="image/avif" srcSet={hero.avif} sizes={HERO_SIZES} />
+                <source type="image/webp" srcSet={hero.webp} sizes={HERO_SIZES} />
+                <img
+                  src={hero.fallback}
+                  alt="Stand-up pouch packaging design with orange splash, granola and orange slices"
+                  width={hero.width}
+                  height={hero.height}
+                  sizes={HERO_SIZES}
+                  fetchPriority="high"
+                  decoding="async"
+                  loading="eager"
+                  className="mx-auto h-auto max-h-[380px] w-auto max-w-full object-contain lg:max-h-[560px] lg:w-full"
+                />
+              </picture>
             </div>
           </div>
           <div className="relative z-10 mt-4 flex h-14 w-full items-center justify-between gap-4 rounded-2xl border border-silver-100 bg-white px-6 shadow-[0_8px_24px_rgba(20,19,23,.06)] lg:-mt-6 lg:w-[85%]">

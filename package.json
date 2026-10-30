@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "prebuild": "node scripts/gen-blur.mjs && node scripts/gen-content-dates.mjs",
+    "prebuild": "node scripts/gen-hero.mjs && node scripts/gen-blur.mjs && node scripts/gen-content-dates.mjs",
     "blur": "node scripts/gen-blur.mjs",
     "lhci": "npx --yes @lhci/cli@0.14.0 autorun",
     "bundle-report": "node scripts/bundle-report.mjs . http://localhost:3100"

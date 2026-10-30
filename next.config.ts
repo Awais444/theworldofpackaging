@@ -45,6 +45,8 @@ const nextConfig: NextConfig = {
       { source: "/:path*", headers: security },
       // Photos: 30 days (files are replaced in place when real photos arrive, so not "immutable").
       { source: "/images/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }] },
+      // Hero variants carry a content hash in the file name (scripts/gen-hero.mjs), so they never change in place.
+      { source: "/images/hero/:file([^/]+-[0-9a-f]{8}\\.(?:avif|webp))", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/brand/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }] },
     ];
   },

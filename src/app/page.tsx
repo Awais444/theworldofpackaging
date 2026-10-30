@@ -20,8 +20,8 @@ import { TrustedBy } from "@/components/home/TrustedBy";
 import { Media } from "@/components/media/Media";
 
 export const metadata: Metadata = {
-  title: { absolute: "Packaging Design That Sells. Made in Our Own Factory" },
-  description: metaDescription(`Packaging design that sells, made in our own factory: ${site.facts.yearsExperience}+ years of boxes, labels and pouches for food, cosmetic and supplement brands. Free quote.`),
+  title: { absolute: "Packaging Designed and Made Under One Roof | TWOP" },
+  description: metaDescription(`Packaging designed and made under one roof, in our own factory: ${site.facts.yearsExperience}+ years of boxes, labels and pouches for food, cosmetic and supplement brands. Free quote.`),
   alternates: { canonical: "/" }, openGraph: ogFor("/"),
 };
 

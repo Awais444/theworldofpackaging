@@ -408,7 +408,7 @@ html.lenis body {
 }
 
 /* Homepage hero entrance (components/home/HomeHero.tsx). CSS only, so the LCP text paints at once:
-   lines rise 14px in sequence, the pouch fades in, the H1 word rotates. Off with reduced motion. */
+   lines rise 14px in sequence, the pouch fades in. Off with reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-in [data-hero-line] { animation: hero-rise 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) both; }
   .hero-in [data-hero-line]:nth-child(2) { animation-delay: 0.06s; }
@@ -417,33 +417,15 @@ html.lenis body {
   .hero-in [data-hero-line]:nth-child(5) { animation-delay: 0.24s; }
   /* Pouch image: a one-time fade that always ends at opacity 1 (the base state is final). */
   .hero-pouch { animation: hero-pouch-in 0.4s ease-out forwards; }
-  /* H1 service word: 5 words, 2.5s each. Words share one grid cell; the first is the static fallback. Delays start
-     3% in, so the first word (part of the LCP H1) is fully visible on first paint. */
-  .hero-word > span { animation: hero-word 12.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite backwards; animation-delay: -0.375s; }
-  .hero-word > span:nth-child(2) { animation-delay: 2.125s; }
-  .hero-word > span:nth-child(3) { animation-delay: 4.625s; }
-  .hero-word > span:nth-child(4) { animation-delay: 7.125s; }
-  .hero-word > span:nth-child(5) { animation-delay: 9.625s; }
 }
 @keyframes hero-rise { from { transform: translateY(14px); } }
 @keyframes hero-pouch-in { from { opacity: 0.001; } to { opacity: 1; } }
-.hero-word > span:not(:first-child) { opacity: 0; }
-@keyframes hero-word {
-  0% { opacity: 0; transform: translateY(0.25em); }
-  3%, 17% { opacity: 1; transform: none; }
-  20%, 100% { opacity: 0; transform: translateY(-0.25em); }
-}
 
-/* Hero caption card: captions share one grid cell; only the first shows unless motion is allowed. */
-.hero-caption > span:not(:first-child) { opacity: 0; }
+/* Hero green status dot: soft pulsing ring, off with reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero-caption > span { animation: hero-caption 9s ease-in-out infinite; opacity: 0; }
-  .hero-caption > span:nth-child(2) { animation-delay: 3s; }
-  .hero-caption > span:nth-child(3) { animation-delay: 6s; }
   .hero-dot::after {
     content: ""; position: absolute; inset: 0; border-radius: 9999px; background: var(--success);
     animation: hero-dot 2s ease-out infinite;
   }
 }
-@keyframes hero-caption { 0%, 30% { opacity: 1; } 36%, 94% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes hero-dot { from { transform: scale(1); opacity: 0.5; } to { transform: scale(2.6); opacity: 0; } }

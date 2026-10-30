@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ProjectForm } from "@/components/forms/ProjectForm";
@@ -8,7 +8,7 @@ import { withHighlight } from "@/components/ui/withHighlight";
 export const metadata: Metadata = {
   title: "Start a Project",
   description: metaDescription(`Brief us on branding, packaging design or production. We reply ${site.facts.quoteReply}.`),
-  alternates: { canonical: "/start-a-project" },
+  alternates: { canonical: "/start-a-project" }, openGraph: ogFor("/start-a-project"),
 };
 
 export default function StartProjectPage() {

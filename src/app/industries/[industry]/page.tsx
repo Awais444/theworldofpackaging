@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { industryAnswer } from "@/content/answers";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { ArrowRight, Gift, Info, ShieldCheck, Store, type LucideIcon } from "lucide-react";
 import Link from "next/link";
@@ -40,6 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${ind.name} Boxes and Packaging`,
     description: metaDescription(ind.intro),
     alternates: { canonical: `/industries/${ind.slug}` },
+    openGraph: ogFor(`/industries/${ind.slug}`),
   };
 }
 
@@ -72,7 +74,7 @@ export default async function IndustryPage({ params }: Props) {
         eyebrow="Industry"
         title={`${ind.name} boxes and packaging`}
         highlight="boxes"
-        intro={<p>{ind.intro}</p>}
+        intro={<p>{industryAnswer(ind)}</p>}
         slotId={`industry-${ind.slug}-hero`}
         actions={
           <>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { serviceCommonFaqs } from "@/content/agencyServices";
 import { servicePages, type ServicePage } from "@/content/servicePages";
@@ -21,7 +21,7 @@ import { faqPage } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Branding Services",
   description: metaDescription("Brand identity, logo design, packaging design, label design, structural dielines and 3D mockups, from a studio with its own box factory."),
-  alternates: { canonical: "/services" },
+  alternates: { canonical: "/services" }, openGraph: ogFor("/services"),
 };
 
 const benefits = [

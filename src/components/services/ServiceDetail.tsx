@@ -1,4 +1,5 @@
 import { site } from "@/config/site";
+import { fitAnswer } from "@/content/answers";
 import { CheckCircle2 } from "lucide-react";
 import { publicCaseStudies as caseStudies } from "@/content/caseStudies";
 import { printedStyles } from "@/content/printedStyles";
@@ -37,7 +38,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
         crumbs={[{ label: "Services", href: "/services" }, { label: s.name }]}
         eyebrow="Design service"
         title={s.name}
-        intro={<p>{s.intro}</p>}
+        intro={<p>{fitAnswer([s.intro, s.summary, `We design it alongside packaging and make the boxes in our own factory, so the brand works on pack from the start.`])}</p>}
         slotId={`service-${s.slug}-hero`}
         actions={
           <>

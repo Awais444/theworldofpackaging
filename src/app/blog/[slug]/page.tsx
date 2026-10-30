@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { GuideTerms } from "@/components/blog/GuideTerms";
+import { site } from "@/config/site";
+import { LastUpdated } from "@/components/seo/LastUpdated";
+import { guideAnswer } from "@/content/answers";
+import { metaDescription, ogFor } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, posts } from "@/content/blog/posts";
@@ -31,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.seoTitle ?? post.title,
     description: metaDescription(post.description),
     alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: { type: "article", publishedTime: post.date },
+    openGraph: ogFor(`/blog/${post.slug}`, { type: "article", publishedTime: post.date }),
   };
 }
 
@@ -65,11 +69,14 @@ export default async function PostPage({ params }: Props) {
               ))}
             </div>
             <h1 className="text-h1 mt-4">{post.title}</h1>
-            <p className="text-lead mt-4 text-ink-500">{post.description}</p>
+            <p className="text-lead mt-4 text-ink-500">{guideAnswer(post)}</p>
             <p className="mt-4 text-sm text-ink-500">
               {dateFmt.format(new Date(post.date))} · {post.readingMinutes} min read
             </p>
-            {post.reviewed && <p className="mt-1 text-sm font-semibold text-ink-900">Last reviewed: {dateFmt.format(new Date(post.reviewed))}</p>}
+            <LastUpdated date={new Date(post.reviewed ?? post.date)} className="mt-1 font-semibold text-ink-900" />
+            <p className="mt-1 text-sm text-ink-500">
+              Written by the packaging team at {site.name}{post.reviewed ? `; regulatory sections reviewed on ${dateFmt.format(new Date(post.reviewed))}` : ""}.
+            </p>
           </div>
           <div className="mx-auto mt-10 max-w-4xl rounded-3xl bg-blue-50 p-[4%]" aria-hidden="true" style={{ aspectRatio: "16 / 9" }}>
             <Art />
@@ -79,6 +86,7 @@ export default async function PostPage({ params }: Props) {
       <div className="container-x py-12 md:py-16">
         <div className="mx-auto max-w-3xl">
           <Body />
+          <GuideTerms slug={post.slug} />
 
           {post.kind === "compliance" && (
             <aside className="mt-12 rounded-2xl border border-silver-300 bg-silver-50 p-6">

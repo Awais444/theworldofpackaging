@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2, Cog } from "lucide-react";
 import { site } from "@/config/site";
 import { capacityNote, machines, productionSteps, qcChecklist, sustainability } from "@/content/company";
@@ -17,7 +17,7 @@ import { StepList } from "@/components/ui/StepList";
 export const metadata: Metadata = {
   title: "Our Rigid Box Factory",
   description: metaDescription(`Cutting, printing, wrapping, corner pasting, inserts and quality control under one roof in ${site.country}.`),
-  alternates: { canonical: "/factory" },
+  alternates: { canonical: "/factory" }, openGraph: ogFor("/factory"),
 };
 
 export default function FactoryPage() {

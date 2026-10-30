@@ -8,7 +8,7 @@ import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
 import { countries, isIndexable } from "@/content/countries";
 import { abs } from "@/lib/schema";
-import contentDates from "@/content/contentDates.json";
+import { lastModified } from "@/lib/contentDates";
 import { media } from "@/content/media";
 import { portfolio } from "@/content/portfolio";
 
@@ -17,11 +17,7 @@ export const SITEMAP_IDS = ["core", "manufacturing", "agency", "industries", "gu
 type Id = (typeof SITEMAP_IDS)[number];
 
 /** Latest git commit date among the files a page is built from (scripts/gen-content-dates.mjs). */
-const dates = contentDates as Record<string, string>;
-const lastMod = (...globs: string[]): Date | undefined => {
-  const hits = Object.entries(dates).filter(([file]) => globs.some((g) => (g.endsWith("*") ? file.startsWith(g.slice(0, -1)) : file === g))).map(([, d]) => d);
-  return hits.length ? new Date(hits.sort().at(-1)!) : undefined;
-};
+const lastMod = lastModified;
 const pageFile = (p: string) => `src/app${p === "/" ? "" : p}/page.tsx`;
 const C = "src/content/";
 
@@ -60,6 +56,7 @@ const sections: Record<Id, () => MetadataRoute.Sitemap> = {
   countries: () => [entry("/countries", 0.8, "monthly", [`${C}countries*`]), ...countries.filter(isIndexable).map((c) => entry(`/countries/${c.slug}`, c.tier === 1 ? 0.8 : 0.6, "monthly", ["src/app/countries/[slug]/page.tsx", `${C}countries*`]))],
   guides: () => [
     entry("/blog", 0.7, "weekly", [`${C}blog/*`]),
+    entry("/glossary", 0.6, "monthly", [`${C}glossary.ts`]),
     ...posts.map((p) => ({ ...entry(`/blog/${p.slug}`, 0.6), lastModified: new Date(p.reviewed ?? p.date) })),
   ],
 };

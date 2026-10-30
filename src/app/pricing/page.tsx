@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
@@ -22,7 +22,7 @@ import { faqPage } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Packaging Design Cost and Pricing",
   description: metaDescription("Packaging design cost explained: what affects the price, design fees credited when we manufacture in our own factory. Get a free quote."),
-  alternates: { canonical: "/pricing" },
+  alternates: { canonical: "/pricing" }, openGraph: ogFor("/pricing"),
 };
 
 type Row = { href: string; name: string; cells: string[]; price: string };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { posts } from "@/content/blog/posts";
@@ -16,7 +16,7 @@ import { Tag } from "@/components/ui/Tag";
 export const metadata: Metadata = {
   title: "Blog: packaging guides",
   description: metaDescription("Practical guides on rigid and folding carton boxes, measuring box sizes and collapsible rigid boxes."),
-  alternates: { canonical: "/blog" },
+  alternates: { canonical: "/blog" }, openGraph: ogFor("/blog"),
 };
 
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
@@ -30,7 +30,7 @@ export default function BlogPage() {
         eyebrow="Blog"
         title="Packaging guides from our studio"
         highlight="guides"
-        intro={<p>What we explain to clients most often, written down once.</p>}
+        intro={<p>What we explain to clients most often, written down once. New to the terms? Start with the <Link href="/glossary" className="font-semibold text-blue-600 hover:underline">packaging glossary</Link>.</p>}
       />
       <Section className="!pt-0">
         <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

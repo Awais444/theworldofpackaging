@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { companyFacts } from "@/lib/companyFacts";
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { factStats, heritageLine, site } from "@/config/site";
 import { differences, milestones, story, teamGroups, values } from "@/content/company";
@@ -18,7 +19,7 @@ import { Timeline } from "@/components/ui/Timeline";
 export const metadata: Metadata = {
   title: "About Our Studio and Factory",
   description: metaDescription(`${site.facts.yearsExperience}+ years in packaging: ${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}.`),
-  alternates: { canonical: "/about" },
+  alternates: { canonical: "/about" }, openGraph: ogFor("/about"),
 };
 
 export default function AboutPage() {
@@ -82,6 +83,18 @@ export default function AboutPage() {
             <StatCard key={n.label} value={n.value} label={n.label} />
           ))}
         </div>
+      </Section>
+
+      <Section bg="silver-50">
+        <SectionHeader eyebrow="Company facts" title="The World of Packaging at a glance" highlight="glance" />
+        <dl className="mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+          {companyFacts().map((f) => (
+            <div key={f.label} className="border-t border-silver-300 pt-3">
+              <dt className="text-sm font-semibold text-ink-500">{f.label}</dt>
+              <dd className="mt-1 font-semibold text-ink-900">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
       </Section>
 
       <Section>

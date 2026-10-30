@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isIndexable } from "@/content/countries";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { Plane, Ship } from "lucide-react";
 import Link from "next/link";
 import { site } from "@/config/site";
@@ -19,7 +19,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 export const metadata: Metadata = {
   title: "Countries We Ship Packaging To",
   description: metaDescription("Packaging design and custom boxes for brands worldwide: local labelling notes, currency and shipping by air or sea from our own factory. Get a free quote."),
-  alternates: { canonical: "/countries" },
+  alternates: { canonical: "/countries" }, openGraph: ogFor("/countries"),
 };
 
 export default function CountriesHub() {

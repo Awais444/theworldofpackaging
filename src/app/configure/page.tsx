@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Configurator } from "@/components/configurator/Configurator";
 import { SpecLabel } from "@/components/ui/SpecLabel";
@@ -7,7 +7,7 @@ import { SpecLabel } from "@/components/ui/SpecLabel";
 export const metadata: Metadata = {
   title: "Configure a Box: live estimate",
   description: metaDescription("Build a rigid, collapsible or printed box step by step and see a live estimate in six currencies."),
-  alternates: { canonical: "/configure" },
+  alternates: { canonical: "/configure" }, openGraph: ogFor("/configure"),
 };
 
 export default function ConfigurePage() {

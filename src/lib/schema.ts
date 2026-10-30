@@ -145,3 +145,14 @@ export function collectionPage(c: { name: string; description: string; path: str
     },
   };
 }
+
+/** Glossary: DefinedTermSet with one DefinedTerm per entry (anchor URLs). */
+export function definedTermSet(d: { name: string; path: string; terms: Array<{ term: string; id: string; definition: string }> }): WithContext<import("schema-dts").DefinedTermSet> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name: d.name,
+    url: abs(d.path),
+    hasDefinedTerm: d.terms.map((t) => ({ "@type": "DefinedTerm", name: t.term, description: t.definition, url: abs(`${d.path}#${t.id}`), inDefinedTermSet: abs(d.path) })),
+  };
+}

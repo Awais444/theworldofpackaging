@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
 import { BoxStylePage } from "@/components/boxes/BoxStylePage";
@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `Custom ${style.name}${/box$/i.test(style.name) ? "es" : "s"}`,
     description: metaDescription(`${style.summary} Made in our own factory from MOQ ${style.moq}, shipped worldwide.`),
     alternates: { canonical: `/rigid-boxes/${style.slug}` },
+    openGraph: ogFor(`/rigid-boxes/${style.slug}`),
   };
 }
 

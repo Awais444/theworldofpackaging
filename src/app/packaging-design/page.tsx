@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import Link from "next/link";
 import { getPost } from "@/content/blog/posts";
 import { hubFaqs, hubGuides, hubSections } from "@/content/designHubCopy";
@@ -22,7 +22,7 @@ import { faqPage } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Packaging Design Services",
   description: metaDescription(`${site.facts.yearsExperience}+ years in packaging. Design for boxes, labels and pouches, made in our own factory from ${site.facts.rigidMoq} units. Concepts in 48 hours. Free quote.`),
-  alternates: { canonical: "/packaging-design" },
+  alternates: { canonical: "/packaging-design" }, openGraph: ogFor("/packaging-design"),
 };
 
 const reasons = [

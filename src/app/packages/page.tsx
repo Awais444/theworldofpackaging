@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { Check, CheckCircle2, Minus } from "lucide-react";
 import { site } from "@/config/site";
 import { packageComparison, packages } from "@/content/packages";
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Design and Packaging Bundles",
   description: metaDescription(`Fixed-scope bundles that combine branding, packaging design and rigid box production. From ${site.facts.rigidMoq} boxes.`),
-  alternates: { canonical: "/packages" },
+  alternates: { canonical: "/packages" }, openGraph: ogFor("/packages"),
 };
 
 const faqs = [

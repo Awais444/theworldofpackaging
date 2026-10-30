@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { site } from "@/config/site";
 import { processSteps, whatWeNeed } from "@/content/process";
@@ -19,7 +19,7 @@ import { faqPage, howTo } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "How It Works: Brief to Boxes",
   description: metaDescription("Six steps from brief to delivery: brief, design, digital proof, approval, production and shipping by air or sea."),
-  alternates: { canonical: "/how-it-works" },
+  alternates: { canonical: "/how-it-works" }, openGraph: ogFor("/how-it-works"),
 };
 
 const faqs = [

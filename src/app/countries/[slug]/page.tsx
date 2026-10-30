@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { lastModified } from "@/lib/contentDates";
+import { LastUpdated } from "@/components/seo/LastUpdated";
+import { countryAnswer } from "@/content/answers";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2, ExternalLink, Factory, Plane, Ship, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -43,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: pageTitle(c),
     description: metaDescription(description),
-    alternates: { canonical: countryHref(c.slug) },
+    alternates: { canonical: countryHref(c.slug) }, openGraph: ogFor(countryHref(c.slug)),
     robots: isIndexable(c) ? undefined : { index: false, follow: true },
   };
 }
@@ -91,7 +94,8 @@ export default async function CountryPage({ params }: Props) {
               <p className="text-eyebrow text-blue-600">{c.region}</p>
             </div>
             <h1 className="text-h1 mt-5">Packaging design &amp; custom boxes for {c.name} brands</h1>
-            <p className="text-lead mt-5 text-ink-500">{c.lead}</p>
+            <p className="text-lead mt-5 text-ink-500">{countryAnswer(c)}</p>
+            <LastUpdated date={lastModified("src/app/countries/[slug]/page.tsx", "src/content/countries*")} className="mt-3" />
             <ul className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
               {[`MOQ ${site.facts.rigidMoq}`, "Own factory", `Ships to ${name} by air & sea`].map((t) => (
                 <li key={t} className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-4 py-2 text-orange-text">

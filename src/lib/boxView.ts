@@ -15,6 +15,8 @@ export type BoxView = {
   name: string;
   href: string;
   summary: string;
+  /** Rigid MOQ; null for printed (MOQ on quote). */
+  moq: number | null;
   description: string;
   chips: Array<{ label: string; value: string }>;
   highlights: string[];
@@ -64,6 +66,7 @@ export function rigidView(s: RigidStyle): BoxView {
     name: s.name,
     href: rigidHref(s.slug),
     summary: s.summary,
+    moq: s.moq,
     description: s.description,
     chips: [
       { label: "MOQ", value: String(s.moq) },
@@ -112,6 +115,7 @@ export function printedView(s: PrintedStyle): BoxView {
     name: s.name,
     href: printedHref(s.slug),
     summary: s.summary,
+    moq: null,
     description: s.description,
     chips: [
       { label: "MOQ", value: s.moq ? String(s.moq) : "On quote" },

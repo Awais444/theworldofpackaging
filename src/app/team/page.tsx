@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { teamGroups } from "@/content/company";
 import { quoteHref } from "@/content/navigation";
@@ -11,7 +11,7 @@ import { Section } from "@/components/ui/Layout";
 export const metadata: Metadata = {
   title: "Our Design and Factory Team",
   description: metaDescription("The packaging designers, brand designers, pre-press and factory teams who take your packaging from sketch to delivered box."),
-  alternates: { canonical: "/team" },
+  alternates: { canonical: "/team" }, openGraph: ogFor("/team"),
 };
 
 export default function TeamPage() {

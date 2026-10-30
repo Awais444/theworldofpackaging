@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { publicCaseStudies } from "@/content/caseStudies";
 import { WORK_SERVICES, getWorkService } from "@/content/workServices";
 import { designHref } from "@/content/designServices";
@@ -26,7 +26,7 @@ import { printedCard, rigidCard } from "@/lib/boxView";
 export const metadata: Metadata = {
   title: "Work: packaging we design and make",
   description: metaDescription("Packaging design projects and the boxes we make in our own factory: cosmetic, food, coffee, candle and jewellery packaging, labels and rigid boxes."),
-  alternates: { canonical: "/work" },
+  alternates: { canonical: "/work" }, openGraph: ogFor("/work"),
 };
 
 /** Shown until real, approved case studies exist (sample projects are never published). */

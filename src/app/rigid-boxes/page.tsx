@@ -3,7 +3,7 @@ import { rigidHref } from "@/lib/boxView";
 import { rigidStyles } from "@/content/rigidStyles";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { hubFaqs, rigidTabs } from "@/content/hubs";
 import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxes/BoxHub";
@@ -11,7 +11,7 @@ import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxe
 export const metadata: Metadata = {
   title: "Custom Rigid Boxes",
   description: metaDescription(`Magnetic, lid & base, drawer, book, collapsible, shoulder neck, tube and window rigid boxes. ${site.facts.yearsExperience}+ years, MOQ ${site.facts.rigidMoq}, made in-house, worldwide.`),
-  alternates: { canonical: "/rigid-boxes" },
+  alternates: { canonical: "/rigid-boxes" }, openGraph: ogFor("/rigid-boxes"),
 };
 
 export default function RigidHubPage() {

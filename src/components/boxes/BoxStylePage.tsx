@@ -1,4 +1,5 @@
 import { site } from "@/config/site";
+import { boxAnswer } from "@/content/answers";
 import { CheckCircle2, Gift, ShieldCheck, Sparkles, Wrench, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { designHref } from "@/content/designServices";
@@ -60,7 +61,7 @@ export function BoxStylePage({ box }: { box: BoxView }) {
             <div className="lg:col-span-5">
               <Tag tone={box.kind === "rigid" ? "blue" : "orange"}>{box.kind === "rigid" ? "Rigid box" : "Printed box"}</Tag>
               <h1 className="text-h1 mt-4">{box.name}</h1>
-              <p className="text-lead mt-4 text-ink-500">{box.summary}</p>
+              <p className="text-lead mt-4 text-ink-500">{boxAnswer(box)}</p>
               <dl className="mt-6 grid grid-cols-2 gap-3">
                 {box.chips.map((c) => (
                   <div key={c.label} className="rounded-xl bg-silver-50 px-4 py-3">

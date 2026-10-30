@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getPrintedStyle, printedStyles } from "@/content/printedStyles";
 import { BoxStylePage } from "@/components/boxes/BoxStylePage";
@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `Custom Printed ${style.name}`,
     description: metaDescription(`${style.summary} Designed, printed and cut in our own factory.`),
     alternates: { canonical: `/printed-boxes/${style.slug}` },
+    openGraph: ogFor(`/printed-boxes/${style.slug}`),
   };
 }
 

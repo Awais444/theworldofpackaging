@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { QuoteBuilder } from "@/components/forms/QuoteBuilder";
@@ -9,7 +9,7 @@ import { withHighlight } from "@/components/ui/withHighlight";
 export const metadata: Metadata = {
   title: "Get a Quote",
   description: metaDescription(`Build a quote for rigid, collapsible or printed boxes in a few steps. We reply ${site.facts.quoteReply}.`),
-  alternates: { canonical: "/get-a-quote" },
+  alternates: { canonical: "/get-a-quote" }, openGraph: ogFor("/get-a-quote"),
 };
 
 export default function GetAQuotePage() {

@@ -1,5 +1,6 @@
+import Link from "next/link";
 import type { Metadata } from "next";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { faqGroups } from "@/content/faqs";
 import { quoteHref } from "@/content/navigation";
 import { PageHero } from "@/components/sections/PageHero";
@@ -14,7 +15,7 @@ import { faqPage } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "FAQ",
   description: metaDescription("Answers on ordering, design, production, shipping and payment for rigid and printed boxes."),
-  alternates: { canonical: "/faq" },
+  alternates: { canonical: "/faq" }, openGraph: ogFor("/faq"),
 };
 
 const total = faqGroups.reduce((n, g) => n + g.faqs.length, 0);
@@ -28,7 +29,7 @@ export default function FaqPage() {
         eyebrow={`FAQ · ${total} answers`}
         title="Questions, answered"
         highlight="answered"
-        intro={<p>The things clients ask before their first order, grouped by topic. Missing one? Ask us directly.</p>}
+        intro={<p>The things clients ask before their first order, grouped by topic. Missing one? Ask us directly, or look a word up in the <Link href="/glossary" className="font-semibold text-blue-600 hover:underline">packaging glossary</Link>.</p>}
         actions={
           <Button href="/contact" size="lg" arrow>
             Ask a question

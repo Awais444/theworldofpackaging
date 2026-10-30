@@ -4,7 +4,7 @@ import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { orderSteps } from "@/content/boxDetails";
 import { boxesTabs, hubFaqs } from "@/content/hubs";
@@ -16,7 +16,7 @@ import { StepList } from "@/components/ui/StepList";
 export const metadata: Metadata = {
   title: "All Custom Boxes: rigid and printed",
   description: metaDescription(`Every box style we make: rigid gift boxes from MOQ ${site.facts.rigidMoq}, collapsible rigid boxes that ship flat, and printed mailers, cartons and displays.`),
-  alternates: { canonical: "/boxes" },
+  alternates: { canonical: "/boxes" }, openGraph: ogFor("/boxes"),
 };
 
 export default function BoxesHubPage() {

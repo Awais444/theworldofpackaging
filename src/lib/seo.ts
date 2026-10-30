@@ -46,3 +46,11 @@ export function metaDescription(text: string): string {
 }
 
 const bitCount = (x: number) => x.toString(2).split("1").length - 1;
+
+/**
+ * Open Graph for a page: url + the site-wide fields. A page's `openGraph` replaces the layout's
+ * entirely, so every page passes this instead of a partial object.
+ */
+export function ogFor(path: string, extra: Record<string, unknown> = {}) {
+  return { type: "website" as const, url: path, siteName: site.name, locale: "en_US", ...extra };
+}

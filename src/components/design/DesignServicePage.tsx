@@ -1,4 +1,7 @@
 import { CheckCircle2, Clock, Factory, Tag as TagIcon } from "lucide-react";
+import { lastModified } from "@/lib/contentDates";
+import { LastUpdated } from "@/components/seo/LastUpdated";
+import { designAnswer } from "@/content/answers";
 import Link from "next/link";
 import { site } from "@/config/site";
 import { designHref, getDesignService, type DesignService } from "@/content/designServices";
@@ -58,7 +61,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
             <div className="lg:col-span-6">
               <p className="text-eyebrow text-blue-600">Packaging design service</p>
               <h1 className="text-h1 mt-3">{s.h1}</h1>
-              <p className="text-lead mt-5 text-ink-500">{s.intro}</p>
+              <p className="text-lead mt-5 text-ink-500">{designAnswer(s)}</p>
               <ul className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
                 <li className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-2 text-blue-600">
                   <TagIcon aria-hidden="true" className="h-4 w-4" /> {priceLabel(s.priceFrom ?? null)}
@@ -67,6 +70,22 @@ export function DesignServicePage({ s }: { s: DesignService }) {
                   <Clock aria-hidden="true" className="h-4 w-4" /> {turnaround}
                 </li>
               </ul>
+              <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
+                {[
+                  ["Minimum order", `${site.facts.rigidMoq} boxes (rigid)`],
+                  ["First concepts", `${site.facts.firstConceptHours} hours`],
+                  ["You receive", "Print-ready PDF + dieline"],
+                  ["Production", "Our own factory"],
+                  ["Approval", "Digital proof + 3D mockup"],
+                  ["Shipping", "Worldwide, air or sea"],
+                ].map(([k, v]) => (
+                  <div key={k} className="rounded-xl bg-silver-50 px-4 py-3">
+                    <dt className="text-xs font-semibold uppercase tracking-wider text-ink-500">{k}</dt>
+                    <dd className="mt-0.5 font-semibold text-ink-900">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+              <LastUpdated date={lastModified("src/app/packaging-design/[slug]/page.tsx", "src/content/designServices*", "src/components/design/*")} className="mt-4" />
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button href={`${quoteHref}?service=${s.slug}`} size="lg" arrow>
                   Get a Free Quote

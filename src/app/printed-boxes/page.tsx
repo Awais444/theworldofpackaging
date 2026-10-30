@@ -3,7 +3,7 @@ import { printedHref } from "@/lib/boxView";
 import { printedStyles } from "@/content/printedStyles";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { collectionPage } from "@/lib/schema";
-import { metaDescription } from "@/lib/seo";
+import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { hubFaqs, printedTabs } from "@/content/hubs";
 import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxes/BoxHub";
@@ -11,7 +11,7 @@ import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxe
 export const metadata: Metadata = {
   title: "Custom Printed Boxes",
   description: metaDescription(`Mailer, tuck end, folding carton, shipping, display, pillow, sleeve and gable boxes, printed and cut by ${site.name}.`),
-  alternates: { canonical: "/printed-boxes" },
+  alternates: { canonical: "/printed-boxes" }, openGraph: ogFor("/printed-boxes"),
 };
 
 export default function PrintedHubPage() {

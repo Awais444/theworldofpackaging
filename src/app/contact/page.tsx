@@ -70,7 +70,7 @@ export default function ContactPage() {
               </Row>
               {site.phone && (
                 <Row icon={Phone} label="Phone">
-                  <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-blue-600">
+                  <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="hover:text-blue-600">
                     {site.phone}
                   </a>
                   <CopyButton value={site.phone} label="phone number" />

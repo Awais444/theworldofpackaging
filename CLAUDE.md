@@ -56,8 +56,8 @@ export const site = {
   tagline: "Packaging design and manufacturing under one roof.",
   url: "https://theworldofpackaging.com",          // TODO confirm
   email: "hello@theworldofpackaging.com",          // TODO confirm
-  whatsapp: "+92 300 0000000",                     // TODO
-  phone: "+92 300 0000000",                        // TODO
+  whatsapp: "+1 (437) 564-0199",
+  phone: "+1 (437) 564-0199",
   address: "Factory address, Pakistan",            // TODO
   hours: "Mon–Sat, 9:00–18:00 PKT",                // TODO
   socials: { instagram: "", linkedin: "", facebook: "", pinterest: "", behance: "" },

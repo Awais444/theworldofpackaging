@@ -12,7 +12,7 @@ Copy them from the "Company facts" block on /about. They come from `src/config/s
 | Former name | Anmol Printers (mention "formerly Anmol Printers" in descriptions) |
 | Website | https://theworldofpackaging.com |
 | Email | hello@theworldofpackaging.com |
-| WhatsApp / phone | +92 327 4675886 |
+| WhatsApp / phone | +1 (437) 564-0199 |
 | Address | TODO: add the factory address to `site.ts` first, then use it everywhere |
 | Founded / experience | 2011 (TODO confirm), 15+ years in packaging |
 | What we do | Packaging design, branding and box manufacturing under one roof; own factory; rigid and collapsible rigid boxes from MOQ 500; ships worldwide |

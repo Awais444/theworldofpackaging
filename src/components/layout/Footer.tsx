@@ -128,7 +128,7 @@ export function Footer() {
                 </ContactItem>
                 {site.phone && (
                   <ContactItem icon={<Phone aria-hidden="true" className={icon} />}>
-                    <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-white hover:underline">
+                    <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="hover:text-white hover:underline">
                       {site.phone}
                     </a>
                   </ContactItem>

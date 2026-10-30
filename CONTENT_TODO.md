@@ -9,7 +9,7 @@ Find them in code with `grep -rn "TODO" src` and `grep -rn "placeholder: true" s
 Changing these updates the header, utility bar, footer, contact page, metadata, OG images and JSON-LD everywhere.
 
 - [ ] `url` (or `NEXT_PUBLIC_SITE_URL` in `.env`): confirm the domain and TLD
-- [ ] `email`; and `phone`, `address`, `hours` (null now, so they are hidden site-wide). WhatsApp is set: +92 327 4675886.
+- [ ] `email`; `address`, `hours` (null now, so they are hidden site-wide). WhatsApp and phone are set: +1 (437) 564-0199.
 - [ ] `facts.foundedYear` (2011): confirm. `facts.yearsExperience` (15) drives every "15+ years" on the site.
 - [ ] About page timeline (`milestones` in `src/content/company.ts`): five placeholder milestones with no years. Add the real years and wording, then remove `placeholder: true`.
 - [ ] `socials`: Instagram, LinkedIn, Facebook, Pinterest, Behance (empty links stay hidden)

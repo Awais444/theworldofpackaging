@@ -38,10 +38,10 @@ export const site = {
   email: "hello@theworldofpackaging.com", // TODO confirm
   // Contact details stay hidden on the site while null. TODO: real values.
   /** Display format. */
-  whatsapp: "+92 327 4675886" as string | null,
+  whatsapp: "+1 (437) 564-0199" as string | null,
   /** wa.me format: digits only, no + or spaces. */
-  whatsappLink: "923274675886",
-  phone: null as string | null,
+  whatsappLink: "14375640199",
+  phone: "+1 (437) 564-0199" as string | null,
   address: null as string | null, // e.g. "Plot 12, Industrial Area, Lahore, Pakistan"
   hours: null as string | null, // e.g. "Mon–Sat, 9:00–18:00 PKT"
   country: "Pakistan",

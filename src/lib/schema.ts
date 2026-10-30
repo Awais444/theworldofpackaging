@@ -26,7 +26,7 @@ export function organization(): WithContext<Organization> {
       {
         "@type": "ContactPoint",
         contactType: "sales",
-        telephone: `+${site.whatsappLink}`,
+        telephone: "+1-437-564-0199",
         email: site.email,
         areaServed: "Worldwide",
         availableLanguage: ["English", "Urdu"],

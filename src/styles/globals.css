@@ -430,8 +430,8 @@ html.lenis body {
 }
 @keyframes hero-dot { from { transform: scale(1); opacity: 0.5; } to { transform: scale(2.6); opacity: 0; } }
 
-/* Homepage H1 rotator (components/home/HeroRotator.tsx): the phrase leaving slides up and fades, the next
-   one rises in. "in" phrases jump into place while invisible. Reduced motion: the rotator never advances. */
+/* Homepage H1 rotating word (components/home/HeroRotator.tsx): the word leaving slides up and fades, the next
+   one rises in. "in" words jump into place while invisible. Reduced motion: the rotator never advances. */
 .hero-phrase { transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.215, 0.61, 0.355, 1); }
 .hero-phrase[data-state="in"] { opacity: 0; transform: translateY(0.35em); transition: none; }
 .hero-phrase[data-state="out"] { opacity: 0; transform: translateY(-0.35em); }

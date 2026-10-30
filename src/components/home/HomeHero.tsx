@@ -8,15 +8,15 @@ import { site, yearsLabel } from "@/config/site";
 import hero from "@/content/heroImage.json";
 
 // Static variants from scripts/gen-hero.mjs (prebuild): no runtime optimisation for the LCP-area image.
-const HERO_SIZES = "(min-width: 1024px) 42vw, 92vw";
+const HERO_SIZES = "(min-width: 1024px) 36vw, 92vw";
 
-// First phrase is server-rendered and is the reduced-motion fallback.
-const phrases = ["Product Packaging Design", "Pouch Design", "Label Design", "Rigid Box Design", "Brand Identity Design", "Box Packaging Design"];
+// First word is server-rendered and is the reduced-motion fallback.
+const words = ["pouches.", "labels.", "rigid boxes.", "cartons.", "brand identity."];
 const factsLine = [`MOQ ${site.facts.rigidMoq}`, "Collapsible rigid boxes", "Digital proof before print"];
 
 /**
  * Homepage hero, sized to the first screen on desktop (100svh minus utility bar and header, 600–760px).
- * Desktop grid, 2 rows: row 1 = intro (cols 1–6, centred) + image (cols 7–12); row 2 = trust row + caption
+ * Desktop grid, 2 rows: row 1 = intro (cols 1–7, centred) + image (cols 8–12); row 2 = trust row + caption
  * card, both 56px tall in the same row, so their bottoms sit on one line. Mobile order: intro, image, card,
  * trust row. Motion is CSS + a small rotator, off with reduced motion.
  * The pouch is a concept mockup: never used in /work or the portfolio.
@@ -27,18 +27,15 @@ export function HomeHero() {
   return (
     <section className="hero-in overflow-hidden bg-white">
       <div className="container-x grid gap-x-12 gap-y-8 pb-10 pt-10 lg:h-[clamp(600px,calc(100svh-var(--header-h)-var(--utility-h)),760px)] lg:grid-cols-12 lg:grid-rows-[1fr_auto] lg:gap-y-6 lg:pt-12">
-        <div data-hero-focus className="lg:col-span-6 lg:self-center">
+        <div data-hero-focus className="lg:col-span-7 lg:self-center">
           <p data-hero-line className="inline-flex min-h-7 items-center rounded-full bg-blue-50 px-3 py-1 text-[12px] font-bold uppercase tracking-[0.1em] text-blue-600">
             Packaging studio + printing press
           </p>
-          {/* Line 1 is sized from the column width (cqi) so the longest phrase always fits on one line. */}
-          <h1 data-hero-line className="@container mt-5 font-heading font-bold leading-[1.12] tracking-[-0.02em] text-ink-900">
-            <span className="sr-only">Packaging design, labels, pouches, rigid boxes and brand identity, made under one roof.</span>
-            <span className="block text-[min(52px,7.8cqi)]">
-              <HeroRotator phrases={phrases} />
-            </span>
-            <span aria-hidden="true" className="mt-1 block text-[clamp(36px,3.6vw,52px)]">
-              made under one roof.
+          <h1 data-hero-line className="mt-5 font-heading text-[clamp(44px,5.2vw,72px)] font-bold leading-[1.05] tracking-[-0.02em] text-ink-900">
+            <span className="sr-only">We design and print pouches, labels, rigid boxes, cartons and brand identity.</span>
+            <span aria-hidden="true" className="block">We design and print</span>
+            <span aria-hidden="true" className="block">
+              your <HeroRotator words={words} />
             </span>
           </h1>
           <p data-hero-line className="mt-5 max-w-[50ch] text-[17px] leading-relaxed text-ink-500">
@@ -53,7 +50,7 @@ export function HomeHero() {
           <p data-hero-line className="mt-4 text-[13px] text-ink-500">{factsLine.join(" · ")}</p>
         </div>
 
-        <div className="hero-pouch w-full lg:relative lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:min-h-0">
+        <div className="hero-pouch w-full lg:relative lg:col-span-5 lg:col-start-8 lg:row-start-1 lg:min-h-0">
           <picture>
             <source type="image/avif" srcSet={hero.avif} sizes={HERO_SIZES} />
             <source type="image/webp" srcSet={hero.webp} sizes={HERO_SIZES} />
@@ -71,7 +68,7 @@ export function HomeHero() {
           </picture>
         </div>
 
-        <div className="relative z-10 mx-auto -mt-4 flex h-14 w-full items-center justify-between gap-4 rounded-2xl border border-silver-100 bg-white px-6 shadow-[0_8px_24px_rgba(20,19,23,.06)] lg:col-span-6 lg:col-start-7 lg:row-start-2 lg:-mt-12 lg:w-[85%] lg:self-end">
+        <div className="relative z-10 mx-auto -mt-4 flex h-14 w-full items-center justify-between gap-4 rounded-2xl border border-silver-100 bg-white px-6 shadow-[0_8px_24px_rgba(20,19,23,.06)] lg:col-span-5 lg:col-start-8 lg:row-start-2 lg:-mt-12 lg:self-end">
           <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-ink-500">Own factory</span>
           <span className="flex items-center gap-2.5 whitespace-nowrap text-[15px] font-semibold text-ink-900">
             <span aria-hidden="true" className="hero-dot relative h-2 w-2 rounded-full bg-success" />
@@ -79,7 +76,7 @@ export function HomeHero() {
           </span>
         </div>
 
-        <div className="flex min-h-14 flex-wrap items-center gap-x-6 gap-y-2 border-t border-silver-100 py-3 text-sm font-medium text-ink-900 lg:col-span-6 lg:row-start-2 lg:h-14 lg:self-end lg:py-0">
+        <div className="flex min-h-14 flex-wrap items-center gap-x-6 gap-y-2 border-t border-silver-100 py-3 text-sm font-medium text-ink-900 lg:col-span-7 lg:row-start-2 lg:h-14 lg:self-end lg:py-0">
           <p className="inline-flex items-start gap-2">
             <Check aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-orange-600" strokeWidth={2.5} />
             <span>

@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { StoreHydration } from "@/components/providers/StoreHydration";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { site, type CurrencyCode } from "@/config/site";
@@ -343,6 +344,7 @@ export function Configurator() {
 
   return (
     <div className="grid gap-12 lg:grid-cols-12">
+      <StoreHydration />
       <div className="lg:col-span-7">
         <ol className="mb-10 flex flex-wrap gap-x-4 gap-y-2" aria-label="Configurator steps">
           {steps.map((s, i) => (
@@ -360,7 +362,7 @@ export function Configurator() {
           ))}
         </ol>
         <div className="h-px bg-silver-300">
-          <motion.div
+          <m.div
             className="h-px origin-left bg-ink-900"
             initial={false}
             animate={{ scaleX: (current + 1) / steps.length }}
@@ -370,7 +372,7 @@ export function Configurator() {
 
         <div className="relative mt-10 min-h-[22rem]">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.section
+            <m.section
               key={active.id}
               aria-labelledby={`step-${active.id}`}
               initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
@@ -382,7 +384,7 @@ export function Configurator() {
                 {active.label}
               </h2>
               {active.render()}
-            </motion.section>
+            </m.section>
           </AnimatePresence>
         </div>
 

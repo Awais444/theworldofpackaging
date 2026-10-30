@@ -4,6 +4,7 @@ import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { QuoteBuilder } from "@/components/forms/QuoteBuilder";
+import { countries } from "@/content/countries";
 import { withHighlight } from "@/components/ui/withHighlight";
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export default function GetAQuotePage() {
             .
           </p>
         </div>
-        <QuoteBuilder />
+        <QuoteBuilder countries={countries.map(({ slug, name }) => ({ slug, name }))} />
       </div>
     </section>
   );

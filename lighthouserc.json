@@ -1,0 +1,29 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npx next start -p 3100",
+      "startServerReadyPattern": "Ready",
+      "url": [
+        "http://localhost:3100/",
+        "http://localhost:3100/packaging-design",
+        "http://localhost:3100/packaging-design/cosmetic-packaging-design",
+        "http://localhost:3100/rigid-boxes/magnetic-closure",
+        "http://localhost:3100/work",
+        "http://localhost:3100/countries/united-states",
+        "http://localhost:3100/blog/what-is-a-dieline",
+        "http://localhost:3100/get-a-quote"
+      ],
+      "numberOfRuns": 1,
+      "settings": { "formFactor": "mobile", "screenEmulation": { "mobile": true } }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.95 }],
+        "categories:accessibility": ["warn", { "minScore": 0.95 }],
+        "categories:best-practices": ["warn", { "minScore": 0.95 }],
+        "categories:seo": ["warn", { "minScore": 1 }]
+      }
+    },
+    "upload": { "target": "temporary-public-storage" }
+  }
+}

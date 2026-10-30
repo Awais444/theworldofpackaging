@@ -1,0 +1,19 @@
+# Lighthouse CI on pull requests: builds the site and audits the 8 key URLs (mobile).
+# Assertions are warnings for now, so this never blocks a merge or a Vercel deploy.
+name: Lighthouse CI
+on:
+  pull_request:
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lhci

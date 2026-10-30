@@ -90,7 +90,7 @@ export const designGroups: Array<{ id: DesignGroup; label: string; title: string
   { id: "service", label: "By Service", title: "Packaging design services" },
 ];
 
-export const designHref = (slug: string) => `/packaging-design/${slug}`;
+export { designHref } from "./links";
 export const getDesignService = (slug: string) => designServices.find((s) => s.slug === slug);
 export const designByGroup = (g: DesignGroup) => designServices.filter((s) => s.group === g);
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { ArrowRight, ChevronDown, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, createContext, useContext } from "react";
 import { site, whatsappMessage, whatsappUrl } from "@/config/site";
-import { boxesMenu, boxesPromo, designMenu, designMenuFooter, mainNav, primaryCta, type MenuId } from "@/content/navigation";
+import type { HeaderNav, MenuId } from "@/content/navigation";
 import { MagneticBoxClosed } from "@/components/illustrations";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
@@ -27,7 +27,12 @@ const topLink = "inline-flex items-center gap-1 whitespace-nowrap py-2 text-[15p
 const menuLink = "-mx-3 block rounded-full px-3 text-[15px] font-medium leading-9 text-ink-900 transition-colors hover:bg-blue-50 hover:text-blue-600 focus-visible:bg-blue-50 focus-visible:text-blue-600";
 const menuHeading = "text-[12px] font-bold uppercase tracking-[0.12em] text-blue-600";
 
+/** Menu data from the server (layout), so content modules never ship to the browser. */
+const NavContext = createContext<HeaderNav | null>(null);
+const useNav = () => useContext(NavContext)!;
+
 function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
+  const { boxesMenu, boxesPromo } = useNav();
   return (
     <div className="grid grid-cols-4 gap-8">
       {boxesMenu.map((group) => (
@@ -67,6 +72,7 @@ function BoxesPanel({ onNavigate }: { onNavigate: () => void }) {
 }
 
 function DesignPanel({ onNavigate }: { onNavigate: () => void }) {
+  const { designMenu, designMenuFooter } = useNav();
   return (
     <div>
       <div className="grid grid-cols-4 gap-8">
@@ -134,7 +140,8 @@ function onPanelKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
   items[(ii + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length]?.focus();
 }
 
-export function Header() {
+export function Header({ nav }: { nav: HeaderNav }) {
+  const { mainNav, primaryCta } = nav;
   const pathname = usePathname();
   const reduce = useReducedMotion();
   // Menus remember the path they were opened on, so they close on navigation without an effect.
@@ -201,12 +208,13 @@ export function Header() {
   }, [openId, closeMenu]);
 
   return (
+    <NavContext.Provider value={nav}>
     <>
       <UtilityBar />
       {/* Page overlay behind the open panel; clicking it closes the menu. */}
       <AnimatePresence>
         {openId && (
-          <motion.div
+          <m.div
             key="overlay"
             aria-hidden="true"
             className="fixed inset-0 z-[90] hidden bg-[rgba(20,19,23,0.25)] lg:block"
@@ -265,7 +273,7 @@ export function Header() {
                     {openId === item.id && (
                       // Solid white from the first frame: only translateY animates on the panel,
                       // plus a quick opacity on its inner content. Swapping between menus is instant.
-                      <motion.div
+                      <m.div
                         id={`menu-${item.id}`}
                         className="absolute inset-x-0 top-full border-b border-silver-300 bg-white shadow-md"
                         initial={reduce || menu?.swap ? false : { y: -8 }}
@@ -273,10 +281,10 @@ export function Header() {
                         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                         onKeyDown={onPanelKeyDown}
                       >
-                        <motion.div className="container-x py-8" initial={reduce || menu?.swap ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.12 }}>
+                        <m.div className="container-x py-8" initial={reduce || menu?.swap ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.12 }}>
                           {item.id === "design" ? <DesignPanel onNavigate={closeMenu} /> : <BoxesPanel onNavigate={closeMenu} />}
-                        </motion.div>
-                      </motion.div>
+                        </m.div>
+                      </m.div>
                     )}
                   </li>
                 ),
@@ -316,8 +324,9 @@ export function Header() {
           </div>
         </div>
 
-        <MobileMenu id={MOBILE_ID} open={mobileOpen} onClose={closeMobile} toggleRef={mobileToggle} />
+        <MobileMenu id={MOBILE_ID} open={mobileOpen} onClose={closeMobile} toggleRef={mobileToggle} nav={nav} />
       </header>
     </>
+    </NavContext.Provider>
   );
 }

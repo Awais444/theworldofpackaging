@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitInlineContact } from "@/app/actions/contact";
@@ -47,7 +47,7 @@ export function InlineContact() {
   return (
     <AnimatePresence mode="wait" initial={false}>
       {status === "sent" ? (
-        <motion.div
+        <m.div
           key="sent"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,9 +63,9 @@ export function InlineContact() {
           <Button variant="ghost" className="mt-6" onClick={() => setStatus("idle")}>
             Send another
           </Button>
-        </motion.div>
+        </m.div>
       ) : (
-        <motion.form
+        <m.form
           key="form"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -161,7 +161,7 @@ export function InlineContact() {
               </p>
             )}
           </div>
-        </motion.form>
+        </m.form>
       )}
     </AnimatePresence>
   );

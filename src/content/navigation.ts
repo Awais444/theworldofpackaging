@@ -8,7 +8,8 @@ export type NavLink = { label: string; href: string; description?: string; /** I
 export type NavGroup = { title: string; href?: string; links: NavLink[] };
 
 /** Every quote CTA points here, so the route moves in one place . */
-export const quoteHref = "/get-a-quote";
+import { quoteHref } from "./links";
+export { quoteHref };
 
 const rigidHref = (slug: string) => (slug === "collapsible" ? "/collapsible-rigid-boxes" : `/rigid-boxes/${slug}`);
 
@@ -181,3 +182,15 @@ export const legalNav: NavLink[] = [
   { label: "Terms", href: "/terms" },
   { label: "Sitemap", href: "/sitemap.xml" },
 ];
+
+/** Everything the client header and mobile menu render, built on the server and passed as props. */
+export type HeaderNav = {
+  boxesMenu: NavGroup[];
+  boxesPromo: typeof boxesPromo;
+  designMenu: NavGroup[];
+  designMenuFooter: NavLink[];
+  mainNav: MainNavItem[];
+  mobileNav: MobileItem[];
+  primaryCta: NavLink;
+};
+export const headerNav = (): HeaderNav => ({ boxesMenu, boxesPromo, designMenu, designMenuFooter, mainNav, mobileNav, primaryCta });

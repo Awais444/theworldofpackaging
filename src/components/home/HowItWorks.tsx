@@ -4,11 +4,11 @@ import { useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { processLines } from "@/components/illustrations/ProcessLine";
 import { site } from "@/config/site";
-import { quoteHref } from "@/content/navigation";
+import { quoteHref } from "@/content/links";
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { useLazyGsap } from "@/lib/useLazyGsap";
 import { cn } from "@/lib/utils";
 
 // Production time shows only once the real lead time is confirmed in config/site.ts.
@@ -33,17 +33,11 @@ export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNod
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(false);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      // Without motion (or JS) the ruler shows fully filled.
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo("[data-ruler-fill]", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top 80%", end: "bottom 50%", scrub: true } });
-      });
-      return () => mm.revert();
-    },
-    { scope: root },
-  );
+  // Ruler fills on scroll. GSAP loads only when this section is near the viewport.
+  // Without motion (or JS) the ruler shows fully filled.
+  useLazyGsap(root, ({ gsap }, el) => {
+    gsap.fromTo("[data-ruler-fill]", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 80%", end: "bottom 50%", scrub: true } });
+  });
 
   useEffect(() => {
     const el = root.current;

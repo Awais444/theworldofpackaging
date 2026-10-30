@@ -3,7 +3,7 @@
 import { CheckCircle2 } from "lucide-react";
 import { useRef, type ReactNode } from "react";
 import type { ProcessStep } from "@/content/process";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { useLazyGsap } from "@/lib/useLazyGsap";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,27 +14,21 @@ import { cn } from "@/lib/utils";
 export function ProcessTimeline({ steps, visuals = {} }: { steps: ProcessStep[]; visuals?: Record<string, ReactNode> }) {
   const root = useRef<HTMLOListElement>(null);
 
-  useGSAP(
-    () => {
-      const items = gsap.utils.toArray<HTMLElement>("[data-step]");
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        items.forEach((el) => el.setAttribute("data-on", "false"));
-        gsap.fromTo("[data-line-fill]", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top 60%", end: "bottom 60%", scrub: true } });
-        items.forEach((el) =>
-          ScrollTrigger.create({
-            trigger: el,
-            start: "top 60%",
-            onEnter: () => el.setAttribute("data-on", "true"),
-            onLeaveBack: () => el.setAttribute("data-on", "false"),
-          }),
-        );
-        return () => items.forEach((el) => el.setAttribute("data-on", "true"));
-      });
-      return () => mm.revert();
-    },
-    { scope: root },
-  );
+  // Line fill and step highlights on scroll; GSAP loads only when the timeline is near the viewport.
+  useLazyGsap(root, ({ gsap, ScrollTrigger }, el) => {
+    const items = gsap.utils.toArray<HTMLElement>("[data-step]", el);
+    items.forEach((it) => it.setAttribute("data-on", "false"));
+    gsap.fromTo("[data-line-fill]", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "bottom 60%", scrub: true } });
+    items.forEach((it) =>
+      ScrollTrigger.create({
+        trigger: it,
+        start: "top 60%",
+        onEnter: () => it.setAttribute("data-on", "true"),
+        onLeaveBack: () => it.setAttribute("data-on", "false"),
+      }),
+    );
+    return () => items.forEach((it) => it.setAttribute("data-on", "true"));
+  });
 
   return (
     <ol ref={root} className="relative space-y-10 lg:space-y-6">

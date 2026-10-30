@@ -1,10 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { Minus, Plus, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { mobileNav, primaryCta } from "@/content/navigation";
+import type { HeaderNav } from "@/content/navigation";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,8 @@ type MobileMenuProps = {
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /** Full-screen drawer: accordion groups, large tap targets, sticky quote button. */
-export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
+export function MobileMenu({ id, open, onClose, toggleRef, nav }: MobileMenuProps & { nav: HeaderNav }) {
+  const { mobileNav, primaryCta } = nav;
   const panelRef = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
 
@@ -55,7 +56,7 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <m.div
           ref={panelRef}
           id={id}
           role="dialog"
@@ -127,7 +128,7 @@ export function MobileMenu({ id, open, onClose, toggleRef }: MobileMenuProps) {
               {primaryCta.label}
             </Button>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

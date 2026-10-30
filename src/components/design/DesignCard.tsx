@@ -2,7 +2,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { illustrations } from "@/components/illustrations";
 import { Media } from "@/components/media/Media";
-import { designHref, type DesignService } from "@/content/designServices";
+import type { DesignService } from "@/content/designServices";
+import { designHref } from "@/content/links";
 
 /** Card for a packaging design service: photo (when `slot` is given) or illustration panel, name, one line. */
 export function DesignCard({ s, slot }: { s: Pick<DesignService, "slug" | "name" | "short" | "illustration">; slot?: string }) {

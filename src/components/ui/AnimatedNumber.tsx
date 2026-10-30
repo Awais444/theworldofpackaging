@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { m, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { useEffect } from "react";
 
 /** Number that rolls to its new value. Formatting is applied every frame. */
@@ -15,9 +15,9 @@ export function AnimatedNumber({ value, format, className }: { value: number; fo
 
   return (
     <>
-      <motion.span aria-hidden="true" className={className}>
+      <m.span aria-hidden="true" className={className}>
         {text}
-      </motion.span>
+      </m.span>
       <span className="sr-only">{format(value)}</span>
     </>
   );

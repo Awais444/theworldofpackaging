@@ -1,35 +1,29 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { useInViewOnce } from "@/lib/useInViewOnce";
 
 /**
- * The signature highlight: one key word in orange-600 (#E66400) with a Hot Orange (#FF7001)
+ * The signature highlight: one key word in orange-700 (#C25400, AA on light backgrounds) with a Hot Orange (#FF7001)
  * swoosh underline that draws when scrolled into view. Max once per heading.
- * The swoosh is fully drawn with reduced motion. The in-view trigger sits on the wrapping
- * span: an observer on the SVG path itself does not fire reliably.
+ * CSS only (stroke-dashoffset transition, see .swoosh in globals.css): no animation library on every page.
+ * Reduced motion and no-JS show the swoosh fully drawn.
  */
 export function Highlight({ children }: { children: ReactNode }) {
-  const reduce = useReducedMotion();
+  const [ref, inView] = useInViewOnce<HTMLSpanElement>();
+  const [armed, setArmed] = useState(false);
+  // Animate only headings still below the fold on load; ones already on screen stay drawn.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top > window.innerHeight) requestAnimationFrame(() => setArmed(true));
+  }, [ref]);
   return (
-    <motion.span
-      className="relative inline-block whitespace-nowrap text-orange-600 [.on-dark_&]:text-white"
-      initial={reduce ? "drawn" : "hidden"}
-      whileInView="drawn"
-      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-    >
+    <span ref={ref} data-armed={armed || undefined} data-drawn={inView || undefined} className="swoosh relative inline-block whitespace-nowrap text-orange-700 [.on-dark_&]:text-white">
       {children}
       <svg viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true" className="absolute -bottom-[0.18em] left-0 h-[0.32em] w-full overflow-visible text-orange-500">
-        <motion.path
-          d="M3 11 C 45 3, 110 2, 197 8"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={5}
-          strokeLinecap="round"
-          variants={{ hidden: { pathLength: 0 }, drawn: { pathLength: 1 } }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-        />
+        <path d="M3 11 C 45 3, 110 2, 197 8" pathLength={1} fill="none" stroke="currentColor" strokeWidth={5} strokeLinecap="round" />
       </svg>
-    </motion.span>
+    </span>
   );
 }

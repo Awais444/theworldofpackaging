@@ -1,15 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { MagneticBoxOpen, illustrations } from "@/components/illustrations";
-import { Media } from "@/components/media/Media";
 import { Button } from "@/components/ui/Button";
 import { Highlight } from "@/components/ui/Highlight";
-import { getMedia } from "@/content/media";
-import { quoteHref } from "@/content/navigation";
+import { quoteHref } from "@/content/links";
 import { promises, site } from "@/config/site";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { gsap, useGSAP } from "@/lib/gsap";
 
 // Promises come from confirmed facts in config/site.ts; null facts are skipped.
 const trust = [...promises(), "Own factory", `MOQ ${site.facts.rigidMoq}`];
@@ -37,27 +34,17 @@ function Composition({ alt }: { alt: string }) {
   );
 }
 
-export function HomeHero() {
+/**
+ * `photo`: the hero <Media>, rendered by the server page so the media registry never ships to the browser.
+ * Without a photo the illustration composition is shown, labelled with `alt`.
+ */
+export function HomeHero({ photo, alt }: { photo?: ReactNode; alt: string }) {
   const root = useRef<HTMLElement>(null);
-  const slot = getMedia("home-hero");
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        // Animate from an already-visible state only: content is fully readable without JS.
-        tl.from("[data-hero-line]", { y: 14, duration: 0.5, stagger: 0.06 })
-          .from("[data-hero-art]", { scale: 0.97, duration: 0.6, stagger: 0.08 }, 0)
-          .from("[data-hero-chip]", { y: 8, duration: 0.4, stagger: 0.06 }, 0.2);
-      });
-      return () => mm.revert();
-    },
-    { scope: root },
-  );
+  // Entrance animation is CSS (.hero-in in globals.css): no JS, starts from a readable state, off with reduced motion.
 
   return (
-    <section ref={root} className="bg-white">
+    <section ref={root} className="hero-in bg-white">
       {/* Desktop: content centred in the first screen (capped at 760px). */}
       <div className="container-x grid items-center gap-12 pb-16 pt-14 lg:min-h-[min(760px,calc(100svh-var(--header-h)-var(--utility-h)-104px))] lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-7">
@@ -91,11 +78,7 @@ export function HomeHero() {
         <div className="lg:col-span-5">
           {/* One background shape: the blue-50 rounded panel. Photo, illustration and chips all stay inside it. */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-blue-50">
-            {slot.src ? (
-              <Media slot="home-hero" priority className="absolute inset-0 h-full w-full rounded-3xl" sizes="(min-width: 1024px) 50vw, 100vw" />
-            ) : (
-              <Composition alt={slot.alt} />
-            )}
+            {photo ?? <Composition alt={alt} />}
             {chips.map((c) => (
               <span key={c.label} data-hero-chip className={`absolute z-10 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-ink-900 shadow-md sm:text-sm ${c.className}`}>
                 {c.label}

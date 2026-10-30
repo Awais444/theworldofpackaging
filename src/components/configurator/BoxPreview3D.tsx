@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { m, useReducedMotion, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { useEffect } from "react";
 import type { BoxType } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,7 @@ type FaceProps = {
 
 function Face({ transform, shade, children }: FaceProps) {
   return (
-    <motion.div
+    <m.div
       className="absolute left-1/2 top-1/2 -ml-[50px] -mt-[50px] h-[100px] w-[100px] [backface-visibility:hidden]"
       style={{ transform, backgroundColor: `var(--face-${shade})` }}
     >
@@ -25,7 +25,7 @@ function Face({ transform, shade, children }: FaceProps) {
         <rect x="0" y="0" width="100" height="100" fill="none" stroke="currentColor" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
       </svg>
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -60,7 +60,7 @@ export function BoxPreview3D({ dims, type }: { dims: { l: number; w: number; h: 
 
   return (
     <div className={cn("illo relative aspect-[4/3] overflow-hidden [perspective:1200px]", tone)} aria-hidden="true">
-      <motion.div
+      <m.div
         className="absolute inset-0 [transform-style:preserve-3d]"
         initial={false}
         animate={reduce ? { rotateX: -24, rotateY: -38 } : { rotateX: -24, rotateY: [-38, -28, -38] }}
@@ -74,7 +74,7 @@ export function BoxPreview3D({ dims, type }: { dims: { l: number; w: number; h: 
         <Face transform={top} shade={1}>
           <span className="absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--accent)]" />
         </Face>
-      </motion.div>
+      </m.div>
       <p className="text-xs font-semibold uppercase tracking-wider absolute bottom-3 left-3 text-ink-500">
         {dims.l} × {dims.w} × {dims.h} mm
       </p>

@@ -4,9 +4,10 @@ import type { ReactNode } from "react";
 import { site, siteUrl } from "@/config/site";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { headerNav } from "@/content/navigation";
 import { ConsentAndAnalytics } from "@/components/providers/ConsentAndAnalytics";
-import { StoreHydration } from "@/components/providers/StoreHydration";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { MotionProvider } from "@/components/providers/MotionProvider";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { fontVariables } from "@/lib/fonts";
@@ -43,15 +44,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <JsonLd data={[organization(), website()]} />
-        <StoreHydration />
         <SmoothScroll />
+        <MotionProvider>
         <ConsentAndAnalytics />
-        <Header />
+        <Header nav={headerNav()} />
         <main id="main" className="flex-1">
           {children}
         </main>
         <Footer />
         <WhatsAppFloat />
+        </MotionProvider>
       </body>
     </html>
   );

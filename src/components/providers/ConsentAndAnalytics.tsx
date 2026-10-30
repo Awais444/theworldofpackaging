@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import Script from "next/script";
 import { useEffect, useState } from "react";
@@ -56,15 +56,15 @@ export function ConsentAndAnalytics() {
       {CHAT_SRC && choice === "granted" && <Script src={CHAT_SRC} strategy="lazyOnload" />}
       {GA_ID && choice === "granted" && (
         <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-          <Script id="ga4" strategy="afterInteractive">
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
+          <Script id="ga4" strategy="lazyOnload">
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}',{anonymize_ip:true});`}
           </Script>
         </>
       )}
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             role="dialog"
             aria-label="Cookie preferences"
             initial={{ opacity: 0, y: 24 }}
@@ -87,7 +87,7 @@ export function ConsentAndAnalytics() {
                 Decline
               </Button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

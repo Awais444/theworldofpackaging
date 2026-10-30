@@ -1,0 +1,29 @@
+## Largest client chunks (gzip)
+   70.0 KB gz    223.3 KB raw  /static/chunks/03_aflcgu9s9l.js  [react-hook-form]
+   45.3 KB gz    164.4 KB raw  /static/chunks/2e268anpfvdoc.js  [react-hook-form]
+   43.4 KB gz    111.7 KB raw  /static/chunks/092ixmuw2qqlg.js  [gsap, ScrollTrigger]
+   38.7 KB gz    110.0 KB raw  /static/chunks/0cz1d0mv5g_q7.js  []
+   31.7 KB gz    109.6 KB raw  /static/chunks/0gcl96d4dy7fh.js  [zod]
+   18.6 KB gz     51.0 KB raw  /static/chunks/0m4hg_1cph4g4.js  [zustand]
+   18.1 KB gz     58.2 KB raw  /static/chunks/1q64y_npip0z_.js  [framer-motion]
+   16.1 KB gz     41.1 KB raw  /static/chunks/2vrlx_ir8d59l.js  []
+   15.1 KB gz     44.0 KB raw  /static/chunks/2a2dsm_t6ennj.js  [zustand]
+   14.1 KB gz     41.3 KB raw  /static/chunks/3qjjfwk7zmajh.js  []
+   12.8 KB gz     37.5 KB raw  /static/chunks/0cyg91v169vnv.js  [zod]
+   12.1 KB gz     33.0 KB raw  /static/chunks/13n_jrbz2p45s.js  []
+   12.0 KB gz     30.0 KB raw  /static/chunks/1txsyxospm-k5.js  []
+   11.7 KB gz     33.1 KB raw  /static/chunks/33qu8_2b3q-0a.js  [framer-motion]
+   10.4 KB gz     25.3 KB raw  /static/chunks/3roa9d8h6800d.js  []
+Total chunks: 41, total gzip 516.9 KB
+
+## First-load JS per page (scripts in the HTML)
+/                                               14 chunks    206.5 KB gz  libs: react-hook-form, framer-motion
+/packaging-design                               11 chunks    180.3 KB gz  libs: react-hook-form, framer-motion
+/packaging-design/cosmetic-packaging-design     11 chunks    179.5 KB gz  libs: react-hook-form, framer-motion
+/rigid-boxes/magnetic-closure                   11 chunks    179.8 KB gz  libs: react-hook-form, framer-motion
+/work                                           13 chunks    216.4 KB gz  libs: react-hook-form, framer-motion
+/countries/united-states                        11 chunks    178.8 KB gz  libs: react-hook-form, framer-motion
+/blog/what-is-a-dieline                         11 chunks    173.5 KB gz  libs: react-hook-form, framer-motion
+/get-a-quote                                    12 chunks    219.6 KB gz  libs: react-hook-form, framer-motion, zustand, zod
+/collapsible-rigid-boxes                        12 chunks    224.7 KB gz  libs: react-hook-form, framer-motion, gsap, ScrollTrigger
+/about                                          11 chunks    179.0 KB gz  libs: react-hook-form, framer-motion

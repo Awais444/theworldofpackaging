@@ -47,7 +47,8 @@ export function Logo({ tone = "dark", className, asLink = true, markOnly = false
   );
   if (!asLink) return content;
   return (
-    <Link href="/" aria-label={`${site.name}, home`} className="inline-flex min-w-0 max-w-full rounded-lg">
+    // The visible name is the link text; only the mark-only logo needs a label.
+    <Link href="/" aria-label={markOnly ? `${site.name}, home` : undefined} className="inline-flex min-w-0 max-w-full rounded-lg">
       {content}
     </Link>
   );

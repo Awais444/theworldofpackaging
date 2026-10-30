@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getMedia } from "@/content/media";
 import { metaDescription, ogFor } from "@/lib/seo";
 import { HomeHero } from "@/components/home/HomeHero";
 import { BlogTeaser, DesignForEveryProduct, ShelfProblems } from "@/components/home/HomeDesign";
@@ -28,7 +29,10 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <HomeHero />
+      <HomeHero
+        alt={getMedia("home-hero").alt}
+        photo={getMedia("home-hero").src ? <Media slot="home-hero" priority className="absolute inset-0 h-full w-full rounded-3xl" sizes="(min-width: 1024px) 50vw, 100vw" /> : undefined}
+      />
       <DesignForEveryProduct />
       <TrustedBy />
       <ShelfProblems />

@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { StoreHydration } from "@/components/providers/StoreHydration";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { Check, ChevronUp, CircleCheck, FileUp, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
@@ -10,7 +11,6 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { finishes as finishOptions, inserts, printedMaterials, wraps } from "@/content/materials";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
-import { countries, getCountry } from "@/content/countries";
 import { illustrations, type IllustrationKey } from "@/components/illustrations";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
@@ -44,7 +44,6 @@ const materialsFor = (c?: Category) => (c === "printed" ? printedMaterials.map((
 const finishList = [...finishOptions.map((f) => f.name), ...inserts.map((i) => i.name), "Window patch", "Ribbon"];
 
 // Main markets first, then common others. "Other" is clarified in notes.
-const COUNTRIES = [...countries.map((c) => c.name).sort((a, b) => a.localeCompare(b)), "Other (add in notes)"];
 
 const ARTWORK = [
   { id: "have", title: "I have artwork", text: "Print-ready files or a design you want us to use." },
@@ -169,7 +168,7 @@ function Summary({ d, onEdit, compact = false }: { d: QuoteDraft; onEdit?: (step
 
 function Success({ onRestart }: { onRestart: () => void }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} role="status" className="mx-auto max-w-2xl rounded-3xl bg-blue-50 p-8 text-center md:p-12">
+    <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} role="status" className="mx-auto max-w-2xl rounded-3xl bg-blue-50 p-8 text-center md:p-12">
       <CircleCheck aria-hidden="true" className="mx-auto h-16 w-16 text-blue-600" />
       <h2 className="text-h2 mt-6">Quote request sent</h2>
       <p className="text-lead mt-4 text-ink-500">Thank you. We&apos;ll reply {site.facts.quoteReply} with a price and any questions about your spec.</p>
@@ -182,12 +181,14 @@ function Success({ onRestart }: { onRestart: () => void }) {
       <button type="button" onClick={onRestart} className="mt-6 text-sm font-semibold text-blue-600 hover:underline">
         Start another quote
       </button>
-    </motion.div>
+    </m.div>
   );
 }
 
 /** Multi-step quote builder (CLAUDE.md §10.1). State lives in the Zustand quote store. */
-export function QuoteBuilder() {
+/** `countries`: slug + name only, passed by the server page so the full country content stays out of the browser. */
+export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; name: string }> }) {
+  const COUNTRIES = [...countries.map((c) => c.name).sort((a, b) => a.localeCompare(b)), "Other (add in notes)"];
   const { draft: d, step, set, toggle, goTo, reset } = useQuote();
   const reduce = useReducedMotion();
   const [errors, setErrors] = useState<Errors>({});
@@ -216,14 +217,14 @@ export function QuoteBuilder() {
         const category: Category | undefined = collapsibleOptions.some((s) => s.slug === style) ? "collapsible" : rigidOptions.some((s) => s.slug === style) ? "rigid" : printedOptions.some((s) => s.slug === style) ? "printed" : undefined;
         if (category) patch({ category, style });
       }
-      const country = getCountry(q.get("country") ?? "")?.name;
+      const country = countries.find((c) => c.slug === q.get("country"))?.name;
       if (country && !draft.country) patch({ country });
       const service = q.get("service");
       if (service && !draft.notes) patch({ notes: `Design service: ${service.replace(/-/g, " ")}${q.get("tier") ? ` (${q.get("tier")} tier)` : ""}. ` });
       const industry = q.get("industry");
       if (industry && !draft.notes) patch({ notes: `Industry: ${industry.replace(/-/g, " ")}. ` });
     })();
-  }, []);
+  }, [countries]); // countries comes from the server and does not change after hydration
 
   const move = (n: number) => {
     setErrors({});
@@ -483,6 +484,7 @@ export function QuoteBuilder() {
 
   return (
     <div className="grid gap-10 pb-24 lg:grid-cols-12 lg:pb-0">
+      <StoreHydration />
       <form
         noValidate
         onSubmit={(e) => {
@@ -499,11 +501,11 @@ export function QuoteBuilder() {
           <span className="text-ink-500">{Math.round(((step + 1) / STEPS.length) * 100)}%</span>
         </div>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-silver-100" role="progressbar" aria-label="Quote progress" aria-valuemin={1} aria-valuemax={STEPS.length} aria-valuenow={step + 1}>
-          <motion.div className="h-full origin-left rounded-full bg-blue-600" initial={false} animate={{ scaleX: (step + 1) / STEPS.length }} transition={{ duration: reduce ? 0 : 0.4 }} />
+          <m.div className="h-full origin-left rounded-full bg-blue-600" initial={false} animate={{ scaleX: (step + 1) / STEPS.length }} transition={{ duration: reduce ? 0 : 0.4 }} />
         </div>
 
         <AnimatePresence mode="wait" initial={false}>
-          <motion.fieldset
+          <m.fieldset
             key={step}
             initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
@@ -516,7 +518,7 @@ export function QuoteBuilder() {
               {STEPS[step]}
             </h2>
             {content[step]}
-          </motion.fieldset>
+          </m.fieldset>
         </AnimatePresence>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-silver-300 pt-6">

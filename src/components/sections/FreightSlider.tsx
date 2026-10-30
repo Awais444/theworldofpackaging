@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { useId, useState } from "react";
 import { freightExample as ex } from "@/content/shipping";
 
@@ -61,7 +61,7 @@ export function FreightSlider() {
                 </span>
               </div>
               <div className="mt-3 h-3 overflow-hidden rounded-full bg-silver-100">
-                <motion.div
+                <m.div
                   className={r.label === "Collapsible" ? "h-full origin-left rounded-full bg-orange-500" : "h-full origin-left rounded-full bg-blue-600"}
                   initial={false}
                   animate={{ scaleX: r.ratio }}

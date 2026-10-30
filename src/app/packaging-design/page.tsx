@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DesignCard } from "@/components/design/DesignCard";
 import { collectionPage } from "@/lib/schema";
 import { metaDescription, ogFor } from "@/lib/seo";
 import Link from "next/link";
@@ -74,7 +75,7 @@ export default function PackagingDesignHub() {
       <Section>
         <SectionHeader eyebrow="Services" title="Find your packaging design service" highlight="your" />
         <div className="mt-10">
-          <DesignHubBrowser items={designServices.map(({ slug, name, short, illustration, group, formats }) => ({ slug, name, short, illustration, group, formats }))} />
+          <DesignHubBrowser items={designServices.map((d) => ({ slug: d.slug, name: d.name, short: d.short, group: d.group, formats: d.formats, card: <DesignCard s={d} /> }))} />
         </div>
       </Section>
 

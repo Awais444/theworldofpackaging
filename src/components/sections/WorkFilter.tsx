@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion , LazyMotion, domMax } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -87,7 +87,7 @@ export function WorkFilter({ items, services, quoteHref, gallery = [] }: { items
   const active = type !== "all" || industry !== "all";
 
   return (
-    <>
+    <LazyMotion features={domMax}>
       <div ref={sentinel} aria-hidden="true" />
       <div className={cn("sticky top-[var(--header-h)] z-30 -mx-4 border-b px-4 py-3 transition-colors md:-mx-6 md:px-6", stuck ? "border-silver-300 bg-white" : "border-transparent bg-white")}>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
@@ -149,10 +149,10 @@ export function WorkFilter({ items, services, quoteHref, gallery = [] }: { items
       </div>
 
       {visible.length > 0 && <h2 className="text-h3 mt-6">Featured projects</h2>}
-      <motion.ul layout={!reduce} className="mt-6 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+      <m.ul layout={!reduce} className="mt-6 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence initial={false} mode="popLayout">
           {visible.map((item) => (
-            <motion.li
+            <m.li
               key={item.slug}
               layout={!reduce}
               initial={reduce ? false : { opacity: 0, scale: 0.96 }}
@@ -161,10 +161,10 @@ export function WorkFilter({ items, services, quoteHref, gallery = [] }: { items
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               {item.card}
-            </motion.li>
+            </m.li>
           ))}
         </AnimatePresence>
-      </motion.ul>
+      </m.ul>
 
       {galleryVisible.length > 0 && (
         <section aria-labelledby="portfolio-heading" className="mt-20">
@@ -185,6 +185,6 @@ export function WorkFilter({ items, services, quoteHref, gallery = [] }: { items
           </Link>
         </div>
       )}
-    </>
+    </LazyMotion>
   );
 }

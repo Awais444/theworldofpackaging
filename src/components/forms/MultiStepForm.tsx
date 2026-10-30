@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useRef, useState, type ReactNode } from "react";
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { site } from "@/config/site";
@@ -43,7 +43,7 @@ export function DirectContact() {
 
 function Success({ title, body }: { title: string; body: string }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} role="status" className="mx-auto max-w-2xl rounded-3xl bg-blue-50 p-8 text-center md:p-12">
+    <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} role="status" className="mx-auto max-w-2xl rounded-3xl bg-blue-50 p-8 text-center md:p-12">
       <CheckCircleIcon aria-hidden="true" className="mx-auto h-16 w-16 text-blue-600" />
       <h2 className="text-h2 mt-6">{title}</h2>
       <p className="text-lead mt-4 text-ink-500">{body}</p>
@@ -53,7 +53,7 @@ function Success({ title, body }: { title: string; body: string }) {
           Browse our work
         </Button>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -115,7 +115,7 @@ export function MultiStepForm<T extends FieldValues>({
           </p>
         </div>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-silver-100" role="progressbar" aria-valuemin={1} aria-valuemax={steps.length} aria-valuenow={index + 1} aria-label="Form progress">
-          <motion.div
+          <m.div
             className="h-full origin-left rounded-full bg-blue-600"
             initial={false}
             animate={{ scaleX: (index + 1) / steps.length }}
@@ -124,7 +124,7 @@ export function MultiStepForm<T extends FieldValues>({
         </div>
 
         <AnimatePresence mode="wait" initial={false}>
-          <motion.fieldset
+          <m.fieldset
             key={step.id}
             initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
@@ -135,7 +135,7 @@ export function MultiStepForm<T extends FieldValues>({
             <legend className="text-h3 mb-2">{step.title}</legend>
             {step.intro && <p className="text-ink-500">{step.intro}</p>}
             {step.content}
-          </motion.fieldset>
+          </m.fieldset>
         </AnimatePresence>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-silver-300 pt-6">

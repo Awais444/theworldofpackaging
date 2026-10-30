@@ -1,12 +1,12 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useId, useMemo, useState } from "react";
+import { useId, useMemo, useState, type ReactNode } from "react";
 import type { DesignGroup, DesignService } from "@/content/designServices";
 import { cn } from "@/lib/utils";
-import { DesignCard } from "./DesignCard";
 
-type Item = Pick<DesignService, "slug" | "name" | "short" | "illustration" | "group" | "formats">;
+/** `card`: the DesignCard, rendered on the server so the media registry stays out of this client bundle. */
+type Item = Pick<DesignService, "slug" | "name" | "short" | "group" | "formats"> & { card: ReactNode };
 
 const TABS: Array<{ id: DesignGroup | "all"; label: string }> = [
   { id: "product", label: "By Product" },
@@ -73,7 +73,7 @@ export function DesignHubBrowser({ items }: { items: Item[] }) {
       </p>
       <div className="mt-6 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
         {visible.map((s) => (
-          <DesignCard key={s.slug} s={s} />
+          <div key={s.slug} className="h-full">{s.card}</div>
         ))}
       </div>
       {visible.length === 0 && (

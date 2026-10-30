@@ -430,8 +430,8 @@ html.lenis body {
 }
 @keyframes hero-dot { from { transform: scale(1); opacity: 0.5; } to { transform: scale(2.6); opacity: 0; } }
 
-/* Homepage H1 rotating word (components/home/HeroRotator.tsx): the word leaving slides up and fades, the next
-   one rises in. "in" words jump into place while invisible. Reduced motion: the rotator never advances. */
-.hero-phrase { transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.215, 0.61, 0.355, 1); }
-.hero-phrase[data-state="in"] { opacity: 0; transform: translateY(0.35em); transition: none; }
-.hero-phrase[data-state="out"] { opacity: 0; transform: translateY(-0.35em); }
+/* Homepage H1 rotating word (components/home/HeroRotator.tsx): out = slide up + fade (0.25s), pre = parked
+   below with no transition, on = slide in (0.3s). The clipped box hides the word while it moves. */
+.hero-word { transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.hero-word[data-phase="out"] { opacity: 0; transform: translateY(-0.6em); transition-duration: 0.25s; transition-timing-function: ease-in; }
+.hero-word[data-phase="pre"] { opacity: 0; transform: translateY(0.6em); transition: none; }

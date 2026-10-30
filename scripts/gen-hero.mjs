@@ -1,4 +1,4 @@
-// Pre-generates the homepage hero image at fixed widths in AVIF and WebP (transparency kept), so the
+// Pre-generates the homepage hero image (transparent padding trimmed) at fixed widths in AVIF and WebP (transparency kept), so the
 // LCP-area image is served as a static file instead of being optimised on demand by /_next/image.
 // File names carry a short content hash of the source, so /images/hero/* can be cached as immutable.
 // Writes src/content/heroImage.json, which HomeHero and the homepage preload read. Runs in prebuild.
@@ -14,7 +14,8 @@ const MANIFEST = "src/content/heroImage.json";
 const WIDTHS = [480, 768, 1024, 1440];
 const FORMATS = { avif: { quality: 55, effort: 6, chromaSubsampling: "4:2:0" }, webp: { quality: 78, alphaQuality: 80, effort: 6 } };
 
-const src = readFileSync(SRC);
+// Transparent padding is trimmed so the pouch fills its box.
+const src = await sharp(readFileSync(SRC)).trim({ threshold: 1 }).toBuffer();
 const hash = createHash("sha1").update(src).update(JSON.stringify({ WIDTHS, FORMATS })).digest("hex").slice(0, 8);
 const { width, height } = await sharp(src).metadata();
 

@@ -6,6 +6,7 @@ Next.js (App Router) marketing site. The build plan is in `CLAUDE.md`, and the S
 npm install
 npm run dev        # development
 npm run build      # production build (prebuild: blur placeholders + content dates)
+                   # low-memory machine: NEXT_BUILD_CPUS=1 npm run build
 npm run lint
 ```
 
@@ -18,6 +19,7 @@ Run these against a production build (`npm run build && npx next start -p 3100`)
 | `node scripts/seo-crawl.mjs http://localhost:3100 audit` | Crawls every sitemap URL and internal link. Writes `crawl.csv` and `crawl-summary.json`: titles, descriptions, H1s, canonicals, JSON-LD types, links in/out, answer-first leads, FAQs, dates. |
 | `node scripts/validate-schema.mjs http://localhost:3100` | Checks every JSON-LD block against the schema.org vocabulary (cached in `.cache/`). |
 | `node scripts/check-overflow.mjs http://localhost:3100` | No horizontal scroll at 360–414 px. |
+| `node scripts/check-images.mjs http://localhost:3100` | Served vs rendered image width and bytes vs budget on the 8 audited pages. |
 | `INDEXNOW_KEY=… node scripts/indexnow.mjs` | After a deploy, pings IndexNow with every sitemap URL. The same `INDEXNOW_KEY` must be set on Vercel so `/indexnow-key.txt` serves it. |
 
 ## Generated at build time

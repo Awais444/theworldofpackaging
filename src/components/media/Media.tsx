@@ -54,7 +54,8 @@ export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50
           style={slot.position ? { objectPosition: slot.position } : undefined}
         />
       ) : (
-        <div role="img" aria-label={slot.alt} className="absolute inset-0 p-[6%]">
+        // Illustrations stand in for photos not taken yet: decorative, so screen readers skip them.
+        <div aria-hidden="true" className="absolute inset-0 p-[6%]">
           {/* Soft background shapes keep illustration panels from looking empty. */}
           <span aria-hidden="true" className="absolute -right-[10%] -top-[15%] h-[55%] aspect-square rounded-full bg-white/50" />
           <span aria-hidden="true" className="absolute -bottom-[20%] -left-[8%] h-[45%] aspect-square rounded-full bg-white/40" />

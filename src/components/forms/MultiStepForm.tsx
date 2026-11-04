@@ -1,5 +1,6 @@
 "use client";
 
+import { SendError } from "./SendError";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { useRef, useState, type ReactNode } from "react";
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
@@ -146,11 +147,7 @@ export function MultiStepForm<T extends FieldValues>({
             {last ? (form.formState.isSubmitting ? "Sending…" : "Send brief") : `Next: ${steps[index + 1]!.title}`}
           </Button>
         </div>
-        {status === "error" && (
-          <p role="alert" className="mt-4 text-sm font-medium text-error">
-            {error || "That did not go through."} You can also email {site.email}.
-          </p>
-        )}
+        {status === "error" && <SendError message={error} topic="a project brief" />}
       </form>
 
       <aside className="space-y-8 rounded-3xl bg-silver-100 p-6 lg:col-span-4 lg:self-start">

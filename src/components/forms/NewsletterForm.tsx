@@ -6,14 +6,14 @@ import { submitNewsletter } from "@/app/actions/contact";
 /** Footer email sign-up. Works on dark (Klein Blue) backgrounds. */
 export function NewsletterForm() {
   const id = useId();
-  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [state, setState] = useState<"idle" | "sending" | "done" | "error" | "failed">("idle");
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
     setState("sending");
     const res = await submitNewsletter(data);
-    setState(res.ok ? "done" : "error");
+    setState(res.ok ? "done" : res.reason === "invalid" ? "error" : "failed");
   }
 
   if (state === "done") return <p className="mt-6 text-sm font-medium">Thanks, you are on the list.</p>;
@@ -39,6 +39,11 @@ export function NewsletterForm() {
         </button>
       </div>
       {state === "error" && <p role="alert" className="mt-2 text-sm">Please enter a valid email.</p>}
+      {state === "failed" && (
+        <p role="alert" className="mt-2 text-sm">
+          We couldn&apos;t sign you up just now. Please try again later.
+        </p>
+      )}
     </form>
   );
 }

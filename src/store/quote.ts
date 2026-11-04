@@ -12,8 +12,6 @@ export type QuoteDraft = {
   logo?: (typeof QUOTE_LOGO)[number];
   about: string;
   links: string;
-  /** File names only: files are requested by email after the first reply. */
-  files: string[];
   /** Page the visitor came from (from the link params), for our team. */
   source: string;
   name: string;
@@ -29,7 +27,6 @@ export const emptyQuote: QuoteDraft = {
   country: "",
   about: "",
   links: "",
-  files: [],
   source: "",
   name: "",
   email: "",

@@ -86,8 +86,6 @@ const projectFields = z
     logo: z.enum(QUOTE_LOGO).optional(),
     about: optional(2000),
     links: optional(1000),
-    /** File names only: files are requested by email after the first reply. */
-    files: z.array(z.string().max(200)).max(10),
     source: optional(300),
   })
   .superRefine((d, ctx) => {

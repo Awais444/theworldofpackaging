@@ -1,13 +1,14 @@
 "use client";
 
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { Check, CircleCheck, FileUp, Layers, MessageCircle, Palette, PenTool, Printer, X, type LucideIcon } from "lucide-react";
+import { Check, CircleCheck, Layers, MessageCircle, Palette, PenTool, Paperclip, Printer, type LucideIcon } from "lucide-react";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { submitQuoteRequest } from "@/app/actions/forms";
 import { site, whatsappUrl } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Textarea } from "@/components/ui/Field";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { SendError } from "./SendError";
 import {
   brandOnly,
   needsPrinting,
@@ -130,6 +131,18 @@ function ErrorMsg({ error }: { error?: string }) {
   ) : null;
 }
 
+/** Files are not uploaded through the form: they come by WhatsApp or as a reply to our email. */
+function FilesNote({ className }: { className?: string }) {
+  return (
+    <p className={cn("flex items-start gap-3 rounded-2xl bg-blue-50 p-4 text-[15px] text-ink-900", className)}>
+      <Paperclip aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
+      <span>
+        You can send files on WhatsApp{site.whatsapp ? ` (${site.whatsapp})` : ""} or by replying to our email.
+      </span>
+    </p>
+  );
+}
+
 function NextSteps({ className }: { className?: string }) {
   return (
     <ol className={cn("space-y-3", className)}>
@@ -150,6 +163,7 @@ function Success({ d, onRestart }: { d: QuoteDraft; onRestart: () => void }) {
       <h2 className="text-h2 mt-6">Thank you{d.name ? `, ${d.name.split(" ")[0]}` : ""}. Request sent.</h2>
       <p className="text-lead mt-4 text-ink-500">We&apos;ve got your answers. Here&apos;s what happens next:</p>
       <NextSteps className="mt-6" />
+      <FilesNote className="mt-6" />
       <div className="mt-8 flex flex-wrap gap-3">
         <WhatsAppButton message="Hi, I just sent a quote request on your website." label="Message us on WhatsApp" variant="primary" />
         <Button href="/work" size="lg" variant="secondary">
@@ -366,39 +380,10 @@ export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: st
       <Field label="Tell us about your product (optional)" htmlFor={`${ids}-about`} hint="What it is, where it sells, a deadline, anything that helps.">
         <Textarea id={`${ids}-about`} rows={3} value={d.about} onChange={(e) => set({ about: e.target.value })} />
       </Field>
-      <div className="grid gap-5 md:grid-cols-2">
-        <Field label="Links (optional)" htmlFor={`${ids}-links`} hint="Website, references, Drive or Dropbox folder.">
-          <Textarea id={`${ids}-links`} rows={3} value={d.links} onChange={(e) => set({ links: e.target.value })} />
-        </Field>
-        <div>
-          <p className="text-sm font-semibold">Files (optional)</p>
-          <label htmlFor={`${ids}-files`} className="mt-2 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-silver-300 p-5 text-center transition hover:border-blue-600">
-            <FileUp aria-hidden="true" className="h-7 w-7 text-blue-600" />
-            <span className="font-semibold">Add references or artwork</span>
-            <span className="text-sm text-ink-500">We note the file names and ask for the files when we reply.</span>
-          </label>
-          <input
-            id={`${ids}-files`}
-            type="file"
-            multiple
-            accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg,.webp"
-            className="sr-only"
-            onChange={(e) => set({ files: [...new Set([...d.files, ...Array.from(e.target.files ?? []).map((f) => f.name)])].slice(0, 10) })}
-          />
-          {d.files.length > 0 && (
-            <ul className="mt-3 space-y-2">
-              {d.files.map((f) => (
-                <li key={f} className="flex items-center justify-between gap-3 rounded-lg bg-silver-50 px-3 py-2 text-sm">
-                  <span className="truncate">{f}</span>
-                  <button type="button" aria-label={`Remove ${f}`} onClick={() => set({ files: d.files.filter((x) => x !== f) })} className="text-ink-500 hover:text-error">
-                    <X aria-hidden="true" className="h-4 w-4" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
+      <Field label="Links (optional)" htmlFor={`${ids}-links`} hint="Website, references, Drive or Dropbox folder.">
+        <Textarea id={`${ids}-links`} rows={2} value={d.links} onChange={(e) => set({ links: e.target.value })} />
+      </Field>
+      <FilesNote />
     </div>,
     // 3. Your details
     <div key="details" className="grid gap-5 sm:grid-cols-2">
@@ -485,11 +470,7 @@ export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: st
             {last ? (status === "sending" ? "Sending…" : "Send my request") : "Continue"}
           </Button>
         </div>
-        {status === "error" && (
-          <p role="alert" className="mt-4 text-sm font-medium text-error">
-            {serverError || "That did not go through."} You can also email {site.email}.
-          </p>
-        )}
+        {status === "error" && <SendError message={serverError} topic="a quote request" />}
       </form>
 
       {/* Summary: sticky beside the form on desktop, below it on mobile. */}

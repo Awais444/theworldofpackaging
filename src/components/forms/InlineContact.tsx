@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitInlineContact } from "@/app/actions/contact";
 import { site } from "@/config/site";
+import { SendError } from "./SendError";
 import { Button } from "@/components/ui/Button";
 import { CircleCheck as CheckCircleIcon } from "lucide-react";
 import { BUDGETS, inlineContactSchema, NEEDS, type InlineContactInput } from "@/lib/schemas";
@@ -26,6 +27,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 export function InlineContact() {
   const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
   const {
     register,
     handleSubmit,
@@ -41,7 +43,10 @@ export function InlineContact() {
     if (res.ok) {
       setStatus("sent");
       reset();
-    } else setStatus("error");
+    } else {
+      setErrorMsg(res.error);
+      setStatus("error");
+    }
   };
 
   return (
@@ -155,11 +160,7 @@ export function InlineContact() {
             <Button type="submit" size="lg" arrow disabled={isSubmitting}>
               {isSubmitting ? "Sending" : "Send"}
             </Button>
-            {status === "error" && (
-              <p role="alert" className="text-sm text-error">
-                That did not go through. Try again, or email {site.email}.
-              </p>
-            )}
+            {status === "error" && <SendError message={errorMsg} topic="an enquiry" />}
           </div>
         </m.form>
       )}

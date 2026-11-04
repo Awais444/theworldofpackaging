@@ -251,7 +251,7 @@ export default function DesignSystemPage() {
       </Section>
 
       <Section>
-        <CTABand title="Ready to start your packaging?" highlight="packaging" text="Send a brief and get a quote." actions={<Button href="/get-a-quote" variant="white">Get a quote</Button>} />
+        <CTABand title="Ready to start your packaging?" highlight="packaging" text="Send a brief and get a quote." primary={{ href: "/get-a-quote", label: "Get a quote" }} />
         <div className="mt-8 flex items-center gap-3 text-sm text-ink-500">
           <Sparkles aria-hidden="true" className="h-4 w-4" /> Icons from lucide-react <Factory aria-hidden="true" className="h-4 w-4" />
         </div>

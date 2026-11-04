@@ -176,16 +176,7 @@ export default function AboutPage() {
           title="Work with us"
           highlight="Work"
           text={`Tell us about your product. We reply ${site.facts.quoteReply}.`}
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/start-a-project" variant="white" size="lg">
-                Start a Project
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

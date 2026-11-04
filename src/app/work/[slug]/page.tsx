@@ -4,10 +4,8 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCaseStudy, publicCaseStudies as caseStudies } from "@/content/caseStudies";
-import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Media } from "@/components/media/Media";
-import { Button } from "@/components/ui/Button";
 import { StatCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
@@ -160,16 +158,7 @@ export default async function CaseStudyPage({ params }: Props) {
           title="Start your project"
           highlight="project"
           text="Brand, packaging and production from one team. Tell us what you are launching."
-          actions={
-            <>
-              <Button href="/start-a-project" variant="accent" size="lg" arrow>
-                Start a Project
-              </Button>
-              <Button href={quoteHref} variant="white" size="lg">
-                Get a Quote
-              </Button>
-            </>
-          }
+          primary={{ href: "/start-a-project", label: "Start a Project" }}
         />
       </Section>
     </article>

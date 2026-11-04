@@ -5,7 +5,6 @@ import { glossary } from "@/content/glossary";
 import { quoteHref } from "@/content/navigation";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { withHighlight } from "@/components/ui/withHighlight";
@@ -75,11 +74,7 @@ export default function GlossaryPage() {
           title="Questions about your packaging?"
           highlight="packaging"
           text="Send us your product and we will recommend the right box, board and finishes."
-          actions={
-            <Button href={quoteHref} variant="accent" size="lg" arrow>
-              Get a Free Quote
-            </Button>
-          }
+          primary={{ href: quoteHref, label: "Get a Free Quote" }}
         />
       </Section>
     </>

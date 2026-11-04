@@ -224,11 +224,7 @@ export default function PricingPage() {
           highlight="real"
           text="Send your product, size and quantity. We reply with a fixed quote."
           whatsapp="pricing for packaging design and boxes"
-          actions={
-            <Button href={quoteHref} variant="accent" size="lg" arrow>
-              Get a Free Quote
-            </Button>
-          }
+          primary={{ href: quoteHref, label: "Get a Free Quote" }}
         />
       </Section>
     </>

@@ -54,11 +54,7 @@ export default function TeamPage() {
           highlight="team"
           text="Tell us about your product and we will put the right people on it."
           whatsapp="packaging design"
-          actions={
-            <Button href={quoteHref} variant="accent" size="lg" arrow>
-              Get a Free Quote
-            </Button>
-          }
+          primary={{ href: quoteHref, label: "Get a Free Quote" }}
         />
       </Section>
     </>

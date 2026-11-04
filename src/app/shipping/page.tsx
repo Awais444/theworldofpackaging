@@ -189,16 +189,7 @@ export default function ShippingPage() {
           title="Get a delivered price"
           highlight="delivered"
           text="Tell us the destination and we include freight in your quote."
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/contact" variant="white" size="lg">
-                Talk to us
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

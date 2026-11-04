@@ -116,16 +116,7 @@ export default function FactoryPage() {
           title="See it in your hands"
           highlight="hands"
           text="Approve a digital proof and 3D mockup, then we share production photos on WhatsApp before dispatch."
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href={quoteHref} variant="white" size="lg">
-                Get a Quote
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

@@ -494,15 +494,9 @@ export function FinalCta() {
       <CTABand
         title="Ready to create your packaging?"
         highlight="packaging"
-        text="Packaging design and manufacturing from one team. Digital proof before print."
+        text="Packaging design and printing from one team."
         whatsapp="packaging design and boxes"
-        actions={
-          <>
-            <Button href={quoteHref} variant="accent" size="lg" arrow>
-              Get a Quote
-            </Button>
-          </>
-        }
+        primary={{ href: quoteHref, label: "Get a Quote" }}
       />
     </Section>
   );

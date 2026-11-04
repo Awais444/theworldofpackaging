@@ -127,16 +127,7 @@ export default function IndustriesPage() {
           title="Not on the list?"
           highlight="list"
           text="We package plenty of other products. Tell us what yours is."
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/contact" variant="white" size="lg">
-                Talk to us
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

@@ -176,16 +176,7 @@ export default async function PostPage({ params }: Props) {
           title="Want us to handle it?"
           highlight="handle"
           text="Brief us and we take care of structure, artwork and production."
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/start-a-project" variant="white" size="lg">
-                Start a Project
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </article>

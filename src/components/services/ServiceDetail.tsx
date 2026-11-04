@@ -141,16 +141,7 @@ export function ServiceDetail({ s }: { s: ServicePage }) {
           whatsapp={s.name}
           highlight="project"
           text="Tell us about your brand. We reply with a proposal and a fixed quote."
-          actions={
-            <>
-              <Button href={`/start-a-project?service=${s.path}`} variant="accent" size="lg" arrow>
-                Start a Project
-              </Button>
-              <Button href="/packages" variant="white" size="lg">
-                See packages
-              </Button>
-            </>
-          }
+          primary={{ href: `/start-a-project?service=${s.path}`, label: "Start a Project" }}
         />
       </Section>
     </>

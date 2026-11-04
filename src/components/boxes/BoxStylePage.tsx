@@ -248,13 +248,7 @@ export function BoxStylePage({ box }: { box: BoxView }) {
           whatsapp={box.name.endsWith("Box") ? `${box.name}es` : `${box.name}s`}
           highlight="price"
           text="Send your size and quantity. Free design support with every order."
-          actions={
-            <>
-              <Button href={quote} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-            </>
-          }
+          primary={{ href: quote, label: "Get a Quote" }}
         />
       </Section>
     </>

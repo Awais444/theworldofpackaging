@@ -192,16 +192,7 @@ export default async function IndustryPage({ params }: Props) {
           whatsapp={`${ind.name} packaging`}
           highlight="Launching"
           text="Tell us about the product. We recommend a box and send a quote."
-          actions={
-            <>
-              <Button href={`${quoteHref}?industry=${ind.slug}`} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/contact" variant="white" size="lg">
-                Talk to us
-              </Button>
-            </>
-          }
+          primary={{ href: `${quoteHref}?industry=${ind.slug}`, label: "Get a Quote" }}
         />
       </Section>
     </>

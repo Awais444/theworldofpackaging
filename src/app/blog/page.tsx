@@ -8,7 +8,6 @@ import { posts } from "@/content/blog/posts";
 import { quoteHref } from "@/content/navigation";
 import { illustrations } from "@/components/illustrations";
 import { PageHero } from "@/components/sections/PageHero";
-import { Button } from "@/components/ui/Button";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { Tag } from "@/components/ui/Tag";
@@ -66,16 +65,7 @@ export default function BlogPage() {
           title="Rather we just did it?"
           highlight="did"
           text="Brief us and we handle structure, artwork and production."
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/start-a-project" variant="white" size="lg">
-                Start a Project
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

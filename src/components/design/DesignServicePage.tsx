@@ -319,13 +319,7 @@ export function DesignServicePage({ s }: { s: DesignService }) {
           highlight="project"
           text={designFeeNote}
           whatsapp={topic}
-          actions={
-            <>
-              <Button href={`${quoteHref}?service=${s.slug}`} variant="accent" size="lg" arrow>
-                Get a Free Quote
-              </Button>
-            </>
-          }
+          primary={{ href: `${quoteHref}?service=${s.slug}`, label: "Get a Free Quote" }}
         />
       </Section>
     </>

@@ -151,16 +151,7 @@ export default function WorkPage() {
           highlight="next"
           text="Tell us what you are making. We reply with a design route, a box recommendation and a fixed quote."
           whatsapp="examples of your packaging work"
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Free Quote
-              </Button>
-              <Button href="/start-a-project" variant="white" size="lg">
-                Start a Project
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Free Quote" }}
         />
       </Section>
     </>

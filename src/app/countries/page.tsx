@@ -102,11 +102,7 @@ export default function CountriesHub() {
           highlight="market"
           text={`Tell us where your products will be sold. We reply ${site.facts.quoteReply} with a design route, a box recommendation and shipping options.`}
           whatsapp="packaging for my country"
-          actions={
-            <Button href={quoteHref} variant="accent" size="lg" arrow>
-              Get a Free Quote
-            </Button>
-          }
+          primary={{ href: quoteHref, label: "Get a Free Quote" }}
         />
       </Section>
     </>

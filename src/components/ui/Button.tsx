@@ -3,8 +3,8 @@ import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type ButtonVariant = "primary" | "secondary" | "accent" | "white" | "ghost" | "link";
-export type ButtonSize = "sm" | "md" | "lg";
+export type ButtonVariant = "primary" | "secondary" | "accent" | "orange" | "white" | "ghost" | "link";
+export type ButtonSize = "sm" | "md" | "lg" | "band";
 
 const base =
   "group/btn relative inline-flex items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap transition-[background-color,color,border-color,box-shadow,transform] duration-200 disabled:pointer-events-none disabled:opacity-50";
@@ -17,6 +17,8 @@ const variants: Record<ButtonVariant, string> = {
   primary: "bg-blue-600 text-white hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-blue",
   secondary: "border border-blue-600 bg-white text-blue-600 hover:-translate-y-0.5 hover:bg-blue-50",
   accent: "bg-orange-500 text-ink-900 hover:-translate-y-0.5 hover:bg-orange-600",
+  // White on Hot Orange, used in the CTA band at the user's request. Below AA for text (about 2.9:1).
+  orange: "bg-orange-500 text-white hover:-translate-y-0.5 hover:bg-orange-600",
   white: "bg-white text-blue-600 hover:-translate-y-0.5 hover:bg-blue-50",
   ghost,
   link: ghost,
@@ -26,6 +28,8 @@ const sizes: Record<ButtonSize, string> = {
   sm: "h-10 px-4 text-sm",
   md: "h-12 px-6 text-[15px]",
   lg: "h-14 px-8 text-base",
+  /** CTA band pair: 52px, same padding for both buttons. */
+  band: "h-[52px] px-7 text-base",
 };
 
 export function buttonClasses(variant: ButtonVariant = "primary", size: ButtonSize = "md", className?: string) {

@@ -1,41 +1,42 @@
-import type { ReactNode } from "react";
-import { promises } from "@/config/site";
+import { site } from "@/config/site";
+import { Button } from "./Button";
 import { Container } from "./Layout";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { withHighlight } from "./withHighlight";
 
+const bandPromises = [`Quote reply ${site.facts.quoteReply}`, `First concepts in ${site.facts.firstConceptHours} hours`, "Digital proof before print"];
+
 /**
- * Vibrant Blue call-to-action panel (CLAUDE.md §4.4). The highlight word stays white
- * here (never orange text on blue); the swoosh carries the accent.
- * Every band shows the confirmed promises and a WhatsApp alternative naming the page topic.
+ * Vibrant Blue call-to-action panel (CLAUDE.md §4.4), the same on every page: heading, lead and promise row
+ * on the left; one orange primary button and a white WhatsApp button as a pair on the right. The highlight
+ * word stays white (never orange text on blue); the swoosh carries the accent.
  */
 export function CTABand({
   title,
   highlight,
   text,
-  actions,
+  primary,
   whatsapp,
 }: {
   title: string;
   highlight?: string;
   text: string;
-  /** Typically an accent button and a white button. */
-  actions: ReactNode;
-  /** Topic for the pre-filled WhatsApp message, e.g. "Magnetic Closure Boxes"; false hides it. */
-  whatsapp?: string | false;
+  /** The page's main next step, e.g. { href: quoteHref, label: "Get a Quote" }. */
+  primary: { href: string; label: string };
+  /** Topic for the pre-filled WhatsApp message, e.g. "Magnetic Closure Boxes". */
+  whatsapp?: string;
 }) {
   return (
     <section className="section-y">
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-blue-600 px-6 py-12 text-white md:px-14 md:py-16">
-          <span aria-hidden="true" className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-900/40" />
-          <span aria-hidden="true" className="absolute -bottom-32 right-24 h-64 w-64 rounded-full bg-white/5" />
-          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
+        {/* One soft Klein Blue glow, top right, kept well inside the rounded corners. */}
+        <div className="rounded-3xl bg-blue-600 bg-[radial-gradient(60%_90%_at_88%_0%,color-mix(in_srgb,var(--blue-900)_55%,var(--blue-600))_0%,var(--blue-600)_70%)] px-6 py-10 text-white md:px-[72px] md:py-16">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+            <div className="min-w-0">
               <h2 className="text-h2 on-dark">{withHighlight(title, highlight)}</h2>
-              <p className="mt-4 text-lg text-white/85">{text}</p>
+              <p className="mt-4 max-w-[46ch] text-lg text-white/85">{text}</p>
               <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-white">
-                {promises().map((p) => (
+                {bandPromises.map((p) => (
                   <li key={p} className="inline-flex items-center gap-2">
                     <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
                     {p}
@@ -43,9 +44,11 @@ export function CTABand({
                 ))}
               </ul>
             </div>
-            <div className="flex flex-wrap gap-3">
-              {actions}
-              {whatsapp !== false && <WhatsAppButton topic={whatsapp || undefined} variant="white" />}
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <Button href={primary.href} variant="orange" size="band" arrow className="w-full sm:w-auto">
+                {primary.label}
+              </Button>
+              <WhatsAppButton topic={whatsapp} variant="white" size="band" label="WhatsApp us" className="w-full sm:w-auto" />
             </div>
           </div>
         </div>

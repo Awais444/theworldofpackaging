@@ -419,11 +419,7 @@ export default async function CountryPage({ params }: Props) {
           highlight="launch"
           text={`Tell us what you are making and where it ships. We reply ${site.facts.quoteReply} with a design route, a box recommendation and a quote.`}
           whatsapp={`packaging in ${c.name}`}
-          actions={
-            <Button href={quoteHref} variant="accent" size="lg" arrow>
-              Get a Free Quote
-            </Button>
-          }
+          primary={{ href: quoteHref, label: "Get a Free Quote" }}
         />
       </Section>
     </>

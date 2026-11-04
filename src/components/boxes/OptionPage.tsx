@@ -84,16 +84,7 @@ export function OptionPage({ page }: { page: OptionPageContent }) {
           title="Feel it before you choose"
           highlight="Feel"
           text="See your materials and finishes on a 3D mockup and digital proof before anything is printed."
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href={quoteHref} variant="white" size="lg">
-                Get a Quote
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

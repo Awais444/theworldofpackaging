@@ -174,16 +174,7 @@ export default function PackagesPage() {
           title="Not sure which package fits?"
           highlight="fits"
           text="Tell us what you are launching and we will recommend a package or a custom scope."
-          actions={
-            <>
-              <Button href="/start-a-project" variant="accent" size="lg" arrow>
-                Start a Project
-              </Button>
-              <Button href="/contact" variant="white" size="lg">
-                Talk to us
-              </Button>
-            </>
-          }
+          primary={{ href: "/start-a-project", label: "Start a Project" }}
         />
       </Section>
     </>

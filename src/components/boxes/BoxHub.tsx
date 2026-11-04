@@ -107,16 +107,7 @@ export function BoxHub(p: BoxHubProps) {
           title={p.cta.title}
           highlight={p.cta.highlight}
           text={p.cta.text}
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/contact" variant="white" size="lg">
-                Talk to us
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
     </>

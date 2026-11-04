@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { metaDescription, ogFor } from "@/lib/seo";
 import { faqGroups } from "@/content/faqs";
-import { quoteHref } from "@/content/navigation";
 import { PageHero } from "@/components/sections/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
@@ -46,16 +45,7 @@ export default function FaqPage() {
           title="Still have a question?"
           highlight="question"
           text="Send it with your brief and we will answer both."
-          actions={
-            <>
-              <Button href="/contact" variant="accent" size="lg" arrow>
-                Contact us
-              </Button>
-              <Button href={quoteHref} variant="white" size="lg">
-                Get a Quote
-              </Button>
-            </>
-          }
+          primary={{ href: "/contact", label: "Contact us" }}
         />
       </Section>
     </>

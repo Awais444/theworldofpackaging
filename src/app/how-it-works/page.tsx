@@ -82,16 +82,7 @@ export default function HowItWorksPage() {
           title="Start at step one"
           highlight="one"
           text={`Send your brief. We reply ${site.facts.quoteReply}.`}
-          actions={
-            <>
-              <Button href={quoteHref} variant="accent" size="lg" arrow>
-                Get a Quote
-              </Button>
-              <Button href="/start-a-project" variant="white" size="lg">
-                Start a Project
-              </Button>
-            </>
-          }
+          primary={{ href: quoteHref, label: "Get a Quote" }}
         />
       </Section>
       <Section bg="silver">

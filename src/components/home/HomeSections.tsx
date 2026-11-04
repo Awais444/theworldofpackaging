@@ -238,7 +238,7 @@ const reasons: Array<{ icon: LucideIcon; title: string; text: string }> = [
 
 export function WhyUs() {
   return (
-    <Section>
+    <Section bg="silver-50">
       <FadeIn>
         <SectionHeader eyebrow="Why choose us" title="One team from sketch to delivered box" highlight="delivered" />
       </FadeIn>

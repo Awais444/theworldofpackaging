@@ -30,6 +30,7 @@ export default function HomePage() {
     <>
       <HomeHero />
       <DesignForEveryProduct />
+      <FeaturedWork />
       <TrustedBy />
       <ShelfProblems />
       <ProofBar items={proofItems()} />
@@ -37,7 +38,6 @@ export default function HomePage() {
       <BoxTypes />
       <CollapsibleFeature />
       <WhyUs />
-      <FeaturedWork />
       <HowItWorks visuals={{ 1: <Media slot="home-how-step-2" card className="rounded-2xl" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" /> }} />
       <Industries />
       <Finishes />

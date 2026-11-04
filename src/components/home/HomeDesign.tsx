@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Tag } from "@/components/ui/Tag";
+import { CardSlider } from "@/components/ui/CardSlider";
 
 /** "Packaging design for every product": 12 service cards directly under the hero. */
 export function DesignForEveryProduct() {
@@ -28,10 +29,13 @@ export function DesignForEveryProduct() {
           }
         />
       </FadeIn>
-      <div className="mt-10 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
-        {items.map((s) => (
-          <DesignCard key={s.slug} s={s} slot={`home-design-${s.slug}`} />
-        ))}
+      {/* Swipe slider below 1024px (1.2 cards on mobile, 2.3 on tablet), the 4-column grid from 1024px. */}
+      <div className="mt-10">
+        <CardSlider label="Packaging design services" slideClassName="basis-[82%] sm:basis-[42%] lg:basis-auto" gridClassName="lg:grid lg:grid-cols-4 lg:gap-6">
+          {items.map((s) => (
+            <DesignCard key={s.slug} s={s} slot={`home-design-${s.slug}`} />
+          ))}
+        </CardSlider>
       </div>
     </Section>
   );

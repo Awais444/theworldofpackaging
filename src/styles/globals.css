@@ -450,3 +450,32 @@ html.lenis body {
 @media (prefers-reduced-motion: reduce) {
   .finish-card .finish-best { opacity: 1; transform: none; }
 }
+
+/* Homepage work marquee (components/home/WorkMarquee.tsx). Each track holds the list twice and moves by
+   half its width, so the loop is seamless. Only transform animates. Rows pause on hover/focus; the whole
+   marquee pauses off-screen or in a hidden tab ([data-off], set by an IntersectionObserver). */
+.marquee-row {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-img { transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.marquee-cap { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+.marquee-tile:hover .marquee-cap, .marquee-tile:focus-visible .marquee-cap { opacity: 1; transform: none; }
+.marquee-tile:hover .marquee-img, .marquee-tile:focus-visible .marquee-img { transform: scale(1.04); }
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track { animation: marquee-left 60s linear infinite; }
+  .marquee-row[data-dir="right"] .marquee-track { animation: marquee-right 70s linear infinite; }
+  .marquee:not([data-off]) .marquee-track { will-change: transform; }
+  .marquee[data-off] .marquee-track,
+  .marquee-row:hover .marquee-track,
+  .marquee-row:focus-within .marquee-track { animation-play-state: paused; }
+}
+/* The two copies sit 1rem (gap-4) apart: moving by half the track plus half a gap lands exactly on the seam. */
+@keyframes marquee-left { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 0.5rem)); } }
+@keyframes marquee-right { from { transform: translateX(calc(-50% - 0.5rem)); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; -webkit-mask-image: none; mask-image: none; padding-inline: 16px; }
+  .marquee-copy { display: none; }
+  .marquee-tile { scroll-snap-align: start; }
+  .marquee-img { transition: none; }
+}

@@ -78,7 +78,7 @@ export function PortfolioGallery({ items, quoteHref }: { items: GalleryItem[]; q
   );
 }
 
-function Lightbox({ items, index, onIndex, onClose, quoteHref }: { items: GalleryItem[]; index: number; onIndex: (i: number) => void; onClose: () => void; quoteHref: string }) {
+export function Lightbox({ items, index, onIndex, onClose, quoteHref }: { items: GalleryItem[]; index: number; onIndex: (i: number) => void; onClose: () => void; quoteHref: string }) {
   const item = items[index]!;
   const dialog = useRef<HTMLDivElement>(null);
   const opener = useRef<Element | null>(null);

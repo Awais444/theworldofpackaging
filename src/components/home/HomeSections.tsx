@@ -16,7 +16,6 @@ import { Award,
 import { site, whatsappUrl } from "@/config/site";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { featuredCaseSlugs, publicCaseStudies } from "@/content/caseStudies";
 import { faqGroups } from "@/content/faqs";
 import { industries } from "@/content/industries";
 import { quoteHref } from "@/content/navigation";
@@ -32,14 +31,16 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
 import {
-  CaseCard,
   IndustryCard,
   ProductCard,
   ServiceCard,
   TestimonialCard,
 } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
-import { Section } from "@/components/ui/Layout";
+import { Container, Section } from "@/components/ui/Layout";
+import { WorkMarquee } from "@/components/home/WorkMarquee";
+import { TestimonialSlider } from "@/components/ui/TestimonialSlider";
+import { workMarqueeRows } from "@/lib/workMarquee";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Tabs } from "@/components/ui/Tabs";
 import { illustrations } from "@/components/illustrations";
@@ -264,41 +265,31 @@ export function WhyUs() {
   );
 }
 
-export function FeaturedWork() {
-  // Only real projects are shown; the section is hidden until there is one.
-  if (publicCaseStudies.length === 0) return null;
+/** "Packaging we have made": section header in the container, then a full-bleed two-row marquee. */
+export async function FeaturedWork() {
+  const { rows, lightbox } = await workMarqueeRows();
+  if (rows[0].length === 0) return null;
   return (
-    <Section bg="silver">
-      <FadeIn>
-        <SectionHeader
-          eyebrow="Featured work"
-          title="Packaging we have made"
-          highlight="made"
-          action={
-            <Button href="/work" variant="ghost" arrow>
-              View all work
-            </Button>
-          }
-        />
-      </FadeIn>
-      <div className="mt-12 grid gap-8 md:grid-cols-3">
-        {featuredCaseSlugs
-          .map((slug) => publicCaseStudies.find((c) => c.slug === slug))
-          .filter((c): c is (typeof publicCaseStudies)[number] => Boolean(c))
-          .map((c, i) => (
-          <FadeIn key={c.slug} delay={i * 0.08}>
-            <CaseCard
-              href={`/work/${c.slug}`}
-              title={`${c.client}: ${c.project}`}
-              text={c.summary}
-              slot={c.coverSlot}
-              industry={c.industry}
-              placeholder={c.placeholder}
-            />
-          </FadeIn>
-        ))}
+    <section className="section-y overflow-hidden bg-silver-100" data-bg="silver">
+      <Container>
+        <FadeIn>
+          <SectionHeader
+            eyebrow="Featured work"
+            title="Packaging we have made"
+            highlight="made"
+            lead="Boxes, pouches, labels and cartons we designed and printed for brands like yours."
+            action={
+              <Button href="/work" variant="secondary" arrow>
+                View all work
+              </Button>
+            }
+          />
+        </FadeIn>
+      </Container>
+      <div className="mt-12">
+        <WorkMarquee rows={rows} lightbox={lightbox} quoteHref={quoteHref} />
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -436,18 +427,21 @@ export function Finishes() {
 
 export function TestimonialsAndFaq() {
   const faqs = faqGroups.flatMap((g) => g.faqs).slice(0, 8);
-  const quotes = publicTestimonials.slice(0, 3);
+  // Only real, approved quotes (placeholder: false); the slider stays hidden until there are at least two.
+  const quotes = publicTestimonials;
   return (
     <Section>
-      {quotes.length > 0 && (
+      {quotes.length >= 2 && (
         <div className="mb-20">
           <FadeIn>
             <SectionHeader eyebrow="Testimonials" title="What clients say" highlight="say" />
           </FadeIn>
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {quotes.map((t, i) => (
-              <TestimonialCard key={i} quote={t.quote} name={t.name} role={t.role} placeholder={t.placeholder} />
-            ))}
+          <div className="mt-10 max-w-3xl">
+            <TestimonialSlider>
+              {quotes.map((t, i) => (
+                <TestimonialCard key={i} quote={t.quote} name={t.name} role={t.role} placeholder={t.placeholder} />
+              ))}
+            </TestimonialSlider>
           </div>
         </div>
       )}

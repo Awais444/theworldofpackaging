@@ -283,7 +283,6 @@ export const getCaseStudy = (slug: string) => publicCaseStudies.find((c) => c.sl
 
 /** Homepage "Featured work": the three strongest projects. */
 /** Homepage featured work. United Gift Club is left out: its only photo is also the homepage hero. */
-export const featuredCaseSlugs = ["springwater-soaps-window-cartons", "hip-hip-coffee-pouches", "barkers-secret-handmade-soap-packaging"];
 
 /** Case studies linked from a page (service, box style or industry). */
 export const relatedWork = (by: { designService?: string; box?: BoxRef; industry?: string }, n = 3) =>

@@ -1,14 +1,16 @@
 import { Award,
+  Boxes,
+  Droplet,
   Factory,
-  Gem,
+  Feather,
   Globe,
   Layers,
   Package,
   Palette,
   PenTool,
   Sparkles,
+  SquareDashed,
   Stamp,
-  Truck,
   type LucideIcon,
 } from "lucide-react";
 import { site, whatsappUrl } from "@/config/site";
@@ -21,7 +23,10 @@ import { quoteHref } from "@/content/navigation";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
 import { publicTestimonials } from "@/content/testimonials";
+import Link from "next/link";
 import { Media } from "@/components/media/Media";
+import type { MediaSlotId } from "@/content/media";
+import { cn } from "@/lib/utils";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Accordion } from "@/components/ui/Accordion";
@@ -329,36 +334,74 @@ export function Industries() {
   );
 }
 
-const finishes: Array<{ icon: LucideIcon; title: string; text: string }> = [
-  {
-    icon: Sparkles,
-    title: "Foil stamping",
-    text: "Gold, silver or coloured foil pressed into the wrap.",
-  },
-  {
-    icon: Stamp,
-    title: "Embossing",
-    text: "Raised or debossed logos you can feel.",
-  },
-  { icon: Gem, title: "Spot UV", text: "Gloss highlights on a matte surface." },
-  {
-    icon: Layers,
-    title: "Soft-touch",
-    text: "Velvety lamination that resists scuffs.",
-  },
-  {
-    icon: Package,
-    title: "Window patch",
-    text: "Clear PET window to show the product.",
-  },
-  {
-    icon: Truck,
-    title: "Custom inserts",
-    text: "EVA, card or pulp inserts cut to fit.",
-  },
+/** zoom: close-up crop, scaled from the slot's object-position (the full-size photo is used so it stays sharp). */
+type Finish = { icon: LucideIcon; slot: MediaSlotId; title: string; text: string; bestFor: string; href: string; zoom?: { scale: number; origin: string } };
+
+// Anchors match the item ids on /finishes (slugify of the item name). Inserts have their own page.
+const finishes: Finish[] = [
+  { icon: Sparkles, slot: "finish-foil-stamping", title: "Foil stamping", text: "Gold, silver or holographic foil pressed with a heated die.", bestFor: "luxury, cosmetics, gifts", href: "/finishes#foil-stamping", zoom: { scale: 1.7, origin: "72% 50%" } },
+  { icon: Stamp, slot: "finish-embossing", title: "Embossing", text: "Raised or debossed logos you can feel.", bestFor: "logos, rigid boxes, stationery", href: "/finishes#embossing-and-debossing" },
+  { icon: Droplet, slot: "finish-spot-uv", title: "Spot UV", text: "Gloss highlights on a matte surface.", bestFor: "patterns, logos, tech", href: "/finishes#spot-uv" },
+  { icon: Feather, slot: "finish-soft-touch", title: "Soft-touch", text: "Velvety lamination that resists scuffs.", bestFor: "cosmetics, skincare, retail", href: "/finishes#soft-touch-lamination", zoom: { scale: 2.2, origin: "62% 74%" } },
+  { icon: SquareDashed, slot: "finish-window-patch", title: "Window patch", text: "Clear PET window to show the product.", bestFor: "food, soap, toys", href: "/finishes#window-patch", zoom: { scale: 1.25, origin: "52% 38%" } },
+  { icon: Boxes, slot: "finish-custom-inserts", title: "Custom inserts", text: "EVA, card or pulp inserts cut to fit your product.", bestFor: "electronics, gift sets, PR kits", href: "/inserts", zoom: { scale: 1.5, origin: "26% 52%" } },
 ];
 
+/** The slot image, optionally zoomed into a close-up. */
+function Zoomed({ f, sizes }: { f: Finish; sizes: string }) {
+  if (!f.zoom) return <Media slot={f.slot} fill panel="blue" sizes={sizes} card />;
+  return (
+    <div className="absolute inset-0" style={{ transform: `scale(${f.zoom.scale})`, transformOrigin: f.zoom.origin }}>
+      <Media slot={f.slot} fill panel="blue" sizes={sizes} />
+    </div>
+  );
+}
+
+/** Bento card: photo or illustration fills the card; title and line sit on a bottom gradient. */
+function FinishCard({ f, className, sizes, wide = false }: { f: Finish; className?: string; sizes: string; wide?: boolean }) {
+  const label = (
+    <>
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-orange-600">
+        <f.icon aria-hidden="true" className="h-[18px] w-[18px]" />
+      </span>
+      <h3 className="mt-3 font-heading text-[20px] font-semibold leading-tight">{f.title}</h3>
+      <p className="mt-1 text-sm text-white/85">{f.text}</p>
+      {/* Revealed on hover/focus; always shown on touch and with reduced motion (see .finish-card in globals.css). */}
+      <p className="finish-best mt-2 text-[13px] font-semibold text-orange-50">Best for: {f.bestFor}</p>
+    </>
+  );
+  return (
+    <Link
+      href={f.href}
+      className={cn(
+        "finish-card group relative isolate block overflow-hidden rounded-[20px] bg-blue-50 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-blue-600/30",
+        className,
+      )}
+    >
+      {wide ? (
+        <div className="grid h-full md:grid-cols-[2fr_3fr]">
+          <div className="relative min-h-56 overflow-hidden">
+            <div className="finish-img absolute inset-0">
+              <Zoomed f={f} sizes={sizes} />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center bg-blue-900 p-7 text-white md:p-10">{label}</div>
+        </div>
+      ) : (
+        <>
+          <div className="finish-img absolute inset-0 -z-10">
+            <Zoomed f={f} sizes={sizes} />
+          </div>
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink-900/70 via-ink-900/40 to-transparent p-5 pt-14 text-white">{label}</div>
+        </>
+      )}
+    </Link>
+  );
+}
+
 export function Finishes() {
+  const [foil, embossing, spotUv, softTouch, windowPatch, inserts] = finishes as [Finish, Finish, Finish, Finish, Finish, Finish];
+  const small = [embossing, spotUv, softTouch, windowPatch];
   return (
     <Section>
       <FadeIn>
@@ -366,18 +409,26 @@ export function Finishes() {
           eyebrow="Finishes"
           title="Details people notice"
           highlight="notice"
+          action={
+            <Button href="/finishes" variant="ghost" arrow>
+              See all finishes
+            </Button>
+          }
         />
       </FadeIn>
-      <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-        {finishes.map((f) => (
-          <li key={f.title} className="rounded-2xl bg-silver-100 p-5">
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-orange-500">
-              <f.icon aria-hidden="true" className="h-5 w-5" />
-            </span>
-            <h3 className="mt-4 font-heading text-base font-bold">{f.title}</h3>
-            <p className="mt-1 text-sm text-ink-500">{f.text}</p>
+      {/* Desktop: 4 columns, foil 2×2, four 1×1, inserts full width. Tablet: 2 columns. Mobile: 1 column. */}
+      <ul className="mt-10 grid gap-4 md:grid-cols-2 lg:auto-rows-[260px] lg:grid-cols-4">
+        <li className="aspect-square md:col-span-2 md:aspect-[2/1] lg:row-span-2 lg:aspect-auto">
+          <FinishCard f={foil} className="h-full" sizes="(min-width: 1024px) 1040px, (min-width: 768px) 100vw, 170vw" />
+        </li>
+        {small.map((f) => (
+          <li key={f.title} className="aspect-[4/3] md:aspect-square lg:aspect-auto">
+            <FinishCard f={f} className="h-full" sizes="(min-width: 1024px) 660px, (min-width: 768px) 100vw, 200vw" />
           </li>
         ))}
+        <li className="md:col-span-2 lg:col-span-4">
+          <FinishCard f={inserts} wide className="h-full" sizes="(min-width: 1024px) 750px, (min-width: 768px) 60vw, 150vw" />
+        </li>
       </ul>
     </Section>
   );

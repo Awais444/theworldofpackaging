@@ -3,6 +3,7 @@ import type { IllustrationProps } from "./primitives";
 import { BrandBoard } from "./BrandBoard";
 import { CollapsibleBoxAssembled, CollapsibleBoxFlat } from "./CollapsibleBox";
 import { DielineFlat } from "./DielineFlat";
+import { EmbossCloseUp, SpotUvCloseUp } from "./Finishes";
 import { FactoryCorner, FactoryCut, FactoryInsert, FactoryQc, FactoryWrap, FoilStamping, InsertFoam, ShippingStack } from "./Factory";
 import { LabelBottle } from "./LabelBottle";
 import { MagneticBoxClosed, MagneticBoxOpen } from "./MagneticBox";
@@ -44,6 +45,8 @@ export const illustrations = {
   "shipping-stack": ShippingStack,
   "label-bottle": LabelBottle,
   "world-map": WorldMap,
+  "emboss-closeup": EmbossCloseUp,
+  "spot-uv-closeup": SpotUvCloseUp,
 } satisfies Record<string, ComponentType<IllustrationProps>>;
 
 export type IllustrationKey = keyof typeof illustrations;

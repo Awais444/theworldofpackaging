@@ -122,6 +122,29 @@ const fixedSlots = {
     size: "1600×2130",
     shot: "Operator wrapping rigid boxes at a workbench, finished boxes stacked beside, warm daylight",
   },
+  // Homepage finishes bento. Embossing and spot UV wait for real macro photos.
+  "finish-embossing": {
+    id: "finish-embossing",
+    alt: "Close-up of a blind-embossed logo raised on a white rigid box lid",
+    illustration: "emboss-closeup",
+    aspect: "1/1",
+    page: "/",
+    size: "1600×1600",
+    shot: "Macro of a blind-embossed logo on a white or pale lid, raking side light so the relief casts a shadow",
+  },
+  "finish-spot-uv": {
+    id: "finish-spot-uv",
+    alt: "Close-up of glossy spot UV pattern on a matte dark blue carton",
+    illustration: "spot-uv-closeup",
+    aspect: "1/1",
+    page: "/",
+    size: "1600×1600",
+    shot: "Macro of spot UV gloss over matte or soft-touch lamination, angled so the gloss catches the light",
+  },
+  "finish-foil-stamping": { id: "finish-foil-stamping", alt: "Gold foil stamped logo on a dark rigid box", illustration: "foil-stamping", aspect: "1/1", page: "/", size: "2000×2000", shot: "Close-up of a gold foil logo on a dark rigid box" },
+  "finish-soft-touch": { id: "finish-soft-touch", alt: "Soft-touch laminated cosmetic cartons", illustration: "tuck-end", aspect: "1/1", page: "/", size: "1600×1600", shot: "Soft-touch laminated cosmetic cartons, low angle light showing the velvet matte surface" },
+  "finish-window-patch": { id: "finish-window-patch", alt: "Folding cartons with die-cut windows", illustration: "window-box", aspect: "1/1", page: "/", size: "1600×1600", shot: "Folding cartons with die-cut windows showing the product inside" },
+  "finish-custom-inserts": { id: "finish-custom-inserts", alt: "Open rigid box ready for a fitted insert", illustration: "insert-foam", aspect: "4/3", page: "/", size: "2000×1500", shot: "Open rigid box with a fitted EVA or card insert holding the product" },
 } satisfies Record<string, MediaSlot>;
 
 
@@ -418,6 +441,11 @@ const photos: Record<string, Photo> = {
   "design-hair-care-packaging-design-6": SECONDARY.hairLifestyle,
   "design-perfume-fragrance-packaging-design-6": SECONDARY.perfumeBw,
   "design-gift-box-pr-kit-design-6": SECONDARY.giftTag,
+  // Homepage finishes bento: close-up crops of existing photos.
+  "finish-foil-stamping": { ...STOCK.navyMagnetic, position: "72% 48%" },
+  "finish-window-patch": { ...PHOTOS.soapCartons, position: "52% 38%" },
+  "finish-custom-inserts": { ...PHOTOS.magnetic, position: "28% 52%" },
+  "finish-soft-touch": { ...STOCK.lipstickCartons, position: "62% 74%" },
 };
 
 const withPhoto = (s: MediaSlot): MediaSlot => {

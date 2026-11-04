@@ -520,3 +520,14 @@ General direction: Pale Silver (#E7EAEC) or white backgrounds, soft daylight, re
 | `design-wine-spirits-beer-label-design-5` | /packaging-design/wine-spirits-beer-label-design | 4/3 | 2400×1800 | Illustration | Wine, Spirits & Beer Label, in use or on shelf | Wine, Spirits & Beer Label Design: in use or on shelf |
 | `design-wine-spirits-beer-label-design-6` | /packaging-design/wine-spirits-beer-label-design | 4/3 | 2400×1800 | Illustration | Wine, Spirits & Beer Label, flat dieline and artwork | Wine, Spirits & Beer Label Design: flat dieline and artwork |
 | `mega-menu-feature` | Header mega-menu | 4/3 | 1200×900 | Illustration | Magnetic rigid box open, product in insert, dark set, three-quarter view | Open magnetic rigid box with an EVA foam insert holding a product jar |
+
+## Homepage finishes (added 2026-11-04)
+
+| Slot id | Page | Aspect | Size (px) | Now | Shot description | Alt text |
+| --- | --- | --- | --- | --- | --- | --- |
+| `finish-embossing` | / | 1/1 | 1600×1600 | Illustration | Macro of a blind-embossed logo on a white or pale lid, raking side light so the relief casts a shadow | Close-up of a blind-embossed logo raised on a white rigid box lid |
+| `finish-spot-uv` | / | 1/1 | 1600×1600 | Illustration | Macro of spot UV gloss over matte or soft-touch lamination, angled so the gloss catches the light | Close-up of glossy spot UV pattern on a matte dark blue carton |
+| `finish-foil-stamping` | / | 1/1 | 2000×2000 | Photo (magnetic-closure-navy-gold, cropped) | Close-up of a gold foil logo on a dark rigid box | Navy magnetic closure rigid box with a gold foil logo, shown open and closed |
+| `finish-soft-touch` | / | 1/1 | 1600×1600 | Photo (lipstick-cartons, cropped) | Soft-touch laminated cosmetic cartons, low angle light showing the velvet matte surface | Small printed cosmetic cartons laid on white fabric |
+| `finish-window-patch` | / | 1/1 | 1600×1600 | Photo (soap-window-folding-cartons, cropped) | Folding cartons with die-cut windows showing the product inside | Pink and green soap folding cartons with leaf-shaped die-cut windows showing the bars inside |
+| `finish-custom-inserts` | / | 4/3 | 2000×1500 | Photo (magnetic-closure-green-gold-gift-box, cropped) | Open rigid box with a fitted EVA or card insert holding the product | Dark green magnetic closure gift box with a gold foil eagle logo, shown open and closed |

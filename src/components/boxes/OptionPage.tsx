@@ -11,6 +11,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SpecTable } from "@/components/ui/SpecTable";
 import { Tag } from "@/components/ui/Tag";
 import { faqPage } from "@/lib/schema";
+import { slugify } from "@/lib/utils";
 
 /** Materials, finishes and inserts pages: option groups, a "which to choose" table, FAQ and CTA. */
 export function OptionPage({ page }: { page: OptionPageContent }) {
@@ -39,7 +40,7 @@ export function OptionPage({ page }: { page: OptionPageContent }) {
           </FadeIn>
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {g.cards.map((c) => (
-              <li key={c.name} className="flex flex-col rounded-2xl border border-silver-300 bg-white p-6">
+              <li key={c.name} id={slugify(c.name)} className="scroll-mt-28 flex flex-col rounded-2xl border border-silver-300 bg-white p-6">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="text-h4">{c.name}</h3>
                   {c.tag && <Tag tone={c.tag === "Rigid" ? "blue" : "orange"}>{c.tag}</Tag>}

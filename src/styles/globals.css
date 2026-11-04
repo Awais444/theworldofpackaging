@@ -435,3 +435,18 @@ html.lenis body {
 .hero-word { transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1); }
 .hero-word[data-phase="out"] { opacity: 0; transform: translateY(-0.6em); transition-duration: 0.25s; transition-timing-function: ease-in; }
 .hero-word[data-phase="pre"] { opacity: 0; transform: translateY(0.6em); transition: none; }
+
+/* Homepage finishes bento (components/home/HomeSections.tsx): image zooms and the "Best for" line rises on
+   hover/focus. The line always keeps its space (no layout shift); touch screens and reduced motion show it. */
+.finish-img { transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1); }
+.finish-best { transition: opacity 0.25s ease, transform 0.25s ease; }
+@media (hover: hover) {
+  .finish-card .finish-best { opacity: 0; transform: translateY(6px); }
+  .finish-card:hover .finish-best, .finish-card:focus-visible .finish-best { opacity: 1; transform: none; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .finish-card:hover .finish-img, .finish-card:focus-visible .finish-img { transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .finish-card .finish-best { opacity: 1; transform: none; }
+}

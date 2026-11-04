@@ -24,6 +24,8 @@ type MediaProps = {
   panel?: MediaPanel;
   /** Use the 1200px card version of the photo. */
   card?: boolean;
+  /** Fill the parent (absolute, no aspect ratio or radius): the parent sets the size, e.g. a bento cell. */
+  fill?: boolean;
 };
 
 /**
@@ -31,7 +33,7 @@ type MediaProps = {
  * otherwise the slot's illustration in the same aspect box. Swapping a photo in
  * needs no code change.
  */
-export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority = false, panel = "silver", card = false }: MediaProps) {
+export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority = false, panel = "silver", card = false, fill = false }: MediaProps) {
   const slot = getMedia(slotId);
   const Illustration = illustrations[slot.illustration];
   const file = slot.src ? (card && slot.srcCard ? slot.srcCard : slot.src) : undefined;
@@ -39,7 +41,7 @@ export function Media({ slot: slotId, className, sizes = "(min-width: 1024px) 50
   const blur = file ? (blurData as Record<string, string>)[file] : undefined;
 
   return (
-    <figure className={cn("relative overflow-hidden rounded-3xl", slot.src ? (slot.fit === "contain" ? "bg-silver-50" : "bg-silver-100") : panels[panel], className)} style={{ aspectRatio: slot.aspect }}>
+    <figure className={cn(fill ? "absolute inset-0 overflow-hidden" : "relative overflow-hidden rounded-3xl", slot.src ? (slot.fit === "contain" ? "bg-silver-50" : "bg-silver-100") : panels[panel], className)} style={fill ? undefined : { aspectRatio: slot.aspect }}>
       {slot.src ? (
         <Image
           src={file!}

@@ -58,7 +58,7 @@ export default function CollapsiblePage() {
         slotId="collapsible-flat"
         actions={
           <>
-            <Button href={`${quoteHref}?style=collapsible`} size="lg" arrow>
+            <Button href={`${quoteHref}?box=collapsible`} size="lg" arrow>
               Get a Quote
             </Button>
           </>
@@ -126,7 +126,7 @@ export default function CollapsiblePage() {
           text="Send your size and quantity. We include freight options in the quote."
           actions={
             <>
-              <Button href={`${quoteHref}?style=collapsible`} variant="accent" size="lg" arrow>
+              <Button href={`${quoteHref}?box=collapsible`} variant="accent" size="lg" arrow>
                 Get a Quote
               </Button>
               <Button href="/contact" variant="white" size="lg">

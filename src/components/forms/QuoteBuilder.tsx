@@ -1,63 +1,41 @@
 "use client";
 
-import { StoreHydration } from "@/components/providers/StoreHydration";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { Check, ChevronUp, CircleCheck, FileUp, X } from "lucide-react";
-import Link from "next/link";
+import { Check, CircleCheck, FileUp, Layers, MessageCircle, Palette, PenTool, Printer, X, type LucideIcon } from "lucide-react";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { submitQuoteRequest } from "@/app/actions/forms";
-import { promises, site } from "@/config/site";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { finishes as finishOptions, inserts, printedMaterials, wraps } from "@/content/materials";
-import { printedStyles } from "@/content/printedStyles";
-import { rigidStyles } from "@/content/rigidStyles";
-import { illustrations, type IllustrationKey } from "@/components/illustrations";
+import { site, whatsappUrl } from "@/config/site";
 import { Button } from "@/components/ui/Button";
-import { Field, Input, Select, Textarea } from "@/components/ui/Field";
-import { QUOTE_QTY_PRESETS, quoteMinQty, quoteStepSchemas } from "@/lib/schemas";
+import { Field, Input, Textarea } from "@/components/ui/Field";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import {
+  brandOnly,
+  needsPrinting,
+  QUOTE_LOGO,
+  QUOTE_PACKAGING,
+  QUOTE_PRODUCTS,
+  QUOTE_QTY,
+  QUOTE_SKUS,
+  quoteStepSchemas,
+  type QuoteNeed,
+} from "@/lib/schemas";
+import { prefillFromParams, type QuoteBoxOption } from "@/lib/quotePrefill";
 import { cn } from "@/lib/utils";
 import { useQuote, type QuoteDraft } from "@/store/quote";
-import { useConfigurator } from "@/store/configurator";
 
-type Category = NonNullable<QuoteDraft["category"]>;
 type Errors = Record<string, string>;
 
-const CATEGORIES: Array<{ id: Category; title: string; text: string; art: IllustrationKey }> = [
-  { id: "rigid", title: "Rigid box", text: "Premium greyboard boxes, made in our factory.", art: "magnetic-closed" },
-  { id: "collapsible", title: "Collapsible rigid", text: "Rigid boxes that ship and store flat.", art: "collapsible-flat" },
-  { id: "printed", title: "Printed box", text: "Mailers, cartons and displays in any size.", art: "mailer-box" },
-  { id: "unsure", title: "Not sure", text: "Tell us about the product and we will recommend.", art: "tuck-end" },
+const NEEDS: Array<{ id: QuoteNeed; icon: LucideIcon; title: string; text: string }> = [
+  { id: "design", icon: PenTool, title: "Packaging design", text: "Box, label, pouch or bottle design, print-ready." },
+  { id: "brand", icon: Palette, title: "Brand identity", text: "Logo, colours and brand guidelines." },
+  { id: "design-print", icon: Layers, title: "Design + printing", text: "We design it and print it for you." },
+  { id: "print", icon: Printer, title: "Printing only", text: "You have artwork; we print and ship." },
 ];
+const needLabel = (id: QuoteNeed) => NEEDS.find((n) => n.id === id)?.title ?? id;
 
-const NOT_SURE = "not-sure";
+const STEPS = ["What do you need?", "About your project", "Your details"] as const;
 
-type StyleOption = { slug: string; name: string; art: IllustrationKey };
-const rigidOptions: StyleOption[] = rigidStyles.filter((s) => !s.collapsible).map((s) => ({ slug: s.slug, name: s.name, art: s.illustration }));
-const collapsibleOptions: StyleOption[] = rigidStyles.filter((s) => s.collapsible).map((s) => ({ slug: s.slug, name: s.name, art: s.illustration }));
-const printedOptions: StyleOption[] = printedStyles.map((s) => ({ slug: s.slug, name: s.name, art: s.illustration }));
-const stylesFor = (c?: Category): StyleOption[] =>
-  c === "rigid" ? rigidOptions : c === "collapsible" ? collapsibleOptions : c === "printed" ? printedOptions : [...rigidOptions, ...collapsibleOptions, ...printedOptions];
-const styleName = (slug: string) => (slug === NOT_SURE ? "Not sure yet" : [...rigidOptions, ...collapsibleOptions, ...printedOptions].find((s) => s.slug === slug)?.name ?? slug);
-
-const rigidMaterials = [...wraps.map((w) => w.name), "1.5 mm board", "2.0 mm board", "2.5 mm board", "3.0 mm board"];
-const materialsFor = (c?: Category) => (c === "printed" ? printedMaterials.map((m) => m.name) : c === "unsure" ? [...wraps.map((w) => w.name), ...printedMaterials.map((m) => m.name)] : rigidMaterials);
-const finishList = [...finishOptions.map((f) => f.name), ...inserts.map((i) => i.name), "Window patch", "Ribbon"];
-
-// Main markets first, then common others. "Other" is clarified in notes.
-
-const ARTWORK = [
-  { id: "have", title: "I have artwork", text: "Print-ready files or a design you want us to use." },
-  { id: "basic", title: "Free basic setup", text: "We place your logo and text on the dieline at no cost." },
-  { id: "design", title: "I need full packaging design", text: "Our studio designs the packaging for you." },
-] as const;
-
-const SHIP = [
-  { id: "air", title: "Air", text: "Fastest. Best for launches and urgent stock." },
-  { id: "sea", title: "Sea", text: "Lowest cost per box at volume." },
-  { id: "unsure", title: "Not sure", text: "Quote both and we will compare." },
-] as const;
-
-const STEPS = ["Category", "Style", "Size", "Quantity", "Materials & finishes", "Artwork", "Shipping", "Contact", "Review"] as const;
+const NEXT_STEPS = [`Reply ${site.facts.quoteReply}`, `First concepts in ${site.facts.firstConceptHours} hours`, "Digital proof before anything is printed"];
 
 function issues(result: { success: boolean; error?: { issues: Array<{ path: PropertyKey[]; message: string }> } }): Errors {
   if (result.success || !result.error) return {};
@@ -67,59 +45,80 @@ function issues(result: { success: boolean; error?: { issues: Array<{ path: Prop
 }
 
 function validate(step: number, d: QuoteDraft): Errors {
-  switch (step) {
-    case 0:
-      return issues(quoteStepSchemas.category.safeParse(d));
-    case 1:
-      return issues(quoteStepSchemas.style.safeParse(d));
-    case 2:
-      return issues(quoteStepSchemas.size.safeParse(d));
-    case 3:
-      return issues(quoteStepSchemas.quantity.safeParse({ category: d.category, quantity: d.quantity }));
-    case 5:
-      return issues(quoteStepSchemas.artwork.safeParse(d));
-    case 6:
-      return issues(quoteStepSchemas.shipping.safeParse(d));
-    case 7:
-      return issues(quoteStepSchemas.contact.safeParse(d));
-    default:
-      return {};
-  }
+  if (step === 0) return issues(quoteStepSchemas.needs.safeParse(d));
+  if (step === 1) return issues(quoteStepSchemas.project.safeParse(d));
+  return issues(quoteStepSchemas.details.safeParse(d));
 }
 
-/** Large selectable card backed by a real radio or checkbox input. */
-function ChoiceCard({ name, checked, onChange, title, text, art, type = "radio" }: { name: string; checked: boolean; onChange: () => void; title: string; text?: string; art?: IllustrationKey; type?: "radio" | "checkbox" }) {
-  const Art = art ? illustrations[art] : null;
+/** Answers as short chips, in form order. Only answered questions appear. */
+function answerChips(d: QuoteDraft): string[] {
+  const print = needsPrinting(d.needs);
+  const brand = brandOnly(d.needs);
+  return [
+    ...d.needs.map(needLabel),
+    d.product,
+    ...(brand ? [] : d.packaging),
+    d.skus && `${d.skus} ${d.skus === "1" ? "design" : "designs"}`,
+    brand && d.logo && `Logo: ${d.logo}`,
+    print && !brand && d.quantity && `Qty ${d.quantity}`,
+    print && d.country && `Ship to ${d.country}`,
+  ].filter((x): x is string => Boolean(x));
+}
+
+/** Pre-filled WhatsApp message with the answers so far. */
+const whatsappMessage = (d: QuoteDraft) => {
+  const chips = answerChips(d);
+  return chips.length ? `Hi, I'd like a quote. ${chips.join(" · ")}.` : "Hi, I'd like a quote for packaging.";
+};
+
+/** Large selectable card backed by a real checkbox. */
+function NeedCard({ checked, onChange, icon: Icon, title, text }: { checked: boolean; onChange: () => void; icon: LucideIcon; title: string; text: string }) {
   return (
     <label className="block cursor-pointer">
-      <input type={type} name={name} checked={checked} onChange={onChange} className="peer sr-only" />
-      <span className="relative flex h-full flex-col rounded-2xl border-2 border-silver-300 bg-white p-4 transition peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-focus-visible:shadow-[var(--ring)] hover:border-blue-600">
-        {checked && (
-          <span className="absolute right-3 top-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-white">
-            <Check aria-hidden="true" className="h-4 w-4" />
-          </span>
-        )}
-        {Art && (
-          <span className="mb-3 block aspect-[4/3] rounded-xl bg-silver-100 p-[8%]" aria-hidden="true">
-            <Art />
-          </span>
-        )}
-        <span className="font-heading font-bold">{title}</span>
-        {text && <span className="mt-1 text-sm text-ink-500">{text}</span>}
+      <input type="checkbox" checked={checked} onChange={onChange} className="peer sr-only" />
+      <span className="relative flex h-full gap-4 rounded-2xl border-2 border-silver-300 bg-white p-5 transition hover:border-blue-600 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-focus-visible:shadow-[var(--ring)] sm:flex-col sm:p-6">
+        <span className={cn("inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition", checked ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-600")}>
+          <Icon aria-hidden="true" className="h-6 w-6" />
+        </span>
+        <span className="min-w-0 pr-7 sm:pr-0">
+          <span className="block font-heading text-lg font-bold">{title}</span>
+          <span className="mt-1 block text-sm text-ink-500">{text}</span>
+        </span>
+        <span
+          aria-hidden="true"
+          className={cn(
+            "absolute right-4 top-4 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 transition",
+            checked ? "border-blue-600 bg-blue-600 text-white" : "border-silver-300 bg-white text-transparent",
+          )}
+        >
+          <Check className="h-4 w-4" />
+        </span>
       </span>
     </label>
   );
 }
 
-function Chip({ checked, onChange, children }: { checked: boolean; onChange: () => void; children: ReactNode }) {
+/** Pill option backed by a real radio or checkbox. */
+function Chip({ type = "checkbox", name, checked, onChange, children }: { type?: "radio" | "checkbox"; name?: string; checked: boolean; onChange: () => void; children: ReactNode }) {
   return (
     <label className="cursor-pointer">
-      <input type="checkbox" checked={checked} onChange={onChange} className="peer sr-only" />
-      <span className="inline-flex h-11 items-center gap-2 rounded-full border border-silver-300 bg-white px-4 text-[15px] font-medium transition peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white peer-focus-visible:shadow-[var(--ring)] hover:border-blue-600">
+      <input type={type} name={name} checked={checked} onChange={onChange} className="peer sr-only" />
+      <span className="inline-flex h-11 items-center gap-2 rounded-full border border-silver-300 bg-white px-4 text-[15px] font-medium transition hover:border-blue-600 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white peer-focus-visible:shadow-[var(--ring)]">
         {checked && <Check aria-hidden="true" className="h-4 w-4" />}
         {children}
       </span>
     </label>
+  );
+}
+
+function Group({ label, error, children, hint }: { label: string; error?: string; hint?: string; children: ReactNode }) {
+  return (
+    <fieldset>
+      <legend className="mb-3 text-[15px] font-semibold">{label}</legend>
+      {hint && <p className="-mt-2 mb-3 text-sm text-ink-500">{hint}</p>}
+      <div className="flex flex-wrap gap-2">{children}</div>
+      <ErrorMsg error={error} />
+    </fieldset>
   );
 }
 
@@ -131,100 +130,127 @@ function ErrorMsg({ error }: { error?: string }) {
   ) : null;
 }
 
-function summaryRows(d: QuoteDraft): Array<{ label: string; value: string; step: number }> {
-  const cat = CATEGORIES.find((c) => c.id === d.category)?.title;
-  const size = d.helpChoose ? "Help me choose" : d.length && d.width && d.height ? `${d.length} × ${d.width} × ${d.height} ${d.unit}` : "";
-  return [
-    { label: "Category", value: cat ?? "", step: 0 },
-    { label: "Style", value: d.style ? styleName(d.style) : "", step: 1 },
-    { label: "Size (L × W × H)", value: size, step: 2 },
-    { label: "Quantity", value: d.quantity ? d.quantity.toLocaleString("en-US") : "", step: 3 },
-    { label: "Materials", value: d.materials.join(", "), step: 4 },
-    { label: "Finishes & inserts", value: d.finishes.join(", "), step: 4 },
-    { label: "Artwork", value: ARTWORK.find((a) => a.id === d.artwork)?.title ?? "", step: 5 },
-    { label: "Ship to", value: [d.country, SHIP.find((s) => s.id === d.ship)?.title, d.packing && (d.packing === "flat" ? "Packed flat" : "Assembled")].filter(Boolean).join(" · "), step: 6 },
-  ];
-}
-
-function Summary({ d, onEdit, compact = false }: { d: QuoteDraft; onEdit?: (step: number) => void; compact?: boolean }) {
+function NextSteps({ className }: { className?: string }) {
   return (
-    <dl className={cn("divide-y divide-silver-300", compact && "text-sm")}>
-      {summaryRows(d).map((r) => (
-        <div key={r.label} className="flex items-start justify-between gap-4 py-3">
-          <div className="min-w-0">
-            <dt className="text-xs font-semibold uppercase tracking-wider text-ink-500">{r.label}</dt>
-            <dd className={cn("mt-0.5 break-words", r.value ? "font-medium text-ink-900" : "text-ink-500")}>{r.value || "Not set yet"}</dd>
-          </div>
-          {onEdit && r.value && (
-            <button type="button" onClick={() => onEdit(r.step)} className="shrink-0 text-sm font-semibold text-blue-600 hover:underline">
-              Edit
-            </button>
-          )}
-        </div>
+    <ol className={cn("space-y-3", className)}>
+      {NEXT_STEPS.map((s, i) => (
+        <li key={s} className="flex items-start gap-3 text-[15px]">
+          <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">{i + 1}</span>
+          <span className="pt-0.5">{s}</span>
+        </li>
       ))}
-    </dl>
+    </ol>
   );
 }
 
-function Success({ onRestart }: { onRestart: () => void }) {
+function Success({ d, onRestart }: { d: QuoteDraft; onRestart: () => void }) {
   return (
-    <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} role="status" className="mx-auto max-w-2xl rounded-3xl bg-blue-50 p-8 text-center md:p-12">
-      <CircleCheck aria-hidden="true" className="mx-auto h-16 w-16 text-blue-600" />
-      <h2 className="text-h2 mt-6">Quote request sent</h2>
-      <p className="text-lead mt-4 text-ink-500">Thank you. We&apos;ll reply {site.facts.quoteReply} with a price and any questions about your spec.</p>
-      <div className="mt-8 flex flex-wrap justify-center gap-3">
+    <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} role="status" className="mx-auto max-w-2xl rounded-3xl bg-blue-50 p-8 md:p-12">
+      <CircleCheck aria-hidden="true" className="h-14 w-14 text-blue-600" />
+      <h2 className="text-h2 mt-6">Thank you{d.name ? `, ${d.name.split(" ")[0]}` : ""}. Request sent.</h2>
+      <p className="text-lead mt-4 text-ink-500">We&apos;ve got your answers. Here&apos;s what happens next:</p>
+      <NextSteps className="mt-6" />
+      <div className="mt-8 flex flex-wrap gap-3">
         <WhatsAppButton message="Hi, I just sent a quote request on your website." label="Message us on WhatsApp" variant="primary" />
         <Button href="/work" size="lg" variant="secondary">
-          Browse our work
+          See our work
+        </Button>
+        <Button href="/packaging-design" size="lg" variant="ghost" arrow>
+          Packaging design services
         </Button>
       </div>
       <button type="button" onClick={onRestart} className="mt-6 text-sm font-semibold text-blue-600 hover:underline">
-        Start another quote
+        Send another request
       </button>
     </m.div>
   );
 }
 
-/** Multi-step quote builder (CLAUDE.md §10.1). State lives in the Zustand quote store. */
-/** `countries`: slug + name only, passed by the server page so the full country content stays out of the browser. */
-export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; name: string }> }) {
-  const COUNTRIES = [...countries.map((c) => c.name).sort((a, b) => a.localeCompare(b)), "Other (add in notes)"];
-  const { draft: d, step, set, toggle, goTo, reset } = useQuote();
+/**
+ * Quote request: 3 steps (what you need → about the project → your details), design first, printing optional.
+ * The draft autosaves to localStorage. Links can preselect choices (see lib/quotePrefill.ts).
+ * `countries` and `boxes` are passed by the server page so content data stays out of the browser bundle.
+ */
+export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: string; name: string }>; boxes: QuoteBoxOption[] }) {
+  const names = countries.map((c) => c.name).sort((a, b) => a.localeCompare(b));
+  const { draft: d, step, set: save, goTo, reset } = useQuote();
   const reduce = useReducedMotion();
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [sent, setSent] = useState<QuoteDraft | null>(null);
   const [serverError, setServerError] = useState("");
-  const [sheetOpen, setSheetOpen] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const heading = useRef<HTMLHeadingElement>(null);
   const ids = useId();
   const last = step === STEPS.length - 1;
+  const print = needsPrinting(d.needs);
+  const brand = brandOnly(d.needs);
+  // Saving an answer clears that field's error.
+  const set = (patch: Partial<QuoteDraft>) => {
+    save(patch);
+    setErrors((e) => Object.fromEntries(Object.entries(e).filter(([k]) => !(k in patch))));
+  };
 
-  // Prefill from links: ?style=, ?country=, ?industry= or ?from=configurator.
+  // Restore the autosaved draft, then apply link choices (?service=, ?box=, ?industry=, ?country=, ?from=configurator).
   useEffect(() => {
     void (async () => {
       await useQuote.persist.rehydrate();
       const q = new URLSearchParams(window.location.search);
-      const { set: patch, draft } = useQuote.getState();
+      const { set: patch, goTo: go } = useQuote.getState();
       if (q.get("from") === "configurator") {
+        const { useConfigurator } = await import("@/store/configurator");
         await useConfigurator.persist.rehydrate();
         const c = useConfigurator.getState().config;
-        patch({ category: c.type, style: c.style, unit: "mm", helpChoose: false, length: c.dims.l, width: c.dims.w, height: c.dims.h, quantity: c.quantity, finishes: c.finishes });
+        const box = boxes.find((b) => b.slug === c.style);
+        const qty = c.quantity >= 5000 ? "5,000+" : c.quantity >= 2500 ? "2,500" : c.quantity >= 1000 ? "1,000" : "500";
+        patch({
+          needs: ["design-print"],
+          packaging: [c.type === "printed" ? "Box" : "Rigid box"],
+          quantity: qty,
+          source: `Box configurator: ${box?.name ?? c.style}, ${c.dims.l} × ${c.dims.w} × ${c.dims.h} mm, ${c.quantity.toLocaleString("en-US")} pcs${c.finishes.length ? `, ${c.finishes.join(", ")}` : ""}`,
+        });
+        go(0);
         return;
       }
-      const style = q.get("style");
-      if (style && !draft.style) {
-        const category: Category | undefined = collapsibleOptions.some((s) => s.slug === style) ? "collapsible" : rigidOptions.some((s) => s.slug === style) ? "rigid" : printedOptions.some((s) => s.slug === style) ? "printed" : undefined;
-        if (category) patch({ category, style });
+      const countrySlugs = Object.fromEntries(countries.map((c) => [c.slug, c.name]));
+      const pre = prefillFromParams(q, { boxes, countries: names, countrySlugs });
+      if (pre) {
+        patch(pre);
+        go(0);
       }
-      const country = countries.find((c) => c.slug === q.get("country"))?.name;
-      if (country && !draft.country) patch({ country });
-      const service = q.get("service");
-      if (service && !draft.notes) patch({ notes: `Design service: ${service.replace(/-/g, " ")}${q.get("tier") ? ` (${q.get("tier")} tier)` : ""}. ` });
-      const industry = q.get("industry");
-      if (industry && !draft.notes) patch({ notes: `Industry: ${industry.replace(/-/g, " ")}. ` });
     })();
-  }, [countries]); // countries comes from the server and does not change after hydration
+    // countries and boxes come from the server and do not change after hydration.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Ship-to default from the browser's region, when printing is involved and nothing is set yet.
+  useEffect(() => {
+    if (!print || d.country) return;
+    try {
+      const region = new Intl.Locale(navigator.language).maximize().region;
+      const name = region && new Intl.DisplayNames(["en"], { type: "region" }).of(region);
+      const match = name && names.find((n) => n === name || n === name.replace(/^the /, ""));
+      if (match) save({ country: match });
+    } catch {
+      /* no locale info: leave it empty */
+    }
+    // names is derived from server props.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [print, d.country, save]);
+
+  const toggleNeed = (id: QuoteNeed) => {
+    const on = d.needs.includes(id);
+    let needs = on ? d.needs.filter((n) => n !== id) : [...d.needs, id];
+    // Design + printing and Printing only exclude each other: picking one switches off the other.
+    if (!on && id === "design-print") needs = needs.filter((n) => n !== "print");
+    if (!on && id === "print") needs = needs.filter((n) => n !== "design-print");
+    set({ needs });
+  };
+
+  const toggleIn = <K extends "packaging">(key: K, v: QuoteDraft[K][number]) => {
+    const list = d[key] as string[];
+    set({ [key]: list.includes(v) ? list.filter((x) => x !== v) : [...list, v] } as Partial<QuoteDraft>);
+  };
 
   const move = (n: number) => {
     setErrors({});
@@ -240,8 +266,7 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
   };
 
   const submit = async () => {
-    // Re-check every step before sending.
-    for (let i = 0; i < STEPS.length - 1; i++) {
+    for (let i = 0; i < STEPS.length; i++) {
       const e = validate(i, d);
       if (Object.keys(e).length) {
         move(i);
@@ -250,8 +275,18 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
       }
     }
     setStatus("sending");
-    const res = await submitQuoteRequest({ ...d, website: honeypot });
+    // Answers the form hid (e.g. quantity after printing was switched off) are not sent.
+    const payload = {
+      ...d,
+      packaging: brand ? [] : d.packaging,
+      quantity: print && !brand ? d.quantity : undefined,
+      country: print ? d.country : "",
+      logo: brand ? d.logo : undefined,
+      website: honeypot,
+    };
+    const res = await submitQuoteRequest(payload);
     if (res.ok) {
+      setSent(d);
       setStatus("sent");
       reset();
     } else {
@@ -260,142 +295,98 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
     }
   };
 
-  if (status === "sent") return <Success onRestart={() => setStatus("idle")} />;
+  if (status === "sent" && sent) return <Success d={sent} onRestart={() => setStatus("idle")} />;
 
-  const minQty = quoteMinQty(d.category ?? "unsure");
-  const filled = summaryRows(d).filter((r) => r.value).length;
+  const chips = answerChips(d);
+  const wa = whatsappUrl(whatsappMessage(d));
 
   const content: ReactNode[] = [
-    // 1. Category
-    <div key="category">
-      <div role="radiogroup" aria-label="Box category" className="grid gap-4 sm:grid-cols-2">
-        {CATEGORIES.map((c) => (
-          <ChoiceCard
-            key={c.id}
-            name="category"
-            checked={d.category === c.id}
-            onChange={() => set({ category: c.id, style: d.category === c.id ? d.style : "", packing: c.id === "collapsible" ? d.packing : undefined })}
-            title={c.title}
-            text={c.text}
-            art={c.art}
-          />
+    // 1. What do you need?
+    <div key="needs">
+      <p className="-mt-2 mb-5 text-ink-500">Pick one or more.</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {NEEDS.map((n) => (
+          <NeedCard key={n.id} checked={d.needs.includes(n.id)} onChange={() => toggleNeed(n.id)} icon={n.icon} title={n.title} text={n.text} />
         ))}
       </div>
-      <ErrorMsg error={errors.category} />
+      <ErrorMsg error={errors.needs} />
     </div>,
-    // 2. Style
-    <div key="style">
-      <div role="radiogroup" aria-label="Box style" className="grid grid-cols-2 gap-4 md:grid-cols-3">
-        {stylesFor(d.category).map((s) => (
-          <ChoiceCard key={s.slug} name="style" checked={d.style === s.slug} onChange={() => set({ style: s.slug })} title={s.name} art={s.art} />
+    // 2. About your project
+    <div key="project" className="space-y-8">
+      <Group label="Product type" error={errors.product}>
+        {QUOTE_PRODUCTS.map((p) => (
+          <Chip key={p} type="radio" name="product" checked={d.product === p} onChange={() => set({ product: p })}>
+            {p}
+          </Chip>
         ))}
-        <ChoiceCard name="style" checked={d.style === NOT_SURE} onChange={() => set({ style: NOT_SURE })} title="Not sure yet" text="We will recommend a style." />
-      </div>
-      <ErrorMsg error={errors.style} />
-    </div>,
-    // 3. Size
-    <div key="size" className="space-y-6">
-      <div className="inline-flex rounded-full bg-silver-100 p-1" role="radiogroup" aria-label="Units">
-        {(["mm", "in"] as const).map((u) => (
-          <label key={u} className="cursor-pointer">
-            <input type="radio" name="unit" checked={d.unit === u} onChange={() => set({ unit: u })} className="peer sr-only" />
-            <span className="inline-flex h-10 items-center rounded-full px-5 text-sm font-semibold peer-checked:bg-blue-600 peer-checked:text-white peer-focus-visible:shadow-[var(--ring)]">{u === "mm" ? "Millimetres" : "Inches"}</span>
-          </label>
+      </Group>
+      {brand ? (
+        <Group label="Do you have a logo already?" error={errors.logo}>
+          {QUOTE_LOGO.map((l) => (
+            <Chip key={l} type="radio" name="logo" checked={d.logo === l} onChange={() => set({ logo: l })}>
+              {l}
+            </Chip>
+          ))}
+        </Group>
+      ) : (
+        <Group label="Packaging type" hint="Pick any." error={errors.packaging}>
+          {QUOTE_PACKAGING.map((p) => (
+            <Chip key={p} checked={d.packaging.includes(p)} onChange={() => toggleIn("packaging", p)}>
+              {p}
+            </Chip>
+          ))}
+        </Group>
+      )}
+      <Group label="Number of designs (SKUs)" error={errors.skus}>
+        {QUOTE_SKUS.map((s) => (
+          <Chip key={s} type="radio" name="skus" checked={d.skus === s} onChange={() => set({ skus: s })}>
+            {s}
+          </Chip>
         ))}
-      </div>
-      <fieldset disabled={d.helpChoose} className="grid gap-4 disabled:opacity-50 sm:grid-cols-3">
-        <legend className="sr-only">Inside dimensions</legend>
-        {(["length", "width", "height"] as const).map((k) => (
-          <Field key={k} label={`${k[0]!.toUpperCase()}${k.slice(1)} (${d.unit})`} htmlFor={`${ids}-${k}`} error={errors[k]}>
-            <Input
-              id={`${ids}-${k}`}
-              type="number"
-              inputMode="decimal"
-              min={0}
-              step={d.unit === "mm" ? 1 : 0.1}
-              value={d[k] ?? ""}
-              aria-invalid={!!errors[k]}
-              onChange={(e) => set({ [k]: e.target.value === "" ? undefined : Number(e.target.value) })}
-            />
-          </Field>
-        ))}
-      </fieldset>
-      <p className="text-sm text-ink-500">
-        Inside dimensions: the space your product needs. Not sure how to measure?{" "}
-        <Link href="/blog/how-to-measure-box-size" target="_blank" className="font-semibold text-blue-600 underline underline-offset-4">
-          Read our measuring guide
-        </Link>
-        .
-      </p>
-      <Chip checked={d.helpChoose} onChange={() => set({ helpChoose: !d.helpChoose })}>
-        Help me choose a size
-      </Chip>
-    </div>,
-    // 4. Quantity
-    <div key="quantity" className="space-y-6">
-      <div role="radiogroup" aria-label="Quantity" className="flex flex-wrap gap-3">
-        {QUOTE_QTY_PRESETS.map((q) => (
-          <label key={q} className="cursor-pointer">
-            <input type="radio" name="qty" checked={d.quantity === q} onChange={() => set({ quantity: q })} className="peer sr-only" />
-            <span className="inline-flex h-14 min-w-28 items-center justify-center rounded-2xl border-2 border-silver-300 px-5 font-heading text-lg font-bold transition peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-focus-visible:shadow-[var(--ring)] hover:border-blue-600">
-              {q.toLocaleString("en-US")}
-            </span>
-          </label>
-        ))}
-      </div>
-      <Field label="Or a custom quantity" htmlFor={`${ids}-qty`} error={errors.quantity} hint={`Minimum ${minQty.toLocaleString("en-US")} for this category.`} className="max-w-xs">
-        <Input id={`${ids}-qty`} type="number" inputMode="numeric" min={minQty} step={50} value={d.quantity ?? ""} aria-invalid={!!errors.quantity} onChange={(e) => set({ quantity: e.target.value === "" ? undefined : Number(e.target.value) })} />
+      </Group>
+      {print && !brand && (
+        <Group label="Quantity per design" error={errors.quantity}>
+          {QUOTE_QTY.map((q) => (
+            <Chip key={q} type="radio" name="quantity" checked={d.quantity === q} onChange={() => set({ quantity: q })}>
+              {q}
+            </Chip>
+          ))}
+        </Group>
+      )}
+      {print && (
+        <Field label="Ship to" htmlFor={`${ids}-country`} error={errors.country} hint="Start typing to search." className="max-w-md">
+          <Input id={`${ids}-country`} list={`${ids}-countries`} autoComplete="country-name" value={d.country} aria-invalid={!!errors.country} onChange={(e) => set({ country: e.target.value })} />
+          <datalist id={`${ids}-countries`}>
+            {names.map((c) => (
+              <option key={c} value={c} />
+            ))}
+          </datalist>
+        </Field>
+      )}
+      <Field label="Tell us about your product (optional)" htmlFor={`${ids}-about`} hint="What it is, where it sells, a deadline, anything that helps.">
+        <Textarea id={`${ids}-about`} rows={3} value={d.about} onChange={(e) => set({ about: e.target.value })} />
       </Field>
-    </div>,
-    // 5. Materials & finishes
-    <div key="materials" className="space-y-8">
-      <fieldset>
-        <legend className="mb-3 text-sm font-semibold">Materials (pick any)</legend>
-        <div className="flex flex-wrap gap-2">
-          {materialsFor(d.category).map((m) => (
-            <Chip key={m} checked={d.materials.includes(m)} onChange={() => toggle("materials", m)}>
-              {m}
-            </Chip>
-          ))}
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend className="mb-3 text-sm font-semibold">Finishes and inserts (pick any)</legend>
-        <div className="flex flex-wrap gap-2">
-          {finishList.map((f) => (
-            <Chip key={f} checked={d.finishes.includes(f)} onChange={() => toggle("finishes", f)}>
-              {f}
-            </Chip>
-          ))}
-        </div>
-      </fieldset>
-      <p className="text-sm text-ink-500">Optional. Skip this step and we will recommend a spec.</p>
-    </div>,
-    // 6. Artwork
-    <div key="artwork" className="space-y-6">
-      <div role="radiogroup" aria-label="Artwork" className="grid gap-4 md:grid-cols-3">
-        {ARTWORK.map((a) => (
-          <ChoiceCard key={a.id} name="artwork" checked={d.artwork === a.id} onChange={() => set({ artwork: a.id })} title={a.title} text={a.text} />
-        ))}
-      </div>
-      <ErrorMsg error={errors.artwork} />
-      {d.artwork === "have" && (
-        <div className="rounded-2xl border-2 border-dashed border-silver-300 p-6">
-          <label htmlFor={`${ids}-files`} className="flex cursor-pointer flex-col items-center gap-2 text-center">
-            <FileUp aria-hidden="true" className="h-8 w-8 text-blue-600" />
-            <span className="font-semibold">Choose artwork files</span>
-            <span className="text-sm text-ink-500">PDF, AI, PNG or JPG. We note the file names now and ask you to send the files when we reply.</span>
+      <div className="grid gap-5 md:grid-cols-2">
+        <Field label="Links (optional)" htmlFor={`${ids}-links`} hint="Website, references, Drive or Dropbox folder.">
+          <Textarea id={`${ids}-links`} rows={3} value={d.links} onChange={(e) => set({ links: e.target.value })} />
+        </Field>
+        <div>
+          <p className="text-sm font-semibold">Files (optional)</p>
+          <label htmlFor={`${ids}-files`} className="mt-2 flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-2xl border-2 border-dashed border-silver-300 p-5 text-center transition hover:border-blue-600">
+            <FileUp aria-hidden="true" className="h-7 w-7 text-blue-600" />
+            <span className="font-semibold">Add references or artwork</span>
+            <span className="text-sm text-ink-500">We note the file names and ask for the files when we reply.</span>
           </label>
           <input
             id={`${ids}-files`}
             type="file"
             multiple
-            accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg"
+            accept=".pdf,.ai,.eps,.svg,.png,.jpg,.jpeg,.webp"
             className="sr-only"
-            onChange={(e) => set({ files: [...d.files, ...Array.from(e.target.files ?? []).map((f) => f.name)].slice(0, 10) })}
+            onChange={(e) => set({ files: [...new Set([...d.files, ...Array.from(e.target.files ?? []).map((f) => f.name)])].slice(0, 10) })}
           />
           {d.files.length > 0 && (
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-3 space-y-2">
               {d.files.map((f) => (
                 <li key={f} className="flex items-center justify-between gap-3 rounded-lg bg-silver-50 px-3 py-2 text-sm">
                   <span className="truncate">{f}</span>
@@ -407,55 +398,32 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
             </ul>
           )}
         </div>
-      )}
-    </div>,
-    // 7. Shipping
-    <div key="shipping" className="space-y-6">
-      <Field label="Ship to" htmlFor={`${ids}-country`} error={errors.country} className="max-w-md">
-        <Select id={`${ids}-country`} value={d.country} aria-invalid={!!errors.country} onChange={(e) => set({ country: e.target.value })}>
-          <option value="">Choose a country</option>
-          {COUNTRIES.map((c) => (
-            <option key={c}>{c}</option>
-          ))}
-        </Select>
-      </Field>
-      <div>
-        <p className="mb-3 text-sm font-semibold">Freight</p>
-        <div role="radiogroup" aria-label="Freight" className="grid gap-4 md:grid-cols-3">
-          {SHIP.map((s) => (
-            <ChoiceCard key={s.id} name="ship" checked={d.ship === s.id} onChange={() => set({ ship: s.id })} title={s.title} text={s.text} />
-          ))}
-        </div>
-        <ErrorMsg error={errors.ship} />
       </div>
-      {d.category === "collapsible" && (
-        <div>
-          <p className="mb-3 text-sm font-semibold">Packing</p>
-          <div role="radiogroup" aria-label="Packing" className="grid gap-4 md:grid-cols-2">
-            <ChoiceCard name="packing" checked={d.packing === "flat"} onChange={() => set({ packing: "flat" })} title="Flat" text="Lowest freight volume. Assemble in seconds." />
-            <ChoiceCard name="packing" checked={d.packing === "assembled"} onChange={() => set({ packing: "assembled" })} title="Assembled" text="Ready to pack on arrival." />
-          </div>
-          <ErrorMsg error={errors.packing} />
-        </div>
-      )}
     </div>,
-    // 8. Contact
-    <div key="contact" className="grid gap-5 sm:grid-cols-2">
+    // 3. Your details
+    <div key="details" className="grid gap-5 sm:grid-cols-2">
       <Field label="Name" htmlFor={`${ids}-name`} error={errors.name}>
         <Input id={`${ids}-name`} autoComplete="name" value={d.name} aria-invalid={!!errors.name} onChange={(e) => set({ name: e.target.value })} />
       </Field>
       <Field label="Email" htmlFor={`${ids}-email`} error={errors.email}>
         <Input id={`${ids}-email`} type="email" autoComplete="email" value={d.email} aria-invalid={!!errors.email} onChange={(e) => set({ email: e.target.value })} />
       </Field>
+      <Field label={d.contactBy === "whatsapp" ? "WhatsApp" : "WhatsApp (optional)"} htmlFor={`${ids}-wa`} error={errors.whatsapp} hint="With country code, e.g. +44 7700 900123.">
+        <Input id={`${ids}-wa`} type="tel" autoComplete="tel" placeholder="+" value={d.whatsapp} aria-invalid={!!errors.whatsapp} onChange={(e) => set({ whatsapp: e.target.value })} />
+      </Field>
       <Field label="Company (optional)" htmlFor={`${ids}-company`}>
         <Input id={`${ids}-company`} autoComplete="organization" value={d.company} onChange={(e) => set({ company: e.target.value })} />
       </Field>
-      <Field label="WhatsApp (optional)" htmlFor={`${ids}-wa`}>
-        <Input id={`${ids}-wa`} type="tel" autoComplete="tel" value={d.whatsapp} onChange={(e) => set({ whatsapp: e.target.value })} />
-      </Field>
-      <Field label="Notes (optional)" htmlFor={`${ids}-notes`} className="sm:col-span-2" hint="Product, deadline, anything else we should know.">
-        <Textarea id={`${ids}-notes`} rows={4} value={d.notes} onChange={(e) => set({ notes: e.target.value })} />
-      </Field>
+      <div className="sm:col-span-2">
+        <Group label="How should we reply?">
+          <Chip type="radio" name="contactBy" checked={d.contactBy === "email"} onChange={() => set({ contactBy: "email" })}>
+            Email
+          </Chip>
+          <Chip type="radio" name="contactBy" checked={d.contactBy === "whatsapp"} onChange={() => set({ contactBy: "whatsapp" })}>
+            WhatsApp
+          </Chip>
+        </Group>
+      </div>
       {/* Honeypot: hidden from people, filled by bots. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>
@@ -464,27 +432,10 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
         </label>
       </div>
     </div>,
-    // 9. Review
-    <div key="review" className="space-y-6">
-      <div className="rounded-2xl bg-silver-50 px-5">
-        <Summary d={d} onEdit={move} />
-      </div>
-      <div className="rounded-2xl bg-silver-50 p-5 text-sm">
-        <p className="font-semibold">
-          {d.name} · {d.email}
-        </p>
-        {(d.company || d.whatsapp) && <p className="mt-1 text-ink-500">{[d.company, d.whatsapp].filter(Boolean).join(" · ")}</p>}
-        {d.notes && <p className="mt-2 text-ink-500">{d.notes}</p>}
-        <button type="button" onClick={() => move(7)} className="mt-2 font-semibold text-blue-600 hover:underline">
-          Edit contact details
-        </button>
-      </div>
-    </div>,
   ];
 
   return (
-    <div className="grid gap-10 pb-24 lg:grid-cols-12 lg:pb-0">
-      <StoreHydration />
+    <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
       <form
         noValidate
         onSubmit={(e) => {
@@ -494,14 +445,15 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
         }}
         className="relative rounded-3xl border border-silver-300 bg-white p-5 md:p-8 lg:col-span-8"
       >
-        <div className="flex items-center justify-between gap-4 text-sm font-semibold">
-          <span className="text-blue-600">
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-semibold text-blue-600">
             Step {step + 1} of {STEPS.length}
           </span>
-          <span className="text-ink-500">{Math.round(((step + 1) / STEPS.length) * 100)}%</span>
-        </div>
-        <div className="mt-3 h-2 overflow-hidden rounded-full bg-silver-100" role="progressbar" aria-label="Quote progress" aria-valuemin={1} aria-valuemax={STEPS.length} aria-valuenow={step + 1}>
-          <m.div className="h-full origin-left rounded-full bg-blue-600" initial={false} animate={{ scaleX: (step + 1) / STEPS.length }} transition={{ duration: reduce ? 0 : 0.4 }} />
+          <ol aria-hidden="true" className="flex items-center gap-2">
+            {STEPS.map((s, i) => (
+              <li key={s} className={cn("h-2.5 rounded-full transition-all", i === step ? "w-7 bg-blue-600" : i < step ? "w-2.5 bg-blue-600" : "w-2.5 bg-silver-300")} />
+            ))}
+          </ol>
         </div>
 
         <AnimatePresence mode="wait" initial={false}>
@@ -511,7 +463,7 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
             animate={{ opacity: 1, x: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, x: -24 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 min-h-[20rem]"
+            className="mt-6"
           >
             <legend className="sr-only">{STEPS[step]}</legend>
             <h2 ref={heading} tabIndex={-1} className="text-h3 mb-6 outline-none">
@@ -522,11 +474,15 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
         </AnimatePresence>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-silver-300 pt-6">
-          <Button type="button" variant="ghost" onClick={() => move(step - 1)} disabled={step === 0} className="disabled:invisible">
-            Back
-          </Button>
+          {step > 0 ? (
+            <Button type="button" variant="ghost" onClick={() => move(step - 1)}>
+              Back
+            </Button>
+          ) : (
+            <span />
+          )}
           <Button type="submit" size="lg" arrow disabled={status === "sending"}>
-            {last ? (status === "sending" ? "Sending…" : "Send quote request") : `Next: ${STEPS[step + 1]}`}
+            {last ? (status === "sending" ? "Sending…" : "Send my request") : "Continue"}
           </Button>
         </div>
         {status === "error" && (
@@ -536,47 +492,38 @@ export function QuoteBuilder({ countries }: { countries: Array<{ slug: string; n
         )}
       </form>
 
-      {/* Live summary: sticky sidebar on desktop. */}
-      <aside className="hidden lg:col-span-4 lg:block">
-        <div className="sticky top-[calc(var(--header-h)+1.5rem)] rounded-3xl bg-silver-100 p-6">
-          <h2 className="font-heading text-lg font-bold">Your quote</h2>
-          <div className="mt-2">
-            <Summary d={d} onEdit={move} compact />
+      {/* Summary: sticky beside the form on desktop, below it on mobile. */}
+      <aside className="lg:col-span-4">
+        <div className="space-y-4 lg:sticky lg:top-[calc(var(--header-h)+1.5rem)]">
+          <div className="rounded-3xl bg-silver-100 p-6">
+            <h2 className="font-heading text-lg font-bold">Your request</h2>
+            {chips.length ? (
+              <ul className="mt-4 flex flex-wrap gap-2" aria-label="Your answers">
+                {chips.map((c) => (
+                  <li key={c} className="inline-flex min-h-8 items-center rounded-full bg-white px-3 py-1 text-sm font-medium text-ink-900">
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-2 text-sm text-ink-500">Your answers appear here as you go.</p>
+            )}
+            <h3 className="mt-6 text-sm font-semibold uppercase tracking-wider text-ink-500">What happens next</h3>
+            <NextSteps className="mt-3" />
           </div>
-          <ul className="mt-4 space-y-1.5 text-sm font-medium">
-            {promises().map((p) => (
-              <li key={p} className="flex items-center gap-2">
-                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
-                {p}
-              </li>
-            ))}
-            <li className="flex items-center gap-2">
-              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-orange-500" />
-              Free design support with every order
-            </li>
-          </ul>
+          {wa && (
+            <a href={wa} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-3xl border border-silver-300 bg-white p-5 font-semibold transition hover:border-blue-600">
+              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-success text-white">
+                <MessageCircle aria-hidden="true" className="h-5 w-5" />
+              </span>
+              <span>
+                Prefer chat? WhatsApp us
+                <span className="block text-sm font-normal text-ink-500">{chips.length ? "Your answers are added to the message." : site.whatsapp}</span>
+              </span>
+            </a>
+          )}
         </div>
       </aside>
-
-      {/* Live summary: collapsible bottom sheet on mobile. */}
-      <div data-bottom-sheet className="fixed inset-x-0 bottom-0 z-40 border-t border-silver-300 bg-white shadow-md lg:hidden">
-        <button type="button" aria-expanded={sheetOpen} aria-controls={`${ids}-sheet`} onClick={() => setSheetOpen(!sheetOpen)} className="container-x flex h-14 w-full items-center justify-between font-semibold">
-          <span>
-            Your quote <span className="text-ink-500">({filled}/8 set)</span>
-          </span>
-          <ChevronUp aria-hidden="true" className={cn("h-5 w-5 transition-transform", !sheetOpen && "rotate-180")} />
-        </button>
-        <div id={`${ids}-sheet`} hidden={!sheetOpen} className="container-x max-h-[60vh] overflow-y-auto pb-[max(1rem,env(safe-area-inset-bottom))]">
-          <Summary
-            d={d}
-            compact
-            onEdit={(s) => {
-              setSheetOpen(false);
-              move(s);
-            }}
-          />
-        </div>
-      </div>
     </div>
   );
 }

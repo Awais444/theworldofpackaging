@@ -52,91 +52,76 @@ export const newsletterSchema = z.object({
   website: z.string().max(0).optional(), // honeypot
 });
 
-// ---- Quote builder (/get-a-quote, CLAUDE.md §10.1) ----
+// ---- Quote request (/get-a-quote): 3 steps, design first, printing optional ----
 
-export const QUOTE_CATEGORIES = ["rigid", "collapsible", "printed", "unsure"] as const;
-export const QUOTE_QTY_PRESETS = [500, 1000, 2500, 5000] as const;
-export const QUOTE_ARTWORK = ["have", "basic", "design"] as const;
-export const QUOTE_SHIP = ["air", "sea", "unsure"] as const;
-export const QUOTE_PACKING = ["assembled", "flat"] as const;
-export const DIM_UNITS = ["mm", "in"] as const;
+export const QUOTE_NEEDS = ["design", "brand", "design-print", "print"] as const;
+export type QuoteNeed = (typeof QUOTE_NEEDS)[number];
+export const QUOTE_PRODUCTS = ["Cosmetic", "Skincare", "Food", "Snacks", "Coffee & Tea", "Supplement", "CBD", "Candle", "Pharma", "Apparel", "Other"] as const;
+export const QUOTE_PACKAGING = ["Box", "Rigid box", "Label", "Pouch", "Bottle/Jar label", "Bag", "Not sure"] as const;
+export const QUOTE_SKUS = ["1", "2–3", "4+"] as const;
+export const QUOTE_QTY = ["500", "1,000", "2,500", "5,000+", "Not sure"] as const;
+export const QUOTE_LOGO = ["Yes", "No", "Needs a refresh"] as const;
+export const QUOTE_CONTACT = ["email", "whatsapp"] as const;
 
-/** Rigid and collapsible quotes start at the MOQ; printed and "not sure" accept smaller asks. */
-export const quoteMinQty = (category: (typeof QUOTE_CATEGORIES)[number]) => (category === "rigid" || category === "collapsible" ? 500 : 100);
+/** Printing is involved when either printing option is picked. */
+export const needsPrinting = (needs: readonly QuoteNeed[]) => needs.includes("design-print") || needs.includes("print");
+/** Brand identity on its own: no packaging questions. */
+export const brandOnly = (needs: readonly QuoteNeed[]) => needs.length === 1 && needs[0] === "brand";
 
-const toMm = (v: number, unit: (typeof DIM_UNITS)[number]) => (unit === "in" ? v * 25.4 : v);
+const optional = (max: number) => z.string().trim().max(max).optional().or(z.literal(""));
 
-export const quoteStepSchemas = {
-  category: z.object({ category: z.enum(QUOTE_CATEGORIES, { error: "Pick a box category." }) }),
-  style: z.object({ style: z.string().min(1, "Pick a style, or choose Not sure.") }),
-  size: z
-    .object({
-      helpChoose: z.boolean(),
-      unit: z.enum(DIM_UNITS),
-      length: z.number().optional(),
-      width: z.number().optional(),
-      height: z.number().optional(),
-    })
-    .superRefine((d, ctx) => {
-      if (d.helpChoose) return;
-      for (const k of ["length", "width", "height"] as const) {
-        const v = d[k];
-        if (v === undefined || Number.isNaN(v)) ctx.addIssue({ code: "custom", path: [k], message: "Enter a number." });
-        else if (toMm(v, d.unit) < 20 || toMm(v, d.unit) > 1000) ctx.addIssue({ code: "custom", path: [k], message: d.unit === "mm" ? "Between 20 and 1000 mm." : "Between 0.8 and 39 in." });
-      }
-    }),
-  quantity: z.object({ category: z.enum(QUOTE_CATEGORIES), quantity: z.number({ error: "Enter a quantity." }).int("Whole boxes only.") }).superRefine((d, ctx) => {
-    const min = quoteMinQty(d.category);
-    if (d.quantity < min) ctx.addIssue({ code: "custom", path: ["quantity"], message: `Minimum is ${min} boxes for this category.` });
-  }),
-  materials: z.object({ materials: z.array(z.string()), finishes: z.array(z.string()) }),
-  artwork: z.object({ artwork: z.enum(QUOTE_ARTWORK, { error: "Pick an artwork option." }), files: z.array(z.string().max(200)).max(10) }),
-  shipping: z
-    .object({
-      country: z.string().trim().min(2, "Which country should we ship to?"),
-      ship: z.enum(QUOTE_SHIP, { error: "Pick air, sea or not sure." }),
-      category: z.enum(QUOTE_CATEGORIES),
-      packing: z.enum(QUOTE_PACKING).optional(),
-    })
-    .superRefine((d, ctx) => {
-      if (d.category === "collapsible" && !d.packing) ctx.addIssue({ code: "custom", path: ["packing"], message: "Assembled or flat?" });
-    }),
-  contact: z.object({
+const needsField = z
+  .array(z.enum(QUOTE_NEEDS))
+  .min(1, "Pick at least one.")
+  .refine((n) => !(n.includes("design-print") && n.includes("print")), "Pick design + printing or printing only, not both.");
+
+const projectFields = z
+  .object({
+    needs: needsField,
+    product: z.enum(QUOTE_PRODUCTS, { error: "Pick a product type." }),
+    packaging: z.array(z.enum(QUOTE_PACKAGING)),
+    skus: z.enum(QUOTE_SKUS, { error: "How many designs?" }),
+    quantity: z.enum(QUOTE_QTY).optional(),
+    country: optional(80),
+    logo: z.enum(QUOTE_LOGO).optional(),
+    about: optional(2000),
+    links: optional(1000),
+    /** File names only: files are requested by email after the first reply. */
+    files: z.array(z.string().max(200)).max(10),
+    source: optional(300),
+  })
+  .superRefine((d, ctx) => {
+    if (!brandOnly(d.needs) && d.packaging.length === 0) ctx.addIssue({ code: "custom", path: ["packaging"], message: "Pick at least one, or Not sure." });
+    if (brandOnly(d.needs) && !d.logo) ctx.addIssue({ code: "custom", path: ["logo"], message: "Do you have a logo already?" });
+    if (needsPrinting(d.needs) && !d.quantity) ctx.addIssue({ code: "custom", path: ["quantity"], message: "Pick a quantity, or Not sure." });
+    if (needsPrinting(d.needs) && !d.country?.trim()) ctx.addIssue({ code: "custom", path: ["country"], message: "Which country should we ship to?" });
+  });
+
+const detailFields = z
+  .object({
     name: z.string().trim().min(2, "Tell us your name."),
     email: z.email("Enter a valid email address."),
-    company: z.string().trim().max(200).optional(),
-    whatsapp: z.string().trim().max(40).optional(),
-    notes: z.string().trim().max(2000).optional(),
-  }),
+    whatsapp: optional(40),
+    company: optional(200),
+    contactBy: z.enum(QUOTE_CONTACT),
+  })
+  .superRefine((d, ctx) => {
+    if (d.contactBy === "whatsapp" && !d.whatsapp?.trim()) ctx.addIssue({ code: "custom", path: ["whatsapp"], message: "Add your WhatsApp number, with country code." });
+  });
+
+export const quoteStepSchemas = {
+  needs: z.object({ needs: needsField }),
+  project: projectFields,
+  details: detailFields,
 };
 
 /** Full quote request, validated again on the server. */
 export const quoteRequestSchema = z
-  .object({
-    ...quoteStepSchemas.category.shape,
-    ...quoteStepSchemas.style.shape,
-    helpChoose: z.boolean(),
-    unit: z.enum(DIM_UNITS),
-    length: z.number().optional(),
-    width: z.number().optional(),
-    height: z.number().optional(),
-    quantity: z.number().int(),
-    ...quoteStepSchemas.materials.shape,
-    ...quoteStepSchemas.artwork.shape,
-    country: z.string().trim().min(2),
-    ship: z.enum(QUOTE_SHIP),
-    packing: z.enum(QUOTE_PACKING).optional(),
-    ...quoteStepSchemas.contact.shape,
-    website: z.string().max(0).optional(), // honeypot
-  })
+  .object({ ...projectFields.shape, ...detailFields.shape, website: z.string().max(0).optional() }) // website = honeypot
   .superRefine((d, ctx) => {
-    for (const [key, schema] of [
-      ["size", quoteStepSchemas.size],
-      ["quantity", quoteStepSchemas.quantity],
-      ["shipping", quoteStepSchemas.shipping],
-    ] as const) {
+    for (const schema of [projectFields, detailFields]) {
       const r = schema.safeParse(d);
-      if (!r.success) ctx.addIssue({ code: "custom", path: [key], message: r.error.issues[0]?.message ?? "Invalid" });
+      if (!r.success) for (const i of r.error.issues) ctx.addIssue({ code: "custom", path: i.path, message: i.message });
     }
   });
 export type QuoteRequest = z.infer<typeof quoteRequestSchema>;

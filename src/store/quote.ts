@@ -1,70 +1,95 @@
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import type { DIM_UNITS, QUOTE_ARTWORK, QUOTE_CATEGORIES, QUOTE_PACKING, QUOTE_SHIP } from "@/lib/schemas";
+import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
+import type { QUOTE_CONTACT, QUOTE_LOGO, QUOTE_PACKAGING, QUOTE_PRODUCTS, QUOTE_QTY, QUOTE_SKUS, QuoteNeed } from "@/lib/schemas";
 
 export type QuoteDraft = {
-  category?: (typeof QUOTE_CATEGORIES)[number];
-  style: string;
-  helpChoose: boolean;
-  unit: (typeof DIM_UNITS)[number];
-  length?: number;
-  width?: number;
-  height?: number;
-  quantity?: number;
-  materials: string[];
-  finishes: string[];
-  artwork?: (typeof QUOTE_ARTWORK)[number];
+  needs: QuoteNeed[];
+  product?: (typeof QUOTE_PRODUCTS)[number];
+  packaging: Array<(typeof QUOTE_PACKAGING)[number]>;
+  skus?: (typeof QUOTE_SKUS)[number];
+  quantity?: (typeof QUOTE_QTY)[number];
+  country: string;
+  logo?: (typeof QUOTE_LOGO)[number];
+  about: string;
+  links: string;
   /** File names only: files are requested by email after the first reply. */
   files: string[];
-  country: string;
-  ship?: (typeof QUOTE_SHIP)[number];
-  packing?: (typeof QUOTE_PACKING)[number];
+  /** Page the visitor came from (from the link params), for our team. */
+  source: string;
   name: string;
   email: string;
-  company: string;
   whatsapp: string;
-  notes: string;
+  company: string;
+  contactBy: (typeof QUOTE_CONTACT)[number];
 };
 
-const empty: QuoteDraft = {
-  style: "",
-  helpChoose: false,
-  unit: "mm",
-  materials: [],
-  finishes: [],
-  files: [],
+export const emptyQuote: QuoteDraft = {
+  needs: [],
+  packaging: [],
   country: "",
+  about: "",
+  links: "",
+  files: [],
+  source: "",
   name: "",
   email: "",
-  company: "",
   whatsapp: "",
-  notes: "",
+  company: "",
+  contactBy: "email",
 };
 
 type QuoteState = {
   draft: QuoteDraft;
   step: number;
   set: (patch: Partial<QuoteDraft>) => void;
-  toggle: (key: "materials" | "finishes", value: string) => void;
   goTo: (step: number) => void;
   reset: () => void;
 };
 
-/** Quote builder state, kept for the browser session so a refresh does not lose answers. */
+/** localStorage can be missing or throw (private mode, blocked storage): the form then just doesn't autosave. */
+const safeLocal: StateStorage = {
+  getItem: (k) => {
+    try {
+      return localStorage.getItem(k);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (k, v) => {
+    try {
+      localStorage.setItem(k, v);
+    } catch {
+      /* not saved */
+    }
+  },
+  removeItem: (k) => {
+    try {
+      localStorage.removeItem(k);
+    } catch {
+      /* nothing to remove */
+    }
+  },
+};
+
+/** Quote request draft, autosaved in localStorage so going back, refreshing or returning later keeps the answers. */
 export const useQuote = create<QuoteState>()(
   persist(
     (set) => ({
-      draft: empty,
+      draft: emptyQuote,
       step: 0,
       set: (patch) => set((s) => ({ draft: { ...s.draft, ...patch } })),
-      toggle: (key, value) =>
-        set((s) => {
-          const list = s.draft[key];
-          return { draft: { ...s.draft, [key]: list.includes(value) ? list.filter((v) => v !== value) : [...list, value] } };
-        }),
       goTo: (step) => set({ step }),
-      reset: () => set({ draft: empty, step: 0 }),
+      reset: () => set({ draft: emptyQuote, step: 0 }),
     }),
-    { name: "twop-quote", storage: createJSONStorage(() => sessionStorage), skipHydration: true },
+    {
+      // v2: the 3-step form. Old 9-step drafts (sessionStorage, "twop-quote") are not read.
+      name: "twop-quote-v2",
+      storage: createJSONStorage(() => safeLocal),
+      skipHydration: true,
+      merge: (persisted, current) => {
+        const p = persisted as Partial<QuoteState> | undefined;
+        return { ...current, step: p?.step ?? 0, draft: { ...emptyQuote, ...p?.draft } };
+      },
+    },
   ),
 );

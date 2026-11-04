@@ -35,7 +35,7 @@ const featureIcons: LucideIcon[] = [Sparkles, ShieldCheck, Gift, Wrench];
 export function BoxStylePage({ box }: { box: BoxView }) {
   const hub = box.kind === "rigid" ? { label: "Rigid Boxes", href: "/rigid-boxes" } : { label: "Printed Boxes", href: "/printed-boxes" };
   const gallerySlots = box.slots.slice(0, 5);
-  const quote = `${quoteHref}?style=${box.slug}`;
+  const quote = `${quoteHref}?box=${box.slug}`;
   const designFor = servicesForBox(`${box.kind}:${box.slug}`);
 
   return (

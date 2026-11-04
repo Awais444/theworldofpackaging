@@ -5,5 +5,5 @@ export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
-  return renderOg({ eyebrow: "Quote builder", title: "Get a price for your boxes" });
+  return renderOg({ eyebrow: "Get a quote", title: "Get a quote for your packaging" });
 }

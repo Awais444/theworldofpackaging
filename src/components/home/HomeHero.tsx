@@ -11,7 +11,7 @@ import hero from "@/content/heroImage.json";
 const HERO_SIZES = "(min-width: 1024px) 50vw, 92vw";
 
 // First word is server-rendered and is the reduced-motion fallback.
-const words = ["pouches.", "labels.", "rigid boxes.", "cartons.", "brand identity."];
+const words = ["pouches.", "labels.", "cartons.", "rigid boxes.", "mailer boxes."];
 const factsLine = [`MOQ ${site.facts.rigidMoq}`, "Collapsible rigid boxes", "Digital proof before print"];
 
 /**
@@ -32,7 +32,7 @@ export function HomeHero() {
             Packaging studio + printing press
           </p>
           <h1 data-hero-line className="mt-5 font-heading text-[clamp(44px,4.6vw,64px)] font-bold leading-[1.05] tracking-[-0.02em] text-ink-900">
-            <span className="sr-only">We design and print pouches, labels, rigid boxes, cartons and brand identity.</span>
+            <span className="sr-only">We design and print your pouches, labels, cartons, rigid boxes and mailer boxes.</span>
             <span aria-hidden="true" className="block">We design and print</span>
             <span aria-hidden="true" className="block">
               your <HeroRotator words={words} />

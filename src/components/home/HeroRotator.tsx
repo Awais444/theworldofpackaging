@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type Phase = "on" | "out" | "pre";
 
 /**
- * Rotating word in the homepage H1. An invisible copy of the longest word reserves the width; the visible
+ * Rotating word in the homepage H1. Invisible copies of every word reserve the width of the widest one; the visible
  * word sits on top in a clipped box (overflow hidden), so only one word is ever visible: the outgoing word
  * slides up and fades (0.25s), then the next slides in from below (0.3s). The first word is server-rendered
  * visible. Rotation pauses on hover, on focus inside [data-hero-focus], and while the tab is hidden.
@@ -16,7 +16,6 @@ export function HeroRotator({ words, interval = 2400 }: { words: string[]; inter
   const [phase, setPhase] = useState<Phase>("on");
   const paused = useRef(false);
   const root = useRef<HTMLSpanElement>(null);
-  const longest = words.reduce((a, b) => (b.length > a.length ? b : a));
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -53,7 +52,14 @@ export function HeroRotator({ words, interval = 2400 }: { words: string[]; inter
 
   return (
     <span ref={root} aria-hidden="true" className="relative inline-block overflow-hidden whitespace-nowrap pb-[0.12em] align-bottom leading-[1.1]">
-      <span className="invisible">{longest}</span>
+      {/* Every word, invisible and stacked in one grid cell: the cell takes the widest word's real width. */}
+      <span className="invisible inline-grid">
+        {words.map((w) => (
+          <span key={w} className="col-start-1 row-start-1">
+            {w}
+          </span>
+        ))}
+      </span>
       <span data-phase={phase} className="hero-word absolute left-0 top-0 text-orange-600">
         {words[i]}
       </span>

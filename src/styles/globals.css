@@ -494,3 +494,13 @@ html.lenis body {
   mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
 }
 .blog-pills::-webkit-scrollbar { display: none; }
+
+/* Space above the footer CTA band, structurally: the last section on every page keeps the standard bottom
+   padding (64px mobile, 96px desktop) even when the page zeroes it with pb-0 to tighten stacked rows.
+   In the base layer on purpose: for !important rules the earlier layer wins, so this beats the !pb-0 utility. */
+@layer base {
+  main > .section-y:last-child { padding-bottom: 4rem !important; }
+  @media (width >= 64rem) {
+    main > .section-y:last-child { padding-bottom: 6rem !important; }
+  }
+}

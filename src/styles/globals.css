@@ -26,6 +26,14 @@
   --ink-800: #2b2a30; /* Nav text */
   --white: #ffffff;
   --success: #12a150;
+  /* Blog category colours (content/blog/categories.ts). Pink is for small accents only. */
+  --cat-compliance: var(--blue-600);
+  --cat-design: var(--orange-500);
+  --cat-materials: #b98a5a; /* kraft */
+  --cat-cost: var(--blue-900);
+  --cat-ecommerce: #e4007c;
+  --cat-printing: var(--ink-900);
+  --cat-shipping: var(--success);
   --error: #e5251c;
 
   /* Semantic */

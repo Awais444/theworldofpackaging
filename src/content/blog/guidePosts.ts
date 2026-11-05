@@ -1,4 +1,4 @@
-import type { Post } from "./posts";
+import type { PostInput as Post } from "./posts";
 
 /** Practical packaging guides (SEO_CONTENT_PLAN.md Priority 3). Bodies live in ./<slug>.mdx. */
 export const guidePosts: Post[] = [

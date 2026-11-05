@@ -140,7 +140,7 @@ Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, l
 
 ## 6. Integrations (not connected yet)
 
-- [ ] Form delivery: `deliver()` in `src/lib/submission.ts` only logs. Connect Resend (email notifications) and your CRM. All forms (quote, project, contact, newsletter, order request) go through it.
+- [x] Form delivery: Resend email + Google Sheet via `src/lib/leads.ts` (setup in `docs/LEADS_SETUP.md`). Optional later: a CRM.
 - [ ] Artwork uploads in the quote builder record file names only. Real uploads need storage (e.g. Vercel Blob or S3).
 - [ ] Rate limiting in `src/lib/rateLimit.ts` is in-memory per server instance. Move to a shared store (e.g. Upstash Redis) if spam appears.
 - [ ] Newsletter: connect an email list provider.

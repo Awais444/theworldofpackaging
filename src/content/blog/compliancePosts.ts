@@ -1,4 +1,4 @@
-import type { Post } from "./posts";
+import type { PostInput as Post } from "./posts";
 
 /**
  * Compliance and requirements guides (SEO_CONTENT_PLAN.md Priority 2).

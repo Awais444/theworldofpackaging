@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { designServices } from "@/content/designServices";
 import { servicePages } from "@/content/servicePages";
+import { BLOG_PAGE_SIZE, blogCategories, categoryHref } from "@/content/blog/categories";
 import { posts } from "@/content/blog/posts";
 import { caseStudies } from "@/content/caseStudies";
 import { industries } from "@/content/industries";
@@ -56,6 +57,12 @@ const sections: Record<Id, () => MetadataRoute.Sitemap> = {
   countries: () => [entry("/countries", 0.8, "monthly", [`${C}countries*`]), ...countries.filter(isIndexable).map((c) => entry(`/countries/${c.slug}`, c.tier === 1 ? 0.8 : 0.6, "monthly", ["src/app/countries/[slug]/page.tsx", `${C}countries*`]))],
   guides: () => [
     entry("/blog", 0.7, "weekly", [`${C}blog/*`]),
+    // Category pages, including /page/N for categories with more than one page.
+    ...blogCategories.flatMap((c) =>
+      Array.from({ length: Math.max(1, Math.ceil(posts.filter((p) => p.category === c.id).length / BLOG_PAGE_SIZE)) }, (_, i) =>
+        entry(categoryHref(c.id, i + 1), i === 0 ? 0.6 : 0.4, "weekly", ["src/components/blog/CategoryPage.tsx", `${C}blog/*`]),
+      ),
+    ),
     entry("/glossary", 0.6, "monthly", [`${C}glossary.ts`]),
     ...posts.map((p) => ({ ...entry(`/blog/${p.slug}`, 0.6), lastModified: new Date(p.reviewed ?? p.date) })),
   ],

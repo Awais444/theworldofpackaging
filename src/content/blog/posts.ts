@@ -1,9 +1,11 @@
 import type { IllustrationKey } from "@/components/illustrations";
 import type { Faq } from "../rigidStyles";
+import { postMeta, type BlogCategoryId } from "./categories";
 import { compliancePosts } from "./compliancePosts";
 import { guidePosts } from "./guidePosts";
 
-export type Post = {
+/** A post as written in the content files. Category, cover and featured come from ./categories.ts. */
+export type PostInput = {
   slug: string;
   title: string;
   description: string;
@@ -26,7 +28,7 @@ export type Post = {
 };
 
 // Bodies live in ./<slug>.mdx and are imported dynamically by the post route.
-export const posts: Post[] = [
+const postInputs: PostInput[] = [
   ...compliancePosts,
   ...guidePosts,
   {
@@ -115,5 +117,24 @@ export const posts: Post[] = [
     services: ["rigid-luxury-box-design", "amazon-packaging-design"],
   },
 ];
+
+export type Post = PostInput & { category: BlogCategoryId; featured: boolean; cover: (typeof postMeta)[string]["cover"] };
+
+/** Every post with its one primary category and card cover. A post missing from postMeta fails the build. */
+export const posts: Post[] = postInputs.map((p) => {
+  const meta = postMeta[p.slug];
+  if (!meta) throw new Error(`Blog post "${p.slug}" has no category in content/blog/categories.ts`);
+  return { ...p, category: meta.category, featured: meta.featured ?? false, cover: meta.cover };
+});
+
+// Every category entry belongs to a real post, and no two posts share a cover photo.
+{
+  const slugs = new Set(postInputs.map((p) => p.slug));
+  const stray = Object.keys(postMeta).filter((s) => !slugs.has(s));
+  if (stray.length) throw new Error(`content/blog/categories.ts lists unknown posts: ${stray.join(", ")}`);
+  const photos = posts.flatMap((p) => ("photo" in p.cover ? [p.cover.photo] : []));
+  const dupes = photos.filter((ph, i) => photos.indexOf(ph) !== i);
+  if (dupes.length) throw new Error(`Blog covers reuse photos: ${dupes.join(", ")}`);
+}
 
 export const getPost = (slug: string) => posts.find((p) => p.slug === slug);

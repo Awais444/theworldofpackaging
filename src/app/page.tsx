@@ -17,7 +17,6 @@ import {
 } from "@/components/home/HomeSections";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { TrustedBy } from "@/components/home/TrustedBy";
-import { Media } from "@/components/media/Media";
 
 export const metadata: Metadata = {
   title: { absolute: "Packaging Designed and Made Under One Roof | TWOP" },
@@ -38,7 +37,7 @@ export default function HomePage() {
       <BoxTypes />
       <CollapsibleFeature />
       <WhyUs />
-      <HowItWorks visuals={{ 1: <Media slot="home-how-step-2" card className="rounded-2xl" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw" /> }} />
+      <HowItWorks />
       <Industries />
       <Finishes />
       <BlogTeaser />

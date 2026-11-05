@@ -1,8 +1,8 @@
 "use client";
 
 import { useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { processLines } from "@/components/illustrations/ProcessLine";
+import { ClipboardList, Globe, PenTool, Printer, type LucideIcon } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/config/site";
 import { quoteHref } from "@/content/links";
 import { Button } from "@/components/ui/Button";
@@ -11,22 +11,25 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useLazyGsap } from "@/lib/useLazyGsap";
 import { cn } from "@/lib/utils";
 
-// Production time shows only once the real lead time is confirmed in config/site.ts.
-const leadTime = site.facts.rigidLeadTime === "TODO" ? null : site.facts.rigidLeadTime;
+// The printing time shows only once a real lead time is confirmed in config/site.ts.
+const printTime = site.facts.printedLeadTime === "TODO" ? "Timeline in your quote" : site.facts.printedLeadTime;
 
-const steps = [
-  { title: "Share your brief", body: "Tell us the product, size, quantity and where it ships.", time: "Day 1" },
-  { title: "Design & proof", body: "Concepts, dieline, 3D mockup and a digital proof for your approval.", time: `Concepts in ${site.facts.firstConceptHours} hrs` },
-  { title: "Production", body: "Your boxes are made, printed and checked in our own factory.", time: leadTime },
-  { title: "Delivery", body: "Packed for export and shipped by air or sea to your door.", time: "Air or sea, tracked" },
+const steps: Array<{ icon: LucideIcon; title: string; body: string; time: string }> = [
+  { icon: ClipboardList, title: "Share your brief", body: "Tell us the product, size, quantity and where it ships.", time: "Day 1" },
+  { icon: PenTool, title: "Design & proof", body: "Concepts, dieline, 3D mockup and a digital proof for your approval.", time: `Concepts in ${site.facts.firstConceptHours} hrs` },
+  { icon: Printer, title: "Printing", body: "Your packaging is printed, finished and checked at our press.", time: printTime },
+  { icon: Globe, title: "Delivery", body: "Packed for export and shipped by air or sea to your door.", time: "Air or sea, tracked" },
 ];
 
 /** Ruler line: 1px ticks every 6px. */
 const ticks = (color: string) => ({ backgroundImage: `repeating-linear-gradient(90deg, ${color} 0 1px, transparent 1px 6px)` });
 
-/** Homepage "How it works": step tabs, a ruler that fills on scroll, and four illustrated columns. */
-/** `visuals` optionally replaces a step illustration with a photo rendered on the server, keyed by step index. */
-export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNode> }) {
+/**
+ * Homepage "How it works": step tabs, a ruler that fills on scroll, and four equal cards (number, icon tile,
+ * title, two lines, time chip). The active step (hover, focus or the 4s auto-advance) lifts its card and fills
+ * its icon tile. Auto-advance pauses on hover or focus and is off with reduced motion.
+ */
+export function HowItWorks() {
   const root = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
@@ -56,7 +59,7 @@ export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNod
 
   return (
     <Section>
-      <SectionHeader align="center" eyebrow="How it works" title="Four steps to your boxes" highlight="boxes" lead={`We reply to every brief ${site.facts.quoteReply}.`} />
+      <SectionHeader align="center" eyebrow="How it works" title="Four steps to your packaging" highlight="packaging" lead={`We reply to every brief ${site.facts.quoteReply}.`} />
       <div className="mt-6 flex flex-wrap items-center justify-center gap-6">
         <Button href={quoteHref} size="sm" arrow>
           Get a Quote
@@ -67,9 +70,9 @@ export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNod
       </div>
 
       <div ref={root} className="mt-14" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-        <div role="tablist" aria-label="Steps" className="hidden grid-cols-4 lg:grid">
+        <div role="tablist" aria-label="Steps" className="hidden grid-cols-4 gap-6 lg:grid">
           {steps.map((s, i) => (
-            <div key={s.title} className="px-6 first:pl-0">
+            <div key={s.title}>
               <button
                 type="button"
                 role="tab"
@@ -90,9 +93,8 @@ export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNod
           <div data-ruler-fill className="absolute inset-0 origin-left" style={ticks("var(--blue-600)")} />
         </div>
 
-        <ol className="mt-8 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => {
-            const Illo = processLines[i]!;
             const on = active === i;
             return (
               <li
@@ -100,23 +102,29 @@ export function HowItWorks({ visuals = {} }: { visuals?: Record<number, ReactNod
                 tabIndex={0}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
-                className="flex flex-col border-silver-300 outline-none md:px-6 md:even:border-l lg:border-l lg:first:border-l-0 lg:first:pl-0"
-              >
-                <span className={cn("mb-3 inline-flex h-8 w-fit items-center rounded-lg px-3 text-sm font-semibold lg:hidden", on ? "bg-blue-600 text-white" : "border border-silver-300 text-ink-900")}>
-                  Step {i + 1}
-                </span>
-                <h3 className="text-h4 font-heading font-bold">{s.title}</h3>
-                <p className="mt-2 min-h-[3.2em] text-ink-500">{s.body}</p>
-                <div className="mt-4 h-7">
-                  {s.time && <span className="inline-flex h-7 items-center rounded-full bg-orange-50 px-3 text-xs font-semibold text-orange-text">{s.time}</span>}
-                </div>
-                {visuals[i] ? (
-                  <div className={cn("mt-5 transition-transform duration-300", on && "-translate-y-1")}>{visuals[i]}</div>
-                ) : (
-                <div className={cn("mt-5 aspect-[4/3] rounded-2xl p-6 transition-colors duration-300", on ? "bg-blue-50" : "bg-silver-50")}>
-                  <Illo className={cn("h-full w-full transition-transform duration-300", on && "-translate-y-1")} />
-                </div>
+                aria-current={on ? "step" : undefined}
+                className={cn(
+                  "flex h-full flex-col rounded-2xl border bg-white p-6 outline-none transition-[transform,border-color,box-shadow] duration-300 focus-visible:shadow-[var(--ring)] motion-reduce:transition-none",
+                  on ? "-translate-y-1 border-blue-600 shadow-md motion-reduce:translate-y-0" : "border-silver-300",
                 )}
+              >
+                <div className="flex items-start justify-between">
+                  <span className={cn("relative inline-flex h-14 w-14 items-center justify-center rounded-[14px] transition-colors duration-300", on ? "bg-blue-600 text-white" : "bg-blue-50 text-blue-600")}>
+                    <s.icon aria-hidden="true" className="h-6 w-6" strokeWidth={2} />
+                    {/* Orange accent: one small dot on the tile corner. */}
+                    <span aria-hidden="true" className="absolute right-2 top-2 h-2 w-2 rounded-full bg-orange-500" />
+                  </span>
+                  <span aria-hidden="true" className="font-heading text-[48px] font-semibold leading-none text-silver-300">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h3 className="mt-6 font-heading text-[20px] font-semibold leading-snug">
+                  <span className="sr-only">Step {i + 1}: </span>
+                  {s.title}
+                </h3>
+                <p className="mb-5 mt-2 text-ink-500">{s.body}</p>
+                {/* Chips sit on the same line in every card. */}
+                <span className="mt-auto inline-flex h-7 w-fit items-center rounded-full bg-orange-50 px-3 pt-px text-xs font-semibold text-orange-text">{s.time}</span>
               </li>
             );
           })}

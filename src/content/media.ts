@@ -58,15 +58,6 @@ const fixedSlots = {
     size: "1600×1200",
     shot: "Flat printed carton on its dieline",
   },
-  "home-how-step-2": {
-    id: "home-how-step-2",
-    alt: "Design and proof: a flat printed film box carton laid out on its dieline",
-    illustration: "dieline-flat",
-    aspect: "4/3",
-    page: "/ (How it works, step 2)",
-    size: "1200×900",
-    shot: "Flat printed carton on its dieline",
-  },
   "home-hero": {
     id: "home-hero",
     alt: "A rigid gift box, a mailer box and a tube, made in our factory",
@@ -294,7 +285,6 @@ const photos: Record<string, Photo> = {
   "industry-gifts-pr-kits-hero": PHOTOS.floral,
   "design-gift-box-pr-kit-design-1": PHOTOS.floral,
   "design-structural-dieline-design-1": PHOTOS.dielineDaylight,
-  "home-how-step-2": PHOTOS.dielineDaylight,
   "packaging-design-hub": PHOTOS.dielineIllustrated,
   "how-it-works-design": PHOTOS.dielineIllustrated,
   "design-soap-bath-packaging-design-2": PHOTOS.soapSet,

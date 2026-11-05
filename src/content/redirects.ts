@@ -69,8 +69,7 @@ export const legacyQuoteRedirects: Record<string, string> = {
   "/samples": "/get-a-quote",
   "/cart": "/get-a-quote",
   "/checkout": "/get-a-quote",
-  // Browsers ask for these by convention; the real icons are app/icon.svg and app/apple-icon.
-  "/favicon.ico": "/icon.svg",
-  "/apple-touch-icon.png": "/apple-icon",
-  "/apple-touch-icon-precomposed.png": "/apple-icon",
+  // Browsers ask for these by convention; the real icons are app/favicon.ico, app/icon.png and app/apple-icon.png (scripts/generate-icons.mjs).
+  "/apple-touch-icon.png": "/apple-icon.png",
+  "/apple-touch-icon-precomposed.png": "/apple-icon.png",
 };

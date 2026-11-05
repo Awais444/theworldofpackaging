@@ -30,10 +30,10 @@
   --cat-compliance: var(--blue-600);
   --cat-design: var(--orange-500);
   --cat-materials: #b98a5a; /* kraft */
-  --cat-cost: var(--blue-900);
+  --cat-cost: var(--ink-500);
   --cat-ecommerce: #e4007c;
   --cat-printing: var(--ink-900);
-  --cat-shipping: var(--success);
+  --cat-shipping: var(--blue-900); /* Klein Blue */
   --error: #e5251c;
 
   /* Semantic */
@@ -487,3 +487,10 @@ html.lenis body {
   .marquee-tile { scroll-snap-align: start; }
   .marquee-img { transition: none; }
 }
+
+/* Blog category pills (components/blog/CategoryBar.tsx): one scrolling row with soft fades at both edges. */
+.blog-pills {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+}
+.blog-pills::-webkit-scrollbar { display: none; }

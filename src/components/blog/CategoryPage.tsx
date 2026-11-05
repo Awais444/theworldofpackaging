@@ -7,11 +7,9 @@ import { collectionPage } from "@/lib/schema";
 import { metaDescription, ogFor } from "@/lib/seo";
 import { BLOG_PAGE_SIZE, categoryHref, getBlogCategory, type BlogCategoryId } from "@/content/blog/categories";
 import { posts } from "@/content/blog/posts";
-import { quoteHref } from "@/content/navigation";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { cn } from "@/lib/utils";
 
@@ -102,9 +100,6 @@ export function CategoryPage({ slug, page }: { slug: string; page: number }) {
             ) : null}
           </nav>
         )}
-      </Section>
-      <Section className="!pt-0">
-        <CTABand title="Rather we just did it?" highlight="did" text="Brief us and we handle structure, artwork and production." primary={{ href: quoteHref, label: "Get a Quote" }} />
       </Section>
     </>
   );

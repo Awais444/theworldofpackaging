@@ -4,16 +4,15 @@ import { ArrowRight } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { collectionPage } from "@/lib/schema";
 import { metaDescription, ogFor } from "@/lib/seo";
-import { blogCategories, categoryHref } from "@/content/blog/categories";
+import { blogCategories, categoryHref, type BlogCategoryId } from "@/content/blog/categories";
 import { posts } from "@/content/blog/posts";
-import { quoteHref } from "@/content/navigation";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { BlogSearch } from "@/components/blog/BlogSearch";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { withHighlight } from "@/components/ui/withHighlight";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Packaging guides",
@@ -27,6 +26,36 @@ const featured = [...newest.filter((p) => p.featured), ...newest.filter((p) => !
   .slice(0, 3)
   .sort((a, b) => Number("photo" in b.cover) - Number("photo" in a.cover));
 const [lead, ...side] = featured;
+// Posts in the featured block are left out of the category rows below, so nothing shows twice on the page.
+const featuredSlugs = new Set(featured.map((p) => p.slug));
+const postCount = (id: BlogCategoryId) => posts.filter((p) => p.category === id).length;
+
+/** Fills a short category row: links to the three largest other categories. */
+function MoreGuides({ current }: { current: BlogCategoryId }) {
+  const others = blogCategories.filter((c) => c.id !== current).sort((a, b) => postCount(b.id) - postCount(a.id)).slice(0, 3);
+  return (
+    <div className="flex h-full flex-col rounded-2xl border border-silver-300 bg-silver-50 p-6">
+      <p className="font-heading text-lg font-bold">More guides</p>
+      <p className="mt-1 text-[15px] text-ink-500">Related topics with more to read.</p>
+      <ul className="mt-5 space-y-2">
+        {others.map((c) => (
+          <li key={c.id}>
+            <Link href={categoryHref(c.id)} className="group flex items-center justify-between gap-3 rounded-xl bg-white px-4 py-3 font-semibold text-ink-900 transition hover:text-blue-600 focus-visible:outline-none focus-visible:shadow-[var(--ring)]">
+              <span className="flex items-center gap-2.5">
+                <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ background: c.color }} />
+                {c.name}
+              </span>
+              <span className="flex items-center gap-1 text-sm text-ink-500">
+                {postCount(c.id)}
+                <ArrowRight aria-hidden="true" className="h-4 w-4 text-blue-600 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function BlogPage() {
   return (
@@ -72,10 +101,14 @@ export default function BlogPage() {
         </Section>
       )}
 
-      {/* One row per category: the 3 newest posts, "View all" to the category page. Swipe row on mobile. */}
+      {/* One row per category: the 3 newest posts not already featured above, "View all" to the category page.
+          Rows with fewer than 3 posts end with a "More guides" card, so no slot is empty. Swipe row on mobile. */}
       {blogCategories.map((c) => {
         const inCat = newest.filter((p) => p.category === c.id);
-        if (!inCat.length) return null;
+        const rowPosts = inCat.filter((p) => !featuredSlugs.has(p.slug)).slice(0, 3);
+        if (!rowPosts.length) return null;
+        const more = rowPosts.length < 3;
+        const cols = rowPosts.length + (more ? 1 : 0);
         return (
           <Section key={c.id} className="!pb-0 !pt-16" aria-labelledby={`cat-${c.id}`}>
             <div className="flex flex-wrap items-end justify-between gap-4">
@@ -91,20 +124,21 @@ export default function BlogPage() {
                 <ArrowRight aria-hidden="true" className="h-4 w-4" />
               </Link>
             </div>
-            <ul className="-mx-4 mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-2 [scrollbar-width:thin] md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
-              {inCat.slice(0, 3).map((p) => (
+            <ul className={cn("-mx-4 mt-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-2 [scrollbar-width:thin] md:mx-0 md:grid md:overflow-visible md:px-0 md:pb-0", cols === 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
+              {rowPosts.map((p) => (
                 <li key={p.slug} className="w-[82%] shrink-0 snap-start md:w-auto">
                   <BlogCard post={p} />
                 </li>
               ))}
+              {more && (
+                <li className="w-[82%] shrink-0 snap-start md:w-auto">
+                  <MoreGuides current={c.id} />
+                </li>
+              )}
             </ul>
           </Section>
         );
       })}
-
-      <Section className="!pt-16">
-        <CTABand title="Rather we just did it?" highlight="did" text="Brief us and we handle structure, artwork and production." primary={{ href: quoteHref, label: "Get a Quote" }} />
-      </Section>
     </>
   );
 }

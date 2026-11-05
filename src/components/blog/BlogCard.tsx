@@ -26,7 +26,7 @@ const ICONS: Record<CoverIcon, LucideIcon> = {
 
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
 
-/** Card cover (aspect 16/10): a stock photo, or a generated cover in the category colour with an icon and short title. */
+/** Card cover (aspect 16/10): a stock photo, or a light generated cover with the category icon and short title. */
 export function BlogCover({ post, sizes, priority = false, className }: { post: Post; sizes: string; priority?: boolean; className?: string }) {
   const color = getBlogCategory(post.category)!.color;
   const cover = post.cover;
@@ -42,14 +42,15 @@ export function BlogCover({ post, sizes, priority = false, className }: { post: 
           className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
       ) : (
-        // Generated cover: decorative (the card has the title), so screen readers skip it.
-        <div aria-hidden="true" className="absolute inset-0 flex flex-col justify-between p-[7%] text-white" style={{ background: color }}>
-          <span className="absolute -right-[12%] -top-[22%] aspect-square w-[62%] rounded-full bg-white/10" />
+        // Generated cover (no fitting photo): light silver panel, a soft corner shape and the icon in the category
+        // colour, the short title in ink. Decorative (the card has the title), so screen readers skip it.
+        <div aria-hidden="true" className="absolute inset-0 flex flex-col justify-between bg-silver-50 p-[7%] text-ink-900">
+          <span className="absolute -right-[14%] -top-[30%] aspect-square w-[58%] rounded-full opacity-[0.14]" style={{ background: color }} />
           {(() => {
             const Icon = ICONS[cover.icon];
-            return <Icon className="relative h-[34%] w-auto transition-transform duration-500 group-hover:scale-[1.06]" strokeWidth={1.5} />;
+            return <Icon className="relative h-10 w-10 transition-transform duration-500 group-hover:scale-[1.08]" strokeWidth={1.75} style={{ color }} />;
           })()}
-          <span className="relative max-w-[85%] font-heading text-[clamp(18px,2.2vw,26px)] font-bold leading-tight">{cover.short}</span>
+          <span className="relative max-w-[85%] font-heading text-[clamp(18px,2vw,24px)] font-bold leading-tight">{cover.short}</span>
         </div>
       )}
     </div>

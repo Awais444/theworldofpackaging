@@ -145,7 +145,7 @@ export const postMeta: Record<string, { category: BlogCategoryId; cover: Cover; 
   "how-to-measure-box-size": { category: "printing-production", cover: { icon: "ruler", short: "Measure your box size" } },
   // Shipping & Export
   "collapsible-rigid-boxes-explained": { category: "shipping-export", cover: { icon: "fold", short: "Collapsible rigid boxes" } },
-  "shipping-rigid-boxes-internationally": { category: "shipping-export", cover: { icon: "ship", short: "Shipping rigid boxes" } },
+  "shipping-rigid-boxes-internationally": { category: "shipping-export", cover: { photo: "floralMailer" } },
   "packaging-for-international-markets": { category: "shipping-export", cover: { icon: "globe", short: "International markets" } },
 };
 

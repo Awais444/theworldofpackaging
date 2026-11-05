@@ -1,3 +1,4 @@
+import { LogoSprite } from "@/components/ui/LogoSprite";
 import type { Metadata, Viewport } from "next";
 import { metaDescription } from "@/lib/seo";
 import type { ReactNode } from "react";
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={fontVariables}>
       <body className="flex min-h-dvh flex-col">
+        <LogoSprite />
         <a
           href="#main"
           className="sr-only z-[60] rounded-lg bg-accent px-4 py-3 text-sm font-medium text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"

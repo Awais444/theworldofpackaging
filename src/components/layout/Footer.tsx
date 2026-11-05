@@ -74,7 +74,7 @@ export function Footer() {
         {/* Main grid */}
         <div className="grid min-w-0 gap-8 py-12 [&>*]:min-w-0 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Logo tone="light" />
+            <Logo variant="onDark" />
             <p className="mt-4 max-w-xs text-[15px] text-white/[.72]">{site.tagline}</p>
             <p className="mt-2 text-[14px] font-semibold text-white">{heritageLine()}</p>
             <NewsletterForm />

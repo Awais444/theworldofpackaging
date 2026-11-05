@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 import { site } from "@/config/site";
 
@@ -5,7 +7,11 @@ export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
 // ImageResponse cannot read CSS variables, so these mirror the tokens in globals.css.
-const C = { blue600: "#011EFD", blue900: "#1B08B7", orange500: "#FF7001", red500: "#FF3600", white: "#FFFFFF" };
+const C = { blue600: "#011EFD", blue900: "#1B08B7", orange500: "#FF7001", white: "#FFFFFF" };
+
+// The brand mark from public/brand/logo-mark.svg, with its blue part switched to white for the blue card.
+const markSvg = fs.readFileSync(path.join(process.cwd(), "public/brand/logo-mark.svg"), "utf8").replace(/fill="#011EFD"/gi, `fill="${C.white}"`);
+const markSrc = `data:image/svg+xml;utf8,${encodeURIComponent(markSvg)}`;
 
 /**
  * Brand OG card (CLAUDE.md §12): Vibrant Blue background, white title, orange accent.
@@ -43,10 +49,8 @@ export function renderOg({ eyebrow, title, tone = "paper", flagSvg }: { eyebrow:
           <div style={{ display: "flex", width: 160, height: 10, borderRadius: 5, background: C.orange500, marginTop: 28 }} />
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ display: "flex", position: "relative", width: 56, height: 56, borderRadius: 56, background: C.orange500, alignItems: "center", justifyContent: "center", fontSize: 32, fontWeight: 700 }}>
-            W
-            <div style={{ display: "flex", position: "absolute", right: -4, top: -4, width: 16, height: 16, borderRadius: 4, background: C.red500, transform: "rotate(45deg)" }} />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse renders plain img tags. */}
+          <img src={markSrc} width={104} height={56} alt="" />
           <div style={{ display: "flex", fontSize: 30, fontWeight: 700 }}>{site.name}</div>
         </div>
       </div>

@@ -17,7 +17,7 @@ export function organization(): WithContext<Organization> {
     name: site.name,
     alternateName: site.history.originalName,
     url: siteUrl(),
-    logo: abs("/icon.svg"),
+    logo: abs("/brand/logo-mark.png"),
     email: site.email,
     description: site.description,
     foundingDate: String(site.facts.foundedYear),

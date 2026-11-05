@@ -17,7 +17,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 - [ ] `facts.rigidLeadTime`, `facts.printedLeadTime`: e.g. "3–4 weeks" (pages say "Confirmed with your quote" until set)
 - [ ] `QUOTE_REPLY_HOURS` (24) and `facts.firstConceptHours` (48): confirm
 - [ ] `currency.rates`: display exchange rates for the configurator
-- [ ] Logo: replace the temporary wordmark with `/public/brand/logo.svg` (see `src/components/ui/Logo.tsx`)
+- [x] Logo: brand mark in `public/brand/` (logo-mark.svg, icons), used by `src/components/ui/Logo.tsx`, the favicons, manifest and OG images
 
 ## 2. Prices and rates
 

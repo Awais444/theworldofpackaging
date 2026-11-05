@@ -80,7 +80,7 @@ export default function DesignSystemPage() {
             <div className="flex flex-wrap items-center gap-10">
               <Logo asLink={false} />
               <div className="rounded-2xl bg-blue-600 p-6">
-                <Logo asLink={false} tone="light" />
+                <Logo asLink={false} variant="onDark" />
               </div>
               <Logo asLink={false} markOnly />
             </div>

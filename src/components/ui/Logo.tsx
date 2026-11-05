@@ -2,9 +2,11 @@ import Link from "next/link";
 import { site } from "@/config/site";
 import { cn } from "@/lib/utils";
 
+const LOGO_SYMBOL_ID = "twop-mark"; // defined once per page by <LogoSprite /> in the root layout
+
 type LogoProps = {
-  /** Black wordmark on light backgrounds, white on blue / Klein. */
-  tone?: "dark" | "light";
+  /** "onDark" for Klein / blue backgrounds: the blue part of the mark and the wordmark turn white. */
+  variant?: "default" | "onDark";
   className?: string;
   /** Render as a link to the home page (default). */
   asLink?: boolean;
@@ -13,36 +15,23 @@ type LogoProps = {
 };
 
 /**
- * Temporary logo: orange circular "W" mark with a small red 4-point star, plus the
- * name in Space Grotesk 700. Swap for the real SVG at /public/brand/logo.svg later.
+ * Brand logo: the mark from public/brand/logo-mark.svg (blue "W" with the orange shape), 30px high,
+ * plus the name in Space Grotesk 700. The mark is a <use> of the symbol in <LogoSprite />.
  */
-export function Logo({ tone = "dark", className, asLink = true, markOnly = false }: LogoProps) {
+export function Logo({ variant = "default", className, asLink = true, markOnly = false }: LogoProps) {
+  const dark = variant === "onDark";
   const content = (
     <span className={cn("inline-flex min-w-0 max-w-full items-center gap-2.5", className)}>
-      <svg viewBox="0 0 40 40" className="h-8 w-8 shrink-0" aria-hidden="true">
-        <circle cx="19" cy="21" r="17" className="fill-orange-500" />
-        <text
-          x="19"
-          y="27.5"
-          textAnchor="middle"
-          className="fill-white"
-          style={{ fontFamily: "var(--ff-heading), sans-serif", fontWeight: 700, fontSize: 18 }}
-        >
-          W
-        </text>
-        {/* 4-point star */}
-        <path d="M33 1.5l1.6 4.4 4.4 1.6-4.4 1.6L33 13.5l-1.6-4.4-4.4-1.6 4.4-1.6z" className="fill-red-500" />
+      <svg
+        viewBox="0 0 689 373"
+        aria-hidden="true"
+        focusable="false"
+        className="h-[30px] w-auto shrink-0 aspect-[689/373]"
+        style={dark ? ({ "--logo-blue": "#FFFFFF" } as React.CSSProperties) : undefined}
+      >
+        <use href={`#${LOGO_SYMBOL_ID}`} />
       </svg>
-      {!markOnly && (
-        <span
-          className={cn(
-            "min-w-0 truncate font-heading text-[17px] font-bold tracking-tight",
-            tone === "light" ? "text-white" : "text-ink-900",
-          )}
-        >
-          {site.name}
-        </span>
-      )}
+      {!markOnly && <span className={cn("min-w-0 truncate font-heading text-[17px] font-bold tracking-tight", dark ? "text-white" : "text-ink-900")}>{site.name}</span>}
     </span>
   );
   if (!asLink) return content;

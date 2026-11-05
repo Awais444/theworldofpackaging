@@ -15,38 +15,6 @@ export const inlineContactSchema = z.object({
 
 export type InlineContactInput = z.infer<typeof inlineContactSchema>;
 
-const optionalText = z.string().trim().max(2000).optional().or(z.literal(""));
-const contact = {
-  name: z.string().trim().min(2, "Tell us your name."),
-  email: z.email("Enter a valid email address."),
-  company: optionalText,
-  country: z.string().trim().min(2, "Which country should we ship to?"),
-  website: z.string().max(0).optional(), // honeypot
-};
-
-export const STAGES = ["New brand", "Existing brand", "Rebrand"] as const;
-export const QTY_BANDS = ["Under 500", "500 – 1,000", "1,000 – 5,000", "5,000+", "Not sure yet"] as const;
-export const TIMELINES = ["As soon as possible", "1 – 2 months", "3 – 6 months", "Flexible"] as const;
-
-export const PROJECT_SERVICES = ["Brand identity", "Logo", "Packaging design", "Labels", "Production"] as const;
-
-export const projectSchema = z.object({
-  ...contact,
-  brandName: optionalText,
-  brandWebsite: optionalText,
-  product: z.string().trim().min(10, "A sentence or two about the product helps us a lot."),
-  stage: z.enum(STAGES, { error: "Pick one." }),
-  services: z.array(z.enum(PROJECT_SERVICES)).min(1, "Pick at least one."),
-  quantity: z.enum(QTY_BANDS, { error: "Pick a range." }),
-  timeline: z.enum(TIMELINES, { error: "Pick a timeline." }),
-  budget: z.enum(BUDGETS, { error: "Pick a budget range." }),
-  links: optionalText,
-  notes: optionalText,
-});
-export type ProjectInput = z.infer<typeof projectSchema>;
-
-/** Homepage "Start your project" form: three fields. */
-
 export const newsletterSchema = z.object({
   email: z.email("Enter a valid email address."),
   website: z.string().max(0).optional(), // honeypot

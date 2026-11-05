@@ -3,7 +3,7 @@
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { Check, CircleCheck, Layers, MessageCircle, Palette, PenTool, Paperclip, Printer, type LucideIcon } from "lucide-react";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { submitQuoteRequest } from "@/app/actions/forms";
+import { submitProject, submitQuoteRequest } from "@/app/actions/forms";
 import { site, whatsappUrl } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Textarea } from "@/components/ui/Field";
@@ -184,8 +184,9 @@ function Success({ d, onRestart }: { d: QuoteDraft; onRestart: () => void }) {
  * Quote request: 3 steps (what you need → about the project → your details), design first, printing optional.
  * The draft autosaves to localStorage. Links can preselect choices (see lib/quotePrefill.ts).
  * `countries` and `boxes` are passed by the server page so content data stays out of the browser bundle.
+ * `kind="project"` (/start-a-project): sent as a project brief, with Packaging design preselected on a new draft.
  */
-export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: string; name: string }>; boxes: QuoteBoxOption[] }) {
+export function QuoteBuilder({ countries, boxes, kind = "quote" }: { countries: Array<{ slug: string; name: string }>; boxes: QuoteBoxOption[]; kind?: "quote" | "project" }) {
   const names = countries.map((c) => c.name).sort((a, b) => a.localeCompare(b));
   const { draft: d, step, set: save, goTo, reset } = useQuote();
   const reduce = useReducedMotion();
@@ -231,6 +232,8 @@ export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: st
       if (pre) {
         patch(pre);
         go(0);
+      } else if (kind === "project" && useQuote.getState().draft.needs.length === 0) {
+        patch({ needs: ["design"] });
       }
     })();
     // countries and boxes come from the server and do not change after hydration.
@@ -298,7 +301,7 @@ export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: st
       logo: brand ? d.logo : undefined,
       website: honeypot,
     };
-    const res = await submitQuoteRequest(payload);
+    const res = await (kind === "project" ? submitProject : submitQuoteRequest)(payload);
     if (res.ok) {
       setSent(d);
       setStatus("sent");
@@ -470,7 +473,7 @@ export function QuoteBuilder({ countries, boxes }: { countries: Array<{ slug: st
             {last ? (status === "sending" ? "Sending…" : "Send my request") : "Continue"}
           </Button>
         </div>
-        {status === "error" && <SendError message={serverError} topic="a quote request" />}
+        {status === "error" && <SendError message={serverError} topic={kind === "project" ? "a project brief" : "a quote request"} />}
       </form>
 
       {/* Summary: sticky beside the form on desktop, below it on mobile. */}

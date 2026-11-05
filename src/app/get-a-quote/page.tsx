@@ -5,8 +5,7 @@ import { site } from "@/config/site";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { QuoteBuilder } from "@/components/forms/QuoteBuilder";
 import { countries } from "@/content/countries";
-import { printedStyles } from "@/content/printedStyles";
-import { rigidStyles } from "@/content/rigidStyles";
+import { quoteBoxes } from "@/lib/quoteBoxes";
 import { withHighlight } from "@/components/ui/withHighlight";
 
 export const metadata: Metadata = {
@@ -14,12 +13,6 @@ export const metadata: Metadata = {
   description: metaDescription(`Get a quote for packaging design, brand identity or printing in three short steps. We reply ${site.facts.quoteReply}.`),
   alternates: { canonical: "/get-a-quote" }, openGraph: ogFor("/get-a-quote"),
 };
-
-// Box styles a ?box= link can preselect. Names only: the full style content stays on the server.
-const boxes = [
-  ...rigidStyles.map((s) => ({ slug: s.slug, name: s.name, rigid: true })),
-  ...printedStyles.map((s) => ({ slug: s.slug, name: s.name, rigid: false })),
-];
 
 export default function GetAQuotePage() {
   return (
@@ -37,7 +30,7 @@ export default function GetAQuotePage() {
             .
           </p>
         </div>
-        <QuoteBuilder countries={countries.map(({ slug, name }) => ({ slug, name }))} boxes={boxes} />
+        <QuoteBuilder countries={countries.map(({ slug, name }) => ({ slug, name }))} boxes={quoteBoxes} />
       </div>
     </section>
   );

@@ -49,7 +49,7 @@ function fromService(slug: string): Prefill {
 }
 
 /**
- * Reads ?service=, ?box= (or the older ?style=), ?industry= and ?country= so CTAs on service, box,
+ * Reads ?service=, ?box= (or the older ?style=), ?package=, ?industry= and ?country= so CTAs on service, box, package,
  * industry and country pages open the form with the right choices made. Returns null when the URL has none.
  */
 export function prefillFromParams(q: URLSearchParams, ctx: { boxes: QuoteBoxOption[]; countries: string[]; countrySlugs: Record<string, string> }): Prefill | null {
@@ -68,6 +68,18 @@ export function prefillFromParams(q: URLSearchParams, ctx: { boxes: QuoteBoxOpti
     // A box page visitor wants the box made: design + printing, the box type preselected.
     out = { ...out, needs: ["design-print"], packaging: [box.rigid ? "Rigid box" : "Box"] };
     sources.push(`${box.name} box page`);
+  }
+
+  // /packages cards: ?package=box-ready | launch | full-system (see content/packages.ts).
+  const pkg = q.get("package");
+  const PACKAGES: Record<string, Prefill> = {
+    "box-ready": { needs: ["design-print"], packaging: ["Rigid box"] },
+    launch: { needs: ["brand", "design-print"], packaging: ["Rigid box"] },
+    "full-system": { needs: ["brand", "design-print"], packaging: ["Box"], skus: "2–3" },
+  };
+  if (pkg && PACKAGES[pkg]) {
+    out = { ...out, ...PACKAGES[pkg] };
+    sources.push(`${titleCase(pkg)} package`);
   }
 
   const industry = q.get("industry");

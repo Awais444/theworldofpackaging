@@ -46,12 +46,15 @@ const labelFor = (key: string) => LABELS[key] ?? key.replace(/([A-Z])/g, " $1").
 
 function toLead(kind: LeadKind, data: Record<string, unknown>, ctx: LeadContext): Lead {
   const d = Object.fromEntries(Object.entries(data).filter(([k]) => k !== "website"));
+  // Quote requests and project briefs share the 3-step form (needs are ids like "design-print").
+  const threeStep = kind === "quote-request" || kind === "project-brief";
   const answers = Object.entries(d)
-    .map(([k, v]): [string, string] => [k === "needs" && kind === "quote-request" ? "What they need" : labelFor(k), k === "needs" && kind === "quote-request" ? str((v as string[]).map((n) => NEED_LABEL[n] ?? n)) : str(v)])
+    .map(([k, v]): [string, string] => [k === "needs" && threeStep ? "What they need" : labelFor(k), k === "needs" && threeStep ? str((v as string[]).map((n) => NEED_LABEL[n] ?? n)) : str(v)])
     .filter(([, v]) => v);
   const base = { form: FORM_LABEL[kind], name: str(d.name), email: str(d.email), whatsapp: str(d.whatsapp), company: str(d.company), page: ctx.page, answers };
   switch (kind) {
     case "quote-request":
+    case "project-brief":
       return {
         ...base,
         service: str((d.needs as string[] | undefined)?.map((n) => NEED_LABEL[n] ?? n)),
@@ -61,8 +64,6 @@ function toLead(kind: LeadKind, data: Record<string, unknown>, ctx: LeadContext)
         country: str(d.country) || ctx.ipCountry,
         message: [str(d.about), str(d.links) && `Links: ${str(d.links)}`, str(d.source) && `From: ${str(d.source)}`].filter(Boolean).join("\n"),
       };
-    case "project-brief":
-      return { ...base, service: str(d.services), product: str(d.product), packaging: "", quantity: str(d.quantity), country: str(d.country) || ctx.ipCountry, message: [str(d.notes), str(d.links) && `Links: ${str(d.links)}`].filter(Boolean).join("\n") };
     case "inline-contact":
       return { ...base, service: str(d.needs), product: "", packaging: "", quantity: "", country: ctx.ipCountry, message: str(d.budget) && `Budget: ${str(d.budget)}` };
     case "newsletter":
@@ -104,7 +105,7 @@ async function sendEmail(msg: { to: string; subject: string; html: string; text:
 
 function leadEmail(lead: Lead, receivedAt: Date) {
   const subjectTail = lead.service || lead.product;
-  const subject = `New ${lead.form} – ${lead.name || lead.email}${subjectTail ? ` – ${subjectTail}` : ""}`;
+  const subject = `New ${lead.form.toLowerCase()} – ${lead.name || lead.email}${subjectTail ? ` – ${subjectTail}` : ""}`;
   const wa = waLink(lead.whatsapp);
   const when = receivedAt.toUTCString();
   const rows: Array<[string, string, string?]> = [

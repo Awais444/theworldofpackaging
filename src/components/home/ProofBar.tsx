@@ -38,11 +38,12 @@ export function ProofBar({ items, overlap = false }: { items: ProofItem[]; overl
   return (
     <section aria-label="Key facts" className={overlap ? "relative z-10 -mt-12" : "bg-white py-10 md:py-14"}>
       <div className="container-x">
-        <dl className={cn("grid grid-cols-2 gap-y-6 rounded-3xl border border-silver-300 bg-white p-6 shadow-md md:gap-y-0 md:p-8", cols[items.length])}>
+        {/* A plain list: a <dl> may not hold the icon and wrapper elements this layout needs. */}
+        <ul className={cn("grid grid-cols-2 gap-y-6 rounded-3xl border border-silver-300 bg-white p-6 shadow-md md:gap-y-0 md:p-8", cols[items.length])}>
           {items.map((item, i) => {
             const Icon = icons[item.icon];
             return (
-              <div
+              <li
                 key={item.label}
                 className={cn("flex flex-col items-start gap-3 px-2 md:flex-row md:items-center md:gap-4 md:px-6", i > 0 && "md:border-l md:border-silver-300", i === 0 && "md:pl-0")}
               >
@@ -50,8 +51,8 @@ export function ProofBar({ items, overlap = false }: { items: ProofItem[]; overl
                   <Icon aria-hidden="true" className="h-5 w-5" />
                 </span>
                 <div className="flex flex-col-reverse">
-                  <dt className="text-sm text-ink-500">{item.label}</dt>
-                  <dd className="font-heading text-[32px] font-bold leading-none text-blue-600 md:text-[40px]">
+                  <p className="text-sm text-ink-500">{item.label}</p>
+                  <p className="font-heading text-[32px] font-bold leading-none text-blue-600 md:text-[40px]">
                     {"number" in item ? (
                       <>
                         <CountUp value={item.number} />
@@ -60,12 +61,12 @@ export function ProofBar({ items, overlap = false }: { items: ProofItem[]; overl
                     ) : (
                       <span className="block whitespace-nowrap text-[24px] leading-tight lg:text-[28px]">{item.text}</span>
                     )}
-                  </dd>
+                  </p>
                 </div>
-              </div>
+              </li>
             );
           })}
-        </dl>
+        </ul>
       </div>
     </section>
   );

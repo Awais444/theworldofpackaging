@@ -114,7 +114,7 @@ export function HowItWorks() {
                     {/* Orange accent: one small dot on the tile corner. */}
                     <span aria-hidden="true" className="absolute right-2 top-2 h-2 w-2 rounded-full bg-orange-500" />
                   </span>
-                  <span aria-hidden="true" className="font-heading text-[48px] font-semibold leading-none text-silver-300">
+                  <span aria-hidden="true" className="font-heading text-[48px] font-semibold leading-none text-ink-400">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>

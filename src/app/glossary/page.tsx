@@ -11,7 +11,7 @@ import { withHighlight } from "@/components/ui/withHighlight";
 import { definedTermSet } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Packaging Glossary: dielines, boards and finishes",
+  title: "Packaging Glossary: Terms Explained",
   description: metaDescription("Plain-English definitions of packaging terms: dielines, bleed, greyboard, E-flute, SBS, foil stamping, spot UV, EVA inserts, CMYK, Pantone, MOQ, DDP and more."),
   alternates: { canonical: "/glossary" }, openGraph: ogFor("/glossary"),
 };

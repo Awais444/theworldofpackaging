@@ -1,4 +1,4 @@
-import type { Article, BreadcrumbList, CollectionPage, FAQPage, HowTo, Organization, Product, Service, WebSite, WithContext } from "schema-dts";
+import type { Article, BreadcrumbList, CollectionPage, CreativeWork, FAQPage, HowTo, Organization, Product, Service, WebSite, WithContext } from "schema-dts";
 import { site, siteUrl } from "@/config/site";
 
 /** Structured data builders (schema.org JSON-LD), typed with schema-dts. All identity comes from config/site.ts. */
@@ -154,5 +154,23 @@ export function definedTermSet(d: { name: string; path: string; terms: Array<{ t
     name: d.name,
     url: abs(d.path),
     hasDefinedTerm: d.terms.map((t) => ({ "@type": "DefinedTerm", name: t.term, description: t.definition, url: abs(`${d.path}#${t.id}`), inDefinedTermSet: abs(d.path) })),
+  };
+}
+
+/** Case study (/work/[slug]): the project as a CreativeWork made by us for the client. */
+export function caseStudy(c: { name: string; description: string; path: string; client: string; industry: string; services: string[]; image?: string; year?: string | null }): WithContext<CreativeWork> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: c.name,
+    description: c.description,
+    url: abs(c.path),
+    creator: org(),
+    publisher: org(),
+    sourceOrganization: { "@type": "Organization", name: c.client },
+    genre: c.industry,
+    keywords: c.services.join(", "),
+    ...(c.image ? { image: abs(c.image) } : {}),
+    ...(c.year ? { dateCreated: c.year } : {}),
   };
 }

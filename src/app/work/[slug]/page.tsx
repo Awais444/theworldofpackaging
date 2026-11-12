@@ -5,6 +5,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCaseStudy, publicCaseStudies as caseStudies } from "@/content/caseStudies";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getMedia, type MediaSlotId } from "@/content/media";
+import { caseStudy } from "@/lib/schema";
 import { Media } from "@/components/media/Media";
 import { StatCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
@@ -49,6 +52,7 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <article>
+      <JsonLd data={caseStudy({ name: `${study.client}: ${study.project}`, description: study.summary, path: `/work/${study.slug}`, client: study.client, industry: study.industry, services: study.services, image: getMedia(study.coverSlot as MediaSlotId).src, year: study.year })} />
       <header className="bg-white pb-12 pt-8">
         <div className="container-x">
           <Breadcrumbs items={[{ label: "Work", href: "/work" }, { label: study.client }]} />

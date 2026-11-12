@@ -35,7 +35,7 @@ export const site = {
   description:
     "Packaging design and branding agency with its own factory. Rigid boxes, collapsible rigid boxes and printed boxes, designed and made in-house and shipped worldwide.",
   url: "https://theworldofpackaging.com", // TODO confirm
-  email: "hello@theworldofpackaging.com", // TODO confirm
+  email: "info@theworldofpackaging.com",
   // Contact details stay hidden on the site while null. TODO: real values.
   /** Display format. */
   whatsapp: "+1 (437) 564-0199" as string | null,

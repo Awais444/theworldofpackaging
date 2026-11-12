@@ -55,7 +55,7 @@ export const site = {
   shortName: "TWOP",
   tagline: "Packaging design and manufacturing under one roof.",
   url: "https://theworldofpackaging.com",          // TODO confirm
-  email: "hello@theworldofpackaging.com",          // TODO confirm
+  email: "info@theworldofpackaging.com",
   whatsapp: "+1 (437) 564-0199",
   phone: "+1 (437) 564-0199",
   address: "Factory address, Pakistan",            // TODO

@@ -11,7 +11,7 @@ Copy them from the "Company facts" block on /about. They come from `src/config/s
 | Name | The World of Packaging |
 | Former name | Anmol Printers (mention "formerly Anmol Printers" in descriptions) |
 | Website | https://theworldofpackaging.com |
-| Email | hello@theworldofpackaging.com |
+| Email | info@theworldofpackaging.com |
 | WhatsApp / phone | +1 (437) 564-0199 |
 | Address | TODO: add the factory address to `site.ts` first, then use it everywhere |
 | Founded / experience | 2011 (TODO confirm), 15+ years in packaging |

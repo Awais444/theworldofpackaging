@@ -18,7 +18,8 @@ export function organization(): WithContext<Organization> {
     url: siteUrl(),
     logo: abs("/brand/logo-mark.png"),
     email: site.email,
-    description: site.description,
+    // Team experience, not company history.
+    description: `${site.description} ${site.facts.yearsExperience}+ years in packaging.`,
     address: { "@type": "PostalAddress", ...(site.address ? { streetAddress: site.address } : {}), addressCountry: site.country },
     contactPoint: [
       {

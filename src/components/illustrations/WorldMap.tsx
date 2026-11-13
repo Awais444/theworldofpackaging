@@ -37,10 +37,9 @@ for (let lat = TOP; lat >= BOTTOM; lat -= 4) {
   }
 }
 
-export const ORIGIN: LonLat = [70, 30]; // Pakistan
+export const ORIGIN: LonLat = [-79.4, 43.7]; // Toronto, Canada (our base)
 export const DESTINATIONS: Array<{ label: string; at: LonLat }> = [
   { label: "USA", at: [-95, 38] },
-  { label: "Canada", at: [-79, 46] },
   { label: "UK", at: [-1, 53] },
   { label: "Germany", at: [10, 50] },
   { label: "UAE", at: [55, 24] },
@@ -54,7 +53,7 @@ function route(to: LonLat) {
   return `M${x1} ${y1}Q${(x1 + x2) / 2} ${Math.min(y1, y2) - lift} ${x2} ${y2}`;
 }
 
-/** Dot-matrix world map with shipping routes from our factory. */
+/** Dot-matrix world map with shipping routes from our base in Canada. */
 export function WorldMap({ className }: IllustrationProps) {
   const [ox, oy] = px(ORIGIN);
   return (
@@ -78,7 +77,7 @@ export function WorldMap({ className }: IllustrationProps) {
         <circle cx={ox} cy={oy} r={6} />
         <path d={`M${ox - 10} ${oy}H${ox + 10}M${ox} ${oy - 10}V${oy + 10}`} />
       </g>
-      <text x={ox + 9} y={oy + 14} className="lbl lbl-strong">Factory, Pakistan</text>
+      <text x={ox + 9} y={oy + 14} className="lbl lbl-strong">Toronto, Canada</text>
       <SpecText items={["Air + sea", "Worldwide"]} y={350} />
     </Illo>
   );

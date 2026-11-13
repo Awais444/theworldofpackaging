@@ -23,6 +23,8 @@ export type Country = {
   short?: string;
   iso2: string;
   tier: 1 | 2 | 3;
+  /** Our home market (Canada): local delivery, no import or duties content. */
+  home?: boolean;
   region: Region;
   currency: { code: string; symbol: string; name: string };
   languages: string[];
@@ -83,11 +85,13 @@ export const formatTime = (value: string | null, approx: boolean, fallback = "Co
 export const getCountry = (slug: string) => countries.find((c) => c.slug === slug);
 export const countryName = (c: Country) => c.inText ?? c.name;
 
-/** Tier 3 pages are indexed only when every required field is filled (plan §3). */
+/**
+ * Tier 3 pages are indexed only when every required field is filled (plan §3). Shipping times are not
+ * required: they show "Confirmed with your quote" until recalculated from Canada.
+ */
 export function isIndexable(c: Country): boolean {
   if (c.tier < 3) return true;
-  const ship = shippingTimes(c);
-  return Boolean(c.name && c.region && c.currency.code && c.languages.length && c.measurement && c.labelling.authority && (ship.air || ship.sea) && c.marketNotes.length);
+  return Boolean(c.name && c.region && c.currency.code && c.languages.length && c.measurement && c.labelling.authority && c.marketNotes.length);
 }
 
 export const REGIONS: Region[] = ["North America", "Europe", "Middle East", "Asia", "Oceania", "Africa", "Latin America"];

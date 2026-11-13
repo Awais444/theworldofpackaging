@@ -3,7 +3,7 @@ import { lastModified } from "@/lib/contentDates";
 import { LastUpdated } from "@/components/seo/LastUpdated";
 import { countryAnswer } from "@/content/answers";
 import { metaDescription, ogFor } from "@/lib/seo";
-import { CheckCircle2, ExternalLink, Factory, Plane, Ship, Sparkles } from "lucide-react";
+import { CheckCircle2, ExternalLink, Factory, Plane, Ship, Sparkles, Truck } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { shippingNote, site } from "@/config/site";
@@ -60,7 +60,8 @@ export default async function CountryPage({ params }: Props) {
   const inds = c.topIndustries.map((slug) => industries.find((i) => i.slug === slug)).filter((i): i is (typeof industries)[number] => Boolean(i));
   const guides = (c.guideSlugs ?? []).map(getPost).filter((p): p is NonNullable<ReturnType<typeof getPost>> => Boolean(p));
   const nearby = nearbyCountries(c);
-  const faqs = [...c.faqs, ...countryShippingFaqs];
+  // Home market (Canada): no air-or-sea question.
+  const faqs = [...c.faqs, ...(c.home ? countryShippingFaqs.filter((q) => !/air or sea/i.test(q.q)) : countryShippingFaqs)];
   const full = c.tier < 3;
   const ship = shippingTimes(c);
 
@@ -70,8 +71,12 @@ export default async function CountryPage({ params }: Props) {
     { label: "Label language", value: c.languages.join(", ") },
     { label: "Units", value: c.measurement === "both" ? "Metric and US customary" : c.measurement === "metric" ? "Metric" : "Imperial" },
     { label: "Labelling authority", value: c.labelling.authority || PENDING },
-    { label: "Air shipping", value: formatTime(ship.air, ship.airApprox, PENDING) },
-    { label: "Sea shipping", value: formatTime(ship.sea, ship.seaApprox, PENDING) },
+    ...(c.home
+      ? [{ label: "Delivery", value: `Local delivery across ${name}` }]
+      : [
+          { label: "Air shipping", value: formatTime(ship.air, ship.airApprox, PENDING) },
+          { label: "Sea shipping", value: formatTime(ship.sea, ship.seaApprox, PENDING) },
+        ]),
   ];
 
   return (
@@ -145,7 +150,9 @@ export default async function CountryPage({ params }: Props) {
             {[
               { icon: Sparkles, title: `Designed for ${name}`, text: `Layouts planned for ${c.languages.join(" and ")} text and local labelling, with first concepts usually within ${site.facts.firstConceptHours} hours.` },
               { icon: Factory, title: "Made in our own factory", text: `Rigid and printed boxes from ${site.facts.rigidMoq} units, with a digital proof and 3D mockup before print.` },
-              { icon: Plane, title: `Shipped to ${name}`, text: "By air for speed or by sea for volume, assembled or flat-packed." },
+              c.home
+                ? { icon: Truck, title: `Delivered across ${name}`, text: "To your address, warehouse or 3PL, assembled or flat-packed. Timing confirmed in your quote." }
+                : { icon: Plane, title: `Shipped to ${name}`, text: "By air for speed or by sea for volume, assembled or flat-packed." },
             ].map((card) => (
               <li key={card.title} className="flex gap-4 rounded-2xl border border-silver-300 p-5">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
@@ -213,9 +220,9 @@ export default async function CountryPage({ params }: Props) {
       {/* Shipping */}
       <Section>
         <SectionHeader
-          eyebrow="Shipping"
-          title={`Shipping to ${name}`}
-          highlight="Shipping"
+          eyebrow={c.home ? "Delivery" : "Shipping"}
+          title={c.home ? `Delivery in ${name}` : `Shipping to ${name}`}
+          highlight={c.home ? "Delivery" : "Shipping"}
           action={
             <Link href="/shipping" className="font-semibold text-blue-600 hover:underline">
               How shipping works →
@@ -223,10 +230,16 @@ export default async function CountryPage({ params }: Props) {
           }
         />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {[
-            { icon: Plane, title: "Air freight", time: ship.air ? `${formatTime(ship.air, ship.airApprox)} by air` : PENDING, text: "For launches and urgent stock. Delivered to your address, warehouse or 3PL." },
-            { icon: Ship, title: "Sea freight", time: ship.sea ? `${formatTime(ship.sea, ship.seaApprox)} by sea` : PENDING, text: "For production volumes. Usually to a port, then onward by road." },
-          ].map((m) => (
+          {(c.home
+            ? [
+                { icon: Truck, title: "Local delivery", time: PENDING, text: `We are based in ${name}. Boxes are delivered to your address, warehouse or 3PL, with no import paperwork.` },
+                { icon: Factory, title: "Assembled or flat", time: "Your choice", text: "Collapsible rigid boxes can arrive flat to save storage space, or assembled and ready to pack." },
+              ]
+            : [
+                { icon: Plane, title: "Air freight", time: ship.air ? `${formatTime(ship.air, ship.airApprox)} by air` : PENDING, text: "For launches and urgent stock. Delivered to your address, warehouse or 3PL." },
+                { icon: Ship, title: "Sea freight", time: ship.sea ? `${formatTime(ship.sea, ship.seaApprox)} by sea` : PENDING, text: "For production volumes. Usually to a port, then onward by road." },
+              ]
+          ).map((m) => (
             <div key={m.title} className="rounded-2xl border border-silver-300 p-6">
               <m.icon aria-hidden="true" className="h-6 w-6 text-blue-600" />
               <p className="mt-3 font-heading text-h4 font-bold">{m.title}</p>
@@ -240,7 +253,9 @@ export default async function CountryPage({ params }: Props) {
           <p className="font-semibold text-ink-900">Ship flat, save space</p>
           <p className="mt-1 text-ink-500">{c.shipping.collapsibleTip}</p>
           <p className="mt-3 text-sm text-ink-500">
-            Delivery terms: {c.shipping.incoterms.length ? c.shipping.incoterms.join(", ") : "agreed in your quote"}. Boxes are packed in export cartons, assembled or flat.
+            {c.home
+              ? "Delivery terms are agreed in your quote. Boxes are packed in shipping cartons, assembled or flat."
+              : `Delivery terms: ${c.shipping.incoterms.length ? c.shipping.incoterms.join(", ") : "agreed in your quote"}. Boxes are packed in export cartons, assembled or flat.`}
           </p>
         </div>
       </Section>

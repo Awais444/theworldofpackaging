@@ -31,7 +31,7 @@ Copy them from the "Company facts" block on /about. They come from `src/config/s
   - Behance and Dribbble, with real projects only.
   - Complete bio, link, logo and cover on each.
 - [ ] **Add the social URLs** to `site.socials` in `site.ts`. They then appear in the footer and in the Organization `sameAs` schema.
-- [ ] **B2B and manufacturer directories:** Europages, Kompass, TradeIndia/TradeKey, Pakistan chamber and business directories.
+- [ ] **B2B and manufacturer directories:** Europages, Kompass, Canadian business directories (e.g. Canada411, Yellow Pages Canada, Toronto Region Board of Trade if a member).
 - [ ] **Agency directories:** Clutch, DesignRush, Sortlist, GoodFirms, The Manifest. Service focus "Packaging design".
 - [ ] **Packaging directories:** PackagingConnections, Packaging Gateway and Packaging Europe supplier listings (where free).
 

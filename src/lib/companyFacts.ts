@@ -9,7 +9,7 @@ export function companyFacts(): Array<{ label: string; value: string }> {
   return [
     { label: "Name", value: site.name },
     { label: "Experience", value: `${f.yearsExperience}+ years in packaging` },
-    { label: "Based in", value: site.country },
+    { label: "Based in", value: `${site.location.locality}, ${site.country}` },
     { label: "What we do", value: "Packaging design, branding and box manufacturing under one roof" },
     { label: "Factory", value: "Our own factory: rigid boxes made and printed in-house, plus printed boxes" },
     { label: "Box types", value: "Rigid, collapsible rigid (ships flat) and printed boxes, labels and pouches" },

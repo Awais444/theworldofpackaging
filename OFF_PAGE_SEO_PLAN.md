@@ -7,7 +7,7 @@ Goal: Google and AI assistants recognise the business as a real, consistent enti
 2. **Google Business Profile** (factory address): category "Packaging company" + "Printing service" + "Graphic designer"; services list; 20+ real photos (factory, machines, boxes); weekly posts.
 3. **Bing Places** (copy from Google).
 4. **Social profiles** (complete bio, link, logo, cover, first 9 posts): LinkedIn company page, Instagram, Facebook, Pinterest (very strong for packaging), Behance, Dribbble, YouTube (factory/process shorts), X.
-5. **B2B / manufacturer directories**: Europages, Kompass, Alibaba (supplier profile, optional), Made-in-China not needed, Global Sources (optional), TradeIndia/TradeKey, Pakistan directories (Pakistan Chamber listings, Lahore/Karachi Chamber of Commerce member directory if member, PakBiz, BizPakistan).
+5. **B2B / manufacturer directories**: Europages, Kompass, Alibaba (supplier profile, optional), Made-in-China not needed, Global Sources (optional), Canadian directories (Canada411, Yellow Pages Canada, Toronto Region Board of Trade member directory if a member).
 6. **Agency directories** (design side): Clutch, DesignRush, Sortlist, GoodFirms, Upcity, The Manifest — complete profiles, service focus "Packaging design", portfolio.
 7. **Packaging-specific listings**: PackagingConnections, Packaging Gateway supplier directory, PackagingDigest supplier guide, Packaging Europe supplier listings (where free/allowed).
 
@@ -17,7 +17,7 @@ Goal: Google and AI assistants recognise the business as a real, consistent enti
 3. **Expert quotes / digital PR**: answer journalist requests on Qwoted, Featured.com, SourceBottle, Help a B2B Writer — packaging, sustainability, export, e-commerce topics.
 4. **Linkable assets** (we publish, others link): packaging glossary, cost guide, box size calculator/dieline templates, labelling requirement guides by country, sustainability guide. Outreach to bloggers/universities/resource pages that list such tools.
 5. **Supplier & partner links**: paper/board suppliers, ink suppliers, machinery brands, shipping/freight partners, clients (with permission) — "our packaging partner" mentions or case studies.
-6. **Trade shows & associations**: exhibitor listings (e.g. Packaging Expo / ProPak / local print expos), Pakistan packaging and printing associations, export promotion bodies (TDAP) — member/exhibitor pages link back.
+6. **Trade shows & associations**: exhibitor listings (e.g. Packaging Expo / ProPak / local print expos), Canadian packaging and printing associations (e.g. PAC Packaging Consortium), export promotion bodies (Trade Commissioner Service) — member/exhibitor pages link back.
 7. **Unlinked mentions**: set Google Alerts for "The World of Packaging"; ask sites that mention us to add a link.
 
 ## Ongoing — Reviews & community

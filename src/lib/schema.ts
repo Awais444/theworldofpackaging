@@ -20,7 +20,9 @@ export function organization(): WithContext<Organization> {
     email: site.email,
     // Team experience, not company history.
     description: `${site.description} ${site.facts.yearsExperience}+ years in packaging.`,
-    address: { "@type": "PostalAddress", ...(site.address ? { streetAddress: site.address } : {}), addressCountry: site.country },
+    // TODO: add streetAddress and postalCode once the full address is confirmed.
+    address: { "@type": "PostalAddress", addressLocality: site.location.locality, addressRegion: site.location.region, addressCountry: site.location.countryCode },
+    areaServed: "Worldwide",
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -28,7 +30,7 @@ export function organization(): WithContext<Organization> {
         telephone: "+1-437-564-0199",
         email: site.email,
         areaServed: "Worldwide",
-        availableLanguage: ["English", "Urdu"],
+        availableLanguage: ["English"],
       },
     ],
     ...(sameAs.length ? { sameAs } : {}),

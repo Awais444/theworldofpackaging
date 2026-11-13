@@ -17,7 +17,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export const metadata: Metadata = {
   title: "About Our Studio and Factory",
-  description: metaDescription(`${site.facts.yearsExperience}+ years in packaging: ${site.name} designs brands and packaging and makes rigid boxes in its own factory in ${site.country}.`),
+  description: metaDescription(`${site.facts.yearsExperience}+ years in packaging: ${site.name} designs brands and packaging and makes rigid boxes in its own factory. Based in ${site.country}, serving brands worldwide.`),
   alternates: { canonical: "/about" }, openGraph: ogFor("/about"),
 };
 
@@ -108,7 +108,7 @@ export default function AboutPage() {
               We have {site.facts.yearsExperience}+ years of experience in packaging
               {site.clients.length > 0 && <>, including printed packaging for clients such as {site.clients.map((c) => c.name).join(" and ")}</>}.
             </p>
-            <p>Today we design and print packaging for brands worldwide, from first sketch to delivered box.</p>
+            <p>We are based in {site.country} and design and print packaging for brands worldwide, from first sketch to delivered box.</p>
           </div>
           <p className="mt-6 text-ink-500">
             Meet <Link href="/team" className="font-semibold text-blue-600 hover:underline">the team</Link>, see{" "}

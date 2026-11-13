@@ -55,7 +55,7 @@ export const faqGroups: { id: string; title: string; faqs: Faq[] }[] = [
     title: "Payment",
     faqs: [
       { q: "How do I pay?", a: "Payment terms and methods are set out in your quote." }, // TODO deposit / balance terms and methods
-      { q: "Which currency do you quote in?", a: "We quote in US dollars by default. Other currencies on request." },
+      { q: "Which currency do you quote in?", a: "We quote in US dollars by default and in Canadian dollars for Canadian brands. Other currencies on request." },
       { q: "Are there hidden costs?", a: "No. Your quote lists boxes, finishes, inserts and freight separately, so you see the full cost before you approve." },
       { q: "Do prices drop at higher quantities?", a: "Yes. Unit price falls as quantity rises. Ask for quotes at two or three quantities to compare." },
     ],

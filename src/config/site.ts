@@ -11,17 +11,17 @@ export type CurrencyCode = "USD" | "GBP" | "EUR" | "CAD" | "AUD" | "AED";
 const QUOTE_REPLY_HOURS = 24; // TODO confirm
 
 /**
- * Approximate transit times by region, after dispatch from our factory. Shown as "Approx." everywhere.
- * Per-country values in content/countries*.ts override these. TODO: confirm with shipping agent.
+ * Transit times by region. TODO: recalculate from Canada with the shipping agent. While null, every page
+ * shows "Confirmed with your quote". Per-country values in content/countries*.ts override these.
  */
-export const shippingByRegion: Record<string, { air: string; sea: string }> = {
-  "Middle East": { air: "3–5 days", sea: "10–20 days" },
-  Europe: { air: "5–8 days", sea: "25–35 days" },
-  "North America": { air: "6–10 days", sea: "30–45 days" },
-  Oceania: { air: "7–10 days", sea: "30–40 days" },
-  Asia: { air: "4–7 days", sea: "15–30 days" },
-  Africa: { air: "7–12 days", sea: "30–50 days" },
-  "Latin America": { air: "7–12 days", sea: "30–50 days" },
+export const shippingByRegion: Record<string, { air: string | null; sea: string | null }> = {
+  "Middle East": { air: null, sea: null },
+  Europe: { air: null, sea: null },
+  "North America": { air: null, sea: null },
+  Oceania: { air: null, sea: null },
+  Asia: { air: null, sea: null },
+  Africa: { air: null, sea: null },
+  "Latin America": { air: null, sea: null },
 };
 
 /** Note shown with approximate transit times. */
@@ -42,10 +42,14 @@ export const site = {
   /** wa.me format: digits only, no + or spaces. */
   whatsappLink: "14375640199",
   phone: "+1 (437) 564-0199" as string | null,
-  address: null as string | null, // e.g. "Plot 12, Industrial Area, Lahore, Pakistan"
-  hours: null as string | null, // e.g. "Mon–Sat, 9:00–18:00 PKT"
-  country: "Pakistan",
-  markets: ["USA", "UK", "Canada", "Australia", "UAE", "EU"],
+  address: "Toronto, Ontario, Canada" as string | null, // TODO: full street address and postal code
+  /** Structured address for schema.org. TODO: street address and postal code. */
+  location: { locality: "Toronto", region: "ON", countryCode: "CA" },
+  hours: "Mon–Fri, 9:00–18:00 ET" as string | null, // TODO confirm
+  timezone: "America/Toronto",
+  country: "Canada",
+  /** Main export markets (Canada is home, see country). */
+  markets: ["USA", "UK", "Australia", "UAE", "EU"],
   socials: { instagram: "", linkedin: "", facebook: "", pinterest: "", behance: "" }, // TODO
   facts: {
     rigidMoq: 500,

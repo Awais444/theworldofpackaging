@@ -44,7 +44,7 @@ Stop and send me the summary.
 
 ## 3. Structured data (Phase 1)
 Typed with `schema-dts`, rendered as JSON-LD in server components, values from `site.ts`/content only:
-- **Organization** (site-wide): name, url, logo, contactPoint (WhatsApp/phone, sales, Worldwide, English/Urdu), sameAs (only filled social URLs), address (when confirmed).
+- **Organization** (site-wide): name, url, logo, contactPoint (WhatsApp/phone, sales, Worldwide, English), sameAs (only filled social URLs), address (when confirmed).
 - **WebSite** with `SearchAction` only if site search exists (otherwise omit).
 - **BreadcrumbList** on every inner page.
 - **Service** on each `/packaging-design/*`, `/services/*`: serviceType, provider (Organization @id), areaServed (Worldwide; country pages: that country), offers only if a real price exists.

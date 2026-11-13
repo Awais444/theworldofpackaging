@@ -42,7 +42,7 @@ export const sustainability = [
 
 // TODO: add the real founding story and dates when available. Current copy states only what the business does.
 export const story = {
-  intro: "The World of Packaging is a packaging design studio with its own box factory in Pakistan. Our designers and our production team work on the same projects, so every design is drawn for the board, press and finishes it will be made with.",
+  intro: "The World of Packaging is a packaging design studio and printing press based in Canada, with its own box factory. Our designers and our production team work on the same projects, so every design is drawn for the board, press and finishes it will be made with.",
   body: "We design packaging for brands in the USA, UK, Canada, Australia, the UAE and Europe, and make rigid, collapsible and printed boxes in-house, from 500 boxes per design.",
   mission: "Make premium packaging possible for growing brands: well designed, made properly and delivered at a minimum order they can manage.",
 };

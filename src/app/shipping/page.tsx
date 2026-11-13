@@ -142,16 +142,16 @@ export default function ShippingPage() {
             <thead>
               <tr className="bg-silver-50 text-sm text-ink-500">
                 <th scope="col" className="px-5 py-3 font-semibold">Region</th>
-                <th scope="col" className="px-5 py-3 font-semibold">Air (approx.)</th>
-                <th scope="col" className="px-5 py-3 font-semibold">Sea (approx.)</th>
+                <th scope="col" className="px-5 py-3 font-semibold">Air</th>
+                <th scope="col" className="px-5 py-3 font-semibold">Sea</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(shippingByRegion).map(([region, t]) => (
                 <tr key={region} className="border-t border-silver-300">
                   <th scope="row" className="px-5 py-3 font-semibold text-ink-900">{region}</th>
-                  <td className="px-5 py-3">Approx. {t.air}</td>
-                  <td className="px-5 py-3">Approx. {t.sea}</td>
+                  <td className="px-5 py-3">{t.air ? `Approx. ${t.air}` : "Confirmed with your quote"}</td>
+                  <td className="px-5 py-3">{t.sea ? `Approx. ${t.sea}` : "Confirmed with your quote"}</td>
                 </tr>
               ))}
             </tbody>

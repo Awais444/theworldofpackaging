@@ -21,7 +21,7 @@
 ## 1. The business
 
 - **Name:** The World of Packaging (short: TWOP). Domain: theworldofpackaging.com (confirm TLD in config).
-- **What we are:** a **packaging design & branding agency with its own factory**. We design brands and packaging, **manufacture rigid boxes in-house (including collapsible rigid boxes)**, and **print all types of boxes**. Based in Pakistan, serving brands worldwide (USA, UK, Canada, Australia, UAE, EU).
+- **What we are:** a **packaging design & branding agency with its own factory**. We design brands and packaging, **manufacture rigid boxes in-house (including collapsible rigid boxes)**, and **print all types of boxes**. Based in Canada (Toronto), serving brands worldwide (Canada, USA, UK, Australia, UAE, EU).
 - **Pitch:** "Packaging design and manufacturing under one roof: from first sketch to delivered box."
 - **Why us (use in copy):**
   1. Own factory: rigid boxes made and printed in-house, not outsourced.
@@ -58,8 +58,8 @@ export const site = {
   email: "info@theworldofpackaging.com",
   whatsapp: "+1 (437) 564-0199",
   phone: "+1 (437) 564-0199",
-  address: "Factory address, Pakistan",            // TODO
-  hours: "Mon–Sat, 9:00–18:00 PKT",                // TODO
+  address: "Toronto, Ontario, Canada",             // TODO: full street address and postal code
+  hours: "Mon–Fri, 9:00–18:00 ET",                 // TODO confirm
   socials: { instagram: "", linkedin: "", facebook: "", pinterest: "", behance: "" },
   facts: {
     rigidMoq: 500,

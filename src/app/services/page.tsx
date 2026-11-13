@@ -34,7 +34,7 @@ const benefits = [
 const faqs = [
   ...serviceCommonFaqs,
   { q: "Can I use your design service without manufacturing?", a: "Yes. You get print-ready files you can use with any printer, though most clients produce with us." },
-  { q: "Do you work with brands outside Pakistan?", a: "Yes. Most of our clients are in the USA, UK, Canada, Australia, the UAE and Europe. We work over video calls, email and WhatsApp." },
+  { q: "Do you work with brands outside Canada?", a: "Yes. We are based in Canada and work with brands in the USA, UK, Australia, the UAE and Europe too. We work over video calls, email and WhatsApp." },
   { q: "What do you need to start?", a: "A short brief: your product, audience, competitors you admire and any existing brand files. Our project form walks you through it." },
 ];
 

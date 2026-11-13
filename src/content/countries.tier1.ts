@@ -124,11 +124,12 @@ export const tier1Countries: Country[] = [
     name: "Canada",
     iso2: "CA",
     tier: 1,
+    home: true,
     region: "North America",
     currency: { code: "CAD", symbol: "$", name: "Canadian dollar" },
     languages: ["English", "French"],
     measurement: "metric",
-    lead: "Bilingual-ready packaging design and custom boxes for Canadian brands, made in our own factory and shipped to your address, warehouse or 3PL.",
+    lead: "Based in Canada: bilingual-ready packaging design and custom boxes for Canadian brands, delivered to your address, warehouse or 3PL anywhere in Canada.",
     labelling: {
       authority: "Health Canada, CFIA and Competition Bureau",
       summary:
@@ -168,7 +169,6 @@ export const tier1Countries: Country[] = [
     faqs: [
       { q: "Does Canadian packaging have to be bilingual?", a: "Most mandatory consumer information must be in English and French. Quebec has additional French-language rules. We plan space for both from the start." },
       { q: "Can I use my US label in Canada?", a: "Usually not unchanged. Canada uses its own Nutrition Facts format, metric units and bilingual text. We design shared fronts with country-specific backs." },
-      { q: "Who pays duty and GST on boxes shipped to Canada?", a: "Duty and GST or HST are assessed on import. Your customs broker confirms the amounts." },
       { q: "Do you design cannabis or CBD packaging for Canada?", a: "We design outer boxes and labels from the text you supply. Canada has strict cannabis packaging rules, so your adviser must confirm every element." },
       { q: "Can you print French and English on the same box?", a: "Yes. We lay out both languages and check legibility at actual size." },
     ],
@@ -1043,12 +1043,12 @@ export const tier1Countries: Country[] = [
     slug: "pakistan",
     name: "Pakistan",
     iso2: "PK",
-    tier: 1,
+    tier: 2,
     region: "Asia",
     currency: { code: "PKR", symbol: "₨", name: "Pakistani rupee" },
     languages: ["Urdu", "English"],
     measurement: "metric",
-    lead: "Packaging design and custom boxes for Pakistani brands, made in our own factory in Pakistan and delivered nationwide.",
+    lead: "Packaging design and custom boxes for Pakistani brands, made in our own factory and shipped by air or sea to cities across Pakistan.",
     labelling: {
       authority: "PSQCA and provincial food authorities",
       summary:
@@ -1069,11 +1069,11 @@ export const tier1Countries: Country[] = [
     shipping: {
       air: null,
       sea: null,
-      collapsibleTip: "Even for domestic orders, collapsible rigid boxes save space in your store room and on onward courier shipments.",
+      collapsibleTip: "Collapsible rigid boxes ship flat, which cuts freight volume to Pakistan and saves space in your store room.",
       incoterms: [],
     },
     marketNotes: [
-      "Our factory is in Pakistan, so local brands work directly with the people who make their boxes, with no import paperwork. Pakistani brands in fashion, beauty, sweets, bakery, tea and gifting are moving quickly from generic boxes to custom branded packaging, especially for online sales and festive seasons such as Eid and weddings.",
+      "Pakistani brands in fashion, beauty, sweets, bakery, tea and gifting are moving quickly from generic boxes to custom branded packaging, especially for online sales and festive seasons such as Eid and weddings.",
       "Many Pakistani brands also export to the Gulf, the UK and North America. We design packaging that works at home and abroad, with Urdu, English and Arabic layouts as needed.",
     ],
     topIndustries: ["apparel", "cosmetics", "food-bakery", "chocolates", "gifts-pr-kits", "jewelry"],
@@ -1086,7 +1086,7 @@ export const tier1Countries: Country[] = [
     ],
     faqs: [
       { q: "How do I approve the design before printing?", a: "You get a digital proof and a 3D mockup of your box. Nothing is printed until you approve, and we share production photos before dispatch." },
-      { q: "Do you deliver across Pakistan?", a: "Yes. We deliver to cities across Pakistan; delivery details are confirmed in your quote." },
+      { q: "Do you ship to cities across Pakistan?", a: "Yes. We ship by air or sea to cities across Pakistan. Delivery details, duties and timing are confirmed in your quote." },
       { q: "Do you make Eid and wedding gift boxes?", a: "Yes. We design and make rigid gift boxes, mithai boxes and printed boxes for festive seasons." },
       { q: "Can you add Urdu to packaging?", a: "Yes. We lay out Urdu, English and Arabic as needed." },
       { q: "Do you help Pakistani brands export?", a: "Yes. We design packaging for export markets and ship worldwide by air or sea." },

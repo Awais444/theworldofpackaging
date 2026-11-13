@@ -48,6 +48,8 @@ type State = {
   config: BoxConfig;
   unit: DimUnit;
   currency: CurrencyCode;
+  /** True once the visitor picks a currency; until then Canadian visitors get CAD by default. */
+  currencyChosen: boolean;
   step: number;
   set: (patch: Partial<BoxConfig>) => void;
   reset: (type: BoxType, style?: string) => void;
@@ -62,14 +64,26 @@ export const useConfigurator = create<State>()(
       config: defaultsFor("rigid"),
       unit: "mm",
       currency: "USD",
+      currencyChosen: false,
       step: 0,
       set: (patch) => set((s) => ({ config: { ...s.config, ...patch } })),
       reset: (type, style) => set({ config: defaultsFor(type, style) }),
       setUnit: (unit) => set({ unit }),
-      setCurrency: (currency) => set({ currency }),
+      setCurrency: (currency) => set({ currency, currencyChosen: true }),
       setStep: (step) => set({ step }),
     }),
     // Rehydrated after mount by StoreHydration. Session storage: a configuration survives navigating to /quote and back, not forever.
     { name: "configurator", storage: createJSONStorage(() => sessionStorage), skipHydration: true },
   ),
 );
+
+/** Canadian visitor, judged by browser region or time zone (no network lookup). */
+export function isCanadianVisitor(): boolean {
+  try {
+    if (new Intl.Locale(navigator.language).maximize().region === "CA") return true;
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return ["America/Toronto", "America/Vancouver", "America/Edmonton", "America/Winnipeg", "America/Halifax", "America/St_Johns", "America/Regina", "America/Moncton", "America/Whitehorse", "America/Yellowknife", "America/Iqaluit", "America/Montreal"].includes(tz);
+  } catch {
+    return false;
+  }
+}

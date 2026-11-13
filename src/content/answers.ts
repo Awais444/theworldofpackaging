@@ -27,7 +27,7 @@ export function fitAnswer(parts: string[], min = 40, max = 60): string {
 }
 
 const f = site.facts;
-const factory = `in our own factory in ${site.country}`;
+const factory = "in our own factory";
 
 /** Box style: "What is a {name}?" */
 export function boxAnswer(b: { name: string; summary: string; kind: "rigid" | "printed"; moq: number | null }) {

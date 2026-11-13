@@ -11,7 +11,7 @@ import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
 import { CURRENCIES, formatMoney, fromUsd } from "@/lib/currency";
 import { estimate, MOQ, RATES, type Artwork, type BoxConfig, type BoxType, type PrintSides } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
-import { useConfigurator } from "@/store/configurator";
+import { isCanadianVisitor, useConfigurator } from "@/store/configurator";
 import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 import { Button } from "@/components/ui/Button";
 import { SpecLabel } from "@/components/ui/SpecLabel";
@@ -56,6 +56,16 @@ export function Configurator() {
   const { config: c, unit, currency, step, set, reset, setUnit, setCurrency, setStep } = useConfigurator();
   const opts = useOptions(c);
   const est = useMemo(() => estimate(c), [c]);
+
+  // Prices default to USD; Canadian visitors who have not picked a currency see CAD.
+  useEffect(() => {
+    const pick = () => {
+      const s = useConfigurator.getState();
+      if (!s.currencyChosen && s.currency === "USD" && isCanadianVisitor()) useConfigurator.setState({ currency: "CAD" });
+    };
+    if (useConfigurator.persist.hasHydrated()) pick();
+    return useConfigurator.persist.onFinishHydration(pick);
+  }, []);
 
   // Apply ?type=&style= from style pages once persisted state has loaded.
   useEffect(() => {

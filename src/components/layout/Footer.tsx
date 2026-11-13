@@ -6,7 +6,7 @@ import { NewsletterForm } from "@/components/forms/NewsletterForm";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { CookieSettingsLink } from "@/components/providers/ConsentAndAnalytics";
 import { Logo } from "@/components/ui/Logo";
-import { heritageLine, site, whatsappUrl } from "@/config/site";
+import { site, whatsappUrl, yearsLabel } from "@/config/site";
 import { footerCountries, footerIndustries, footerNav, legalNav, quoteHref } from "@/content/navigation";
 import { FooterGroup } from "./FooterGroup";
 
@@ -76,7 +76,7 @@ export function Footer() {
           <div className="lg:col-span-4">
             <Logo variant="onDark" />
             <p className="mt-4 max-w-xs text-[15px] text-white/[.72]">{site.tagline}</p>
-            <p className="mt-2 text-[14px] font-semibold text-white">{heritageLine()}</p>
+            <p className="mt-2 text-[14px] font-semibold text-white">{yearsLabel()} in packaging.</p>
             <NewsletterForm />
             {socials.length > 0 && (
               <ul className="mt-6 flex flex-wrap gap-2">

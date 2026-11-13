@@ -10,7 +10,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
 
 - [ ] `url` (or `NEXT_PUBLIC_SITE_URL` in `.env`): confirm the domain and TLD
 - [ ] `address`, `hours` (null now, so they are hidden site-wide). Set: email info@theworldofpackaging.com, WhatsApp and phone +1 (437) 564-0199.
-- [ ] `facts.foundedYear` (2011): confirm. `facts.yearsExperience` (15) drives every "15+ years" on the site.
+- [ ] `facts.yearsExperience` (15) drives every "15+ years" on the site: confirm.
 - [ ] About page timeline (`milestones` in `src/content/company.ts`): five placeholder milestones with no years. Add the real years and wording, then remove `placeholder: true`.
 - [ ] `socials`: Instagram, LinkedIn, Facebook, Pinterest, Behance (empty links stay hidden)
 - [ ] `facts.printedMoq`: printed box minimum (pages say "On quote" until set; also update `MOQ.printed` in `src/lib/pricing.ts`)
@@ -41,7 +41,7 @@ Changing these updates the header, utility bar, footer, contact page, metadata, 
   - [ ] `team`: 4 role placeholders (names, photos, bios)
   - [ ] `machines`: generic machine types; add make, model and format
   - [ ] `companyNumbers`: 4 "TBC" figures on `/about`
-  - [ ] `story`: founding story on `/about`
+  - [ ] `story`: the "Who we are" text on `/about`
   - [ ] `capacityNote`: real capacity on `/factory`
 
 ## Confirm ownership before publishing
@@ -153,14 +153,11 @@ Secondary gallery images (`SECONDARY` in `src/content/photos.ts`, 1200px only, l
 
 - [ ] Get logo permission from Hansol Pharmaceutical and Royal Laboratories (then add the logo file and set `logoApproved: true` in `site.clients`)
 - [ ] Add more client names to `site.clients` in `src/config/site.ts`
-- [ ] Confirm founding year 2010 (the site currently uses `facts.foundedYear: 2011`)
-- [ ] About timeline: confirm years and wording for the four milestones after "Started as Anmol Printers"
 
 ## SEO, GEO and AEO work (2026-10-30): facts to confirm
 
 These appear on the site, in schema and in `/llms.txt`. Each comes from `src/config/site.ts` or a content file, so one edit updates everywhere.
 
-- [ ] **Founding year:** `facts.foundedYear` is 2011. It shows in Organization schema (`foundingDate`), the About company facts, the timeline and `/llms.txt`. (The earlier note says to confirm 2010.)
 - [ ] **"Ships to 190+ countries":** used in the company facts, `/llms.txt`, the footer and the utility bar. Confirm you're happy to state it.
 - [ ] **"First concepts usually within 48 hours":** `facts.firstConceptHours`. Used in answer paragraphs, key facts and `/llms-full.txt`.
 - [ ] **Factory address:** `site.address` is empty, so Organization schema has country only. Add it for Google Business Profile and NAP consistency (see `GEO_CHECKLIST.md`).

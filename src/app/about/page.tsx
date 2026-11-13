@@ -3,8 +3,8 @@ import { companyFacts } from "@/lib/companyFacts";
 import type { Metadata } from "next";
 import { metaDescription, ogFor } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
-import { factStats, heritageLine, site } from "@/config/site";
-import { differences, milestones, story, teamGroups, values } from "@/content/company";
+import { factStats, site } from "@/config/site";
+import { differences, story, teamGroups, values } from "@/content/company";
 import { quoteHref } from "@/content/navigation";
 import { Media } from "@/components/media/Media";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -14,7 +14,6 @@ import { StatCard } from "@/components/ui/Cards";
 import { CTABand } from "@/components/ui/CTABand";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Timeline } from "@/components/ui/Timeline";
 
 export const metadata: Metadata = {
   title: "About Our Studio and Factory",
@@ -98,30 +97,25 @@ export default function AboutPage() {
       </Section>
 
       <Section>
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeader eyebrow={`Since ${site.facts.foundedYear}`} title={`${site.facts.yearsExperience}+ years in packaging`} highlight="packaging" />
-            <div className="mt-5 space-y-4 text-ink-500">
-              <p>
-                We started about {site.facts.yearsExperience} years ago as {site.history.originalName}, a printing press. Over the years we grew into box manufacturing, then rigid boxes made in our own factory.
-              </p>
-              <p>
-                Along the way we printed packaging for international clients
-                {site.clients.length > 0 && <> including {site.clients.map((c) => c.name).join(" and ")}</>}.
-              </p>
-              <p>Today we are {site.name}: a packaging design studio with its own factory, from first sketch to delivered box.</p>
-            </div>
-            <p className="mt-6 font-heading font-semibold text-ink-900">{heritageLine()}</p>
-            <p className="mt-4 text-ink-500">
-              Meet <Link href="/team" className="font-semibold text-blue-600 hover:underline">the team</Link>, see{" "}
-              <Link href="/services/logo-design" className="font-semibold text-blue-600 hover:underline">logo design</Link> and{" "}
-              <Link href="/pricing" className="font-semibold text-blue-600 hover:underline">design pricing</Link>, or build a box in the{" "}
-              <Link href="/configure" className="font-semibold text-blue-600 hover:underline">configurator</Link>.
+        {/* Our experience: what we do today. No company history or founding story. */}
+        <div className="max-w-3xl">
+          <SectionHeader eyebrow="Our experience" title={`${site.facts.yearsExperience}+ years in packaging`} highlight="packaging" />
+          <div className="mt-5 space-y-4 text-lg text-ink-500">
+            <p>
+              We are a packaging design studio and printing press. Our designers and our press work on the same projects, so every design is made for the board, inks and finishes it will be printed with.
             </p>
+            <p>
+              We have {site.facts.yearsExperience}+ years of experience in packaging
+              {site.clients.length > 0 && <>, including printed packaging for clients such as {site.clients.map((c) => c.name).join(" and ")}</>}.
+            </p>
+            <p>Today we design and print packaging for brands worldwide, from first sketch to delivered box.</p>
           </div>
-          <div className="lg:col-span-7">
-            <Timeline items={milestones} />
-          </div>
+          <p className="mt-6 text-ink-500">
+            Meet <Link href="/team" className="font-semibold text-blue-600 hover:underline">the team</Link>, see{" "}
+            <Link href="/services/logo-design" className="font-semibold text-blue-600 hover:underline">logo design</Link> and{" "}
+            <Link href="/pricing" className="font-semibold text-blue-600 hover:underline">design pricing</Link>, or build a box in the{" "}
+            <Link href="/configure" className="font-semibold text-blue-600 hover:underline">configurator</Link>.
+          </p>
         </div>
       </Section>
 

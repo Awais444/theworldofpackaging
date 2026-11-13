@@ -9,12 +9,11 @@ Copy them from the "Company facts" block on /about. They come from `src/config/s
 | Field | Value |
 |---|---|
 | Name | The World of Packaging |
-| Former name | Anmol Printers (mention "formerly Anmol Printers" in descriptions) |
 | Website | https://theworldofpackaging.com |
 | Email | info@theworldofpackaging.com |
 | WhatsApp / phone | +1 (437) 564-0199 |
 | Address | TODO: add the factory address to `site.ts` first, then use it everywhere |
-| Founded / experience | 2011 (TODO confirm), 15+ years in packaging |
+| Experience | 15+ years in packaging |
 | What we do | Packaging design, branding and box manufacturing under one roof; own factory; rigid and collapsible rigid boxes from MOQ 500; ships worldwide |
 
 ## Profiles to create or complete
@@ -39,6 +38,6 @@ Copy them from the "Company facts" block on /about. They come from `src/config/s
 ## Ongoing
 
 - [ ] Ask every finished client for a Google review, and reply to all reviews. Never buy or write reviews.
-- [ ] Google Alerts for "The World of Packaging" and "Anmol Printers"; ask sites that mention us to add a link.
+- [ ] Google Alerts for "The World of Packaging"; ask sites that mention us to add a link.
 - [ ] Pin portfolio images on Pinterest with descriptive titles, linking to the matching service page.
 - [ ] Check every quarter that the facts above still match on all profiles.

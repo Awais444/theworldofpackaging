@@ -29,7 +29,7 @@ Types found: Question/Answer 1,162 · ListItem 830 · Organization, WebSite 216 
 
 New or changed:
 - **Typing:** all builders in `src/lib/schema.ts` are typed with `schema-dts` (dev dependency, types only).
-- **Organization:** adds `logo` and `alternateName` "Anmol Printers"; contactPoint and foundingDate as before. No `sameAs` until social URLs are filled in.
+- **Organization:** adds `logo`; contactPoint as before. No `sameAs` until social URLs are filled in.
 - **WebSite:** no SearchAction, because the site has no search page.
 - **Service:** `areaServed` is now "Worldwide" by default, and the country on country pages. No offers.
 - **Product (box style pages):**

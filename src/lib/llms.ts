@@ -24,7 +24,7 @@ const TOP_PRINTED = ["mailer", "tuck-end", "folding-carton"];
 const KEY_GUIDES = ["what-is-a-dieline", "how-to-measure-box-size", "rigid-vs-folding-carton-boxes", "collapsible-rigid-boxes-explained", "packaging-design-cost", "pantone-vs-cmyk-packaging", "print-ready-packaging-files", "packaging-design-process"];
 
 const summary = () =>
-  `${site.name} (formerly ${site.history.originalName}) is a packaging design and branding studio with its own box factory in ${site.country}, with ${site.facts.yearsExperience}+ years in packaging. ` +
+  `${site.name} is a packaging design and branding studio with its own box factory in ${site.country}, with ${site.facts.yearsExperience}+ years in packaging. ` +
   `We design brands and packaging, make rigid and collapsible rigid boxes in-house from MOQ ${site.facts.rigidMoq}, print folding cartons, mailers, labels and pouches, and ship worldwide by air or sea to 190+ countries. ` +
   `Designs are approved as a digital proof and 3D mockup before print. Contact: ${site.email}${site.whatsapp ? `, WhatsApp ${site.whatsapp}` : ""}.`;
 
@@ -61,7 +61,7 @@ export function llmsTxt(): string {
     line("Packaging glossary", "/glossary", "Definitions of packaging terms"),
     "",
     "## Company",
-    line("About", "/about", "History from Anmol Printers to The World of Packaging, and company facts"),
+    line("About", "/about", "Who we are, what we make and company facts"),
     line("Factory", "/factory", "Production steps and quality control"),
     line("How it works", "/how-it-works", "Six steps from brief to delivery"),
     line("Shipping", "/shipping", "Air and sea freight, assembled or flat"),

@@ -15,12 +15,10 @@ export function organization(): WithContext<Organization> {
     "@type": "Organization",
     "@id": ORG_ID(),
     name: site.name,
-    alternateName: site.history.originalName,
     url: siteUrl(),
     logo: abs("/brand/logo-mark.png"),
     email: site.email,
     description: site.description,
-    foundingDate: String(site.facts.foundedYear),
     address: { "@type": "PostalAddress", ...(site.address ? { streetAddress: site.address } : {}), addressCountry: site.country },
     contactPoint: [
       {

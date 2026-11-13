@@ -58,11 +58,6 @@ export const site = {
     firstConceptHours: 48, // TODO confirm
     /** Years in packaging. Rendered as "15+ years" via yearsLabel(); never hard-code the number. */
     yearsExperience: 15,
-    foundedYear: 2011, // TODO confirm exact year
-  },
-  history: {
-    /** The business started as a printing press under this name. */
-    originalName: "Anmol Printers",
   },
   /**
    * Real clients. Names show as text until logoApproved is true (written permission) and a logo file is set.
@@ -85,9 +80,6 @@ export type Client = { name: string; industry: string; /** Path under /public, e
 
 /** Clients in one industry, e.g. clientsIn("Pharmaceutical"). */
 export const clientsIn = (industry: string) => site.clients.filter((c) => c.industry === industry);
-
-/** "Built on 15 years of Anmol Printers." */
-export const heritageLine = () => `Built on ${site.facts.yearsExperience} years of ${site.history.originalName}.`;
 
 /** Lead time for display; neutral wording until the real figure is set. */
 export function leadTimeLabel(value: string = site.facts.rigidLeadTime) {

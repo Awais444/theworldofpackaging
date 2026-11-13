@@ -8,8 +8,6 @@ export function companyFacts(): Array<{ label: string; value: string }> {
   const f = site.facts;
   return [
     { label: "Name", value: site.name },
-    { label: "Formerly", value: site.history.originalName },
-    { label: "Founded", value: String(f.foundedYear) },
     { label: "Experience", value: `${f.yearsExperience}+ years in packaging` },
     { label: "Based in", value: site.country },
     { label: "What we do", value: "Packaging design, branding and box manufacturing under one roof" },

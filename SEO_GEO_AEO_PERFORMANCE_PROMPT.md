@@ -44,7 +44,7 @@ Stop and send me the summary.
 
 ## 3. Structured data (Phase 1)
 Typed with `schema-dts`, rendered as JSON-LD in server components, values from `site.ts`/content only:
-- **Organization** (site-wide): name, alternateName "Anmol Printers", url, logo, foundingDate, contactPoint (WhatsApp/phone, sales, Worldwide, English/Urdu), sameAs (only filled social URLs), address (when confirmed).
+- **Organization** (site-wide): name, url, logo, contactPoint (WhatsApp/phone, sales, Worldwide, English/Urdu), sameAs (only filled social URLs), address (when confirmed).
 - **WebSite** with `SearchAction` only if site search exists (otherwise omit).
 - **BreadcrumbList** on every inner page.
 - **Service** on each `/packaging-design/*`, `/services/*`: serviceType, provider (Organization @id), areaServed (Worldwide; country pages: that country), offers only if a real price exists.
@@ -72,9 +72,9 @@ Goal: pages are easy to quote in Google featured snippets, People Also Ask, voic
 
 ## 5. GEO — Generative Engine Optimization (Phase 2)
 Goal: AI assistants (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) understand and cite us correctly.
-1. **`/llms.txt`** (plain text at site root): one-paragraph summary of the company (who we are, Anmol Printers heritage, 15+ years, own factory, rigid + collapsible rigid boxes, MOQ 500, packaging design + branding, ships to 190+ countries, contact), then sectioned lists of our most important URLs with one-line descriptions (services, box styles, industries, key guides, countries hub, about, contact). Also generate **`/llms-full.txt`** with the plain-text content of core pages (home, about, factory, how-it-works, top 15 services, top 10 box pages, FAQ). Build both from content files at build time.
-2. **Consistent entity facts**: one source (`site.ts`) for name, founding year, experience, MOQ, location, contact, services. Same wording on home, about, footer, schema, llms.txt. Add a short "Company facts" block on `/about` (definition list) that AIs can quote.
-3. **About & trust pages**: `/about` with history (Anmol Printers → The World of Packaging), what we make, where, who for; `/factory` with capabilities; team page with roles. Add an editorial policy line on guides ("Written by our packaging team; regulatory sections reviewed on {date}").
+1. **`/llms.txt`** (plain text at site root): one-paragraph summary of the company (who we are, 15+ years, own factory, rigid + collapsible rigid boxes, MOQ 500, packaging design + branding, ships to 190+ countries, contact), then sectioned lists of our most important URLs with one-line descriptions (services, box styles, industries, key guides, countries hub, about, contact). Also generate **`/llms-full.txt`** with the plain-text content of core pages (home, about, factory, how-it-works, top 15 services, top 10 box pages, FAQ). Build both from content files at build time.
+2. **Consistent entity facts**: one source (`site.ts`) for name, experience, MOQ, location, contact, services. Same wording on home, about, footer, schema, llms.txt. Add a short "Company facts" block on `/about` (definition list) that AIs can quote.
+3. **About & trust pages**: `/about` with who we are, what we make, where, who for; `/factory` with capabilities; team page with roles. Add an editorial policy line on guides ("Written by our packaging team; regulatory sections reviewed on {date}").
 4. **Citable content**: guides include specific, verifiable details (materials, specs, steps) and link to official sources (FDA, GOV.UK, EUR-Lex, TTB, GS1). Short quotable summary sentences at the start of sections.
 5. **Clean HTML for crawlers**: all main content server-rendered (no text that only appears after JS/animation); no content hidden behind tabs without being in the HTML; meaningful link text (no "click here").
 6. **Bing**: add `msvalidate` meta placeholder (Bing feeds several AI assistants) and IndexNow key file + a small script to ping IndexNow on deploy (document in README; don't add secrets).
@@ -135,7 +135,7 @@ For each page, read its primary + supporting keywords from SEO_CONTENT_PLAN.md (
 3. **Content depth**: service pages 900–1,500 words, box pages 700–1,200, industry 700–1,000, guides 1,500–2,500, country Tier 1 1,200+. Thin pages (< 300 words of unique text) listed in the report with a plan.
 4. **Unique content**: no paragraph repeated across pages except shared CTA/footer blocks. Run a near-duplicate check (shingle similarity) across templated pages (services, boxes, industries, countries) and rewrite anything > 60% similar.
 5. **Readability**: short paragraphs (2–4 sentences), descriptive subheadings every 200–300 words, bullet lists for specs, plain English.
-6. **E-E-A-T signals**: 15+ years / Anmol Printers heritage, own factory, real process details, team page link, contact details, last-updated dates, sources on guides.
+6. **E-E-A-T signals**: 15+ years in packaging, own factory, real process details, team page link, contact details, last-updated dates, sources on guides.
 7. **Internal links**: 3–8 contextual links per page with descriptive anchor text (the target's keyword, varied), plus related-content blocks. Every new page gets links from at least 3 existing pages.
 8. **External links**: guides link to 2–5 authoritative sources (open in same tab, no nofollow for official sources).
 9. **CTAs**: one primary CTA per section, WhatsApp pre-filled message per page.

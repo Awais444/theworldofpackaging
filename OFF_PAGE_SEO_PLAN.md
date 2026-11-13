@@ -3,7 +3,7 @@ Manual work (outside the website). White-hat only: no bought links, PBNs, link f
 
 ## Month 1 — Foundation (entity + citations)
 Goal: Google and AI assistants recognise the business as a real, consistent entity.
-1. **NAP consistency**: one exact Name, Address, Phone/WhatsApp, website, used everywhere below. Name: "The World of Packaging"; mention "formerly Anmol Printers" in descriptions.
+1. **NAP consistency**: one exact Name, Address, Phone/WhatsApp, website, used everywhere below. Name: "The World of Packaging".
 2. **Google Business Profile** (factory address): category "Packaging company" + "Printing service" + "Graphic designer"; services list; 20+ real photos (factory, machines, boxes); weekly posts.
 3. **Bing Places** (copy from Google).
 4. **Social profiles** (complete bio, link, logo, cover, first 9 posts): LinkedIn company page, Instagram, Facebook, Pinterest (very strong for packaging), Behance, Dribbble, YouTube (factory/process shorts), X.
@@ -18,7 +18,7 @@ Goal: Google and AI assistants recognise the business as a real, consistent enti
 4. **Linkable assets** (we publish, others link): packaging glossary, cost guide, box size calculator/dieline templates, labelling requirement guides by country, sustainability guide. Outreach to bloggers/universities/resource pages that list such tools.
 5. **Supplier & partner links**: paper/board suppliers, ink suppliers, machinery brands, shipping/freight partners, clients (with permission) — "our packaging partner" mentions or case studies.
 6. **Trade shows & associations**: exhibitor listings (e.g. Packaging Expo / ProPak / local print expos), Pakistan packaging and printing associations, export promotion bodies (TDAP) — member/exhibitor pages link back.
-7. **Unlinked mentions**: set Google Alerts for "The World of Packaging" and "Anmol Printers"; ask sites that mention us to add a link.
+7. **Unlinked mentions**: set Google Alerts for "The World of Packaging"; ask sites that mention us to add a link.
 
 ## Ongoing — Reviews & community
 1. **Reviews**: ask every completed client for a Google review (and Clutch/Trustpilot for international clients). Reply to all reviews. Never write or buy reviews.

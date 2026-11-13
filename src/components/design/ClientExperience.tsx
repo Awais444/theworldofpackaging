@@ -1,5 +1,5 @@
 import { CheckCircle2 } from "lucide-react";
-import { clientsIn, site } from "@/config/site";
+import { clientsIn } from "@/config/site";
 import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
@@ -18,7 +18,7 @@ export function PharmaExperience() {
         <div className="lg:col-span-6">
           <SectionHeader eyebrow="Experience" title="Pharma packaging experience" highlight="experience" />
           <p className="text-lead mt-5 text-ink-500">
-            Since we started as {site.history.originalName}, we have printed packaging for pharmaceutical clients such as {names}.
+            We have printed packaging for pharmaceutical clients such as {names}.
           </p>
           <p className="mt-4 text-ink-500">Medicine packaging leaves no room for error. We bring that discipline to every carton, label and leaflet we design and print.</p>
         </div>

@@ -9,6 +9,35 @@ const REVIEWED = "2026-10-28";
 
 export const compliancePosts: Post[] = [
   {
+    slug: "canadian-packaging-labelling-requirements",
+    kind: "compliance",
+    title: "Canadian packaging labelling requirements: bilingual labels explained",
+    seoTitle: "Canadian Packaging Labelling Rules",
+    description: "What must appear on packaging sold in Canada: bilingual English and French labels, net quantity, food and cosmetic rules, and Quebec French-language rules.",
+    date: "2026-11-24",
+    reviewed: "2026-11-24",
+    readingMinutes: 8,
+    tags: ["Compliance", "Canada"],
+    illustration: "tuck-end",
+    services: ["label-design", "food-packaging-design"],
+    sources: [
+      { label: "Competition Bureau: Guide to the Consumer Packaging and Labelling Act and Regulations", url: "https://competition-bureau.canada.ca/en/guide-consumer-packaging-and-labelling-act-and-regulations" },
+      { label: "Competition Bureau: What must be on the label", url: "https://competition-bureau.canada.ca/en/labelling/prepackaged-non-food-consumer-products/what-must-be-label" },
+      { label: "CFIA: Bilingual food labelling", url: "https://inspection.canada.ca/en/food-labels/labelling/industry/bilingual-food-labelling" },
+      { label: "CFIA: Food labelling requirements checklist", url: "https://inspection.canada.ca/en/food-labels/labelling/industry/requirements-checklist" },
+      { label: "CFIA: Nutrition Facts table formats", url: "https://inspection.canada.ca/en/food-labels/labelling/industry/nutrition-labelling/nutrition-facts-table-formats" },
+      { label: "Health Canada: Front-of-package nutrition symbol labelling guide for industry", url: "https://www.canada.ca/en/health-canada/services/food-nutrition/legislation-guidelines/guidance-documents/front-package-nutrition-symbol-labelling-industry.html" },
+      { label: "Health Canada: Industry guide for the labelling of cosmetics", url: "https://www.canada.ca/en/health-canada/services/consumer-product-safety/reports-publications/industry-professionals/labelling-cosmetics.html" },
+      { label: "OQLF: Trademarks on products (French)", url: "https://www.oqlf.gouv.qc.ca/francisation/entreprises/marque-commerce-produits.html" },
+    ],
+    faqs: [
+      { q: "Does packaging in Canada have to be bilingual?", a: "For most prepackaged consumer products, yes. Mandatory information such as the product identity and net quantity must be in English and French. The name and address of the responsible company may be in either language." },
+      { q: "Can I use my US label in Canada?", a: "Usually not unchanged. Canada uses bilingual mandatory text, metric net quantity and its own Nutrition Facts table formats for food. Many brands use a shared front panel with country-specific back panels." },
+      { q: "Does the cosmetic ingredient list need to be in French?", a: "No. Health Canada allows the ingredient list to use INCI names without translation. Most other mandatory cosmetic label text must be in English and French." },
+      { q: "What changed in Quebec in 2025?", a: "Since 1 June 2025, generic or descriptive words in a trademark, such as scent or flavour, must also appear in French on the product. Some older products can be sold until 1 June 2027. Check the OQLF guidance for your case." },
+    ],
+  },
+  {
     slug: "uk-packaging-labelling-requirements",
     kind: "compliance",
     title: "UK packaging and labelling requirements after Brexit",

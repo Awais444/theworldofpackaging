@@ -27,7 +27,7 @@ export const blogCategories: BlogCategory[] = [
     name: "Labelling & Compliance",
     short: "What has to be on the pack, by product and market.",
     intro:
-      "Labelling rules decide what your packaging must say before it can be sold. These guides cover the requirements we check most often for food, supplements, cosmetics, alcohol and CBD in the US, UK and EU: mandatory text, panel placement, minimum type sizes, barcodes and certification marks. Each guide lists its official sources and a review date. Use them to plan the artwork, then confirm the final wording with a regulatory adviser for your product.",
+      "Labelling rules decide what your packaging must say before it can be sold. These guides cover the requirements we check most often for food, supplements, cosmetics, alcohol and CBD in Canada, the US, UK and EU: mandatory text, panel placement, minimum type sizes, barcodes and certification marks. Each guide lists its official sources and a review date. Use them to plan the artwork, then confirm the final wording with a regulatory adviser for your product.",
     metaDescription: "Packaging labelling guides for food, supplements, cosmetics, alcohol and CBD in the US, UK and EU: required text, placement, type sizes and sources.",
     color: "var(--cat-compliance)",
   },
@@ -95,6 +95,7 @@ type Cover = { photo: keyof typeof STOCK } | { icon: CoverIcon; short: string };
 /** Primary category and card cover for every post. Featured posts lead the /blog hub. */
 export const postMeta: Record<string, { category: BlogCategoryId; cover: Cover; featured?: boolean }> = {
   // Labelling & Compliance
+  "canadian-packaging-labelling-requirements": { category: "labelling-compliance", cover: { icon: "globe", short: "Canadian bilingual labels" } },
   "uk-packaging-labelling-requirements": { category: "labelling-compliance", cover: { photo: "cartonAtShelf" } },
   "supplement-facts-label-requirements": { category: "labelling-compliance", cover: { photo: "flatBottomPouches" } },
   "net-weight-on-packaging": { category: "labelling-compliance", cover: { photo: "coffeeWhite" } },

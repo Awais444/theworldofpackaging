@@ -57,7 +57,7 @@ Data: `audit/crawl-after-phase2.csv`, `audit/crawl-summary-after-phase2.json`.
 ```
 # The World of Packaging
 
-> The World of Packaging is a packaging design and branding studio based in Toronto, Canada, with its own box factory and 15+ years in packaging. We design brands and packaging, make rigid and collapsible rigid boxes in-house from MOQ 500, print folding cartons, mailers, labels and pouches, and ship worldwide by air or sea to 190+ countries. Designs are approved as a digital proof and 3D mockup before print. Contact: info@theworldofpackaging.com, WhatsApp +1 (437) 564-0199.
+> The World of Packaging is a packaging design and branding studio based in Toronto, Canada, with its own box factory and 15+ years in packaging. We design brands and packaging, make rigid and collapsible rigid boxes in-house from MOQ 500, print folding cartons, mailers, labels and pouches, and ship worldwide by air or sea to 190+ countries. Designs are approved as a digital proof and 3D mockup before print. Contact: info@theworldofpackaging.com, WhatsApp +1 (647) 559-3900.
 
 ## Company facts
 - Name: The World of Packaging

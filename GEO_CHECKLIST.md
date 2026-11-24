@@ -11,7 +11,7 @@ Copy them from the "Company facts" block on /about. They come from `src/config/s
 | Name | The World of Packaging |
 | Website | https://theworldofpackaging.com |
 | Email | info@theworldofpackaging.com |
-| WhatsApp / phone | +1 (437) 564-0199 |
+| WhatsApp / phone | +1 (647) 559-3900 |
 | Address | TODO: add the factory address to `site.ts` first, then use it everywhere |
 | Experience | 15+ years in packaging |
 | What we do | Packaging design, branding and box manufacturing under one roof; own factory; rigid and collapsible rigid boxes from MOQ 500; ships worldwide |

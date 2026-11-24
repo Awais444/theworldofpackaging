@@ -19,6 +19,7 @@ import { Section } from "@/components/ui/Layout";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { rigidCard } from "@/lib/boxView";
 import { faqPage } from "@/lib/schema";
+import { CanadaOrdering } from "@/components/sections/CanadaOrdering";
 
 export const metadata: Metadata = {
   title: "Collapsible Rigid Boxes",
@@ -51,8 +52,7 @@ export default function CollapsiblePage() {
         highlight="Flat"
         intro={
           <p>
-            A collapsible rigid box looks and feels like a fixed one, but folds flat for shipping. Fewer cartons, lower freight and less warehouse
-            space. MOQ {site.facts.collapsibleMoq}.
+            A collapsible rigid box is a premium rigid box made from greyboard wrapped in printed paper, with hinged walls that let it fold flat. It looks and feels like a fixed rigid box once assembled, but ships and stores flat, so you need fewer cartons, pay for less freight volume and use less warehouse space. It assembles in seconds. We make them from {site.facts.collapsibleMoq} boxes, with a digital proof before print.
           </p>
         }
         slotId="collapsible-flat"
@@ -80,6 +80,8 @@ export default function CollapsiblePage() {
           <FreightSlider />
         </div>
       </Section>
+
+      <CanadaOrdering product="collapsible rigid boxes" />
 
       <Section bg="silver">
         <FadeIn>

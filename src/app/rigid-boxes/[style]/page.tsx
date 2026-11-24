@@ -3,7 +3,7 @@ import { metaDescription, ogFor } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getRigidStyle, rigidStyles } from "@/content/rigidStyles";
 import { BoxStylePage } from "@/components/boxes/BoxStylePage";
-import { rigidView } from "@/lib/boxView";
+import { rigidHref, rigidView } from "@/lib/boxView";
 
 /** Meta descriptions stay within 155 characters (SEO plan on-page rules). */
 
@@ -21,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Custom ${style.name}${/box$/i.test(style.name) ? "es" : "s"}`,
     description: metaDescription(`${style.summary} Made in our own factory from MOQ ${style.moq}, shipped worldwide.`),
-    alternates: { canonical: `/rigid-boxes/${style.slug}` },
+    // Collapsible has its own landing page; this spec page points search engines there.
+    alternates: { canonical: rigidHref(style.slug) },
     openGraph: ogFor(`/rigid-boxes/${style.slug}`),
   };
 }

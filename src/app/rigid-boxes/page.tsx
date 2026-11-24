@@ -6,6 +6,7 @@ import { collectionPage } from "@/lib/schema";
 import { metaDescription, ogFor } from "@/lib/seo";
 import { site } from "@/config/site";
 import { hubFaqs, rigidTabs } from "@/content/hubs";
+import { CanadaOrdering } from "@/components/sections/CanadaOrdering";
 import { BoxHub, MaterialsTeaser, materialsTeaserItems } from "@/components/boxes/BoxHub";
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function RigidHubPage() {
       eyebrow="Made in our factory"
       title="Rigid boxes built to be kept"
       highlight="kept"
-      intro={`Premium gift and retail boxes in eight styles, wrapped by hand in our own factory. From ${site.facts.rigidMoq} boxes per design.`}
+      intro={`A rigid box (also called a setup box) is made from thick greyboard, usually 1.5 to 3 mm, wrapped in printed or specialty paper. It does not fold, so it feels solid and premium and is often kept after opening. We make eight styles, including magnetic closure, lid and base, drawer and collapsible, wrapped by hand in our own factory from ${site.facts.rigidMoq} boxes per design.`}
       slot="rigid-magnetic-closure-hero"
       benefits={[
         { title: "Own factory", text: "Cut, wrapped and finished in-house, not outsourced." },
@@ -34,7 +35,12 @@ export default function RigidHubPage() {
       gridTitle="Choose your rigid box"
       gridHighlight="rigid"
       tabs={rigidTabs}
-      supporting={<MaterialsTeaser items={materialsTeaserItems} />}
+      supporting={
+        <>
+          <MaterialsTeaser items={materialsTeaserItems} />
+          <CanadaOrdering />
+        </>
+      }
       faqs={hubFaqs}
       cta={{ title: "Not sure which style fits?", highlight: "style", text: "Tell us about your product and we will recommend a box." }}
     />

@@ -8,6 +8,7 @@ import { packages } from "@/content/packages";
 import { designFeeNote, designPricing, designTiers, priceLabel } from "@/content/pricing";
 import { printedStyles } from "@/content/printedStyles";
 import { rigidStyles } from "@/content/rigidStyles";
+import { rigidHref } from "@/lib/boxView";
 import { servicePages } from "@/content/servicePages";
 import { PageHero } from "@/components/sections/PageHero";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -138,7 +139,7 @@ export default function PricingPage() {
         caption="Rigid box styles"
         head={["Style", "MOQ", "Board"]}
         rows={rigidStyles.map((s) => ({
-          href: `/rigid-boxes/${s.slug}`,
+          href: rigidHref(s.slug),
           name: s.name,
           cells: [String(s.moq), `${Math.min(...s.boardMm).toFixed(1)}–${Math.max(...s.boardMm).toFixed(1)} mm`],
           price: priceLabel(s.priceFrom ?? null),

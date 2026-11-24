@@ -27,7 +27,7 @@ export function organization(): WithContext<Organization> {
       {
         "@type": "ContactPoint",
         contactType: "sales",
-        telephone: "+1-437-564-0199",
+        telephone: "+1-647-559-3900",
         email: site.email,
         areaServed: "Worldwide",
         availableLanguage: ["English"],

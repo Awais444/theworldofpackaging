@@ -156,10 +156,11 @@ export const tier1Countries: Country[] = [
     },
     marketNotes: [
       "Bilingual packaging is the defining feature of the Canadian market. Most mandatory text must appear in English and French, which roughly doubles the information on the back of pack. We plan the panels for both languages from the first concept, so the front stays clean and the French is not squeezed in at the end.",
+      "Our studio is in Toronto, so Canadian brands work with a team in their own time zone (Eastern Time). We take briefs from across the Greater Toronto Area and the rest of Canada by video call, email and WhatsApp, and deliver to your address, warehouse or 3PL anywhere in the country.",
       "Many Canadian brands sell into the US as well, and a US label will not work unchanged in Canada. We design shared front panels with country-specific back panels, so one system covers both markets.",
     ],
     topIndustries: ["cosmetics", "supplements", "food-bakery", "candles", "apparel", "cbd"],
-    recommendedBoxes: ["printed:mailer", "rigid:lid-and-base", "printed:folding-carton", "rigid:collapsible", "printed:tuck-end", "rigid:magnetic-closure"],
+    recommendedBoxes: ["rigid:collapsible", "rigid:magnetic-closure", "rigid:lid-and-base", "printed:mailer", "printed:folding-carton", "printed:tuck-end"],
     recommendedServices: ["label-design", "food-packaging-design", "skincare-packaging-design", "cbd-packaging-design"],
     cities: [
       { slug: "toronto", name: "Toronto", note: "Canada's largest consumer market, with many beauty, food and e-commerce brands." },
@@ -170,9 +171,11 @@ export const tier1Countries: Country[] = [
       { q: "Does Canadian packaging have to be bilingual?", a: "Most mandatory consumer information must be in English and French. Quebec has additional French-language rules. We plan space for both from the start." },
       { q: "Can I use my US label in Canada?", a: "Usually not unchanged. Canada uses its own Nutrition Facts format, metric units and bilingual text. We design shared fronts with country-specific backs." },
       { q: "Do you design cannabis or CBD packaging for Canada?", a: "We design outer boxes and labels from the text you supply. Canada has strict cannabis packaging rules, so your adviser must confirm every element." },
+      { q: "Where are you based?", a: "Our studio is in Toronto, Ontario. We work with brands across Canada remotely, and deliver anywhere in the country." },
+      { q: "What is the minimum order for custom rigid boxes in Canada?", a: "500 boxes for rigid and collapsible rigid boxes, with free design support. Delivery time to your city is confirmed with your quote." },
       { q: "Can you print French and English on the same box?", a: "Yes. We lay out both languages and check legibility at actual size." },
     ],
-    guideSlugs: ["net-weight-on-packaging", "packaging-for-international-markets", "cbd-packaging-requirements"],
+    guideSlugs: ["collapsible-rigid-boxes-explained", "net-weight-on-packaging", "packaging-for-international-markets", "cbd-packaging-requirements"],
   },
   {
     slug: "australia",

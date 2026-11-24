@@ -56,8 +56,8 @@ export const site = {
   tagline: "Packaging design and manufacturing under one roof.",
   url: "https://theworldofpackaging.com",          // TODO confirm
   email: "info@theworldofpackaging.com",
-  whatsapp: "+1 (437) 564-0199",
-  phone: "+1 (437) 564-0199",
+  whatsapp: "+1 (647) 559-3900",
+  phone: "+1 (647) 559-3900",
   address: "Toronto, Ontario, Canada",             // TODO: full street address and postal code
   hours: "Mon–Fri, 9:00–18:00 ET",                 // TODO confirm
   socials: { instagram: "", linkedin: "", facebook: "", pinterest: "", behance: "" },

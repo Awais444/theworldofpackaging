@@ -28,6 +28,7 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import type { BoxView } from "@/lib/boxView";
 import { faqPage, product } from "@/lib/schema";
 import { ProductGallery } from "./ProductGallery";
+import { CanadaOrdering } from "@/components/sections/CanadaOrdering";
 
 const featureIcons: LucideIcon[] = [Sparkles, ShieldCheck, Gift, Wrench];
 
@@ -188,6 +189,8 @@ export function BoxStylePage({ box }: { box: BoxView }) {
           <StepList steps={orderSteps} />
         </div>
       </Section>
+
+      {box.kind === "rigid" && <CanadaOrdering product={`${box.name.toLowerCase()}${/box$/i.test(box.name) ? "es" : "s"}`} />}
 
       {/* 9. FAQ */}
       <Section>

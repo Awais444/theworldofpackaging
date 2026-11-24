@@ -40,7 +40,7 @@ const sections: Record<Id, () => MetadataRoute.Sitemap> = {
   manufacturing: () => [
     ...["/rigid-boxes", "/collapsible-rigid-boxes", "/printed-boxes"].map((p) => entry(p, 0.9, "weekly")),
     ...["/boxes", "/materials", "/finishes", "/inserts"].map((p) => entry(p, 0.6)),
-    ...rigidStyles.map((s) => entry(`/rigid-boxes/${s.slug}`, 0.8, "monthly", ["src/app/rigid-boxes/[style]/page.tsx", `${C}rigidStyles.ts`, `${C}boxDetails.ts`, "src/components/boxes/*"])),
+    ...rigidStyles.filter((s) => s.slug !== "collapsible").map((s) => entry(`/rigid-boxes/${s.slug}`, 0.8, "monthly", ["src/app/rigid-boxes/[style]/page.tsx", `${C}rigidStyles.ts`, `${C}boxDetails.ts`, "src/components/boxes/*"])),
     ...printedStyles.map((s) => entry(`/printed-boxes/${s.slug}`, 0.7, "monthly", ["src/app/printed-boxes/[style]/page.tsx", `${C}printedStyles.ts`, `${C}boxDetails.ts`, "src/components/boxes/*"])),
   ],
   agency: () => [

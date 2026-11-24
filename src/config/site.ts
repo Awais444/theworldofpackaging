@@ -38,10 +38,10 @@ export const site = {
   email: "info@theworldofpackaging.com",
   // Contact details stay hidden on the site while null. TODO: real values.
   /** Display format. */
-  whatsapp: "+1 (437) 564-0199" as string | null,
+  whatsapp: "+1 (647) 559-3900" as string | null,
   /** wa.me format: digits only, no + or spaces. */
-  whatsappLink: "14375640199",
-  phone: "+1 (437) 564-0199" as string | null,
+  whatsappLink: "16475593900",
+  phone: "+1 (647) 559-3900" as string | null,
   address: "Toronto, Ontario, Canada" as string | null, // TODO: full street address and postal code
   /** Structured address for schema.org. TODO: street address and postal code. */
   location: { locality: "Toronto", region: "ON", countryCode: "CA" },

@@ -89,7 +89,50 @@ export const countryName = (c: Country) => c.inText ?? c.name;
  * Tier 3 pages are indexed only when every required field is filled (plan §3). Shipping times are not
  * required: they show "Confirmed with your quote" until recalculated from Canada.
  */
+/**
+ * Tier-2 pages that share 75%+ of their text with a sibling page (doorway audit, 24 Nov 2026:
+ * seo-research/theworldofpackaging/audit/country-pages-doorway-audit.md). Kept live and linked,
+ * but noindex, follow until each has a verified labelling note and a market note written for
+ * that country. Remove a slug from this list once its page has real local content.
+ */
+export const pendingLocalContent = new Set<string>([
+  "peru",
+  "colombia",
+  "argentina",
+  "chile",
+  "hungary",
+  "romania",
+  "austria",
+  "greece",
+  "portugal",
+  "egypt",
+  "ghana",
+  "morocco",
+  "poland",
+  "bangladesh",
+  "mexico",
+  "nigeria",
+  "taiwan",
+  "vietnam",
+  "brazil",
+  "finland",
+  "indonesia",
+  "kenya",
+  "south-korea",
+  "thailand",
+  "turkey",
+  "denmark",
+  "israel",
+  "jordan",
+  "norway",
+  "spain",
+  "sri-lanka",
+  "czech-republic",
+  "italy",
+]);
+
 export function isIndexable(c: Country): boolean {
+  if (pendingLocalContent.has(c.slug)) return false;
   if (c.tier < 3) return true;
   return Boolean(c.name && c.region && c.currency.code && c.languages.length && c.measurement && c.labelling.authority && c.marketNotes.length);
 }

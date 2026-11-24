@@ -23,7 +23,7 @@ export default function PrintedHubPage() {
       eyebrow="Printed boxes"
       title="Printed boxes in any size"
       highlight="size"
-      intro="Mailers, retail cartons, shipping boxes and displays, printed in full colour and cut to your exact size."
+      intro="Printed boxes are made from paperboard or corrugated board, printed in CMYK or Pantone colours and die-cut to your exact size. Folding cartons and tuck end boxes suit retail shelves, mailer boxes suit e-commerce and subscriptions, and shipping boxes protect products in transit. They ship flat and fold up when you pack. We print eight styles, with finishes such as foil, spot UV and soft-touch, and a digital proof before print."
       slot="printed-mailer-hero"
       benefits={[
         { title: "Any size", text: "Custom dielines for every product." },

@@ -130,6 +130,7 @@ export const postMeta: Record<string, { category: BlogCategoryId; cover: Cover; 
   "shrink-sleeve-vs-pressure-sensitive-labels": { category: "materials-finishes", cover: { photo: "shampooBottles" } },
   "rigid-vs-folding-carton-boxes": { category: "materials-finishes", cover: { photo: "bowTieBoxes" } },
   // Cost & Strategy
+  "choosing-custom-packaging-supplier-canada": { category: "cost-strategy", cover: { icon: "ship", short: "Choosing a supplier in Canada" } },
   "packaging-cost-guide": { category: "cost-strategy", cover: { icon: "calculator", short: "What custom boxes cost" } },
   "packaging-design-cost": { category: "cost-strategy", cover: { icon: "receipt", short: "Packaging design cost" }, featured: true },
   "packaging-design-for-startups": { category: "cost-strategy", cover: { photo: "proteinBars" } },

@@ -175,7 +175,7 @@ export const tier1Countries: Country[] = [
       { q: "What is the minimum order for custom rigid boxes in Canada?", a: "500 boxes for rigid and collapsible rigid boxes, with free design support. Delivery time to your city is confirmed with your quote." },
       { q: "Can you print French and English on the same box?", a: "Yes. We lay out both languages and check legibility at actual size." },
     ],
-    guideSlugs: ["canadian-packaging-labelling-requirements", "collapsible-rigid-boxes-explained", "net-weight-on-packaging", "packaging-for-international-markets", "cbd-packaging-requirements"],
+    guideSlugs: ["canadian-packaging-labelling-requirements", "choosing-custom-packaging-supplier-canada", "collapsible-rigid-boxes-explained", "net-weight-on-packaging", "packaging-for-international-markets", "cbd-packaging-requirements"],
   },
   {
     slug: "australia",

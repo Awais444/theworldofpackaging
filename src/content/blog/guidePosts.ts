@@ -3,6 +3,28 @@ import type { PostInput as Post } from "./posts";
 /** Practical packaging guides (SEO_CONTENT_PLAN.md Priority 3). Bodies live in ./<slug>.mdx. */
 export const guidePosts: Post[] = [
   {
+    slug: "choosing-custom-packaging-supplier-canada",
+    kind: "guide",
+    title: "Choosing a custom packaging supplier in Canada",
+    seoTitle: "Custom Packaging Suppliers in Canada: How to Choose",
+    description: "How Canadian brands compare custom box and label suppliers: bilingual artwork, CAD quotes, imports and duties, minimums, proofs and door-to-door timing.",
+    date: "2026-11-24",
+    readingMinutes: 7,
+    tags: ["Ordering", "Canada"],
+    illustration: "press-machine",
+    services: ["box-packaging-design", "label-design"],
+    sources: [
+      { label: "Canada Border Services Agency: Importing commercial goods into Canada", url: "https://www.cbsa-asfc.gc.ca/import/menu-eng.html" },
+      { label: "Competition Bureau: Guide to the Consumer Packaging and Labelling Act and Regulations", url: "https://competition-bureau.canada.ca/en/guide-consumer-packaging-and-labelling-act-and-regulations" },
+    ],
+    faqs: [
+      { q: "Should I buy packaging from a Canadian or an overseas supplier?", a: "It depends on the format and volume. Compare the delivered cost in CAD, including freight, brokerage, duty and taxes, and the date boxes reach your warehouse, not only the unit price." },
+      { q: "Do imported boxes pay duty in Canada?", a: "Imported goods may be charged duty and GST or HST at the border. Ask your supplier who clears customs and whether the price is delivered with duties paid, and check CBSA guidance." },
+      { q: "What minimum order should I expect?", a: "It ranges from one box at online print shops to thousands at carton plants. Our rigid and collapsible rigid boxes start at 500 per design." },
+      { q: "Does my supplier need to handle French?", a: "Most mandatory label text in Canada must be in English and French. Choose a supplier that lays out both languages and checks type sizes at actual size." },
+    ],
+  },
+  {
     slug: "packaging-design-cost",
     kind: "guide",
     title: "How much does packaging design cost? A full breakdown",

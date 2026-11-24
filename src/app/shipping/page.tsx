@@ -53,7 +53,7 @@ export default function ShippingPage() {
         eyebrow="Worldwide shipping"
         title="From our factory to your door"
         highlight="door"
-        intro={<p>We pack in export cartons, book freight and prepare the documents. Choose air for speed or sea for cost; collapsible boxes make both cheaper.</p>}
+        intro={<p>We deliver across Canada and ship worldwide. For international orders we pack boxes in export cartons, book air or sea freight and prepare the shipping documents. Air freight is faster and suits smaller or urgent orders; sea freight costs less per box and suits larger volumes. Collapsible rigid boxes ship flat, which cuts the volume you pay for either way. Delivery time to your city is confirmed with your quote.</p>}
         slotId="printed-shipping-hero"
         actions={
           <>

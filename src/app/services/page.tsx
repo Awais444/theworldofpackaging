@@ -56,7 +56,7 @@ export default function ServicesHubPage() {
         eyebrow="Design services"
         title="Branding and packaging design that gets made"
         highlight="made"
-        intro={<p>Brand identity, packaging and structural design from a studio that runs its own factory. Every design is drawn for the board, press and finishes it will be made with.</p>}
+        intro={<p>We offer brand identity, logo design, packaging design, label design, structural and dieline design, and 3D mockups. Because our studio runs its own factory and press, every design is drawn for the board, inks and finishes it will be made with, so what you approve on screen is what comes off the line. You can hire us for design only, or for design and production together.</p>}
         slotId="service-brand-identity-hero"
         actions={
           <>

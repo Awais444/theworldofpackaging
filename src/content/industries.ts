@@ -58,7 +58,10 @@ export const industries: Industry[] = [
     services: ["packaging-design", "label-design", "brand-identity"],
     compliance: COMPLIANCE_NOTE,
     illustration: "magnetic-open",
-    faqs: [{ q: "Can one box design work for several products?", a: "Yes. We design a template system: shared structure and layout, with colour or label changes per SKU." }],
+    faqs: [
+      { q: "Can one box design work for several products?", a: "Yes. We design a template system: shared structure and layout, with colour or label changes per SKU." },
+      { q: "Do cosmetic boxes sold in Canada need French?", a: "Yes, for most mandatory text. Health Canada requires cosmetic labels in English and French, except the INCI ingredient list, which needs no translation. Quebec has extra French-language rules. See our Canadian labelling guide, and confirm the final text with your adviser." },
+    ],
   },
   {
     slug: "perfume",

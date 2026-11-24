@@ -28,7 +28,7 @@ export default function BoxesHubPage() {
       eyebrow="All boxes"
       title="Every box style we make"
       highlight="every"
-      intro="Rigid boxes from our own factory and printed boxes in any size. Pick a style, or tell us about your product and we will recommend one."
+      intro="Custom boxes come in two main families. Rigid boxes are made from thick greyboard wrapped in paper; they feel premium and are often kept, so brands use them for gifts, cosmetics and jewellery. Printed boxes, such as mailers and folding cartons, are made from paperboard or corrugated board and suit retail shelves and shipping. We make rigid boxes in our own factory and print boxes in any size. Pick a style, or ask us to recommend one."
       slot="home-hero"
       benefits={[
         { title: "16+ styles", text: "Rigid and printed, all made to order." },

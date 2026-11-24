@@ -47,7 +47,7 @@ export default function PackagingDesignHub() {
         eyebrow="Packaging design services"
         title="Packaging design services for every product"
         highlight="every"
-        intro={<p>Our packaging design services cover boxes, labels, pouches and displays, designed by our studio and made in our own factory. Choose your product or format below.</p>}
+        intro={<p>Packaging design is the work of turning your product and brand into a box, label or pouch that protects, sells and meets the labelling rules. It covers structure and dieline, graphics, mandatory text and print files. Our studio designs boxes, labels, pouches and displays, with a 3D mockup and a digital proof before print, and our own press prints them. Choose your product or format below.</p>}
         slotId="packaging-design-hub"
         actions={
           <>

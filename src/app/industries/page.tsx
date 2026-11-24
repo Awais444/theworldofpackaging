@@ -56,7 +56,7 @@ export default function IndustriesPage() {
         eyebrow="Industries"
         title="Packaging for your industry"
         highlight="industry"
-        intro={<p>Every category has its own needs: what the box protects, what it must say and how it opens. Pick yours for recommended boxes and finishes.</p>}
+        intro={<p>Every product category needs different packaging. Cosmetics and perfume need shelf appeal and ingredient lists; food needs safe materials and nutrition labels; jewellery and watches need rigid boxes with fitted inserts; e-commerce brands need mailers that survive the post. The box protects the product, carries the information the rules require and shapes the unboxing. Pick your industry for recommended boxes, finishes and design services.</p>}
         slotId="industry-cosmetics-hero"
         actions={
           <>
